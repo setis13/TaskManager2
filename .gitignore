@@ -1,0 +1,5 @@
+/.vs/TaskManager.Web/v14/*.suo
+/packages
+bin
+obj
+/.vs
