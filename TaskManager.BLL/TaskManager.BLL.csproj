@@ -59,6 +59,10 @@
     <Compile Include="Services\Base\EntityCrudService.cs" />
     <Compile Include="Services\Base\EntityReadonlyService.cs" />
     <Compile Include="Services\Base\HostService.cs" />
+    <Compile Include="Services\CommentService.cs" />
+    <Compile Include="Services\SubprojectService.cs" />
+    <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\ProjectService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />

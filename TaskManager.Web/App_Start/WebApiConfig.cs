@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using Microsoft.Practices.Unity.WebApi;
+using Newtonsoft.Json.Serialization;
 
 namespace TaskManager.Web {
     public static class WebApiConfig {
@@ -17,6 +18,9 @@ namespace TaskManager.Web {
 
             config.Routes.MapHttpRoute(name: "DefaultApi", routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional });
+
+            var formatter = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            formatter.SerializerSettings.ContractResolver = new DefaultContractResolver();
         }
     }
 }

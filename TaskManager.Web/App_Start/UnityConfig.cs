@@ -6,8 +6,11 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using TaskManager.BLL;
 using TaskManager.BLL.Contracts;
+using TaskManager.BLL.Contracts.Services;
 using TaskManager.BLL.Contracts.Services.Base;
 using TaskManager.BLL.Mappings;
+using TaskManager.BLL.Services;
+using TaskManager.DAL;
 using TaskManager.DAL.Context;
 using TaskManager.DAL.Contracts;
 using TaskManager.DAL.Contracts.Context;
@@ -39,10 +42,22 @@ namespace TaskManager.Web {
         public static void RegisterTypes(IUnityContainer container) {
             container.RegisterType<ITaskManagerDbContext, TaskManagerDbContext>(new HierarchicalLifetimeManager());
 
+            container.RegisterType<IProjectService, ProjectService>(new HierarchicalLifetimeManager());
+            container.RegisterType<ISubprojectService, SubprojectService>(new HierarchicalLifetimeManager());
+            container.RegisterType<ITaskService, TaskService>(new HierarchicalLifetimeManager());
+            container.RegisterType<ICommentService, CommentService>(new HierarchicalLifetimeManager());
+
             container.RegisterMappingProfile<BllMappingProfile>();
             container.RegisterMapper();
 
             var mapper = container.Resolve<IMapper>();
+
+            // register Unit of Work
+            container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager(),
+                new InjectionFactory(c => {
+                    var uow = new UnitOfWork(c.Resolve<ITaskManagerDbContext>());
+                    return uow;
+                }));
 
             // register services host
             container.RegisterType<IServicesHost, ServicesHost>(new HierarchicalLifetimeManager(),

@@ -50,6 +50,10 @@
     <Compile Include="Services\Base\ICrudService.cs" />
     <Compile Include="Services\Base\IEntityReadonlyService.cs" />
     <Compile Include="Services\Base\IService.cs" />
+    <Compile Include="Services\ISubprojectService.cs" />
+    <Compile Include="Services\ITaskService.cs" />
+    <Compile Include="Services\ICommentService.cs" />
+    <Compile Include="Services\ProjectService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

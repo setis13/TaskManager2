@@ -7,16 +7,26 @@ using System.Web.Mvc;
 namespace TaskManager.Web.Controllers {
     public class HomeController : Controller {
         public ActionResult Index() {
+
+
+
+
+
+
             return View();
         }
 
-        public ActionResult About() {
+
+
+
+
+        public ActionResult Projects() {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Contact() {
+        public ActionResult Subprojects() {
             ViewBag.Message = "Your contact page.";
 
             return View();
