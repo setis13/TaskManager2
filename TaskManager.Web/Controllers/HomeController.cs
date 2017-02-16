@@ -21,14 +21,10 @@ namespace TaskManager.Web.Controllers {
 
 
         public ActionResult Projects() {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Subprojects() {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

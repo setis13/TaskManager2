@@ -264,21 +264,17 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\SubprojectApiController.cs" />
     <Compile Include="Controllers\ProjectApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\WebApiResunt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -317,13 +313,9 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\api\api.js" />
     <Content Include="Scripts\app\app.js" />
-    <Content Include="Scripts\app\models\project-model.js" />
+    <Content Include="Scripts\app\controllers\subproject-controller.js" />
     <Content Include="Scripts\app\controllers\project-controller.js" />
     <Content Include="Scripts\app\controllers\task-controller.js" />
-    <Content Include="Scripts\app\templates\project-edit.html" />
-    <Content Include="Scripts\app\templates\project-add.html" />
-    <Content Include="Scripts\app\templates\project-view.html" />
-    <Content Include="Scripts\app\templates\projects.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -375,6 +367,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\app\templates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

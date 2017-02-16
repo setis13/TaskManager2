@@ -1,24 +1,14 @@
-﻿angular.module('TaskManagerApp', ['ui.router', 'ngResource', 'TaskManagerApp.controllers'/*, 'TaskManagerApp.services'*/]);
+﻿angular.module('TaskManagerApp', ['ui.router', 'ngResource']);
 
 var app = angular.module('TaskManagerApp');
 app.config(function ($stateProvider, $httpProvider) {
-    $stateProvider.state('projects', {
-        //url: '/Projects',
-        //templateUrl: '/Scripts/app/templates/projects.html',
+    $stateProvider
+    .state('projects', {
         controller: 'ProjectController'
-    })/*.state('viewProject', {
-        url: '/Projects/Project:id',
-        templateUrl: '/Scripts/app/templates/project-view.html',
-        controller: 'ProjectViewController'
-    }).state('newProject', {
-        url: '/Projects/New',
-        templateUrl: '/Scripts/app/templates/project-add.html',
-        controller: 'ProjectCreateController'
-    }).state('editProject', {
-        url: '/Projects/Edit:id',
-        templateUrl: '/Scripts/app/templates/project-edit.html',
-        controller: 'ProjectEditController'
-    })*/;
+    })
+    .state('subprojects', {
+        controller: 'SubprojectController'
+    });
 }).run(function ($state) {
     $state.go('projects');
 });

@@ -3,14 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Task Manage</title>
-    @Styles.Render("~/styles/css")
-    @Scripts.Render("~/scripts/modernizr")
-    @Scripts.Render("~/scripts/jquery")
-    @Scripts.Render("~/scripts/bootstrap")
-    @Scripts.Render("~/scripts/angular")
-    @Scripts.Render("~/scripts/app")
-    @Scripts.Render("~/scripts/api")
+    <title>@ViewBag.Title - Task Manager</title>
+    @Scripts.Render("~/scripts/common")
+    @Styles.Render("~/styles/common")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,8 +21,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Projects", "Projects", "Home")</li>
-                    <li>@Html.ActionLink("Subprojects", "Subprojects", "Home")</li>
+                    <li>@Html.ActionLink("Titles", "Projects", "Home")</li>
+                    <li>@Html.ActionLink("Projects", "Subprojects", "Home")</li>
                 </ul>
             </div>
         </div>
