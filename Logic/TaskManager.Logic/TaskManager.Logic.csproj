@@ -66,15 +66,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappings\BllMappingProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServicesHost.cs" />
+    <Compile Include="Services\Base\ReadonlyService.cs" />
+    <Compile Include="Services\Base\CrudService.cs" />
+    <Compile Include="Services\Base\HostService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\TaskManager.Data.Contracts\TaskManager.Data.Contracts.csproj">
+      <Project>{20F08872-7764-4EE2-A383-FB062CE73EAE}</Project>
+      <Name>TaskManager.Data.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskManager.Logic.Contracts\TaskManager.Logic.Contracts.csproj">
+      <Project>{1887BD28-72B4-4265-A00D-8E04DA1E90F1}</Project>
+      <Name>TaskManager.Logic.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

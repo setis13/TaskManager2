@@ -13,7 +13,7 @@ namespace TaskManager.Data.Contracts {
         ///     Gets repository by entity type </summary>
         /// <typeparam name="T">Entity type</typeparam>
         /// <returns>Repository instance</returns>
-        IEntityRepository<T> GetEntityRepository<T>() where T : BaseEntity;
+        IRepository<T> GetRepository<T>() where T : BaseEntity;
         /// <summary>
         ///     Rollbacks uncommited changes </summary>
         void RollBack();

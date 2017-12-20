@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using TaskManager.Data.Contracts.Entities.Base;
@@ -8,12 +9,12 @@ namespace TaskManager.Data.Contracts.Repositories.Base {
     /// <summary>
     /// Base repository interface
     /// </summary>
-    public interface IEntityRepository { };
+    public interface IRepository { };
 
     /// <summary>
     ///     Base entity repository interface </summary>
     /// <typeparam name="T">BaseEntity</typeparam>
-    public interface IEntityRepository<T> : IEntityRepository where T : BaseEntity {
+    public interface IRepository<T> : IRepository where T : BaseEntity {
         /// <summary>
         ///     Gets entity by PK Id </summary>
         /// <param name="id">Id</param>
@@ -36,9 +37,14 @@ namespace TaskManager.Data.Contracts.Repositories.Base {
         ///     Updates existing entity </summary>
         /// <param name="entity">Entity instance</param>
         void Update(T entity);
+
         /// <summary>
-        ///     Deletes existing entity </summary>
-        /// <param name="entity">Entity instance</param>
-        void Delete(T entity);
+        ///     Deletes existing entity by its id </summary>
+        /// <param name="id">Entity Id</param>
+        void DeleteById(Guid id);
+        /// <summary>
+        ///     Deletes existing entity by its ids </summary>
+        /// <param name="ids">List of Entity Ids</param>
+        void DeleteByIds(List<Guid> ids);
     }
 }

@@ -11,7 +11,7 @@ namespace TaskManager.Data.Repositories.Base {
     /// <summary>
     ///     Base entity repository implementation </summary>
     /// <typeparam name="T">BaseEntity</typeparam>
-    public class EntityRepository<T> : IEntityRepository<T>, IEntityRepository where T : BaseEntity {
+    public class Repository<T> : IRepository<T>, IRepository where T : BaseEntity {
 
         /// <summary>
         ///     Holds db context instance </summary>
@@ -24,7 +24,7 @@ namespace TaskManager.Data.Repositories.Base {
         /// <summary>
         ///     Creates entity repository </summary>
         /// <param name="dbContext">Db Context</param>
-        public EntityRepository(ITaskManagerDbContext dbContext) {
+        public Repository(ITaskManagerDbContext dbContext) {
             Context = (DbContext)dbContext;
             DbSet = Context.Set<T>();
         }
@@ -85,7 +85,7 @@ namespace TaskManager.Data.Repositories.Base {
         /// <summary>
         ///     Deletes existing entity by its id </summary>
         /// <param name="id">Entity Id</param>
-        public virtual void Delete(Guid id) {
+        public virtual void DeleteById(Guid id) {
             var entity = GetById(id);
             if (entity == null) return;
             Delete(entity);
@@ -94,9 +94,9 @@ namespace TaskManager.Data.Repositories.Base {
         /// <summary>
         ///     Deletes existing entity by its ids </summary>
         /// <param name="ids">List of Entity Ids</param>
-        public virtual void Delete(IReadOnlyCollection<Guid> ids) {
+        public virtual void DeleteByIds(List<Guid> ids) {
             foreach (var id in ids) {
-                Delete(id);
+                DeleteById(id);
             }
         }
     }

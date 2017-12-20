@@ -21,7 +21,7 @@ namespace TaskManager.Data {
 
         /// <summary>
         ///     Holds registered entity repositories </summary>
-        private readonly Dictionary<Type, IEntityRepository> entityRepositories;
+        private readonly Dictionary<Type, IRepository> entityRepositories;
 
         /// <summary>
         ///     Gets application db context instance </summary>
@@ -36,7 +36,7 @@ namespace TaskManager.Data {
         ///     Creates UOW instance </summary>
         /// <param name="context">Application db context</param>
         public UnitOfWork(ITaskManagerDbContext context) {
-            entityRepositories = new Dictionary<Type, IEntityRepository>();
+            entityRepositories = new Dictionary<Type, IRepository>();
             Context = context;
         }
 
@@ -44,13 +44,13 @@ namespace TaskManager.Data {
         ///     Gets repository by entity type </summary>
         /// <typeparam name="T">Entity type</typeparam>
         /// <returns>Repository instance</returns>
-        public IEntityRepository<T> GetEntityRepository<T>() where T : BaseEntity {
+        public IRepository<T> GetRepository<T>() where T : BaseEntity {
             // checks if repository exist in cache
             if (entityRepositories.ContainsKey(typeof(T)))
-                return entityRepositories[typeof(T)] as IEntityRepository<T>;
+                return entityRepositories[typeof(T)] as IRepository<T>;
             // if not then create a new instance and add to cache
-            var repositoryType = typeof(EntityRepository<>).MakeGenericType(typeof(T));
-            var repository = (IEntityRepository<T>)Activator.CreateInstance(repositoryType, this.Context);
+            var repositoryType = typeof(Repository<>).MakeGenericType(typeof(T));
+            var repository = (IRepository<T>)Activator.CreateInstance(repositoryType, this.Context);
             entityRepositories.Add(typeof(T), repository);
 
             return repository;
