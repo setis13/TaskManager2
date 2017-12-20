@@ -12,7 +12,7 @@ namespace TaskManager.Logic.Services.Base {
     ///     Base service for CRUD queries </summary>
     /// <typeparam name="TDto">DTO</typeparam>
     /// <typeparam name="TEntity">Entity</typeparam>
-    public class CrudService<TDto, TEntity> : ReadonlyService<TDto, TEntity>, ICrudService<TDto>
+    public class CrudService<TDto, TEntity> : EntityReadonlyService<TDto, TEntity>, ICrudService<TDto>
         where TDto : BaseDto
         where TEntity : BaseEntity {
 
@@ -23,22 +23,23 @@ namespace TaskManager.Logic.Services.Base {
         }
 
         /// <summary>
-        ///     Save entity to database </summary>
+        ///     Saves entity to database </summary>
         /// <param name="dto">The DTO</param>
-        public void Save(TDto dto) {
+        /// <param name="userId">User ID</param>
+        public void Save(TDto dto, Guid userId) {
             var store = this.UnitOfWork.GetRepository<TEntity>().GetById(dto.EntityId);
             if (store == null) {
                 store = Mapper.Map<TEntity>(dto);
-                this.UnitOfWork.GetRepository<TEntity>().Insert(store);
+                this.UnitOfWork.GetRepository<TEntity>().Insert(store, userId);
             } else {
                 Mapper.Map(dto, store);
-                this.UnitOfWork.GetRepository<TEntity>().Update(store);
+                this.UnitOfWork.GetRepository<TEntity>().Update(store, userId);
             }
             this.UnitOfWork.SaveChanges();
         }
 
         /// <summary>
-        ///     Delete entity from database </summary>
+        ///     Deletes entity from database </summary>
         /// <param name="dto">The DTO</param>
         public void Delete(TDto dto) {
             this.UnitOfWork.GetRepository<TEntity>().DeleteById(dto.EntityId);
@@ -46,7 +47,7 @@ namespace TaskManager.Logic.Services.Base {
         }
 
         /// <summary>
-        ///     Delete entiy from database by Id </summary>
+        ///     Deletes entiy from database by Id </summary>
         /// <param name="id">The DTO Id</param>
         public void DeleteById(Guid id) {
             this.UnitOfWork.GetRepository<TEntity>().DeleteById(id);
@@ -54,7 +55,7 @@ namespace TaskManager.Logic.Services.Base {
         }
 
         /// <summary>
-        ///     Delete entities from database by ids </summary>
+        ///     Deletes entities from database by ids </summary>
         /// <param name="ids">Entity ids</param>
         public void DeleteByIds(List<Guid> ids) {
             this.UnitOfWork.GetRepository<TEntity>().DeleteByIds(ids);

@@ -3,6 +3,8 @@
 namespace TaskManager.Common.Enums {
     public enum RoleName {
         [Description("User")]
-        User
+        User,
+        [Description("Admin")]
+        Admin
     }
 }

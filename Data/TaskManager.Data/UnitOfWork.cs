@@ -16,21 +16,12 @@ namespace TaskManager.Data {
     ///     UOW interface implementation </summary>
     public class UnitOfWork : IUnitOfWork, IDisposable {
         /// <summary>
-        ///     Logger instance </summary>
-        private readonly Logger<UnitOfWork> _l = new Logger<UnitOfWork>();
-
-        /// <summary>
         ///     Holds registered entity repositories </summary>
         private readonly Dictionary<Type, IRepository> entityRepositories;
 
         /// <summary>
         ///     Gets application db context instance </summary>
         public ITaskManagerDbContext Context { get; }
-
-#if !DEBUG
-        delete ticks  and logger
-#endif
-        public long ticks = DateTime.Now.Ticks;
 
         /// <summary>
         ///     Creates UOW instance </summary>
@@ -52,7 +43,6 @@ namespace TaskManager.Data {
             var repositoryType = typeof(Repository<>).MakeGenericType(typeof(T));
             var repository = (IRepository<T>)Activator.CreateInstance(repositoryType, this.Context);
             entityRepositories.Add(typeof(T), repository);
-
             return repository;
         }
 
@@ -99,6 +89,7 @@ namespace TaskManager.Data {
         }
 
         public void Dispose() {
+            Context.Dispose();
         }
     }
 }

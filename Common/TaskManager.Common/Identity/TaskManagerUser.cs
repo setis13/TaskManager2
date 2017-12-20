@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace TaskManager.Common.Identity {
@@ -23,17 +21,11 @@ namespace TaskManager.Common.Identity {
 
         #endregion [ .ctor ]  
 
-        #region [ Public ]
-
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(
-            UserManager<TaskManagerUser, Guid> manager,
-            string authenticationType) {
-            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
-            var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
-            // Adds custom user claims here
-            return userIdentity;
-        }
-
-        #endregion [ Public ]
+        [NotMapped]
+        public static TaskManagerUser SystemAdmin => new TaskManagerUser {
+            Id = new Guid("1ABB568A-2ECD-43E6-B814-BE164CF2F6F4"),
+            Email = "admin@taskmanager.com",
+            UserName = "admin",
+        };
     }
 }

@@ -55,7 +55,10 @@ namespace TaskManager.Data.Repositories.Base {
         /// <summary>
         ///     Inserts a new entity </summary>
         /// <param name="entity">Entity instance</param>
-        public virtual void Insert(T entity) {
+        /// <param name="userId">User ID</param>
+        public virtual void Insert(T entity, Guid userId) {
+            entity.CreatedDate = entity.LastModifiedDate = DateTime.UtcNow;
+            entity.CreatedById = entity.LastModifiedById = userId;
             var entityEntry = Context.Entry(entity);
             if (entityEntry.State != EntityState.Detached) {
                 entityEntry.State = EntityState.Added;
@@ -67,7 +70,10 @@ namespace TaskManager.Data.Repositories.Base {
         /// <summary>
         ///     Updates existing entity </summary>
         /// <param name="entity">Entity instance</param>
-        public virtual void Update(T entity) {
+        /// <param name="userId">User ID</param>
+        public virtual void Update(T entity, Guid userId) {
+            entity.LastModifiedDate = DateTime.UtcNow;
+            entity.LastModifiedById = userId;
             var entityEntry = Context.Entry(entity);
             if (entityEntry.State == EntityState.Detached) {
                 DbSet.Attach(entity);

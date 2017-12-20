@@ -32,11 +32,13 @@ namespace TaskManager.Data.Contracts.Repositories.Base {
         /// <summary>
         ///     Inserts a new entity </summary>
         /// <param name="entity">Entity instance</param>
-        void Insert(T entity);
+        /// <param name="userId">User ID</param>
+        void Insert(T entity, Guid userId);
         /// <summary>
         ///     Updates existing entity </summary>
         /// <param name="entity">Entity instance</param>
-        void Update(T entity);
+        /// <param name="userId">User ID</param>
+        void Update(T entity, Guid userId);
 
         /// <summary>
         ///     Deletes existing entity by its id </summary>

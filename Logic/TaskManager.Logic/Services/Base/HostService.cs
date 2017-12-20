@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using TaskManager.Common;
 using TaskManager.Data.Contracts;
 using TaskManager.Logic.Contracts;
 using TaskManager.Logic.Contracts.Services.Base;
@@ -7,6 +8,7 @@ namespace TaskManager.Logic.Services.Base {
     /// <summary>
     ///     Base services abstract class </summary>
     public abstract class HostService<T> : IService where T : IService {
+
         /// <summary>
         ///     The unit of work </summary>
         protected readonly IUnitOfWork UnitOfWork;

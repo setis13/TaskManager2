@@ -12,7 +12,7 @@ namespace TaskManager.Logic {
         private readonly Dictionary<Type, IService> services = new Dictionary<Type, IService>();
 
         /// <summary>
-        ///     Register Service with type T </summary>
+        ///     Registers Service with type T </summary>
         /// <typeparam name="T">Service Type</typeparam>
         /// <param name="service">Service instance</param>
         public void Register<T>(T service) where T : IService {
@@ -21,7 +21,7 @@ namespace TaskManager.Logic {
         }
 
         /// <summary>
-        ///     Get Service by it's type </summary>
+        ///     Gets Service by it's type </summary>
         /// <typeparam name="T">Service type</typeparam>
         /// <returns>Service instance</returns>
         public T GetService<T>() where T : IService {

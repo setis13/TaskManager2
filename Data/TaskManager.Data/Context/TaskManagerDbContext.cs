@@ -4,10 +4,11 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using TaskManager.Common.Identity;
 using TaskManager.Data.Contracts.Context;
 using Microsoft.AspNet.Identity.EntityFramework;
+using TaskManager.Data.Mappings;
 
 namespace TaskManager.Data.Context {
     public class TaskManagerDbContext : 
-        IdentityDbContext<TaskManagerUser,TaskManagerRole, Guid, TaskManagerUserLogin, TaskManagerUserRole,TaskManagerUserClaim>,
+        IdentityDbContext<TaskManagerUser, TaskManagerRole, Guid, TaskManagerUserLogin, TaskManagerUserRole,TaskManagerUserClaim>,
         ITaskManagerDbContext {
 
         public DbContext DbContext => this;
@@ -31,7 +32,7 @@ namespace TaskManager.Data.Context {
             modelBuilder.Entity<TaskManagerUserLogin>().ToTable("UserLogins");
             modelBuilder.Entity<TaskManagerUserClaim>().ToTable("UserClaims");
 
-            //modelBuilder.Configurations.Add(new LogDayMap());
+            modelBuilder.Configurations.Add(new SessionMap());
 
             // Conventions
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

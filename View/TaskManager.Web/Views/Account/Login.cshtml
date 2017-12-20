@@ -1,0 +1,94 @@
+﻿@Html.AntiForgeryToken()
+@{
+    ViewBag.Title = "Log in";
+}
+<div class="ui aligned center aligned grid" ng-controller="LoginController">
+    <div class="column">
+        <div class="ui header blue">
+            <img class="ui small image" src="/Content/images/logo.png">
+        </div>
+        <div class="ui form large" ng-submit="Login()">
+            <h3 class="ui top attached header">
+                Login to your Account
+            </h3>
+            <div class="ui attached segment left aligned">
+                <div class="ui red message ng-hide" ng-hide="Model.Error == null">
+                    <p ng-bind-html="Model.Error"></p>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input name="email" placeholder="E-mail address" type="email" ng-model="Model.Email">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input name="password" placeholder="Password" type="password" ng-model="Model.Password">
+                    </div>
+                </div>
+                <button class="fluid ui primary button" lb-busy="Saving" type="submit" ng-click="Login()">
+                    Login
+                </button>
+                <div class="ui error message"></div>
+            </div>
+        </div>
+        <div class="ui message">
+            Don't have an account? <a target="_self" href="@Url.Action("Register")">Sign Up</a>
+        </div>
+    </div>
+</div>
+
+@section Content {
+    <style type="text/css">
+        body {
+            background-color: #F5F5F5 !important;
+        }
+
+            body > .grid {
+                height: 100%;
+            }
+
+        .image {
+            margin-top: -100px;
+        }
+
+        .column {
+            max-width: 450px;
+            margin-top: 40px;
+        }
+    </style>
+}
+@section Scripts {
+    <script language="javascript">
+        function LoadValidation() {
+            form = $('.ui.form')
+                .form({
+                    fields: {
+                        email: {
+                            identifier: 'email',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a email'
+                                },
+                                {
+                                    type: 'email',
+                                    prompt: 'The Email field is not a valid e-mail address.'
+                                }
+                            ]
+                        },
+                        password: {
+                            identifier: 'password',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a password'
+                                }
+                            ]
+                        }
+                    }
+                });
+        }
+    </script>
+}

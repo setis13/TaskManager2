@@ -9,10 +9,10 @@ using TaskManager.Logic.Contracts.Services.Base;
 
 namespace TaskManager.Logic.Services.Base {
     /// <summary>
-    ///     Base service for CRUD queries </summary>
+    ///     Base service for Read queries </summary>
     /// <typeparam name="TDto">DTO</typeparam>
     /// <typeparam name="TEntity">Entity</typeparam>
-    public class ReadonlyService<TDto, TEntity> : IReadonlyService<TDto>
+    public class EntityReadonlyService<TDto, TEntity> : IEntityReadonlyService<TDto>
         where TDto : BaseDto
         where TEntity : BaseEntity {
 
@@ -28,7 +28,7 @@ namespace TaskManager.Logic.Services.Base {
 
         /// <summary>
         ///     Initializes a new instance of the class. </summary>
-        public ReadonlyService(IServicesHost servicesHost, IUnitOfWork unitOfWork, IMapper mapper) {
+        public EntityReadonlyService(IServicesHost servicesHost, IUnitOfWork unitOfWork, IMapper mapper) {
             this.ServicesHost = servicesHost;
             this.UnitOfWork = unitOfWork;
             this.Mapper = mapper;

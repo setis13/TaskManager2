@@ -1,32 +1,42 @@
 using System;
+using System.Diagnostics;
+using System.Linq;
+using AutoMapper;
+using AutoMapper.Unity;
+using TaskManager.Data;
+using TaskManager.Data.Context;
+using TaskManager.Data.Contracts;
+using TaskManager.Data.Contracts.Context;
+using TaskManager.Logic.Mappings;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
+using TaskManager.Logic;
+using TaskManager.Logic.Contracts;
+using TaskManager.Logic.Contracts.Services;
+using TaskManager.Logic.Contracts.Services.Base;
+using TaskManager.Logic.Services;
 
-using Unity;
-
-namespace TaskManager.Web
-{
+namespace TaskManager.Web {
     /// <summary>
-    /// Specifies the Unity configuration for the main container.
-    /// </summary>
-    public static class UnityConfig
-    {
+    ///     Specifies the Unity configuration for the main container. </summary>
+    public static class UnityConfig {
         #region Unity Container
-        private static Lazy<IUnityContainer> container =
-          new Lazy<IUnityContainer>(() =>
-          {
+        private static readonly Lazy<IUnityContainer> _container =
+          new Lazy<IUnityContainer>(() => {
               var container = new UnityContainer();
               RegisterTypes(container);
               return container;
           });
 
         /// <summary>
-        /// Configured Unity Container.
-        /// </summary>
-        public static IUnityContainer Container => container.Value;
+        ///     Gets the configured Unity container. </summary>
+        public static IUnityContainer GetConfiguredContainer() {
+            return _container.Value;
+        }
         #endregion
 
         /// <summary>
-        /// Registers the type mappings with the Unity container.
-        /// </summary>
+        ///     Registers the type mappings with the Unity container. </summary>
         /// <param name="container">The unity container to configure.</param>
         /// <remarks>
         /// There is no need to register concrete types such as controllers or
@@ -34,14 +44,44 @@ namespace TaskManager.Web
         /// allows resolving a concrete type even if it was not previously
         /// registered.
         /// </remarks>
-        public static void RegisterTypes(IUnityContainer container)
-        {
-            // NOTE: To load from web.config uncomment the line below.
-            // Make sure to add a Unity.Configuration to the using statements.
-            // container.LoadConfiguration();
+        public static void RegisterTypes(IUnityContainer container) {
+            // register Db context
+            container.RegisterType<ITaskManagerDbContext, TaskManagerDbContext>(new HierarchicalLifetimeManager());
+            // Register Services
+            container.RegisterType<ISessionService, SessionService>(new HierarchicalLifetimeManager());
 
-            // TODO: Register your type's mappings here.
-            // container.RegisterType<IProductRepository, ProductRepository>();
+            // Register AutoMapper
+            container.RegisterMapper();
+            container.RegisterMappingProfile<BllMappingProfile>();
+            var mapper = container.Resolve<IMapper>();
+
+            // register Unit of Work
+            container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager(),
+                new InjectionFactory(c => new UnitOfWork(c.Resolve<ITaskManagerDbContext>())));
+            // session
+            container.RegisterType<IUserSession, UserSession>(new HierarchicalLifetimeManager());
+
+            // register services host
+            container.RegisterType<IServicesHost, ServicesHost>(new HierarchicalLifetimeManager(),
+                new InjectionFactory(c => {
+                    Debug.WriteLine("RegisterType.InjectionFactory");
+                    var host = new ServicesHost();
+                    var uow = c.Resolve<IUnitOfWork>();
+                        c.Registrations.ToList().Where(
+                            item =>
+                                item.RegisteredType.GetInterfaces().Contains(typeof(IService)) &&
+                                !item.MappedToType.IsInterface && !item.MappedToType.IsGenericType &&
+                                !item.MappedToType.IsAbstract).ToList()
+                            .ForEach(item => c.Resolve(item.RegisteredType,
+                            new ResolverOverride[] {
+                                new ParameterOverride("servicesHost", host),
+                                new ParameterOverride("unitOfWork", uow),
+                                new ParameterOverride("mapper", mapper)
+                            }));
+                    return host;
+                }));
+
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }
     }
 }

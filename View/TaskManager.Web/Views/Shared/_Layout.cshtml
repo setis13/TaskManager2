@@ -1,0 +1,58 @@
+﻿@using System.Web.Mvc.Html
+@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - AutoCall</title>
+    @Styles.Render("~/Content/Common")
+    @Scripts.Render("~/Scripts/Common")
+    <style type="text/css">
+        .main.menu .item img.logo {
+            margin-right: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    @if (Request.IsAuthenticated) {
+        <div class="ui fixed inverted main menu">
+            <div class="ui container">
+                <a href="#" class="header item">
+                    <img class="logo" src="/content/images/logo_64.png">
+                    Project Name
+                </a>
+                <a href="#" class="item">Home</a>
+                <div class="ui simple dropdown item">
+                    Dropdown <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="#">Link Item</a>
+                        <a class="item" href="#">Link Item</a>
+                        <div class="divider"></div>
+                        <div class="header">Header Item</div>
+                        <div class="item">
+                            <i class="dropdown icon"></i>
+                            Sub Menu
+                            <div class="menu">
+                                <a class="item" href="#">Link Item</a>
+                                <a class="item" href="#">Link Item</a>
+                            </div>
+                        </div>
+                        <a class="item" href="#">Link Item</a>
+                    </div>
+                </div>
+                <div class="right menu">
+                    <span class="item">@User.Identity.GetUserName()</span>
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "item" })) {
+                        @Html.AntiForgeryToken()
+                        <a href="#" onclick="$('#logoutForm').submit();">Log off</a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    <div class="ui container">
+        @RenderBody()
+    </div>
+</body>
+</html>

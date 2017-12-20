@@ -25,13 +25,23 @@ namespace TaskManager.Data.Context {
             var roles = typeof(RoleName).GetFields(BindingFlags.Static | BindingFlags.Public)
                     .Select(fi => ((Enum)fi.GetValue(null)).GetDescription()).ToList();
 
+            // admin user
+            var admin = TaskManagerUser.SystemAdmin;
+
             // generates all system roles
             roles.ForEach(roleName => {
-                //Creates Role if it does not exist
+                // creates Role if it does not exist
                 if (!roleManager.RoleExists(roleName)) {
                     roleManager.Create(new TaskManagerRole(roleName));
                 }
             });
+
+            // createa admin if doesn't exist
+            if (userManager.FindById(admin.Id) == null) {
+                // createa User
+                userManager.Create(admin, "123456");
+                userManager.SetLockoutEnabled(admin.Id, false);
+            }
 
             base.Seed(context);
         }

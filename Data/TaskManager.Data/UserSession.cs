@@ -14,15 +14,6 @@ namespace TaskManager.Data {
         /// <summary>
         ///     Token Expires </summary>
         public DateTime TokenExpires { get; set; }
-        /// <summary>
-        ///     DTO of log rules </summary>
-        public object LogRules { get; set; }
-        /// <summary>
-        ///     DTO of carrier info </summary>
-        public object CarrierInfo { get; set; }
-        /// <summary>
-        ///     DTO of user </summary>
-        public object User { get; set; }
 
         public void Reset() {
             throw new NotImplementedException();
@@ -37,9 +28,6 @@ namespace TaskManager.Data {
             clone.UserId = this.UserId;
             clone.Token = this.Token;
             clone.TokenExpires = this.TokenExpires;
-            clone.LogRules = ((ICloneable)this.LogRules)?.Clone();
-            clone.CarrierInfo = ((ICloneable)this.CarrierInfo)?.Clone();
-            clone.User = ((ICloneable)this.User)?.Clone();
 
             return clone;
         }
