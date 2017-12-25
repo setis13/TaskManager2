@@ -66,13 +66,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\ProjectDto.cs" />
     <Compile Include="Dtos\SessionDto.cs" />
+    <Compile Include="Dtos\CommentDto.cs" />
+    <Compile Include="Dtos\SubTaskDto.cs" />
+    <Compile Include="Dtos\TodoDto.cs" />
+    <Compile Include="Dtos\Task1Dto.cs" />
+    <Compile Include="Enums\TaskPriorityEnum.cs" />
+    <Compile Include="Enums\TaskStatusEnum.cs" />
     <Compile Include="IServicesHost.cs" />
     <Compile Include="Dtos\Base\BaseDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Base\ICrudService.cs" />
     <Compile Include="Services\Base\IEntityReadonlyService.cs" />
     <Compile Include="Services\Base\IService.cs" />
+    <Compile Include="Services\ITaskService.cs" />
     <Compile Include="Services\ISessionService.cs" />
   </ItemGroup>
   <ItemGroup />
