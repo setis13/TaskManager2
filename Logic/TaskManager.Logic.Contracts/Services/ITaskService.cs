@@ -15,7 +15,7 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="tasks">List of tasks</param>
         /// <param name="subTasks">List of subtasks of tasks</param>
         /// <param name="comments">List of comments of tasks or subtasks</param>
-        void GetTasks(DateTime? historyDeep,
+        void GetData(DateTime? historyDeep,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks, 
             out List<SubTaskDto> subTasks, 
