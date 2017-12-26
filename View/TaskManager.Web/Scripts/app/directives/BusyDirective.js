@@ -18,4 +18,3 @@ angular.module('BusyDirective', [])
     }
     return { link: link };
 });
-//# sourceMappingURL=BusyDirective.js.map

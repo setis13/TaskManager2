@@ -1,0 +1,100 @@
+﻿<div>
+    <table class="ui celled table">
+        <thead>
+        <tr>
+            <th class="one wide"></th>
+            <th class="three wide left-merge"></th>
+            <th class="four wide">Title</th>
+            <th class="eigth wide">Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        
+        <tr ng-repeat="day in Model.Days | orderBy : '+':true">
+            <td colspan="2">
+                <div class="content">
+                    <div>
+                        <span class="label">Task#</span>&nbsp;
+                        <span class="value">1</span>&nbsp;
+                        <a class="pull-right">edit</a>
+                    </div>
+
+                    <div>
+                        <span class="label">Date</span>&nbsp;
+                        <span class="value">12/26/2017 1:00 AM</span>
+                    </div>
+                    <div>
+                        <span class="label">Owner</span>&nbsp;
+                        <span class="value">Admin</span>
+                    </div>
+                    <div>
+                        <span class="label">Status</span>&nbsp;
+                        <span class="value">In Progress</span>
+                    </div>
+                    <div>
+                        <span class="label">Urgency</span>&nbsp;
+                        <span  class="ui label red">Very Low</span>
+                    </div>
+                    <div>
+                        <span class="label">Hours (actual / total)</span>&nbsp;
+                        <span class="value">20h / 30h</span>
+                    </div>
+                    <div>
+                        <span class="label">Responsible</span>&nbsp;
+                        <span class="value">user1 user2 user3</span>
+                    </div>
+                    <div class="ui progress green value" id="example1" data-percent="15">
+                        <div class="bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                22
+            </td>
+            <td>
+                22
+            </td>
+        </tr>
+
+        <tr>
+            <td class="header"></td>
+            <td>
+                <div>
+                    <span>SubTask#: <b>1</b></span> <a href="#">edit</a>
+                </div>
+                <div>
+                    <span>Owner: <b>Admin</b></span>
+                </div>
+                <div>
+                    <span>Status: In Progress</span>
+                </div>
+                <div>
+                    <span>Actual Hours: 20h</span>
+                </div>
+                <div class="ui progress green" id="example2" data-percent="15">
+                    <div class="bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+            </td>
+            <td class="four wide">
+                22
+            </td>
+            <td class="seven wide">
+                22
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    <hr />
+    <footer>
+        <p>&copy; 2017 - Task Manager</p>
+    </footer>
+</div>
+<script language="javascript">
+    $('#example1').progress({ showActivity: false });// TODO: !!!!
+    $('#example2').progress({ showActivity: false });// TODO: !!!!
+</script>

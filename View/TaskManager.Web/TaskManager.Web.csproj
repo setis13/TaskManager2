@@ -458,6 +458,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
+    <Content Include="Templates\Home.html" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -499,9 +500,7 @@
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\WebApiResult.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Templates\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\app\api\AntiForgeryToken.ts" />
     <TypeScriptCompile Include="Scripts\app\api\Functions.ts" />
@@ -509,12 +508,18 @@
     <TypeScriptCompile Include="Scripts\app\app.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\0BaseController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\LoginController.ts" />
+    <TypeScriptCompile Include="Scripts\app\controllers\HomeController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\SignUpController.ts" />
     <TypeScriptCompile Include="Scripts\app\directives\BusyDirective.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\RoleName.ts" />
+    <TypeScriptCompile Include="Scripts\app\enums\TaskPriorityEnum.ts" />
+    <TypeScriptCompile Include="Scripts\app\enums\TaskStatusEnum.ts" />
     <TypeScriptCompile Include="Scripts\app\models\0ModelBase.ts" />
     <TypeScriptCompile Include="Scripts\app\models\1BaseModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\AccountUserModel.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\HomeModel.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\items\SubTaskModel.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\items\TaskModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\LoginModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\SignUpModel.ts" />
     <TypeScriptCompile Include="Scripts\References.ts" />

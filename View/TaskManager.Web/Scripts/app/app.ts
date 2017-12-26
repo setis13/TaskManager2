@@ -6,7 +6,11 @@ app.config([
     '$routeProvider', '$locationProvider',
     ($routeProvider, $locationProvider) => {
         $routeProvider
-            //.otherwise({ redirectTo: '/' })
+            .when('/Home',
+            {
+                templateUrl: '/Templates/Home.html',
+                controller: 'HomeController',
+            })
             ;
         $locationProvider.html5Mode({
             enabled: true,
@@ -17,3 +21,4 @@ app.config([
 
 app.controller('LoginController', Controllers.LoginController);
 app.controller('SignUpController', Controllers.SignUpController);
+app.controller('HomeController', Controllers.HomeController);

@@ -6,4 +6,3 @@ var Enums;
     })(Enums.RoleName || (Enums.RoleName = {}));
     var RoleName = Enums.RoleName;
 })(Enums || (Enums = {}));
-//# sourceMappingURL=RoleName.js.map

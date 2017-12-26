@@ -5,23 +5,19 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Controllers;
 (function (Controllers) {
-    var SignUpController = (function (_super) {
-        __extends(SignUpController, _super);
-        function SignUpController($scope, $http, $location) {
+    var HomeController = (function (_super) {
+        __extends(HomeController, _super);
+        function HomeController($scope, $http, $location) {
             var _this = this;
             _super.call(this, $scope, $http, $location);
             this.$scope = $scope;
             this.$http = $http;
             this.$location = $location;
-            this.SignUp = function () {
-                if (!_super.prototype.Validate.call(_this)) {
-                    return;
-                }
+            this.Load = function () {
                 var $this = _this;
                 $.ajax({
-                    url: '/api/Account/Register/',
-                    type: 'POST',
-                    data: _this.Model,
+                    url: '/api/Home/GetData/',
+                    type: 'GET',
                     beforeSend: function (xhr) {
                         $this.ShowBusySaving();
                     },
@@ -33,7 +29,7 @@ var Controllers;
                         if (result.success) {
                             $this.ShowBusySaving();
                             $this.$scope.$apply();
-                            window.location.href = result.data.ReturnUrl;
+                            console.log(result);
                         }
                         else {
                             $this.Error(result.error);
@@ -45,12 +41,12 @@ var Controllers;
                     }
                 });
             };
-            this.Model = new Models.SignUpModel();
-            $scope.SignUp = this.SignUp;
+            this.Model = new Models.HomeModel();
             $scope.Model = this.Model;
+            this.Load();
         }
-        SignUpController.$inject = ["$scope", "$http", "$location"];
-        return SignUpController;
+        HomeController.$inject = ["$scope", "$http", "$location"];
+        return HomeController;
     }(Controllers.BaseController));
-    Controllers.SignUpController = SignUpController;
+    Controllers.HomeController = HomeController;
 })(Controllers || (Controllers = {}));

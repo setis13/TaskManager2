@@ -1,1 +1,23 @@
-﻿
+﻿.content .label {
+    color: grey;
+}
+.content .value {
+    color: black;
+}
+.content .extra {
+    color: grey;
+    font-size: 0.9em;
+}
+.content .pull-right {
+    float: right;
+}
+.content .ui.progress.green.value {
+    margin: 0.3em 0em 0em;
+}
+
+.ui.table tr th.left-merge {
+    border-left: none;
+}
+td.header {
+    background: #f9fafb;
+}

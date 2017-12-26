@@ -5,13 +5,12 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Models;
 (function (Models) {
-    var AccountUserModel = (function (_super) {
-        __extends(AccountUserModel, _super);
-        function AccountUserModel(data) {
-            _super.call(this);
-            this.Email = data.Email;
+    var TaskModel = (function (_super) {
+        __extends(TaskModel, _super);
+        function TaskModel() {
+            _super.apply(this, arguments);
         }
-        return AccountUserModel;
+        return TaskModel;
     }(Models.ModelBase));
-    Models.AccountUserModel = AccountUserModel;
+    Models.TaskModel = TaskModel;
 })(Models || (Models = {}));

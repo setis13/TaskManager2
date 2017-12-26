@@ -4,7 +4,11 @@ var app = angular.module('TaskManagerApp');
 app.config([
     '$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
-        $routeProvider;
+        $routeProvider
+            .when('/Home', {
+            templateUrl: '/Templates/Home.html',
+            controller: 'HomeController',
+        });
         $locationProvider.html5Mode({
             enabled: true,
             requireBase: false
@@ -13,4 +17,4 @@ app.config([
 ]);
 app.controller('LoginController', Controllers.LoginController);
 app.controller('SignUpController', Controllers.SignUpController);
-//# sourceMappingURL=app.js.map
+app.controller('HomeController', Controllers.HomeController);

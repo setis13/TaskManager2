@@ -64,7 +64,6 @@ namespace TaskManager.Web {
             // register services host
             container.RegisterType<IServicesHost, ServicesHost>(new HierarchicalLifetimeManager(),
                 new InjectionFactory(c => {
-                    Debug.WriteLine("RegisterType.InjectionFactory");
                     var host = new ServicesHost();
                     var uow = c.Resolve<IUnitOfWork>();
                         c.Registrations.ToList().Where(
