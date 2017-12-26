@@ -1,7 +1,9 @@
-﻿using TaskManager.Logic.Contracts.Dtos.Base;
+﻿using System;
+using TaskManager.Logic.Contracts.Dtos.Base;
 
 namespace TaskManager.Logic.Contracts.Dtos {
     public class ProjectDto : BaseDto {
-        public string Name { get; set; }
+        public Guid CompanyId { get; set; }
+        public string Title { get; set; }
     }
 }

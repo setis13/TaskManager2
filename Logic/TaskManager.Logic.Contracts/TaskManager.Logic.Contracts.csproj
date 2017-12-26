@@ -70,6 +70,8 @@
     <Compile Include="Dtos\SessionDto.cs" />
     <Compile Include="Dtos\CommentDto.cs" />
     <Compile Include="Dtos\SubTaskDto.cs" />
+    <Compile Include="Dtos\CompanyDto.cs" />
+    <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Dtos\TodoDto.cs" />
     <Compile Include="Dtos\Task1Dto.cs" />
     <Compile Include="Enums\TaskPriorityEnum.cs" />

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using TaskManager.Data.Contracts;
 using TaskManager.Logic.Contracts;
@@ -24,13 +23,13 @@ namespace TaskManager.Logic.Services {
             #region projects
 
             var project1 = new ProjectDto() {
-                Name = "Project 1"
+                Title = "Project 1"
             };
             var project2 = new ProjectDto() {
-                Name = "Project 2"
+                Title = "Project 2"
             };
             var project3 = new ProjectDto() {
-                Name = "Project 3",
+                Title = "Project 3",
             };
 
             #endregion projects
@@ -42,16 +41,16 @@ namespace TaskManager.Logic.Services {
             var task1_1 = new Task1Dto() {
                 ProjectId = project1.EntityId,
                 Index = ++index,
-                Name = "Task 1",
+                Title = "Task 1",
                 Description = "description",
                 TotalWork = TimeSpan.FromHours(40),
                 Priority = (byte)TaskPriorityEnum.Medium,
-                Status = (byte)TaskStatusEnum.Created,
+                Status = (byte)TaskStatusEnum.NotStarted,
             };
             var task1_2 = new Task1Dto() {
                 ProjectId = project1.EntityId,
                 Index = ++index,
-                Name = "Task 2",
+                Title = "Task 2",
                 TotalWork = TimeSpan.FromHours(10.5),
                 Priority = (byte)TaskPriorityEnum.Low,
                 Status = (byte)TaskStatusEnum.InProgress,
@@ -59,7 +58,7 @@ namespace TaskManager.Logic.Services {
             var task1_3 = new Task1Dto() {
                 ProjectId = project1.EntityId,
                 Index = ++index,
-                Name = "Task 3",
+                Title = "Task 3",
                 TotalWork = TimeSpan.FromHours(10),
                 Priority = (byte)TaskPriorityEnum.Low,
                 Status = (byte)TaskStatusEnum.Failed,
@@ -68,7 +67,7 @@ namespace TaskManager.Logic.Services {
             var task2_1 = new Task1Dto() {
                 ProjectId = project1.EntityId,
                 Index = ++index,
-                Name = "Task 1",
+                Title = "Task 1",
                 TotalWork = TimeSpan.FromMinutes(40),
                 Priority = (byte)TaskPriorityEnum.High,
                 Status = (byte)TaskStatusEnum.InProgress,
@@ -76,7 +75,7 @@ namespace TaskManager.Logic.Services {
             var task2_2 = new Task1Dto() {
                 ProjectId = project2.EntityId,
                 Index = ++index,
-                Name = "Task 2",
+                Title = "Task 2",
                 TotalWork = TimeSpan.FromHours(10),
                 Priority = (byte)TaskPriorityEnum.Medium,
                 Status = (byte)TaskStatusEnum.Done,
@@ -84,7 +83,7 @@ namespace TaskManager.Logic.Services {
             var task2_3 = new Task1Dto() {
                 ProjectId = project2.EntityId,
                 Index = ++index,
-                Name = "Task 3",
+                Title = "Task 3",
                 TotalWork = TimeSpan.FromHours(10),
                 Priority = (byte)TaskPriorityEnum.Low,
                 Status = (byte)TaskStatusEnum.InProgress,
@@ -92,7 +91,7 @@ namespace TaskManager.Logic.Services {
             var task2_4 = new Task1Dto() {
                 ProjectId = project2.EntityId,
                 Index = ++index,
-                Name = "Task 4",
+                Title = "Task 4",
                 TotalWork = TimeSpan.FromHours(10),
                 Priority = (byte)TaskPriorityEnum.Medium,
                 Status = (byte)TaskStatusEnum.Rejected,
@@ -101,10 +100,10 @@ namespace TaskManager.Logic.Services {
             var task3_1 = new Task1Dto() {
                 ProjectId = project3.EntityId,
                 Index = ++index,
-                Name = "Task 1",
+                Title = "Task 1",
                 TotalWork = TimeSpan.FromMinutes(40),
                 Priority = (byte)TaskPriorityEnum.Low,
-                Status = (byte)TaskStatusEnum.Created,
+                Status = (byte)TaskStatusEnum.NotStarted,
             };
 
             #endregion tasks
@@ -113,38 +112,38 @@ namespace TaskManager.Logic.Services {
 
             var subtask1_1 = new SubTaskDto() {
                 TaskId = task1_1.EntityId,
-                Name = "SubTask 1",
+                Title = "SubTask 1",
                 TotalWork = TimeSpan.FromHours(8),
-                Status = (byte)TaskStatusEnum.Created,
+                Status = (byte)TaskStatusEnum.NotStarted,
             };
             var subtask1_2 = new SubTaskDto() {
                 TaskId = task1_1.EntityId,
-                Name = "SubTask 2",
+                Title = "SubTask 2",
                 TotalWork = TimeSpan.FromHours(4),
                 Status = (byte)TaskStatusEnum.InProgress,
             };
             var subtask1_3 = new SubTaskDto() {
                 TaskId = task1_1.EntityId,
-                Name = "SubTask 3",
+                Title = "SubTask 3",
                 TotalWork = TimeSpan.FromHours(4),
                 Status = (byte)TaskStatusEnum.Failed,
             };
 
             var subtask2_1 = new SubTaskDto() {
                 TaskId = task2_1.EntityId,
-                Name = "SubTask 1",
+                Title = "SubTask 1",
                 TotalWork = TimeSpan.FromMinutes(40),
                 Status = (byte)TaskStatusEnum.InProgress,
             };
             var subtask2_2 = new SubTaskDto() {
                 TaskId = task2_1.EntityId,
-                Name = "SubTask 2",
+                Title = "SubTask 2",
                 TotalWork = TimeSpan.FromHours(10),
                 Status = (byte)TaskStatusEnum.Done,
             };
             var subtask2_3 = new SubTaskDto() {
                 TaskId = task2_1.EntityId,
-                Name = "SubTask 3",
+                Title = "SubTask 3",
                 TotalWork = TimeSpan.FromHours(10),
                 Status = (byte)TaskStatusEnum.InProgress,
             };
@@ -181,7 +180,7 @@ namespace TaskManager.Logic.Services {
             var allsubtasks = new List<SubTaskDto>() { subtask1_1, subtask1_2, subtask1_3, subtask2_1, subtask2_2, subtask2_3 };
             var allcomments = new List<CommentDto> { comment1_1, comment1_2, comment2_1, comment2_2 };
             if (historyDeep == null) {
-                var statuses = new List<TaskStatusEnum>() { TaskStatusEnum.Created, TaskStatusEnum.InProgress };
+                var statuses = new List<TaskStatusEnum>() { TaskStatusEnum.NotStarted, TaskStatusEnum.InProgress };
                 tasks = alltasks.Where(e => statuses.Contains((TaskStatusEnum)e.Status)).ToList();
                 subTasks = allsubtasks.Where(e => statuses.Contains((TaskStatusEnum) e.Status)).ToList();
                 var taskIds = tasks.Select(e => e.EntityId).ToList();

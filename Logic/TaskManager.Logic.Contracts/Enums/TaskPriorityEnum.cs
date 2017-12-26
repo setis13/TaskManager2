@@ -2,6 +2,8 @@
 
 namespace TaskManager.Logic.Contracts.Enums {
     public enum TaskPriorityEnum {
+        [Description("Very Low")]
+        VeryLow,
         [Description("Low")]
         Low,
         [Description("Medium")]

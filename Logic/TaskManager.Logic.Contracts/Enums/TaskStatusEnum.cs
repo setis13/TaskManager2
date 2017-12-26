@@ -2,8 +2,8 @@
 
 namespace TaskManager.Logic.Contracts.Enums {
     public enum TaskStatusEnum {
-        [Description("Created")]
-        Created,
+        [Description("Not Started")]
+        NotStarted,
         [Description("In Progress")]
         InProgress,
         [Description("Done")]
