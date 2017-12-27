@@ -7,8 +7,10 @@ var Models;
 (function (Models) {
     var HomeModel = (function (_super) {
         __extends(HomeModel, _super);
+        //public EditTask: TaskModel;
         function HomeModel() {
-            _super.apply(this, arguments);
+            _super.call(this);
+            //this.EditTask = null;
         }
         HomeModel.prototype.SetData = function (data) {
             this.Tasks = new Array();

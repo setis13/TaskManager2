@@ -5,26 +5,24 @@
 
         static $inject = ["$scope", "$http", "$location"];
 
-        constructor(
-            protected $scope: any,
-            protected $http: ng.IHttpProvider,
-            protected $location: ng.ILocationService) {
+        constructor($scope: any, $http: ng.IHttpProvider, $location: ng.ILocationService) {
             super($scope, $http, $location);
             this.Model = new Models.HomeModel();
 
             $scope.Model = this.Model;
             $scope.TaskStatusNames = TaskStatusNames;
             $scope.TaskPriorityNames = TaskPriorityNames;
+            $scope.CreateTask = this.CreateTask;
 
             this.Load();
         }
 
-        protected Load = () => {
+        public Load = () => {
             var $this = this;
             $.ajax({
                 url: '/api/Home/GetData/',
                 type: 'POST',
-                data: { },
+                data: {},
                 beforeSend(xhr) {
                     $this.ShowBusySaving();
                 },
@@ -47,6 +45,10 @@
                     $this.$scope.$apply();
                 }
             });
+        }
+
+        public CreateTask = () => {
+            (<any>$("#edit-modal")).modal({ closable: false}).modal('show');
         }
     }
 }

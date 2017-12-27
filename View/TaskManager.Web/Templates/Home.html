@@ -1,4 +1,9 @@
 ﻿<div>
+    <!-- panel -->
+    <div>
+        <button class="ui primary button" ng-click="CreateTask()">Create&nbsp;Task</button>
+    </div>
+    <!-- tasks -->
     <table class="ui celled table">
         <thead>
             <tr>
@@ -9,22 +14,21 @@
             </tr>
         </thead>
         <tbody>
-
             <tr class="top aligned" ng-repeat-start="task in Model.Tasks">
                 <td colspan="2">
                     <div class="content">
                         <div>
                             <span class="label">Task#</span>&nbsp;
-                            <span class="value">{{task.Index}}</span>&nbsp;
+                            <span class="value"><b>{{task.Index}}</b></span>&nbsp;
                             <a class="pull-right">edit</a>
-                        </div>
-                        <div>
-                            <span class="label">Date</span>&nbsp;
-                            <span class="value">{{task.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
                         </div>
                         <div>
                             <span class="label">Owner</span>&nbsp;
                             <span class="value">Admin</span>
+                        </div>
+                        <div>
+                            <span class="label">Date</span>&nbsp;
+                            <span class="value">{{task.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
                         </div>
                         <div>
                             <span class="label">Status</span>&nbsp;
@@ -50,7 +54,9 @@
                     </div>
                 </td>
                 <td>
-                    <p><b>{{task.Title}}</b></p>
+                    <p>
+                        <b>{{task.Title}}</b>
+                    </p>
                     <p>{{task.Desctiption}}</p>
                 </td>
                 <td>
@@ -63,6 +69,10 @@
                 <td>
                     <div class="content">
                         <div>
+                            <span class="label">Index</span>&nbsp;
+                            <span class="value">{{task.Index}}/{{subTask.Order}}</span>
+                        </div>
+                        <div>
                             <span class="label">Date</span>&nbsp;
                             <span class="value">{{task.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
                         </div>
@@ -71,7 +81,7 @@
                             <span class="value">{{TaskStatusNames[task.Status]}}</span>
                         </div>
                         <div>
-                            <span>Actual Hours: 20h</span>
+                            <span class="label">Actual Hours: 20h</span>
                         </div>
                         <div class="ui progress green value" id="example2" data-percent="15">
                             <div class="bar">
@@ -81,7 +91,9 @@
                     </div>
                 </td>
                 <td class="four wide">
-                    <p><b>{{subTask.Title}}</b></p>
+                    <p>
+                        <b>{{subTask.Title}}</b>
+                    </p>
                     <p>{{subTask.Desctiption}}</p>
                 </td>
                 <td class="seven wide">
@@ -95,6 +107,25 @@
     <footer>
         <p>&copy; 2017 - Task Manager</p>
     </footer>
+</div>
+<!-- Edit Modal -->
+<div id="edit-modal" class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Modal Title
+    </div>
+    <div class="image content">
+        <div class="image">
+            An image can appear on left or an icon
+        </div>
+        <div class="description">
+            A description can appear on the right
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui cancel button">Cancel</div>
+        <div class="ui ok primary button">Create</div>
+    </div>
 </div>
 <script language="javascript">
     $('#example1').progress({ showActivity: false });// TODO: !!!!

@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 using AutoMapper;
 using TaskManager.Logic.Contracts;
 using TaskManager.Web.Attributes;
@@ -14,6 +15,10 @@ namespace TaskManager.Web.Controllers {
         /// <summary>
         ///     GET /Home </summary>
         public ActionResult Index() {
+            var arr = ((HttpRequestWrapper) this.Request).Path.Split('/');
+            if (arr.Length > 0 && arr[1].ToLower() == "home") {
+                return RedirectToAction("Index");
+            }
             ViewBag.Title = "Home Page";
             return View();
         }

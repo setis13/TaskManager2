@@ -10,9 +10,6 @@ var Controllers;
         function HomeController($scope, $http, $location) {
             var _this = this;
             _super.call(this, $scope, $http, $location);
-            this.$scope = $scope;
-            this.$http = $http;
-            this.$location = $location;
             this.Load = function () {
                 var $this = _this;
                 $.ajax({
@@ -43,10 +40,14 @@ var Controllers;
                     }
                 });
             };
+            this.CreateTask = function () {
+                $("#edit-modal").modal({ closable: false }).modal('show');
+            };
             this.Model = new Models.HomeModel();
             $scope.Model = this.Model;
             $scope.TaskStatusNames = TaskStatusNames;
             $scope.TaskPriorityNames = TaskPriorityNames;
+            $scope.CreateTask = this.CreateTask;
             this.Load();
         }
         HomeController.$inject = ["$scope", "$http", "$location"];
