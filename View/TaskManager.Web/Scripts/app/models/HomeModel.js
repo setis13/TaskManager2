@@ -10,6 +10,12 @@ var Models;
         function HomeModel() {
             _super.apply(this, arguments);
         }
+        HomeModel.prototype.SetData = function (data) {
+            this.Tasks = new Array();
+            for (var i = 0; i < data.Tasks.length; i++) {
+                this.Tasks.push(new Models.TaskModel(data.Tasks[i]));
+            }
+        };
         return HomeModel;
     }(Models.ModelBase));
     Models.HomeModel = HomeModel;

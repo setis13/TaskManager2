@@ -7,7 +7,7 @@ var Controllers;
             this.$scope = $scope;
             this.$http = $http;
             this.$location = $location;
-            this.UserId = userId;
+            this.UserId = UserId;
             this.isActive = function (path) {
                 return _this.location.path().match(path + "$") ? 'active' : '';
             };

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 
 namespace TaskManager.Common.Extensions {
@@ -19,6 +21,14 @@ namespace TaskManager.Common.Extensions {
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        ///     Returns descriptions of enum </summary>
+        /// <typeparam name="T">Type of enum</typeparam>
+        /// <returns>Dictionary [int of Enum, Description]</returns>
+        public static Dictionary<int, string> EnumToDictionary<T>() {
+            return typeof(T).GetEnumValues().Cast<Enum>().ToDictionary(Convert.ToInt32, GetDescription);
         }
     }
 }

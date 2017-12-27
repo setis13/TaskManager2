@@ -7,7 +7,7 @@ using TaskManager.Common.Identity;
 
 namespace TaskManager.Common.Extensions {
 
-    public static class IdentityExtensions {
+    public static class IdentityExtensions1 {
 
         /// <summary>
         ///     Gets UserID in Guid format </summary>

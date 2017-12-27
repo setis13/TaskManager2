@@ -17,7 +17,8 @@ var Controllers;
                 var $this = _this;
                 $.ajax({
                     url: '/api/Home/GetData/',
-                    type: 'GET',
+                    type: 'POST',
+                    data: {},
                     beforeSend: function (xhr) {
                         $this.ShowBusySaving();
                     },
@@ -29,13 +30,14 @@ var Controllers;
                         if (result.success) {
                             $this.ShowBusySaving();
                             $this.$scope.$apply();
-                            console.log(result);
+                            _this.Model.SetData(result.data);
                         }
                         else {
                             $this.Error(result.error);
                         }
                     },
                     error: function (jqXhr) {
+                        console.error(jqXhr.statusText);
                         $this.Error(jqXhr.statusText);
                         $this.$scope.$apply();
                     }
@@ -43,6 +45,8 @@ var Controllers;
             };
             this.Model = new Models.HomeModel();
             $scope.Model = this.Model;
+            $scope.TaskStatusNames = TaskStatusNames;
+            $scope.TaskPriorityNames = TaskPriorityNames;
             this.Load();
         }
         HomeController.$inject = ["$scope", "$http", "$location"];

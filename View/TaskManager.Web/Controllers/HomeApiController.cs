@@ -23,24 +23,20 @@ namespace TaskManager.Web.Controllers {
         }
 
         /// <summary>
-        ///     GET: /api/Home/GetData </summary>
-        [HttpGet, Route("GetData")]
+        ///     POST: /api/Home/GetData </summary>
+        [HttpPost, Route("GetData")]
         [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<WebApiResult> GetData() {
             try {
                 return await Task.Factory.StartNew(() => {
                     List<Task1Dto> tasks;
-                    List<SubTaskDto> subTasks;
                     List<ProjectDto> projects;
-                    List<CommentDto> comments;
                     this.ServicesHost.GetService<ITaskService>().GetData(
                         null,
                         out projects,
-                        out tasks,
-                        out subTasks,
-                        out comments);
-                    return WebApiResult.Succeed(new { projects, tasks, subTasks, comments });
+                        out tasks);
+                    return WebApiResult.Succeed(new { Projects = projects, Tasks = tasks });
                 });
             } catch (Exception e) {
                 Logger.e("GetData", e);

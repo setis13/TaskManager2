@@ -5,7 +5,7 @@ app.config([
     '$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
         $routeProvider
-            .when('/Home', {
+            .when('/', {
             templateUrl: '/Templates/Home.html',
             controller: 'HomeController',
         });

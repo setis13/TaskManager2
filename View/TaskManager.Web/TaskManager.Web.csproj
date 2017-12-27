@@ -506,7 +506,7 @@
     <TypeScriptCompile Include="Scripts\app\api\Functions.ts" />
     <TypeScriptCompile Include="Scripts\app\api\Init.ts" />
     <TypeScriptCompile Include="Scripts\app\app.ts" />
-    <TypeScriptCompile Include="Scripts\app\controllers\0BaseController.ts" />
+    <TypeScriptCompile Include="Scripts\app\controllers\base\0BaseController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\LoginController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\HomeController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\SignUpController.ts" />
@@ -514,9 +514,9 @@
     <TypeScriptCompile Include="Scripts\app\enums\RoleName.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\TaskPriorityEnum.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\TaskStatusEnum.ts" />
-    <TypeScriptCompile Include="Scripts\app\models\0ModelBase.ts" />
-    <TypeScriptCompile Include="Scripts\app\models\1BaseModel.ts" />
-    <TypeScriptCompile Include="Scripts\app\models\AccountUserModel.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\base\0ModelBase.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\base\1BaseModel.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\items\UserModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\HomeModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\SubTaskModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\TaskModel.ts" />

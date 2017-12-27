@@ -11,6 +11,7 @@ var Models;
             _super.call(this);
             if (data != null) {
                 this.EntityId = data.EntityId;
+                this.CreatedDate = moment(data.CreatedDate);
             }
         }
         return BaseModel;

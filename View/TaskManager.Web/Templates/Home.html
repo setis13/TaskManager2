@@ -1,91 +1,93 @@
 ﻿<div>
     <table class="ui celled table">
         <thead>
-        <tr>
-            <th class="one wide"></th>
-            <th class="three wide left-merge"></th>
-            <th class="four wide">Title</th>
-            <th class="eigth wide">Notes</th>
-        </tr>
+            <tr>
+                <th class="one wide"></th>
+                <th class="three wide left-merge"></th>
+                <th class="four wide">Title</th>
+                <th class="eigth wide">Notes</th>
+            </tr>
         </thead>
         <tbody>
-        
-        <tr ng-repeat="day in Model.Days | orderBy : '+':true">
-            <td colspan="2">
-                <div class="content">
-                    <div>
-                        <span class="label">Task#</span>&nbsp;
-                        <span class="value">1</span>&nbsp;
-                        <a class="pull-right">edit</a>
-                    </div>
 
-                    <div>
-                        <span class="label">Date</span>&nbsp;
-                        <span class="value">12/26/2017 1:00 AM</span>
-                    </div>
-                    <div>
-                        <span class="label">Owner</span>&nbsp;
-                        <span class="value">Admin</span>
-                    </div>
-                    <div>
-                        <span class="label">Status</span>&nbsp;
-                        <span class="value">In Progress</span>
-                    </div>
-                    <div>
-                        <span class="label">Urgency</span>&nbsp;
-                        <span  class="ui label red">Very Low</span>
-                    </div>
-                    <div>
-                        <span class="label">Hours (actual / total)</span>&nbsp;
-                        <span class="value">20h / 30h</span>
-                    </div>
-                    <div>
-                        <span class="label">Responsible</span>&nbsp;
-                        <span class="value">user1 user2 user3</span>
-                    </div>
-                    <div class="ui progress green value" id="example1" data-percent="15">
-                        <div class="bar">
-                            <div class="progress"></div>
+            <tr class="top aligned" ng-repeat-start="task in Model.Tasks">
+                <td colspan="2">
+                    <div class="content">
+                        <div>
+                            <span class="label">Task#</span>&nbsp;
+                            <span class="value">{{task.Index}}</span>&nbsp;
+                            <a class="pull-right">edit</a>
+                        </div>
+                        <div>
+                            <span class="label">Date</span>&nbsp;
+                            <span class="value">{{task.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
+                        </div>
+                        <div>
+                            <span class="label">Owner</span>&nbsp;
+                            <span class="value">Admin</span>
+                        </div>
+                        <div>
+                            <span class="label">Status</span>&nbsp;
+                            <span class="value">{{TaskStatusNames[task.Status]}}</span>
+                        </div>
+                        <div>
+                            <span class="label">Urgency</span>&nbsp;
+                            <span class="ui label" ng-class="{0:'gray', 1:'gray', 2:'yellow', 3:'orange', 4:'red', '':'hidden'}[task.Priority]">{{TaskPriorityNames[task.Priority]}}</span>
+                        </div>
+                        <div>
+                            <span class="label">Hours (actual / total)</span>&nbsp;
+                            <span class="value">20h / 30h</span>
+                        </div>
+                        <div>
+                            <span class="label">Responsible</span>&nbsp;
+                            <span class="value">user1 user2 user3</span>
+                        </div>
+                        <div class="ui progress green value" id="example1" data-percent="15">
+                            <div class="bar">
+                                <div class="progress"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </td>
-            <td>
-                22
-            </td>
-            <td>
-                22
-            </td>
-        </tr>
+                </td>
+                <td>
+                    <p><b>{{task.Title}}</b></p>
+                    <p>{{task.Desctiption}}</p>
+                </td>
+                <td>
+                    22
+                </td>
+            </tr>
 
-        <tr>
-            <td class="header"></td>
-            <td>
-                <div>
-                    <span>SubTask#: <b>1</b></span> <a href="#">edit</a>
-                </div>
-                <div>
-                    <span>Owner: <b>Admin</b></span>
-                </div>
-                <div>
-                    <span>Status: In Progress</span>
-                </div>
-                <div>
-                    <span>Actual Hours: 20h</span>
-                </div>
-                <div class="ui progress green" id="example2" data-percent="15">
-                    <div class="bar">
-                        <div class="progress"></div>
+            <tr class="top aligned" ng-repeat-end ng-repeat="subTask in task.SubTasks">
+                <td class="header"></td>
+                <td>
+                    <div class="content">
+                        <div>
+                            <span class="label">Date</span>&nbsp;
+                            <span class="value">{{task.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
+                        </div>
+                        <div>
+                            <span class="label">Status</span>&nbsp;
+                            <span class="value">{{TaskStatusNames[task.Status]}}</span>
+                        </div>
+                        <div>
+                            <span>Actual Hours: 20h</span>
+                        </div>
+                        <div class="ui progress green value" id="example2" data-percent="15">
+                            <div class="bar">
+                                <div class="progress"></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td class="four wide">
-                22
-            </td>
-            <td class="seven wide">
-                22
-            </td>
-        </tr>
+                </td>
+                <td class="four wide">
+                    <p><b>{{subTask.Title}}</b></p>
+                    <p>{{subTask.Desctiption}}</p>
+                </td>
+                <td class="seven wide">
+                    22
+                </td>
+            </tr>
 
         </tbody>
     </table>

@@ -1,5 +1,7 @@
 ﻿@using System.Web.Mvc.Html
 @using Microsoft.AspNet.Identity
+@using TaskManager.Common.Extensions
+@using TaskManager.Logic.Contracts.Enums
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +20,13 @@
             margin-top: 7em;
         }
     </style>
+    <script type="text/javascript">
+        var UserId = '@IdentityExtensions1.GetUserId(User.Identity)';
+        var UserName = '@User.Identity.GetUserName()';
+        var TaskPriorityNames = @Html.Raw(JsonExtension.SerializeObject(EnumExtensions.EnumToDictionary<TaskPriorityEnum>()));
+        var TaskStatusNames = @Html.Raw(JsonExtension.SerializeObject(EnumExtensions.EnumToDictionary<TaskStatusEnum>()));
+    </script>
+
 </head>
 <body ng-app="TaskManagerApp">
     @if (Request.IsAuthenticated) {

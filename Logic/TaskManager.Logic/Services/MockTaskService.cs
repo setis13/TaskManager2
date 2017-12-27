@@ -16,9 +16,7 @@ namespace TaskManager.Logic.Services {
 
         public void GetData(DateTime? historyDeep,
             out List<ProjectDto> projects,
-            out List<Task1Dto> tasks,
-            out List<SubTaskDto> subTasks,
-            out List<CommentDto> comments) {
+            out List<Task1Dto> tasks) {
 
             #region projects
 
@@ -179,10 +177,12 @@ namespace TaskManager.Logic.Services {
             var alltasks = new List<Task1Dto>() { task1_1, task1_2, task1_3, task2_1, task2_2, task2_3, task2_4, task3_1 };
             var allsubtasks = new List<SubTaskDto>() { subtask1_1, subtask1_2, subtask1_3, subtask2_1, subtask2_2, subtask2_3 };
             var allcomments = new List<CommentDto> { comment1_1, comment1_2, comment2_1, comment2_2 };
+            List<SubTaskDto> subTasks;
+            List<CommentDto> comments;
             if (historyDeep == null) {
                 var statuses = new List<TaskStatusEnum>() { TaskStatusEnum.NotStarted, TaskStatusEnum.InProgress };
                 tasks = alltasks.Where(e => statuses.Contains((TaskStatusEnum)e.Status)).ToList();
-                subTasks = allsubtasks.Where(e => statuses.Contains((TaskStatusEnum) e.Status)).ToList();
+                subTasks = allsubtasks.Where(e => statuses.Contains((TaskStatusEnum)e.Status)).ToList();
                 var taskIds = tasks.Select(e => e.EntityId).ToList();
                 var subtaskIds = subTasks.Select(e => e.EntityId).ToList();
                 comments = allcomments.Where(e => taskIds.Contains(e.TaskId) || subtaskIds.Contains(e.SubTaskId)).ToList();
@@ -191,6 +191,10 @@ namespace TaskManager.Logic.Services {
                 subTasks = allsubtasks;
                 comments = allcomments;
             }
+
+            subTasks.ForEach(st => st.Comments = comments.Where(c => c.SubTaskId == st.EntityId).ToList());
+            tasks.ForEach(t => t.Comments = comments.Where(c => c.TaskId == t.EntityId).ToList());
+            tasks.ForEach(t => t.SubTasks = subTasks.Where(st => st.TaskId == t.EntityId).ToList());
         }
     }
 }

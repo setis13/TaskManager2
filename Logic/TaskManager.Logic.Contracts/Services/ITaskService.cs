@@ -13,12 +13,8 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="historyDeep">minimum date of tasks</param>
         /// <param name="projects">List of projects. Returns deleted projects when use <see cref="historyDeep"/></param>
         /// <param name="tasks">List of tasks</param>
-        /// <param name="subTasks">List of subtasks of tasks</param>
-        /// <param name="comments">List of comments of tasks or subtasks</param>
         void GetData(DateTime? historyDeep,
             out List<ProjectDto> projects,
-            out List<Task1Dto> tasks, 
-            out List<SubTaskDto> subTasks, 
-            out List<CommentDto> comments);
+            out List<Task1Dto> tasks);
     }
 }

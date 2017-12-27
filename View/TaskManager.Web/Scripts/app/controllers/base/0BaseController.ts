@@ -10,7 +10,7 @@ namespace Controllers {
 
         public Model: Models.ModelBase;
 
-        protected UserId: string = userId;
+        protected UserId: string = UserId;
 
         constructor(
             protected $scope: any,

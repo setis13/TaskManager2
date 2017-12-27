@@ -49,6 +49,7 @@ namespace TaskManager.Web {
             container.RegisterType<ITaskManagerDbContext, TaskManagerDbContext>(new HierarchicalLifetimeManager());
             // Register Services
             container.RegisterType<ISessionService, SessionService>(new HierarchicalLifetimeManager());
+            container.RegisterType<ITaskService, MockTaskService>(new HierarchicalLifetimeManager());
 
             // Register AutoMapper
             container.RegisterMapper();

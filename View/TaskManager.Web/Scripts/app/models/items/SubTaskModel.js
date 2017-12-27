@@ -7,10 +7,22 @@ var Models;
 (function (Models) {
     var SubTaskModel = (function (_super) {
         __extends(SubTaskModel, _super);
-        function SubTaskModel() {
-            _super.apply(this, arguments);
+        //public Comments: Array<CommentModel>;
+        function SubTaskModel(data) {
+            _super.call(this, data);
+            if (data != null) {
+                this.CompanyId = data.CompanyId;
+                this.TaskId = data.TaskId;
+                this.Order = data.Order;
+                this.Title = data.Title;
+                this.Description = data.Description;
+                this.ActualWork = moment.duration(data.ActualWork);
+                this.TotalWork = moment.duration(data.TotalWork);
+                this.Progress = data.Progress;
+                this.Status = data.Status;
+            }
         }
         return SubTaskModel;
-    }(Models.ModelBase));
+    }(Models.BaseModel));
     Models.SubTaskModel = SubTaskModel;
 })(Models || (Models = {}));

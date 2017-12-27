@@ -40,7 +40,7 @@ namespace TaskManager.Web {
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<TaskManagerUserManager, TaskManagerUser, Guid>(
                         validateInterval: TimeSpan.FromMinutes(20),
                         regenerateIdentityCallback: (manager, user) => user.GenerateUserIdentityAsync(manager),
-                        getUserIdCallback: TaskManager.Common.Extensions.IdentityExtensions.GetUserId)
+                        getUserIdCallback: TaskManager.Common.Extensions.IdentityExtensions1.GetUserId)
 
                 }
             });
