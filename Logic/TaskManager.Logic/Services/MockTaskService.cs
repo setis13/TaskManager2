@@ -15,8 +15,24 @@ namespace TaskManager.Logic.Services {
         }
 
         public void GetData(DateTime? historyDeep,
+            out List<UserDto> users,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks) {
+
+            #region users
+
+            var user1 = new UserDto() {
+                Id = Guid.NewGuid(),
+                UserName = "User1",
+                Email = "User1@taskmanager.com"
+            };
+            var user2 = new UserDto() {
+                Id = Guid.NewGuid(),
+                UserName = "User2",
+                Email = "User2@taskmanager.com"
+            };
+
+            #endregion users
 
             #region projects
 
@@ -192,6 +208,7 @@ namespace TaskManager.Logic.Services {
                 comments = allcomments;
             }
 
+            users = new List<UserDto>() { user1, user2 };
             subTasks.ForEach(st => st.Comments = comments.Where(c => c.SubTaskId == st.EntityId).ToList());
             tasks.ForEach(t => t.Comments = comments.Where(c => c.TaskId == t.EntityId).ToList());
             tasks.ForEach(t => t.SubTasks = subTasks.Where(st => st.TaskId == t.EntityId).ToList());

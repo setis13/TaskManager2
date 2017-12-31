@@ -24,7 +24,7 @@ var Controllers;
         BaseController.prototype.Saving = function (val) {
             this.scope.Saving = val;
         };
-        BaseController.prototype.Validate = function () {
+        BaseController.prototype.ValidateForm = function () {
             if (LoadValidation != undefined) {
                 LoadValidation();
                 var result = form.form('validate form');
@@ -32,6 +32,13 @@ var Controllers;
             }
             else {
                 return true;
+            }
+        };
+        BaseController.prototype.ResetForm = function () {
+            if (LoadValidation != undefined) {
+                form.form('clear errors');
+                $('.ui.error.message').empty();
+                $('.ui.form.error').removeClass('error');
             }
         };
         BaseController.prototype.ShowLoader = function () {

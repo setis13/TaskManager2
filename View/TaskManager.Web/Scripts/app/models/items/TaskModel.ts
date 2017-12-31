@@ -5,7 +5,7 @@
         public Index: number;
         public Title: string;
         public Description: string;
-        public Priority: Enums.TaskPriorityEnum;
+        public Priority: Enums.TaskPriorityEnum = 0;
         public ActualWork: moment.Duration;
         public TotalWork: moment.Duration;
         public Progress: number;
@@ -16,6 +16,7 @@
         constructor(data: any) {
             super(data);
 
+            this.SubTasks = new Array();
             if (data != null) {
                 this.CompanyId = data.CompanyId;
                 this.ProjectId = data.ProjectId;
@@ -27,12 +28,34 @@
                 this.TotalWork = moment.duration(data.TotalWork);
                 this.Progress = data.Progress;
                 this.Status = data.Status;
-                this.SubTasks = new Array();
                 for (var i = 0; i < data.SubTasks.length; i++) {
                     this.SubTasks.push(new SubTaskModel(data.SubTasks[i]));
-                    console.log("add SubTask");
                 }
             }
+        }
+
+        public Clone(): TaskModel {
+            var clone = new TaskModel(null);
+            
+            clone.EntityId = this.EntityId;
+            clone.CreatedDate = this.CreatedDate.clone();
+
+            clone.CompanyId = this.CompanyId;
+            clone.ProjectId = this.ProjectId;
+            clone.Index = this.Index;
+            clone.Title = this.Title;
+            clone.Description = this.Description;
+            clone.Priority = this.Priority;
+            clone.ActualWork = this.ActualWork;
+            clone.TotalWork = this.TotalWork;
+            clone.Progress = this.Progress;
+            clone.Status = this.Status;
+
+            for (var i = 0; i < this.SubTasks.length; i++) {
+                clone.SubTasks.push(this.SubTasks[i].Clone());
+            }
+
+            return clone;
         }
     }
 }

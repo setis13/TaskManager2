@@ -1,7 +1,7 @@
 ﻿<div>
     <!-- panel -->
     <div>
-        <button class="ui primary button" ng-click="CreateTask()">Create&nbsp;Task</button>
+        <button class="ui primary button" ng-click="CreateTask_OnClick()">Create&nbsp;Task</button>
     </div>
     <!-- tasks -->
     <table class="ui celled table">
@@ -20,7 +20,7 @@
                         <div>
                             <span class="label">Task#</span>&nbsp;
                             <span class="value"><b>{{task.Index}}</b></span>&nbsp;
-                            <a class="pull-right">edit</a>
+                            <a class="pull-right" href="" ng-click="EditTask_OnClick(task)">edit</a>
                         </div>
                         <div>
                             <span class="label">Owner</span>&nbsp;
@@ -36,7 +36,7 @@
                         </div>
                         <div>
                             <span class="label">Urgency</span>&nbsp;
-                            <span class="ui label" ng-class="{0:'gray', 1:'gray', 2:'yellow', 3:'orange', 4:'red', '':'hidden'}[task.Priority]">{{TaskPriorityNames[task.Priority]}}</span>
+                            <span class="ui label" ng-class="TaskPriorityClasses[task.Priority]">{{TaskPriorityNames[task.Priority]}}</span>
                         </div>
                         <div>
                             <span class="label">Hours (actual / total)</span>&nbsp;
@@ -109,25 +109,84 @@
     </footer>
 </div>
 <!-- Edit Modal -->
-<div id="edit-modal" class="ui modal">
-    <i class="close icon"></i>
-    <div class="header">
-        Modal Title
-    </div>
-    <div class="image content">
-        <div class="image">
-            An image can appear on left or an icon
+<div id="edit-modal" class="ui small modal">
+    <i class="close icon" ng-click="Cancel_OnClick()"></i>
+    <div class="header">{{Model.EditTask.EntityId == null ? 'Create Task' : 'Edit Task ' + "'" + Model.EditTask.Title + "'"}}</div>
+    <div class="ui validate form scrolling content">
+        <div class="field">
+            <label>Title</label>
+            <input id="title" placeholder="Title" type="text" 
+                   ng-model="Model.EditTask.Title">
         </div>
-        <div class="description">
-            A description can appear on the right
+        <div class="field">
+            <label>Urgency</label>
+            <button class="ui button"
+                    ng-class="TaskPriorityClasses[Model.EditTask.Priority]"
+                    ng-click="TaskPriority_OnClick()">
+                {{TaskPriorityNames[Model.EditTask.Priority]}}
+            </button>
         </div>
+        <div class="field">
+            <label>Total Hours</label>
+            <input id="total-hours" placeholder="Total Hours" type="text"
+                   ng-model="Model.EditTask.TotalWork" convert hours>
+        </div>
+        <div class="field">
+            <label>Responsible</label>
+            <select class="ui fluid dropdown" placeholder="Responsible" multiple=""
+                    ng-options="user as user.UserName for user in Model.Users track by user.Id" 
+                    ng-model="Model.SelectedUsers">
+            </select>
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <textarea placeholder="Description" rows="2"
+                      ng-model="Model.EditTask.Description"></textarea>
+        </div>
+        <div class="ui error message"></div>
     </div>
     <div class="actions">
-        <div class="ui cancel button">Cancel</div>
-        <div class="ui ok primary button">Create</div>
+        <div class="ui button" ng-click="Cancel_OnClick()">Cancel</div>
+        <div class="ui primary button" ng-click="Ok_OnClick()">Create</div>
     </div>
 </div>
 <script language="javascript">
-    $('#example1').progress({ showActivity: false });// TODO: !!!!
-    $('#example2').progress({ showActivity: false });// TODO: !!!!
+    $('#example1').progress({ showActivity: false }); // TODO: !!!!
+    $('#example2').progress({ showActivity: false }); // TODO: !!!!
 </script>
+
+@section Scripts {
+<script language="javascript">
+    InitDropdown();
+    function LoadValidation() {
+        form = $('.ui.form')
+            .form({
+                on: 'blur',
+                fields: {
+                    title: {
+                        identifier: 'title',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a title'
+                            }
+                        ]
+                    },
+                    total_hours: {
+                        identifier: 'total-hours',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter total hours'
+                            },
+                            {
+                                type: 'regExp[/^[0-9.]{1,10}$/]',
+                                prompt: 'Please enter valid total hours'
+                            }
+                        ]
+                    }
+                }
+            });
+    }
+</script>
+}

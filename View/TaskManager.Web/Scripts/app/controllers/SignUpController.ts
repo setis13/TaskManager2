@@ -17,7 +17,7 @@
         }
 
         protected SignUp = () => {
-            if (!super.Validate()) {
+            if (!super.ValidateForm()) {
                 return;
             }
 

@@ -11,9 +11,11 @@ namespace TaskManager.Logic.Contracts.Services {
         ///     Returns tasks </summary>
         /// <remarks> if <see cref="historyDeep"/> is null then returns actual tasks else actual + history </remarks>
         /// <param name="historyDeep">minimum date of tasks</param>
+        /// <param name="users">List of users</param>
         /// <param name="projects">List of projects. Returns deleted projects when use <see cref="historyDeep"/></param>
         /// <param name="tasks">List of tasks</param>
         void GetData(DateTime? historyDeep,
+            out List<UserDto> users,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks);
     }

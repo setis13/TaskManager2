@@ -10,6 +10,7 @@ var Controllers;
         function HomeController($scope, $http, $location) {
             var _this = this;
             _super.call(this, $scope, $http, $location);
+            this.taskPriorityClasses = { 0: 'gray', 1: 'gray', 2: 'yellow', 3: 'orange', 4: 'red' };
             this.Load = function () {
                 var $this = _this;
                 $.ajax({
@@ -40,14 +41,42 @@ var Controllers;
                     }
                 });
             };
-            this.CreateTask = function () {
+            this.CreateTask_OnClick = function () {
+                var task = new Models.TaskModel(null);
+                _this.Model.EditTask = task;
                 $("#edit-modal").modal({ closable: false }).modal('show');
+            };
+            this.EditTask_OnClick = function (task) {
+                var clone = task.Clone();
+                _this.Model.EditTask = clone;
+                $("#edit-modal").modal({ closable: false }).modal('show');
+            };
+            this.TaskPriority_OnClick = function () {
+                _this.Model.EditTask.Priority = (_this.Model.EditTask.Priority + 1) % Object.keys(_this.taskPriorityClasses).length;
+            };
+            this.Ok_OnClick = function () {
+                if (!_super.prototype.ValidateForm.call(_this)) {
+                    $("#edit-modal").modal("refresh");
+                    return;
+                }
+                _this.Model.EditTask = null;
+                $("#edit-modal").modal('hide');
+            };
+            this.Cancel_OnClick = function () {
+                _this.Model.EditTask = null;
+                _super.prototype.ResetForm.call(_this);
+                $("#edit-modal").modal('hide');
             };
             this.Model = new Models.HomeModel();
             $scope.Model = this.Model;
             $scope.TaskStatusNames = TaskStatusNames;
             $scope.TaskPriorityNames = TaskPriorityNames;
-            $scope.CreateTask = this.CreateTask;
+            $scope.TaskPriorityClasses = this.taskPriorityClasses;
+            $scope.CreateTask_OnClick = this.CreateTask_OnClick;
+            $scope.EditTask_OnClick = this.EditTask_OnClick;
+            $scope.TaskPriority_OnClick = this.TaskPriority_OnClick;
+            $scope.Ok_OnClick = this.Ok_OnClick;
+            $scope.Cancel_OnClick = this.Cancel_OnClick;
             this.Load();
         }
         HomeController.$inject = ["$scope", "$http", "$location"];

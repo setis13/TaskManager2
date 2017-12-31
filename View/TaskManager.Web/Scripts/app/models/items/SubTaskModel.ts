@@ -30,5 +30,24 @@
                 //}
             }
         }
+
+        public Clone(): SubTaskModel {
+            var clone = new SubTaskModel(null);
+
+            clone.EntityId = this.EntityId;
+            clone.CreatedDate = this.CreatedDate.clone();
+
+            clone.CompanyId = this.CompanyId;
+            clone.TaskId = this.TaskId;
+            clone.Order = this.Order;
+            clone.Title = this.Title;
+            clone.Description = this.Description;
+            clone.ActualWork = this.ActualWork;
+            clone.TotalWork = this.TotalWork;
+            clone.Progress = this.Progress;
+            clone.Status = this.Status;
+
+            return clone;
+        }
     }
 }

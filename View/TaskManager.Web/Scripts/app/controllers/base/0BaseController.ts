@@ -34,13 +34,21 @@ namespace Controllers {
             this.scope.Saving = val;
         }
 
-        protected Validate(): boolean {
+        protected ValidateForm(): boolean {
             if (LoadValidation != undefined) {
                 LoadValidation();
                 var result = form.form('validate form');
                 return result;
             } else {
                 return true;
+            }
+        }
+
+        protected ResetForm() {
+            if (LoadValidation != undefined) {
+                form.form('clear errors');
+                $('.ui.error.message').empty();
+                $('.ui.form.error').removeClass('error');
             }
         }
 

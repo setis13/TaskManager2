@@ -19,7 +19,7 @@ namespace Controllers {
         }
 
         protected Login = () => {
-            if (!super.Validate()) {
+            if (!super.ValidateForm()) {
                 return;
             }
 

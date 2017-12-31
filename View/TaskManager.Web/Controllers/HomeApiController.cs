@@ -30,13 +30,15 @@ namespace TaskManager.Web.Controllers {
         public async Task<WebApiResult> GetData() {
             try {
                 return await Task.Factory.StartNew(() => {
-                    List<Task1Dto> tasks;
+                    List<UserDto> users;
                     List<ProjectDto> projects;
+                    List<Task1Dto> tasks;
                     this.ServicesHost.GetService<ITaskService>().GetData(
                         null,
+                        out users,
                         out projects,
                         out tasks);
-                    return WebApiResult.Succeed(new { Projects = projects, Tasks = tasks });
+                    return WebApiResult.Succeed(new { Projects = projects, Users = users, Tasks = tasks });
                 });
             } catch (Exception e) {
                 Logger.e("GetData", e);

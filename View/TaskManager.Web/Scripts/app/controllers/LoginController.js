@@ -14,7 +14,7 @@ var Controllers;
             this.$http = $http;
             this.$location = $location;
             this.Login = function () {
-                if (!_super.prototype.Validate.call(_this)) {
+                if (!_super.prototype.ValidateForm.call(_this)) {
                     return;
                 }
                 var $this = _this;

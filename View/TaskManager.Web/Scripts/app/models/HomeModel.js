@@ -7,15 +7,18 @@ var Models;
 (function (Models) {
     var HomeModel = (function (_super) {
         __extends(HomeModel, _super);
-        //public EditTask: TaskModel;
         function HomeModel() {
             _super.call(this);
-            //this.EditTask = null;
+            this.EditTask = null;
         }
         HomeModel.prototype.SetData = function (data) {
+            this.Users = new Array();
             this.Tasks = new Array();
             for (var i = 0; i < data.Tasks.length; i++) {
                 this.Tasks.push(new Models.TaskModel(data.Tasks[i]));
+            }
+            for (var i = 0; i < data.Users.length; i++) {
+                this.Users.push(new Models.UserModel(data.Users[i]));
             }
         };
         return HomeModel;
