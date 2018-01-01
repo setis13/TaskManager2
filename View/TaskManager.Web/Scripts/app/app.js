@@ -1,5 +1,5 @@
 // https://stackoverflow.com/questions/15535336/combating-angularjs-executing-controller-twice
-angular.module('TaskManagerApp', ['ngSanitize', 'ngRoute', 'BusyDirective', 'angularMoment']);
+angular.module('TaskManagerApp', ['ngSanitize', 'ngRoute', 'BusyDirective']);
 var app = angular.module('TaskManagerApp');
 app.config([
     '$routeProvider', '$locationProvider',
@@ -18,3 +18,4 @@ app.config([
 app.controller('LoginController', Controllers.LoginController);
 app.controller('SignUpController', Controllers.SignUpController);
 app.controller('HomeController', Controllers.HomeController);
+//# sourceMappingURL=app.js.map

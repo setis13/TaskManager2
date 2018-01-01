@@ -24,3 +24,6 @@
 td.header {
     background: #f9fafb;
 }
+.button.readonly {
+    pointer-events: none !important;
+}

@@ -1,4 +1,11 @@
-﻿<div>
+﻿<div class="ui error message ng-hide" ng-hide="Model.Error == null">
+    <i class="close icon" ng-click="Model.Error = null"></i>
+    <div class="header">
+        Error
+    </div>
+    <p>{{Model.Error}}</p>
+</div>
+<div>
     <!-- panel -->
     <div>
         <button class="ui primary button" ng-click="CreateTask_OnClick()">Create&nbsp;Task</button>
@@ -118,7 +125,10 @@
 <div id="edit-task-modal" class="ui small modal">
     <i class="close icon" ng-click="TaskCancel_OnClick()"></i>
     <div class="header">{{Model.EditTask.EntityId == null ? 'Create Task' : 'Edit Task ' + "'" + Model.EditTask.Title + "'"}}</div>
-    <div id="form-task" class="ui validate form scrolling content">
+    <div id="form-task" class="ui validate form content">
+        <div class="ui red message ng-hide" ng-hide="Model.EditTask.Error == null">
+            <p ng-bind-html="Model.EditTask.Error"></p>
+        </div>
         <div class="field">
             <label>Title</label>
             <input id="title" placeholder="Title" type="text"
@@ -157,16 +167,31 @@
         <div class="ui error message"></div>
     </div>
     <div class="actions">
-        <div class="ui red button left floated" ng-click="TaskDelete_OnClick()" ng-show="Model.EditTask.EntityId != null">Delete</div>
-        <div class="ui clear button" ng-click="TaskCancel_OnClick()">Cancel</div>
-        <div class="ui primary button" ng-click="TaskOk_OnClick()">{{Model.EditTask.EntityId == null ? 'Create' : 'Save'}}</div>
+        <div class="ui red button left floated"
+             ng-click="TaskDelete_OnClick()"
+             ng-show="Model.EditTask.EntityId != null"
+             lb-busy="Deleting">
+            Delete
+        </div>
+        <div class="ui clear button"
+             ng-click="TaskCancel_OnClick()">
+            Cancel
+        </div>
+        <div class="ui primary button"
+             ng-click="TaskOk_OnClick()"
+             lb-busy="Saving">
+            {{Model.EditTask.EntityId == null ? 'Create' : 'Save'}}
+        </div>
     </div>
 </div>
 <!-- Edit SubTask Modal -->
 <div id="edit-subtask-modal" class="ui small modal">
     <i class="close icon" ng-click="SubTaskCancel_OnClick()"></i>
     <div class="header">{{Model.EditSubTask.EntityId == null ? 'Create SubTask' : 'Edit SubTask ' + "'" + Model.EditSubTask.Title + "'"}}</div>
-    <div id="form-subtask" class="ui validate form scrolling content">
+    <div id="form-subtask" class="ui validate form content">
+        <div class="ui red message ng-hide" ng-hide="Model.EditSubTask.Error == null">
+            <p ng-bind-html="Model.EditSubTask.Error"></p>
+        </div>
         <div class="field">
             <label>Title</label>
             <input id="title2" placeholder="Title" type="text"
@@ -190,9 +215,21 @@
         <div class="ui error message"></div>
     </div>
     <div class="actions">
-        <div class="ui red button left floated" ng-click="SubTaskDelete_OnClick()" ng-show="Model.EditSubTask.EntityId != null">Delete</div>
-        <div class="ui button" ng-click="SubTaskCancel_OnClick()">Cancel</div>
-        <div class="ui primary button" ng-click="SubTaskOk_OnClick()">{{Model.EditSubTask.EntityId == null ? 'Create' : 'Save'}}</div>
+        <div class="ui red button left floated"
+             ng-click="SubTaskDelete_OnClick()"
+             ng-show="Model.EditSubTask.EntityId != null"
+             lb-busy="Deleting">
+            Delete
+        </div>
+        <div class="ui button"
+             ng-click="SubTaskCancel_OnClick()">
+            Cancel
+        </div>
+        <div class="ui primary button"
+             ng-click="SubTaskOk_OnClick()"
+             lb-busy="Saving">
+            {{Model.EditSubTask.EntityId == null ? 'Create' : 'Save'}}
+        </div>
     </div>
 </div>
 <script language="javascript">

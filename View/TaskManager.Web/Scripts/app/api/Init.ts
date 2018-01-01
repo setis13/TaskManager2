@@ -1,4 +1,3 @@
 ﻿function InitDropdown() {
-    (<any>$('.ui.dropdown')).dropdown()
-        ;
+    (<any>$('.ui.dropdown')).dropdown();
 }

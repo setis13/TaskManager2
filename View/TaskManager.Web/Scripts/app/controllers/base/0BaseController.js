@@ -24,6 +24,9 @@ var Controllers;
         BaseController.prototype.Saving = function (val) {
             this.scope.Saving = val;
         };
+        BaseController.prototype.Deleting = function (val) {
+            this.scope.Deleting = val;
+        };
         BaseController.prototype.ValidateForm = function (form2) {
             var result = (form2 != null ? form2 : form).form('validate form');
             return result;
@@ -53,6 +56,12 @@ var Controllers;
         BaseController.prototype.HideBusySaving = function () {
             this.Saving(false);
         };
+        BaseController.prototype.ShowBusyDeleting = function () {
+            this.Deleting(true);
+        };
+        BaseController.prototype.HideBusyDeleting = function () {
+            this.Deleting(false);
+        };
         BaseController.prototype.Error = function (message) {
             this.Model.Error = message;
         };
@@ -66,3 +75,4 @@ var Controllers;
     }());
     Controllers.BaseController = BaseController;
 })(Controllers || (Controllers = {}));
+//# sourceMappingURL=0BaseController.js.map

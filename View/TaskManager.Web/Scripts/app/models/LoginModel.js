@@ -14,3 +14,4 @@ var Models;
     }(Models.ModelBase));
     Models.LoginModel = LoginModel;
 })(Models || (Models = {}));
+//# sourceMappingURL=LoginModel.js.map

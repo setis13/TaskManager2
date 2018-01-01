@@ -34,6 +34,10 @@ namespace Controllers {
             this.scope.Saving = val;
         }
 
+        private Deleting(val: boolean): void {
+            this.scope.Deleting = val;
+        }
+
         protected ValidateForm(form2?: any): boolean {
             var result = (form2 != null ? form2 : form).form('validate form');
             return result;
@@ -68,6 +72,14 @@ namespace Controllers {
 
         protected HideBusySaving() {
             this.Saving(false);
+        }
+
+        protected ShowBusyDeleting() {
+            this.Deleting(true);
+        }
+
+        protected HideBusyDeleting() {
+            this.Deleting(false);
         }
 
         protected Error(message: string) {
