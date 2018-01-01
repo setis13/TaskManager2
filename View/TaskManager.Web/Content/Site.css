@@ -11,6 +11,9 @@
 .content .pull-right {
     float: right;
 }
+.content .pull-left {
+    float: left;
+}
 .content .ui.progress.green.value {
     margin: 0.3em 0em 0em;
 }

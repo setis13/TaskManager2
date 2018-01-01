@@ -13,6 +13,19 @@
         public SubTasks: Array<SubTaskModel>;
         //public Comments: Array<CommentModel>;
 
+        //extra
+        public get TotalWorkHours(): string {
+            if (this.TotalWork != null) {
+                return this.TotalWork.asHours().toString();
+            } else {
+                return null;
+            }
+        }
+        public set TotalWorkHours(str: string) {
+            var value = parseInt(str);
+            this.TotalWork = moment.duration(!isNaN(value) ? value : 0, "hours");
+        }
+
         constructor(data: any) {
             super(data);
 
@@ -36,7 +49,7 @@
 
         public Clone(): TaskModel {
             var clone = new TaskModel(null);
-            
+
             clone.EntityId = this.EntityId;
             clone.CreatedDate = this.CreatedDate.clone();
 

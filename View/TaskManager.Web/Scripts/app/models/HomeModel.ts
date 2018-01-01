@@ -4,11 +4,13 @@
         public SelectedUsers: Array<UserModel>;
         public Tasks: Array<TaskModel>;
         public EditTask: TaskModel;
+        public EditSubTask: SubTaskModel;
 
         constructor() {
             super();
 
             this.EditTask = null;
+            this.EditSubTask = null;
         }
 
         public SetData(data: any) {

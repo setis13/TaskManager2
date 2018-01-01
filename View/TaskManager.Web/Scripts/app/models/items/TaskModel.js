@@ -7,7 +7,6 @@ var Models;
 (function (Models) {
     var TaskModel = (function (_super) {
         __extends(TaskModel, _super);
-        //public Comments: Array<CommentModel>;
         function TaskModel(data) {
             _super.call(this, data);
             this.Priority = 0;
@@ -28,6 +27,24 @@ var Models;
                 }
             }
         }
+        Object.defineProperty(TaskModel.prototype, "TotalWorkHours", {
+            //public Comments: Array<CommentModel>;
+            //extra
+            get: function () {
+                if (this.TotalWork != null) {
+                    return this.TotalWork.asHours().toString();
+                }
+                else {
+                    return null;
+                }
+            },
+            set: function (str) {
+                var value = parseInt(str);
+                this.TotalWork = moment.duration(!isNaN(value) ? value : 0, "hours");
+            },
+            enumerable: true,
+            configurable: true
+        });
         TaskModel.prototype.Clone = function () {
             var clone = new TaskModel(null);
             clone.EntityId = this.EntityId;

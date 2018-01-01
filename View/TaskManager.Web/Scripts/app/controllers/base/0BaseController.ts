@@ -34,22 +34,20 @@ namespace Controllers {
             this.scope.Saving = val;
         }
 
-        protected ValidateForm(): boolean {
-            if (LoadValidation != undefined) {
-                LoadValidation();
-                var result = form.form('validate form');
-                return result;
-            } else {
-                return true;
-            }
+        protected ValidateForm(form2?: any): boolean {
+            var result = (form2 != null ? form2 : form).form('validate form');
+            return result;
         }
 
-        protected ResetForm() {
-            if (LoadValidation != undefined) {
-                form.form('clear errors');
-                $('.ui.error.message').empty();
-                $('.ui.form.error').removeClass('error');
-            }
+        protected ResetForm(form2?: any) {
+            var frm = (form2 != null ? form2 : form);
+            // ERR: Error: [$rootScope:inprog] $apply already in progress. 
+            // error occured in dropdown
+            // Replaced by ".field.error".remove class
+            //frm.form('clear');
+            frm.find('.field.error').removeClass('error');
+            frm.find('.ui.error.message').empty();
+            frm.removeClass('error');
         }
 
         protected ShowLoader() {
@@ -85,6 +83,5 @@ namespace Controllers {
                 return '/' + action;
             return '/' + controller + '/' + action;
         }
-
     }
 }

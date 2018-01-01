@@ -1,5 +1,5 @@
 // https://stackoverflow.com/questions/15535336/combating-angularjs-executing-controller-twice
-angular.module('TaskManagerApp', ['ngSanitize', 'ngRoute', 'BusyDirective']);
+angular.module('TaskManagerApp', ['ngSanitize', 'ngRoute', 'BusyDirective', 'angularMoment']);
 var app = angular.module('TaskManagerApp');
 app.config([
     '$routeProvider', '$locationProvider',

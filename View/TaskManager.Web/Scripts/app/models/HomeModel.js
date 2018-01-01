@@ -10,6 +10,7 @@ var Models;
         function HomeModel() {
             _super.call(this);
             this.EditTask = null;
+            this.EditSubTask = null;
         }
         HomeModel.prototype.SetData = function (data) {
             this.Users = new Array();

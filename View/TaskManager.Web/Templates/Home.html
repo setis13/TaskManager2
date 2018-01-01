@@ -20,7 +20,11 @@
                         <div>
                             <span class="label">Task#</span>&nbsp;
                             <span class="value"><b>{{task.Index}}</b></span>&nbsp;
-                            <a class="pull-right" href="" ng-click="EditTask_OnClick(task)">edit</a>
+                            <div class="pull-right">
+                                <a href="" ng-click="EditTask_OnClick(task)">edit</a>
+                                &nbsp;|&nbsp;
+                                <a href="" ng-click="CreateSubTask_OnClick(task)">add subtask</a>
+                            </div>
                         </div>
                         <div>
                             <span class="label">Owner</span>&nbsp;
@@ -40,7 +44,7 @@
                         </div>
                         <div>
                             <span class="label">Hours (actual / total)</span>&nbsp;
-                            <span class="value">20h / 30h</span>
+                            <span class="value">{{task.ActualWork.asHours() | number:1}}h / {{task.TotalWork.asHours() | number:1}}h</span>
                         </div>
                         <div>
                             <span class="label">Responsible</span>&nbsp;
@@ -70,7 +74,8 @@
                     <div class="content">
                         <div>
                             <span class="label">Index</span>&nbsp;
-                            <span class="value">{{task.Index}}/{{subTask.Order}}</span>
+                            <span class="value"><b>{{task.Index}}</b>/<b>{{subTask.Order}}</b></span>
+                            <a class="pull-right" href="" ng-click="EditSubTask_OnClick(subTask)">edit</a>
                         </div>
                         <div>
                             <span class="label">Date</span>&nbsp;
@@ -81,7 +86,8 @@
                             <span class="value">{{TaskStatusNames[task.Status]}}</span>
                         </div>
                         <div>
-                            <span class="label">Actual Hours: 20h</span>
+                            <span class="label">Actual Hours</span>
+                            <span class="value">{{task.ActualWork.asHours() | number:1}}h / {{task.TotalWork.asHours() | number:1}}h  </span>
                         </div>
                         <div class="ui progress green value" id="example2" data-percent="15">
                             <div class="bar">
@@ -108,14 +114,14 @@
         <p>&copy; 2017 - Task Manager</p>
     </footer>
 </div>
-<!-- Edit Modal -->
-<div id="edit-modal" class="ui small modal">
-    <i class="close icon" ng-click="Cancel_OnClick()"></i>
+<!-- Edit Task Modal -->
+<div id="edit-task-modal" class="ui small modal">
+    <i class="close icon" ng-click="TaskCancel_OnClick()"></i>
     <div class="header">{{Model.EditTask.EntityId == null ? 'Create Task' : 'Edit Task ' + "'" + Model.EditTask.Title + "'"}}</div>
-    <div class="ui validate form scrolling content">
+    <div id="form-task" class="ui validate form scrolling content">
         <div class="field">
             <label>Title</label>
-            <input id="title" placeholder="Title" type="text" 
+            <input id="title" placeholder="Title" type="text"
                    ng-model="Model.EditTask.Title">
         </div>
         <div class="field">
@@ -128,15 +134,20 @@
         </div>
         <div class="field">
             <label>Total Hours</label>
-            <input id="total-hours" placeholder="Total Hours" type="text"
-                   ng-model="Model.EditTask.TotalWork" convert hours>
+            <div class="ui right labeled input">
+                <input id="total-hours" placeholder="Total Hours" type="text"
+                       ng-model="Model.EditTask.TotalWorkHours">
+                <div class="ui label">
+                    hours
+                </div>
+            </div>
         </div>
         <div class="field">
             <label>Responsible</label>
-            <select class="ui fluid dropdown" placeholder="Responsible" multiple=""
-                    ng-options="user as user.UserName for user in Model.Users track by user.Id" 
-                    ng-model="Model.SelectedUsers">
-            </select>
+            <select id="selected-users" class="ui fluid dropdown"
+                    placeholder="Responsible" multiple
+                    ng-options="user as user.UserName for user in Model.Users track by user.Id"
+                    ng-model="Model.SelectedUsers"></select>
         </div>
         <div class="field">
             <label>Description</label>
@@ -146,47 +157,111 @@
         <div class="ui error message"></div>
     </div>
     <div class="actions">
-        <div class="ui button" ng-click="Cancel_OnClick()">Cancel</div>
-        <div class="ui primary button" ng-click="Ok_OnClick()">Create</div>
+        <div class="ui red button left floated" ng-click="TaskDelete_OnClick()" ng-show="Model.EditTask.EntityId != null">Delete</div>
+        <div class="ui clear button" ng-click="TaskCancel_OnClick()">Cancel</div>
+        <div class="ui primary button" ng-click="TaskOk_OnClick()">{{Model.EditTask.EntityId == null ? 'Create' : 'Save'}}</div>
+    </div>
+</div>
+<!-- Edit SubTask Modal -->
+<div id="edit-subtask-modal" class="ui small modal">
+    <i class="close icon" ng-click="SubTaskCancel_OnClick()"></i>
+    <div class="header">{{Model.EditSubTask.EntityId == null ? 'Create SubTask' : 'Edit SubTask ' + "'" + Model.EditSubTask.Title + "'"}}</div>
+    <div id="form-subtask" class="ui validate form scrolling content">
+        <div class="field">
+            <label>Title</label>
+            <input id="title2" placeholder="Title" type="text"
+                   ng-model="Model.EditSubTask.Title">
+        </div>
+        <div class="field">
+            <label>Total Hours</label>
+            <div class="ui right labeled input">
+                <input id="total-hours2" placeholder="Total Hours" type="text"
+                       ng-model="Model.EditSubTask.TotalWorkHours">
+                <div class="ui label">
+                    hours
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <textarea placeholder="Description" rows="2"
+                      ng-model="Model.EditSubTask.Description"></textarea>
+        </div>
+        <div class="ui error message"></div>
+    </div>
+    <div class="actions">
+        <div class="ui red button left floated" ng-click="SubTaskDelete_OnClick()" ng-show="Model.EditSubTask.EntityId != null">Delete</div>
+        <div class="ui button" ng-click="SubTaskCancel_OnClick()">Cancel</div>
+        <div class="ui primary button" ng-click="SubTaskOk_OnClick()">{{Model.EditSubTask.EntityId == null ? 'Create' : 'Save'}}</div>
     </div>
 </div>
 <script language="javascript">
     $('#example1').progress({ showActivity: false }); // TODO: !!!!
     $('#example2').progress({ showActivity: false }); // TODO: !!!!
 </script>
-
-@section Scripts {
 <script language="javascript">
     InitDropdown();
-    function LoadValidation() {
-        form = $('.ui.form')
-            .form({
-                on: 'blur',
-                fields: {
-                    title: {
-                        identifier: 'title',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter a title'
-                            }
-                        ]
-                    },
-                    total_hours: {
-                        identifier: 'total-hours',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter total hours'
-                            },
-                            {
-                                type: 'regExp[/^[0-9.]{1,10}$/]',
-                                prompt: 'Please enter valid total hours'
-                            }
-                        ]
-                    }
+    form = $('#form-task')
+        .form({
+            fields: {
+                title: {
+                    identifier: 'title',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter a title'
+                        }
+                    ]
+                },
+                selected_users: {
+                    identifier: 'selected-users',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please choose responsible users'
+                        }
+                    ]
+                },
+                total_hours: {
+                    identifier: 'total-hours',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter total hours'
+                        },
+                        {
+                            type: 'regExp[/^[0-9.]{1,10}$/]',
+                            prompt: 'Please enter valid total hours'
+                        }
+                    ]
                 }
-            });
-    }
+            }
+        });
+    form2 = $('#form-subtask')
+        .form({
+            fields: {
+                title: {
+                    identifier: 'title2',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter a title'
+                        }
+                    ]
+                },
+                total_hours: {
+                    identifier: 'total-hours2',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter total hours'
+                        },
+                        {
+                            type: 'regExp[/^[0-9.]{1,10}$/]',
+                            prompt: 'Please enter valid total hours'
+                        }
+                    ]
+                }
+            }
+        });
 </script>
-}
