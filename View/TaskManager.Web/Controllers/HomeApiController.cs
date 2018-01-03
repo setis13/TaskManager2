@@ -29,6 +29,9 @@ namespace TaskManager.Web.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<WebApiResult> GetData() {
             try {
+#if DEBUG
+                await Task.Delay(500);
+#endif
                 return await Task.Factory.StartNew(() => {
                     List<UserDto> users;
                     List<ProjectDto> projects;

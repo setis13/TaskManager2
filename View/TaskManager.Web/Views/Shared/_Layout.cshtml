@@ -3,11 +3,11 @@
 @using TaskManager.Common.Extensions
 @using TaskManager.Logic.Contracts.Enums
 <!DOCTYPE html>
-<html>
+<html ng-app="TaskManagerApp">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title - AutoCall</title>
+    <title ng-bind="'AutoCall - ' + $root.title">AutoCall</title>
     <link rel="icon" type="image/x-icon" href="/Content/images/logo_64.png">
     @Styles.Render("~/Content/Common")
     @Scripts.Render("~/Scripts/Common")
@@ -15,7 +15,6 @@
         .main.menu .item img.logo {
             margin-right: 1.5em;
         }
-
         .main.container {
             margin-top: 5em;
         }
@@ -26,13 +25,12 @@
         var TaskPriorityNames = @Html.Raw(JsonExtension.SerializeObject(EnumExtensions.EnumToDictionary<TaskPriorityEnum>()));
         var TaskStatusNames = @Html.Raw(JsonExtension.SerializeObject(EnumExtensions.EnumToDictionary<TaskStatusEnum>()));
     </script>
-
 </head>
-<body ng-app="TaskManagerApp">
+<body>
     @if (Request.IsAuthenticated) {
         <div class="ui fixed inverted main menu">
             <div class="ui container">
-                <a href="#" class="header item">
+                <a ng-class="isActive('/')" href="/" class="header item">
                     <img class="logo" src="/content/images/logo_64.png">
                     Project Name
                 </a>
@@ -56,7 +54,7 @@
                     </div>
                 </div>
                 <div class="right menu">
-                    <span class="item">@User.Identity.GetUserName()</span>
+                    <a ng-class="isActive('/profile')" class="item" href="/profile">@User.Identity.GetUserName()</a>
                     @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "item" })) {
                         @Html.AntiForgeryToken()
                         <a href="#" onclick="$('#logoutForm').submit();">Log off</a>
@@ -65,6 +63,7 @@
             </div>
         </div>
     }
+
     <div class="ui main container" ng-view>
         @RenderBody()
     </div>

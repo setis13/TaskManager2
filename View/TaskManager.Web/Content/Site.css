@@ -27,3 +27,14 @@ td.header {
 .button.readonly {
     pointer-events: none !important;
 }
+/* loading background */
+.ui.main.container > .ui.dimmer {
+    z-index: 1;
+    min-height: 20em;
+}
+html, body {
+    height: auto;
+}
+body footer {
+    margin-bottom: 1em;
+}

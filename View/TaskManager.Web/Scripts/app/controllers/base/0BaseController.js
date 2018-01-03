@@ -42,9 +42,13 @@ var Controllers;
             frm.removeClass('error');
         };
         BaseController.prototype.ShowLoader = function () {
+            $("#loader").parent().addClass("dimmable");
+            $("#loader").parent().addClass("dimmed");
             $("#loader").show();
         };
         BaseController.prototype.HideLoader = function () {
+            $("#loader").parent().removeClass("dimmable");
+            $("#loader").parent().removeClass("dimmed");
             $("#loader").hide();
         };
         BaseController.prototype.DeleteLoader = function () {

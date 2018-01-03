@@ -12,6 +12,11 @@ namespace TaskManager.Web {
                 defaults: new { controller = "Account", action = "Login" }
             );
             routes.MapRoute(
+                name: "Profile",
+                url: "profile",
+                defaults: new { controller = "Account", action = "Profile1" }
+            );
+            routes.MapRoute(
                 name: "Home",
                 url: "",
                 defaults: new { controller = "Home", action = "Index" }

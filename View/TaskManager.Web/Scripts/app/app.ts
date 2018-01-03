@@ -2,13 +2,28 @@
 angular.module('TaskManagerApp', ['ngSanitize', 'ngRoute', 'BusyDirective']);
 
 var app = angular.module('TaskManagerApp');
+
+app.run($rootScope => {
+    $rootScope.$on("$routeChangeSuccess", (event, currentRoute, previousRoute) => {
+        $rootScope.title = currentRoute.title;
+    });
+});
+
 app.config([
     '$routeProvider', '$locationProvider',
     ($routeProvider, $locationProvider) => {
+
         $routeProvider
+            .when('/profile',
+            {
+                title: 'Profile',
+                templateUrl: '/Templates/Account/Profile.html',
+                controller: 'AccountController',
+            })
             .when('/',
             {
-                templateUrl: '/Templates/Home.html',
+                title: 'Home',
+                templateUrl: '/Templates/Home/Index.html',
                 controller: 'HomeController',
             })
             ;
@@ -19,6 +34,8 @@ app.config([
     }
 ]);
 
+
 app.controller('LoginController', Controllers.LoginController);
 app.controller('SignUpController', Controllers.SignUpController);
 app.controller('HomeController', Controllers.HomeController);
+app.controller('AccountController', Controllers.AccountController);

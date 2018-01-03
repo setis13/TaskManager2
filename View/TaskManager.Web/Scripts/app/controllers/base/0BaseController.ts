@@ -55,10 +55,14 @@ namespace Controllers {
         }
 
         protected ShowLoader() {
+            $("#loader").parent().addClass("dimmable");
+            $("#loader").parent().addClass("dimmed");
             $("#loader").show();
         }
 
         protected HideLoader() {
+            $("#loader").parent().removeClass("dimmable");
+            $("#loader").parent().removeClass("dimmed");
             $("#loader").hide();
         }
 

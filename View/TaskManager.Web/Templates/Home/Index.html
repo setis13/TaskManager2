@@ -1,4 +1,9 @@
-﻿<div class="ui error message ng-hide" ng-hide="Model.Error == null">
+﻿<!-- loader -->
+<div id="loader" class="ui dimmer transition active inverted">
+    <div class="ui loader"></div>
+</div>
+<!-- a error on the page -->
+<div class="ui error message ng-hide" ng-hide="Model.Error == null">
     <i class="close icon" ng-click="Model.Error = null"></i>
     <div class="header">
         Error
@@ -13,110 +18,110 @@
     <!-- tasks -->
     <table class="ui celled table">
         <thead>
-            <tr>
-                <th class="one wide"></th>
-                <th class="three wide left-merge"></th>
-                <th class="four wide">Title</th>
-                <th class="eigth wide">Notes</th>
-            </tr>
+        <tr>
+            <th class="one wide"></th>
+            <th class="three wide left-merge"></th>
+            <th class="four wide">Title</th>
+            <th class="eigth wide">Notes</th>
+        </tr>
         </thead>
         <tbody>
-            <tr class="top aligned" ng-repeat-start="task in Model.Tasks">
-                <td colspan="2">
-                    <div class="content">
-                        <div>
-                            <span class="label">Task#</span>&nbsp;
-                            <span class="value"><b>{{task.Index}}</b></span>&nbsp;
-                            <div class="pull-right">
-                                <a href="" ng-click="EditTask_OnClick(task)">edit</a>
-                                &nbsp;|&nbsp;
-                                <a href="" ng-click="CreateSubTask_OnClick(task)">add subtask</a>
-                            </div>
-                        </div>
-                        <div>
-                            <span class="label">Owner</span>&nbsp;
-                            <span class="value">Admin</span>
-                        </div>
-                        <div>
-                            <span class="label">Date</span>&nbsp;
-                            <span class="value">{{task.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
-                        </div>
-                        <div>
-                            <span class="label">Status</span>&nbsp;
-                            <span class="value">{{TaskStatusNames[task.Status]}}</span>
-                        </div>
-                        <div>
-                            <span class="label">Urgency</span>&nbsp;
-                            <span class="ui label" ng-class="TaskPriorityClasses[task.Priority]">{{TaskPriorityNames[task.Priority]}}</span>
-                        </div>
-                        <div>
-                            <span class="label">Hours (actual / total)</span>&nbsp;
-                            <span class="value">{{task.ActualWork.asHours() | number:1}}h / {{task.TotalWork.asHours() | number:1}}h</span>
-                        </div>
-                        <div>
-                            <span class="label">Responsible</span>&nbsp;
-                            <span class="value">user1 user2 user3</span>
-                        </div>
-                        <div class="ui progress green value" id="example1" data-percent="15">
-                            <div class="bar">
-                                <div class="progress"></div>
-                            </div>
+        <tr class="top aligned" ng-repeat-start="task in Model.Tasks">
+            <td colspan="2">
+                <div class="content">
+                    <div>
+                        <span class="label">Task#</span>&nbsp;
+                        <span class="value"><b>{{task.Index}}</b></span>&nbsp;
+                        <div class="pull-right">
+                            <a href="" ng-click="EditTask_OnClick(task)">edit</a>
+                            &nbsp;|&nbsp;
+                            <a href="" ng-click="CreateSubTask_OnClick(task)">add subtask</a>
                         </div>
                     </div>
-                </td>
-                <td>
-                    <p>
-                        <b>{{task.Title}}</b>
-                    </p>
-                    <p>{{task.Desctiption}}</p>
-                </td>
-                <td>
-                    22
-                </td>
-            </tr>
+                    <div>
+                        <span class="label">Owner</span>&nbsp;
+                        <span class="value">Admin</span>
+                    </div>
+                    <div>
+                        <span class="label">Date</span>&nbsp;
+                        <span class="value">{{task.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
+                    </div>
+                    <div>
+                        <span class="label">Status</span>&nbsp;
+                        <span class="value">{{TaskStatusNames[task.Status]}}</span>
+                    </div>
+                    <div>
+                        <span class="label">Urgency</span>&nbsp;
+                        <span class="ui tiny label" ng-class="TaskPriorityClasses[task.Priority]">{{TaskPriorityNames[task.Priority]}}</span>
+                    </div>
+                    <div>
+                        <span class="label">Hours (actual / total)</span>&nbsp;
+                        <span class="value">{{task.ActualWork.asHours() | number:1}}h / {{task.TotalWork.asHours() | number:1}}h</span>
+                    </div>
+                    <div>
+                        <span class="label">Responsible</span>&nbsp;
+                        <span class="value">user1 user2 user3</span>
+                    </div>
+                    <div class="ui progress green value" id="example1" data-percent="15">
+                        <div class="bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <p>
+                    <b>{{task.Title}}</b>
+                </p>
+                <p>{{task.Desctiption}}</p>
+            </td>
+            <td>
+                22
+            </td>
+        </tr>
 
-            <tr class="top aligned" ng-repeat-end ng-repeat="subTask in task.SubTasks">
-                <td class="header"></td>
-                <td>
-                    <div class="content">
-                        <div>
-                            <span class="label">Index</span>&nbsp;
-                            <span class="value"><b>{{task.Index}}</b>/<b>{{subTask.Order}}</b></span>
-                            <a class="pull-right" href="" ng-click="EditSubTask_OnClick(subTask)">edit</a>
-                        </div>
-                        <div>
-                            <span class="label">Date</span>&nbsp;
-                            <span class="value">{{task.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
-                        </div>
-                        <div>
-                            <span class="label">Status</span>&nbsp;
-                            <span class="value">{{TaskStatusNames[task.Status]}}</span>
-                        </div>
-                        <div>
-                            <span class="label">Actual Hours</span>
-                            <span class="value">{{task.ActualWork.asHours() | number:1}}h / {{task.TotalWork.asHours() | number:1}}h  </span>
-                        </div>
-                        <div class="ui progress green value" id="example2" data-percent="15">
-                            <div class="bar">
-                                <div class="progress"></div>
-                            </div>
+        <tr class="top aligned" ng-repeat-end ng-repeat="subTask in task.SubTasks">
+            <td class="header"></td>
+            <td>
+                <div class="content">
+                    <div>
+                        <span class="label">Index</span>&nbsp;
+                        <span class="value"><b>{{task.Index}}</b>/<b>{{subTask.Order}}</b></span>
+                        <a class="pull-right" href="" ng-click="EditSubTask_OnClick(subTask)">edit</a>
+                    </div>
+                    <div>
+                        <span class="label">Date</span>&nbsp;
+                        <span class="value">{{task.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
+                    </div>
+                    <div>
+                        <span class="label">Status</span>&nbsp;
+                        <span class="value">{{TaskStatusNames[task.Status]}}</span>
+                    </div>
+                    <div>
+                        <span class="label">Actual Hours</span>
+                        <span class="value">{{task.ActualWork.asHours() | number:1}}h / {{task.TotalWork.asHours() | number:1}}h  </span>
+                    </div>
+                    <div class="ui progress green value" id="example2" data-percent="15">
+                        <div class="bar">
+                            <div class="progress"></div>
                         </div>
                     </div>
-                </td>
-                <td class="four wide">
-                    <p>
-                        <b>{{subTask.Title}}</b>
-                    </p>
-                    <p>{{subTask.Desctiption}}</p>
-                </td>
-                <td class="seven wide">
-                    22
-                </td>
-            </tr>
+                </div>
+            </td>
+            <td class="four wide">
+                <p>
+                    <b>{{subTask.Title}}</b>
+                </p>
+                <p>{{subTask.Desctiption}}</p>
+            </td>
+            <td class="seven wide">
+                22
+            </td>
+        </tr>
 
         </tbody>
     </table>
-    <hr />
+    <hr/>
     <footer>
         <p>&copy; 2017 - Task Manager</p>
     </footer>

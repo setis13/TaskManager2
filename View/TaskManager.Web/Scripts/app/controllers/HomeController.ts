@@ -47,15 +47,14 @@ namespace Controllers {
                 type: 'POST',
                 data: {},
                 beforeSend(xhr) {
-                    $this.ShowBusySaving();
+                    $this.ShowLoader();
                 },
                 complete() {
-                    $this.HideBusySaving();
+                    $this.HideLoader();
                     $this.$scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this.ShowBusySaving();
                         $this.$scope.$apply();
                         this.Model.SetData(result.data);
                     } else {
@@ -72,6 +71,26 @@ namespace Controllers {
 
         public TaskPriority_OnClick = () => {
             this.Model.EditTask.Priority = (this.Model.EditTask.Priority + 1) % Object.keys(<any>this.taskPriorityClasses).length;
+        }
+
+        private resetTaskModal() {
+            // saves a last view of modal on the closing
+            setTimeout(() => {
+                this.Model.EditTask = null;
+                super.ResetForm(form);
+                this.$scope.$apply();
+            }, 400);
+            // 400 milliseconds - duration of modal animation
+        }
+
+        private resetSubTaskModal() {
+            // saves a last view of modal on the closing
+            setTimeout(() => {
+                this.Model.EditSubTask = null;
+                super.ResetForm(form2);
+                this.$scope.$apply();
+            }, 400);
+            // 400 milliseconds - duration of modal animation
         }
 
         public CreateTask_OnClick = () => {
@@ -118,9 +137,8 @@ namespace Controllers {
                 success: (result) => {
                     if (result.success) {
                         $this.ShowBusySaving();
-                        $this.Model.EditTask = null;
                         (<any>$("#edit-task-modal")).modal('hide');
-                        $this.$scope.$apply();
+                        $this.resetTaskModal();
                     } else {
                         $this.Model.EditTask.Error = result.error;
                         $this.$scope.$apply();
@@ -134,9 +152,8 @@ namespace Controllers {
         }
 
         public TaskCancel_OnClick = () => {
-            this.Model.EditTask = null;
-            super.ResetForm(form);
             (<any>$("#edit-task-modal")).modal('hide');
+            this.resetTaskModal();
         }
 
         public TaskDelete_OnClick = () => {
@@ -156,10 +173,8 @@ namespace Controllers {
                 success: (result) => {
                     if (result.success) {
                         $this.ShowBusyDeleting();
-                        $this.Model.EditTask = null;
-                        super.ResetForm(form);
                         (<any>$("#edit-task-modal")).modal('hide');
-                        $this.$scope.$apply();
+                        $this.resetTaskModal();
                     } else {
                         $this.Model.EditTask.Error = result.error;
                         $this.$scope.$apply();
@@ -194,9 +209,8 @@ namespace Controllers {
                 success: (result) => {
                     if (result.success) {
                         $this.ShowBusySaving();
-                        this.Model.EditSubTask = null;
                         (<any>$("#edit-subtask-modal")).modal('hide');
-                        $this.$scope.$apply();
+                        $this.resetSubTaskModal();
                     } else {
                         $this.Model.EditSubTask.Error = result.error;
                         $this.$scope.$apply();
@@ -210,9 +224,8 @@ namespace Controllers {
         }
 
         public SubTaskCancel_OnClick = () => {
-            this.Model.EditSubTask = null;
-            super.ResetForm(form2);
             (<any>$("#edit-subtask-modal")).modal('hide');
+            this.resetSubTaskModal();
         }
 
         public SubTaskDelete_OnClick = () => {
@@ -232,10 +245,8 @@ namespace Controllers {
                 success: (result) => {
                     if (result.success) {
                         $this.ShowBusyDeleting();
-                        $this.Model.EditSubTask = null;
-                        super.ResetForm(form2);
                         (<any>$("#edit-subtask-modal")).modal('hide');
-                        $this.$scope.$apply();
+                        $this.resetSubTaskModal();
                     } else {
                         $this.Model.EditSubTask.Error = result.error;
                         $this.$scope.$apply();

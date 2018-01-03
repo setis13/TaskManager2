@@ -99,6 +99,7 @@
     <Compile Include="Services\Base\EntityReadonlyService.cs" />
     <Compile Include="Services\Base\CrudService.cs" />
     <Compile Include="Services\Base\HostService.cs" />
+    <Compile Include="Services\TaskService.cs" />
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="Services\MockTaskService.cs" />
   </ItemGroup>

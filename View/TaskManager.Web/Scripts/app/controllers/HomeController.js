@@ -18,15 +18,14 @@ var Controllers;
                     type: 'POST',
                     data: {},
                     beforeSend: function (xhr) {
-                        $this.ShowBusySaving();
+                        $this.ShowLoader();
                     },
                     complete: function () {
-                        $this.HideBusySaving();
+                        $this.HideLoader();
                         $this.$scope.$apply();
                     },
                     success: function (result) {
                         if (result.success) {
-                            $this.ShowBusySaving();
                             $this.$scope.$apply();
                             _this.Model.SetData(result.data);
                         }
@@ -85,9 +84,8 @@ var Controllers;
                     success: function (result) {
                         if (result.success) {
                             $this.ShowBusySaving();
-                            $this.Model.EditTask = null;
                             $("#edit-task-modal").modal('hide');
-                            $this.$scope.$apply();
+                            $this.resetTaskModal();
                         }
                         else {
                             $this.Model.EditTask.Error = result.error;
@@ -101,9 +99,8 @@ var Controllers;
                 });
             };
             this.TaskCancel_OnClick = function () {
-                _this.Model.EditTask = null;
-                _super.prototype.ResetForm.call(_this, form);
                 $("#edit-task-modal").modal('hide');
+                _this.resetTaskModal();
             };
             this.TaskDelete_OnClick = function () {
                 _this.Model.EditTask.Error = null;
@@ -122,10 +119,8 @@ var Controllers;
                     success: function (result) {
                         if (result.success) {
                             $this.ShowBusyDeleting();
-                            $this.Model.EditTask = null;
-                            _super.prototype.ResetForm.call(_this, form);
                             $("#edit-task-modal").modal('hide');
-                            $this.$scope.$apply();
+                            $this.resetTaskModal();
                         }
                         else {
                             $this.Model.EditTask.Error = result.error;
@@ -159,9 +154,8 @@ var Controllers;
                     success: function (result) {
                         if (result.success) {
                             $this.ShowBusySaving();
-                            _this.Model.EditSubTask = null;
                             $("#edit-subtask-modal").modal('hide');
-                            $this.$scope.$apply();
+                            $this.resetSubTaskModal();
                         }
                         else {
                             $this.Model.EditSubTask.Error = result.error;
@@ -175,9 +169,8 @@ var Controllers;
                 });
             };
             this.SubTaskCancel_OnClick = function () {
-                _this.Model.EditSubTask = null;
-                _super.prototype.ResetForm.call(_this, form2);
                 $("#edit-subtask-modal").modal('hide');
+                _this.resetSubTaskModal();
             };
             this.SubTaskDelete_OnClick = function () {
                 _this.Model.EditSubTask.Error = null;
@@ -196,10 +189,8 @@ var Controllers;
                     success: function (result) {
                         if (result.success) {
                             $this.ShowBusyDeleting();
-                            $this.Model.EditSubTask = null;
-                            _super.prototype.ResetForm.call(_this, form2);
                             $("#edit-subtask-modal").modal('hide');
-                            $this.$scope.$apply();
+                            $this.resetSubTaskModal();
                         }
                         else {
                             $this.Model.EditSubTask.Error = result.error;
@@ -230,6 +221,26 @@ var Controllers;
             $scope.SubTaskDelete_OnClick = this.SubTaskDelete_OnClick;
             this.Load();
         }
+        HomeController.prototype.resetTaskModal = function () {
+            var _this = this;
+            // saves a last view of modal on the closing
+            setTimeout(function () {
+                _this.Model.EditTask = null;
+                _super.prototype.ResetForm.call(_this, form);
+                _this.$scope.$apply();
+            }, 400);
+            // 400 milliseconds - duration of modal animation
+        };
+        HomeController.prototype.resetSubTaskModal = function () {
+            var _this = this;
+            // saves a last view of modal on the closing
+            setTimeout(function () {
+                _this.Model.EditSubTask = null;
+                _super.prototype.ResetForm.call(_this, form2);
+                _this.$scope.$apply();
+            }, 400);
+            // 400 milliseconds - duration of modal animation
+        };
         HomeController.$inject = ["$scope", "$http", "$location"];
         return HomeController;
     }(Controllers.BaseController));

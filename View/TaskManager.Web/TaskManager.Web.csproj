@@ -409,6 +409,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-pageTitle.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular-sanitize.js" />
@@ -450,6 +451,7 @@
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
+    <Content Include="Templates\Account\Profile.html" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -458,7 +460,8 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LayoutAccount.cshtml" />
-    <Content Include="Templates\Home.html" />
+    <Content Include="Templates\Home\Index.html" />
+    <Content Include="Views\Account\Profile1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -507,6 +510,7 @@
     <TypeScriptCompile Include="Scripts\app\api\Init.ts" />
     <TypeScriptCompile Include="Scripts\app\app.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\base\0BaseController.ts" />
+    <TypeScriptCompile Include="Scripts\app\controllers\AccountController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\LoginController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\HomeController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\SignUpController.ts" />
@@ -516,6 +520,7 @@
     <TypeScriptCompile Include="Scripts\app\enums\TaskStatusEnum.ts" />
     <TypeScriptCompile Include="Scripts\app\models\base\0ModelBase.ts" />
     <TypeScriptCompile Include="Scripts\app\models\base\1BaseModel.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\AccountModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\UserModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\HomeModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\SubTaskModel.ts" />
