@@ -17,4 +17,3 @@ var Models;
     }(Models.ModelBase));
     Models.UserModel = UserModel;
 })(Models || (Models = {}));
-//# sourceMappingURL=UserModel.js.map

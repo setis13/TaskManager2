@@ -41,4 +41,3 @@ var Models;
     }(Models.BaseModel));
     Models.SubTaskModel = SubTaskModel;
 })(Models || (Models = {}));
-//# sourceMappingURL=SubTaskModel.js.map

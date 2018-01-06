@@ -7,4 +7,3 @@ var Models;
     }());
     Models.ModelBase = ModelBase;
 })(Models || (Models = {}));
-//# sourceMappingURL=0ModelBase.js.map

@@ -30,4 +30,3 @@ app.controller('LoginController', Controllers.LoginController);
 app.controller('SignUpController', Controllers.SignUpController);
 app.controller('HomeController', Controllers.HomeController);
 app.controller('AccountController', Controllers.AccountController);
-//# sourceMappingURL=app.js.map

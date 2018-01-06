@@ -48,4 +48,3 @@ var Controllers;
     }(Controllers.BaseController));
     Controllers.AccountController = AccountController;
 })(Controllers || (Controllers = {}));
-//# sourceMappingURL=AccountController.js.map
