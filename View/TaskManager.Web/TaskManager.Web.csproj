@@ -409,7 +409,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\angular-mocks.js" />
-    <Content Include="Scripts\angular-pageTitle.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular-sanitize.js" />
