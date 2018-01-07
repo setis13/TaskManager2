@@ -6,3 +6,4 @@ String.format = function () {
     }
     return s;
 };
+//# sourceMappingURL=Functions.js.map

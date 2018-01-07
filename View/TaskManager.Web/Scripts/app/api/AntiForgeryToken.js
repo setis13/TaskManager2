@@ -21,3 +21,4 @@ $.ajaxPrefilter(function (options, localOptions, jqXHR) {
         }
     }
 });
+//# sourceMappingURL=AntiForgeryToken.js.map

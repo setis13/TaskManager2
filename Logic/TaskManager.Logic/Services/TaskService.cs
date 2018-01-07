@@ -201,7 +201,7 @@ namespace TaskManager.Logic.Services {
                 subTasks = allsubtasks.Where(e => statuses.Contains((TaskStatusEnum)e.Status)).ToList();
                 var taskIds = tasks.Select(e => e.EntityId).ToList();
                 var subtaskIds = subTasks.Select(e => e.EntityId).ToList();
-                comments = allcomments.Where(e => taskIds.Contains(e.TaskId) || subtaskIds.Contains(e.SubTaskId)).ToList();
+                comments = allcomments.Where(e => (e.TaskId != null && taskIds.Contains(e.TaskId.Value)) || (e.SubTaskId != null && subtaskIds.Contains(e.SubTaskId.Value))).ToList();
             } else {
                 tasks = alltasks;
                 subTasks = allsubtasks;

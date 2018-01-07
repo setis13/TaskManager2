@@ -63,6 +63,12 @@
   <ItemGroup>
     <Compile Include="Context\ITaskManagerDbContext.cs" />
     <Compile Include="Entities\Base\BaseEntity.cs" />
+    <Compile Include="Entities\Task1.cs" />
+    <Compile Include="Entities\Company.cs" />
+    <Compile Include="Entities\Todo.cs" />
+    <Compile Include="Entities\Comment.cs" />
+    <Compile Include="Entities\SubTask.cs" />
+    <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Session.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IUserSession.cs" />

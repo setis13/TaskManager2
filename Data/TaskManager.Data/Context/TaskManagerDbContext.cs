@@ -33,6 +33,12 @@ namespace TaskManager.Data.Context {
             modelBuilder.Entity<TaskManagerUserClaim>().ToTable("UserClaims");
 
             modelBuilder.Configurations.Add(new SessionMap());
+            modelBuilder.Configurations.Add(new CompanyMap());
+            modelBuilder.Configurations.Add(new ProjectMap());
+            modelBuilder.Configurations.Add(new TaskMap());
+            modelBuilder.Configurations.Add(new SubTaskMap());
+            modelBuilder.Configurations.Add(new TodoMap());
+            modelBuilder.Configurations.Add(new CommentMap());
 
             // Conventions
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

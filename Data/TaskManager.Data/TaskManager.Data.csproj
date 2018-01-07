@@ -66,6 +66,12 @@
     <Compile Include="Context\TaskManagerDbContextInitializer.cs" />
     <Compile Include="Identity\LogBookRoleStore.cs" />
     <Compile Include="Identity\LogBookUserStore.cs" />
+    <Compile Include="Mappings\ProjectMap.cs" />
+    <Compile Include="Mappings\TodoMap.cs" />
+    <Compile Include="Mappings\CommentMap.cs" />
+    <Compile Include="Mappings\CompanyMap.cs" />
+    <Compile Include="Mappings\SubTaskMap.cs" />
+    <Compile Include="Mappings\TaskMap.cs" />
     <Compile Include="Mappings\SessionMap.cs" />
     <Compile Include="Migrations\201712231641062_root.cs" />
     <Compile Include="Migrations\201712231641062_root.Designer.cs">

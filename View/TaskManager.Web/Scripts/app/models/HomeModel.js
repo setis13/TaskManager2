@@ -26,3 +26,4 @@ var Models;
     }(Models.ModelBase));
     Models.HomeModel = HomeModel;
 })(Models || (Models = {}));
+//# sourceMappingURL=HomeModel.js.map

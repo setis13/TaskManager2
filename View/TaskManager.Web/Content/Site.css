@@ -1,4 +1,13 @@
-﻿.content .label {
+﻿/*** html & footer ***/
+html, body {
+    height: auto;
+}
+body footer {
+    margin-bottom: 1em;
+}
+
+/*** Text colors ***/
+.content .label {
     color: grey;
 }
 .content .value {
@@ -8,33 +17,37 @@
     color: grey;
     font-size: 0.9em;
 }
+
+/*** Alignments ***/
 .content .pull-right {
     float: right;
 }
 .content .pull-left {
     float: left;
 }
+
+/*** Fixes for progress bar in first column ***/
 .content .ui.progress.green.value {
     margin: 0.3em 0em 0em;
 }
-
 .ui.table tr th.left-merge {
     border-left: none;
 }
 td.header {
     background: #f9fafb;
 }
+
+/*** The fix of readonly button. lb-busy ***/
 .button.readonly {
     pointer-events: none !important;
 }
+
+/*** Loading ***/
 /* loading background */
 .ui.main.container > .ui.dimmer {
     z-index: 1;
+}
+/* the size of main container when loading */
+.ui.main.container.dimmable.dimmed {
     min-height: 20em;
-}
-html, body {
-    height: auto;
-}
-body footer {
-    margin-bottom: 1em;
 }

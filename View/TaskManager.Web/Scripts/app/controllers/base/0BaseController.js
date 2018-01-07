@@ -79,3 +79,4 @@ var Controllers;
     }());
     Controllers.BaseController = BaseController;
 })(Controllers || (Controllers = {}));
+//# sourceMappingURL=0BaseController.js.map
