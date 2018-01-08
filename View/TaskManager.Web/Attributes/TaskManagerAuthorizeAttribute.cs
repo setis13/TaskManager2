@@ -12,9 +12,6 @@ namespace TaskManager.Web.Attributes {
 
         public string Action { get; set; }
 
-        [Dependency]
-        public IServicesHost ServiceHost { get; set; }
-
         public override void OnAuthorization(AuthorizationContext filterContext) {
 
             if (!filterContext.HttpContext.Request.IsAuthenticated) {
