@@ -20,6 +20,18 @@ app.config([
                 templateUrl: '/Templates/Account/Profile.html',
                 controller: 'AccountController',
             })
+            .when('/projects',
+            {
+                title: 'Projects',
+                templateUrl: '/Templates/Projects/Index.html',
+                controller: 'ProjectsController',
+            })
+            .when('/company',
+            {
+                title: 'Company',
+                templateUrl: '/Templates/Company/Index.html',
+                controller: 'CompanyController',
+            })
             .when('/',
             {
                 title: 'Home',
@@ -37,5 +49,7 @@ app.config([
 
 app.controller('LoginController', Controllers.LoginController);
 app.controller('SignUpController', Controllers.SignUpController);
-app.controller('HomeController', Controllers.HomeController);
 app.controller('AccountController', Controllers.AccountController);
+app.controller('HomeController', Controllers.HomeController);
+app.controller('ProjectsController', Controllers.ProjectsController);
+//app.controller('CompanyController', Controllers.CompanyController);

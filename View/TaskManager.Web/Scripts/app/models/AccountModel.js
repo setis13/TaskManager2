@@ -17,4 +17,3 @@ var Models;
     }(Models.ModelBase));
     Models.AccountModel = AccountModel;
 })(Models || (Models = {}));
-//# sourceMappingURL=AccountModel.js.map

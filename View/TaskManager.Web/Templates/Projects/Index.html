@@ -1,0 +1,86 @@
+﻿<!-- loader -->
+<div id="loader" class="ui dimmer transition active inverted">
+    <div class="ui loader"></div>
+</div>
+<!-- a error on the page -->
+<div class="ui error message ng-hide" ng-hide="Model.Error == null">
+    <i class="close icon" ng-click="Model.Error = null"></i>
+    <div class="header">
+        Error
+    </div>
+    <p>{{Model.Error}}</p>
+</div>
+<div>
+    <!-- panel -->
+    <div>
+        <button class="ui primary button" ng-click="Create_OnClick()">Create&nbsp;Project</button>
+    </div>
+    <!-- Projects -->
+    <table class="ui celled table">
+        <thead>
+            <tr>
+                <th class="four wide">Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="top aligned" ng-repeat="Project in Model.Projects">
+                <td>
+                    <b>{{Project.Name}}</b>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+    <footer>
+        <p>&copy; 2017 - Project Manager</p>
+    </footer>
+</div>
+<!-- Edit Project Modal -->
+<div id="edit-project-modal" class="ui small modal">
+    <i class="close icon" ng-click="Cancel_OnClick()"></i>
+    <div class="header">{{Model.EditProject.EntityId == null ? 'Create Project' : 'Edit Project ' + "'" + Model.EditProject.Title + "'"}}</div>
+    <div id="form-project" class="ui validate form content">
+        <div class="ui red message ng-hide" ng-hide="Model.EditProject.Error == null">
+            <p ng-bind-html="Model.EditProject.Error"></p>
+        </div>
+        <div class="field">
+            <label>Name</label>
+            <input id="name" placeholder="Name" type="text"
+                   ng-model="Model.EditProject.Name">
+        </div>
+        <div class="ui error message"></div>
+    </div>
+    <div class="actions">
+        <div class="ui red button left floated"
+             ng-click="Delete_OnClick()"
+             ng-show="Model.EditProject.EntityId != null"
+             lb-busy="Deleting">
+            Delete
+        </div>
+        <div class="ui clear button"
+             ng-click="Cancel_OnClick()">
+            Cancel
+        </div>
+        <div class="ui primary button"
+             ng-click="Ok_OnClick()"
+             lb-busy="Saving">
+            {{Model.EditProject.EntityId == null ? 'Create' : 'Save'}}
+        </div>
+    </div>
+</div>
+<script language="javascript">
+    form = $('#form-project')
+        .form({
+            fields: {
+                name: {
+                    identifier: 'name',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter a name'
+                        }
+                    ]
+                }
+            }
+        });
+</script>

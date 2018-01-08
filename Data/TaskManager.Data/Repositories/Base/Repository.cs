@@ -105,5 +105,40 @@ namespace TaskManager.Data.Repositories.Base {
                 DeleteById(id);
             }
         }
+
+        /// <summary>
+        ///     Marks entity as deleted </summary>
+        /// <param name="entity">Entity instance</param>
+        /// <param name="userId">User ID</param>
+        public virtual void MarkAsDelete(T entity, Guid userId) {
+            entity.LastModifiedDate = DateTime.UtcNow;
+            entity.LastModifiedById = userId;
+            entity.IsDeleted = true;
+            var entityEntry = Context.Entry(entity);
+            if (entityEntry.State == EntityState.Detached) {
+                DbSet.Attach(entity);
+            }
+            entityEntry.State = EntityState.Modified;
+        }
+
+        /// <summary>
+        ///     Marks entity as deleted by id </summary>
+        /// <param name="entityId">Entity Id</param>
+        /// <param name="userId">User ID</param>
+        public virtual void MarkAsDeleteById(Guid entityId, Guid userId) {
+            var entity = GetById(entityId);
+            if (entity == null) return;
+            MarkAsDelete(entity, userId);
+        }
+
+        /// <summary>
+        ///     Marks entities as deleted by ids </summary>
+        /// <param name="ids">List of Entity Ids</param>
+        /// <param name="userId">User ID</param>
+        public virtual void MarkAsDeleteByIds(List<Guid> ids, Guid userId) {
+            foreach (var id in ids) {
+                MarkAsDeleteById(id, userId);
+            }
+        }
     }
 }

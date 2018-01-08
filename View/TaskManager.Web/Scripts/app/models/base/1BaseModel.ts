@@ -9,6 +9,8 @@
             if (data != null) {
                 this.EntityId = data.EntityId;
                 this.CreatedDate = moment(data.CreatedDate);
+            } else {
+                this.CreatedDate = moment();
             }
         }
     }

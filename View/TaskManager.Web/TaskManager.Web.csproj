@@ -451,6 +451,8 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Templates\Account\Profile.html" />
+    <Content Include="Templates\Projects\Index.html" />
+    <Content Include="Templates\Company\Index.html" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -486,6 +488,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\TaskManagerAuthorizeAttribute.cs" />
     <Compile Include="Attributes\ValidateAntiForgeryTokenAttribute.cs" />
+    <Compile Include="Controllers\ProjectsApiController.cs" />
     <Compile Include="Controllers\HomeApiController.cs" />
     <Compile Include="Controllers\AccountApiController.cs" />
     <Compile Include="Controllers\Base\BaseApiController.cs" />
@@ -510,6 +513,7 @@
     <TypeScriptCompile Include="Scripts\app\app.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\base\0BaseController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\AccountController.ts" />
+    <TypeScriptCompile Include="Scripts\app\controllers\ProjectsController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\LoginController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\HomeController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\SignUpController.ts" />
@@ -520,6 +524,8 @@
     <TypeScriptCompile Include="Scripts\app\models\base\0ModelBase.ts" />
     <TypeScriptCompile Include="Scripts\app\models\base\1BaseModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\AccountModel.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\items\ProjectModel.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\ProjectsModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\UserModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\HomeModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\SubTaskModel.ts" />

@@ -39,7 +39,6 @@ namespace TaskManager.Data.Contracts.Repositories.Base {
         /// <param name="entity">Entity instance</param>
         /// <param name="userId">User ID</param>
         void Update(T entity, Guid userId);
-
         /// <summary>
         ///     Deletes existing entity by its id </summary>
         /// <param name="id">Entity Id</param>
@@ -48,5 +47,20 @@ namespace TaskManager.Data.Contracts.Repositories.Base {
         ///     Deletes existing entity by its ids </summary>
         /// <param name="ids">List of Entity Ids</param>
         void DeleteByIds(List<Guid> ids);
+        /// <summary>
+        ///     Marks entity as deleted </summary>
+        /// <param name="entity">Entity instance</param>
+        /// <param name="userId">User ID</param>
+        void MarkAsDelete(T entity, Guid userId);
+        /// <summary>
+        ///     Marks entity as deleted by id </summary>
+        /// <param name="entityId">Entity Id</param>
+        /// <param name="userId">User ID</param>
+        void MarkAsDeleteById(Guid entityId, Guid userId);
+        /// <summary>
+        ///     Marks entities as deleted by ids </summary>
+        /// <param name="ids">List of Entity Ids</param>
+        /// <param name="userId">User ID</param>
+        void MarkAsDeleteByIds(List<Guid> ids, Guid userId);
     }
 }

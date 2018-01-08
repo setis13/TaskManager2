@@ -13,9 +13,11 @@ var Models;
                 this.EntityId = data.EntityId;
                 this.CreatedDate = moment(data.CreatedDate);
             }
+            else {
+                this.CreatedDate = moment();
+            }
         }
         return BaseModel;
     }(Models.ModelBase));
     Models.BaseModel = BaseModel;
 })(Models || (Models = {}));
-//# sourceMappingURL=1BaseModel.js.map

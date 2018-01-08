@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web.Helpers;
 using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using TaskManager.Common;
-using TaskManager.Common.Identity;
 using TaskManager.Logic.Contracts;
 using TaskManager.Logic.Contracts.Dtos;
 using TaskManager.Logic.Contracts.Services;
