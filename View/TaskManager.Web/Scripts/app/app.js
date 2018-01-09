@@ -42,3 +42,4 @@ app.controller('AccountController', Controllers.AccountController);
 app.controller('HomeController', Controllers.HomeController);
 app.controller('ProjectsController', Controllers.ProjectsController);
 //app.controller('CompanyController', Controllers.CompanyController);
+//# sourceMappingURL=app.js.map

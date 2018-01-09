@@ -14,3 +14,4 @@ var Models;
     }(Models.ModelBase));
     Models.SignUpModel = SignUpModel;
 })(Models || (Models = {}));
+//# sourceMappingURL=SignUpModel.js.map

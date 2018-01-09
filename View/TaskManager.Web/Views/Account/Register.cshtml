@@ -69,51 +69,49 @@
 }
 @section Scripts {
     <script language="javascript">
-        function LoadValidation() {
-            form = $('.ui.form')
-                .form({
-                    fields: {
-                        email: {
-                            identifier: 'email',
-                            rules: [
-                                {
-                                    type: 'empty',
-                                    prompt: 'Please enter a email'
-                                },
-                                {
-                                    type: 'email',
-                                    prompt: 'The Email field is not a valid e-mail address.'
-                                }
-                            ]
-                        },
-                        password: {
-                            identifier: 'password',
-                            rules: [
-                                {
-                                    type: 'empty',
-                                    prompt: 'Please enter a password'
-                                },
-                                {
-                                    type: 'length[6]',
-                                    prompt: 'Enter password (minimum 6 characters)'
-                                }
-                            ]
-                        },
-                        confirmPassword: {
-                            identifier: 'confirmPassword',
-                            rules: [
-                                {
-                                    type: 'match[password]',
-                                    prompt: 'Passwords not match'
-                                },
-                                {
-                                    type: 'empty',
-                                    prompt: 'Please enter a confirm password'
-                                },
-                            ]
-                        },
-                    }
-                });
-        }
+        form = $('.ui.form')
+            .form({
+                fields: {
+                    email: {
+                        identifier: 'email',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a email'
+                            },
+                            {
+                                type: 'email',
+                                prompt: 'The Email field is not a valid e-mail address.'
+                            }
+                        ]
+                    },
+                    password: {
+                        identifier: 'password',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a password'
+                            },
+                            {
+                                type: 'length[6]',
+                                prompt: 'Enter password (minimum 6 characters)'
+                            }
+                        ]
+                    },
+                    confirmPassword: {
+                        identifier: 'confirmPassword',
+                        rules: [
+                            {
+                                type: 'match[password]',
+                                prompt: 'Passwords not match'
+                            },
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a confirm password'
+                            },
+                        ]
+                    },
+                }
+            });
     </script>
 }

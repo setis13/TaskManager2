@@ -10,17 +10,18 @@ var Models;
         function ProjectModel(data) {
             _super.call(this, data);
             if (data != null) {
-                this.Name = data.Name;
+                this.Title = data.Title;
             }
         }
         ProjectModel.prototype.Clone = function () {
             var clone = new ProjectModel(null);
             clone.EntityId = this.EntityId;
             clone.CreatedDate = this.CreatedDate.clone();
-            clone.Name = this.Name;
+            clone.Title = this.Title;
             return clone;
         };
         return ProjectModel;
     }(Models.BaseModel));
     Models.ProjectModel = ProjectModel;
 })(Models || (Models = {}));
+//# sourceMappingURL=ProjectModel.js.map

@@ -10,8 +10,6 @@ namespace Controllers {
 
         public Model: Models.ModelBase;
 
-        protected UserId: string = UserId;
-
         constructor(
             protected $scope: any,
             protected $http: angular.IHttpProvider,

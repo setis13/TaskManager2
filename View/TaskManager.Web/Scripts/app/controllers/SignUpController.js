@@ -54,3 +54,4 @@ var Controllers;
     }(Controllers.BaseController));
     Controllers.SignUpController = SignUpController;
 })(Controllers || (Controllers = {}));
+//# sourceMappingURL=SignUpController.js.map

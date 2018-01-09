@@ -21,3 +21,4 @@ var Models;
     }(Models.ModelBase));
     Models.BaseModel = BaseModel;
 })(Models || (Models = {}));
+//# sourceMappingURL=1BaseModel.js.map

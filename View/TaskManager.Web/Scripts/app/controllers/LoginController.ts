@@ -1,5 +1,4 @@
-﻿
-namespace Controllers {
+﻿namespace Controllers {
 
     export class LoginController extends BaseController {
 

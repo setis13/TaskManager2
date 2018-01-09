@@ -20,6 +20,13 @@ namespace TaskManager.Web.Controllers {
         }
 
         /// <summary>
+        ///     GET: /Account/Register </summary>
+        [AllowAnonymous]
+        public ActionResult Register() {
+            return View();
+        }
+
+        /// <summary>
         ///     GET: /Account/Profile </summary>
         [Authorize, Route("Account/Profile")]
         public ActionResult Profile1() {

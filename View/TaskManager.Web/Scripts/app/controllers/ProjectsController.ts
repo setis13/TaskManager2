@@ -85,7 +85,9 @@ namespace Controllers {
             $.ajax({
                 url: '/api/Projects/Save',
                 type: 'POST',
-                data: this.Model.EditProject,
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(this.Model.EditProject),
                 beforeSend(xhr) {
                     $this.ShowBusySaving();
                 },

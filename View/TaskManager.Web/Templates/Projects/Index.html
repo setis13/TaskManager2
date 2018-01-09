@@ -25,7 +25,7 @@
         <tbody>
             <tr class="top aligned" ng-repeat="Project in Model.Projects">
                 <td>
-                    <b>{{Project.Name}}</b>
+                    <b>{{Project.Title}}</b>
                 </td>
             </tr>
         </tbody>
@@ -45,8 +45,8 @@
         </div>
         <div class="field">
             <label>Name</label>
-            <input id="name" placeholder="Name" type="text"
-                   ng-model="Model.EditProject.Name">
+            <input id="title" placeholder="Name" type="text"
+                   ng-model="Model.EditProject.Title">
         </div>
         <div class="ui error message"></div>
     </div>
@@ -72,8 +72,8 @@
     form = $('#form-project')
         .form({
             fields: {
-                name: {
-                    identifier: 'name',
+                title: {
+                    identifier: 'title',
                     rules: [
                         {
                             type: 'empty',

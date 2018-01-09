@@ -21,3 +21,4 @@ var Models;
     }(Models.ModelBase));
     Models.ProjectsModel = ProjectsModel;
 })(Models || (Models = {}));
+//# sourceMappingURL=ProjectsModel.js.map

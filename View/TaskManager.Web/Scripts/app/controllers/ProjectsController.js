@@ -59,7 +59,9 @@ var Controllers;
                 $.ajax({
                     url: '/api/Projects/Save',
                     type: 'POST',
-                    data: _this.Model.EditProject,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify(_this.Model.EditProject),
                     beforeSend: function (xhr) {
                         $this.ShowBusySaving();
                     },
@@ -138,3 +140,4 @@ var Controllers;
     }(Controllers.BaseController));
     Controllers.ProjectsController = ProjectsController;
 })(Controllers || (Controllers = {}));
+//# sourceMappingURL=ProjectsController.js.map

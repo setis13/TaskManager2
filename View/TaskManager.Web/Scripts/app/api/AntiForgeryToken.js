@@ -14,10 +14,20 @@ $.ajaxPrefilter(function (options, localOptions, jqXHR) {
     if (options.type !== "GET") {
         var token = GetAntiForgeryToken();
         if (token !== null) {
-            if (options.data.indexOf("X-Requested-With") === -1) {
-                options.data = "X-Requested-With=XMLHttpRequest" + ((options.data === "") ? "" : "&" + options.data);
+            console.log(token);
+            console.log(options.data);
+            // todo
+            //if (options.data.indexOf("X-Requested-With") === -1) {
+            //    options.data = "X-Requested-With=XMLHttpRequest" + ((options.data === "") ? "" : "&" + options.data);
+            //}
+            //options.data = options.data + "&" + token.name + '=' + token.value;
+            if (options.data.length > 0) {
+                var obj = JSON.parse(options.data);
+                obj[token.name] = token.value;
+                options.data = JSON.stringify(obj);
+                console.log(options.data);
             }
-            options.data = options.data + "&" + token.name + '=' + token.value;
         }
     }
 });
+//# sourceMappingURL=AntiForgeryToken.js.map

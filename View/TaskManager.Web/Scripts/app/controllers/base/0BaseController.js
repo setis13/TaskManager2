@@ -7,7 +7,6 @@ var Controllers;
             this.$scope = $scope;
             this.$http = $http;
             this.$location = $location;
-            this.UserId = UserId;
             this.isActive = function (path) {
                 return _this.location.path().match(path + "$") ? 'active' : '';
             };
@@ -79,3 +78,4 @@ var Controllers;
     }());
     Controllers.BaseController = BaseController;
 })(Controllers || (Controllers = {}));
+//# sourceMappingURL=0BaseController.js.map

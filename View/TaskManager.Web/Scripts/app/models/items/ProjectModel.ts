@@ -1,12 +1,12 @@
 ﻿namespace Models {
     export class ProjectModel extends BaseModel {
-        public Name: string;
+        public Title: string;
 
         constructor(data: any) {
             super(data);
 
             if (data != null) {
-                this.Name = data.Name;
+                this.Title = data.Title;
             }
         }
 
@@ -16,7 +16,7 @@
             clone.EntityId = this.EntityId;
             clone.CreatedDate = this.CreatedDate.clone();
 
-            clone.Name = this.Name;
+            clone.Title = this.Title;
 
             return clone;
         }

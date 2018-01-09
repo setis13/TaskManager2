@@ -68,3 +68,4 @@ var Models;
     }(Models.BaseModel));
     Models.TaskModel = TaskModel;
 })(Models || (Models = {}));
+//# sourceMappingURL=TaskModel.js.map

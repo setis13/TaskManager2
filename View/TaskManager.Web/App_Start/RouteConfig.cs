@@ -12,9 +12,20 @@ namespace TaskManager.Web {
                 defaults: new { controller = "Account", action = "Login" }
             );
             routes.MapRoute(
+                name: "Sign-up",
+                url: "sign-up",
+                defaults: new { controller = "Account", action = "Register" }
+            );
+            routes.MapRoute(
                 name: "Profile",
                 url: "profile",
                 defaults: new { controller = "Account", action = "Profile1" }
+            );
+            /* Important! Home at first action index */
+            routes.MapRoute(
+                name: "Home",
+                url: "",
+                defaults: new { controller = "Home", action = "Index" }
             );
             routes.MapRoute(
                 name: "Company",
@@ -25,16 +36,6 @@ namespace TaskManager.Web {
                 name: "Projects",
                 url: "projects",
                 defaults: new { controller = "Home", action = "Index" }
-            );
-            routes.MapRoute(
-                name: "Home",
-                url: "",
-                defaults: new { controller = "Home", action = "Index" }
-            );
-            routes.MapRoute(
-                name: "Sign-up",
-                url: "sign-up",
-                defaults: new { controller = "Account", action = "Register" }
             );
             routes.MapRoute(
                 name: "Default",

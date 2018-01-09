@@ -1,9 +1,4 @@
-﻿declare var form: any;
-declare var form2: any;
-declare var TaskPriorityNames: { [id: number]: string; };
-declare var TaskStatusNames: { [id: number]: string; };
-
-namespace Controllers {
+﻿namespace Controllers {
 
     export class AccountController extends BaseController {
 
