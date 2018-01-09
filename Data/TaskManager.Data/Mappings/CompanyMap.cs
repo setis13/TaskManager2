@@ -9,6 +9,9 @@ namespace TaskManager.Data.Mappings {
         ///     Company map instance </summary>
         public CompanyMap() : base() {
             this.ToTable("Company");
+            this.HasMany(e => e.Users)
+                .WithOptional(e => (Company)e.Company)
+                .HasForeignKey(e => e.CompanyId);
         }
     }
 }

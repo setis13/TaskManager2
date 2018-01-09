@@ -7,13 +7,13 @@ namespace TaskManager.Data.Context
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class sessions : IMigrationMetadata
+    public sealed partial class root : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(sessions));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(root));
         
         string IMigrationMetadata.Id
         {
-            get { return "201712231646194_sessions"; }
+            get { return "201801091724558_root"; }
         }
         
         string IMigrationMetadata.Source

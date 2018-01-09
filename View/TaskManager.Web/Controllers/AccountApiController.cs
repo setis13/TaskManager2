@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using TaskManager.Common;
 using TaskManager.Common.Identity;
 using TaskManager.Logic.Contracts;
+using TaskManager.Logic.Contracts.Dtos;
 using TaskManager.Web.Controllers.Base;
 using TaskManager.Web.Models;
 
@@ -65,13 +66,18 @@ namespace TaskManager.Web.Controllers {
                 if (!ModelState.IsValid) {
                     return WebApiResult.Failed(base.GetErrors());
                 }
+                if ("exist company name") {
+                    return WebApiResult.Failed("Company already exists");
+                }
 
                 var user = new TaskManagerUser {
-                    UserName = model.Email,
+                    UserName = model.UserName,
                     Email = model.Email
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded) {
+                    var companyDto = new CompanyDto();
+
                     await SignInManager.SignInAsync(user, isPersistent: true, rememberBrowser: false);
                     return WebApiResult.Succeed(new { ReturnUrl = "/Home", UserId = user.Id });
                 }

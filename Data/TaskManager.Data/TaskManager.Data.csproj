@@ -73,17 +73,9 @@
     <Compile Include="Mappings\SubTaskMap.cs" />
     <Compile Include="Mappings\TaskMap.cs" />
     <Compile Include="Mappings\SessionMap.cs" />
-    <Compile Include="Migrations\201712231641062_root.cs" />
-    <Compile Include="Migrations\201712231641062_root.Designer.cs">
-      <DependentUpon>201712231641062_root.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712231646194_sessions.cs" />
-    <Compile Include="Migrations\201712231646194_sessions.Designer.cs">
-      <DependentUpon>201712231646194_sessions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801081600498_task.cs" />
-    <Compile Include="Migrations\201801081600498_task.Designer.cs">
-      <DependentUpon>201801081600498_task.cs</DependentUpon>
+    <Compile Include="Migrations\201801091724558_root.cs" />
+    <Compile Include="Migrations\201801091724558_root.Designer.cs">
+      <DependentUpon>201801091724558_root.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\Repository.cs" />
@@ -106,14 +98,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712231641062_root.resx">
-      <DependentUpon>201712231641062_root.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712231646194_sessions.resx">
-      <DependentUpon>201712231646194_sessions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801081600498_task.resx">
-      <DependentUpon>201801081600498_task.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801091724558_root.resx">
+      <DependentUpon>201801091724558_root.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

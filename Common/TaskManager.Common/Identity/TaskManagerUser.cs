@@ -21,6 +21,11 @@ namespace TaskManager.Common.Identity {
 
         #endregion [ .ctor ]  
 
+        public Guid? CompanyId { get; set; }
+
+        [NotMapped]
+        public object Company { get; set; }
+
         [NotMapped]
         public static TaskManagerUser SystemAdmin => new TaskManagerUser {
             Id = new Guid("1ABB568A-2ECD-43E6-B814-BE164CF2F6F4"),

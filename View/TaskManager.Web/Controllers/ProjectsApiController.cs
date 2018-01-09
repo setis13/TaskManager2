@@ -56,7 +56,6 @@ namespace TaskManager.Web.Controllers {
 #if DEBUG
                 await Task.Delay(500);
 #endif
-                throw new AccessViolationException();
                 return await Task.Factory.StartNew(() => {
                     Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
                     var userDto = Mapper.Map<UserDto>(base.UserManager.FindById(userId));

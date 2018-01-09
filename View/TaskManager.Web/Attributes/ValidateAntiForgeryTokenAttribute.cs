@@ -1,5 +1,9 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Helpers;
@@ -11,7 +15,17 @@ namespace System.Web.Http {
     public sealed class ValidateAntiForgeryTokenAttribute : FilterAttribute, IAuthorizationFilter {
         public Task<HttpResponseMessage> ExecuteAuthorizationFilterAsync(HttpActionContext actionContext, CancellationToken cancellationToken, Func<Task<HttpResponseMessage>> continuation) {
             try {
-                AntiForgery.Validate();
+                var formToken = actionContext.Request.Headers
+                    .GetValues("__RequestVerificationToken")
+                    .FirstOrDefault();
+                var cookieToken = actionContext.Request.Headers
+                    .GetCookies()
+                    .SelectMany(e => e.Cookies)
+                    .FirstOrDefault(e => e.Name == "__RequestVerificationToken")
+                    ?.Value;
+                if (formToken != null && cookieToken != null) {
+                    AntiForgery.Validate(cookieToken, formToken);
+                }
             } catch {
                 actionContext.Response = new HttpResponseMessage {
                     StatusCode = HttpStatusCode.Forbidden,

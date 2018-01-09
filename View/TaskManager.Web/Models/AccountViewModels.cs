@@ -14,10 +14,17 @@ namespace TaskManager.Web.Models {
 
     public class RegisterViewModel {
         [Required]
+        [StringLength(64, MinimumLength = 3)]
+        [Display(Name = "Company Name")]
+        public string CompanyName { get; set; }
+        [Required]
+        [StringLength(32, MinimumLength = 2)]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
-
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]

@@ -10,30 +10,45 @@
     </div>
     <p>{{Model.Error}}</p>
 </div>
-<div>
+<div class="ui grid">
     <!-- panel -->
-    <div>
-        <button class="ui primary button" ng-click="Create_OnClick()">Create&nbsp;Project</button>
+    <div class="row">
+        <div class="sixteen wide column">
+            <button class="ui primary button" ng-click="Create_OnClick()">Create&nbsp;Project</button>
+        </div>
     </div>
     <!-- Projects -->
-    <table class="ui celled table">
-        <thead>
-            <tr>
-                <th class="four wide">Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="top aligned" ng-repeat="Project in Model.Projects">
-                <td>
-                    <b>{{Project.Title}}</b>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <hr />
-    <footer>
-        <p>&copy; 2017 - Project Manager</p>
-    </footer>
+    <div class="row">
+        <div class="sixteen wide mobile eight wide tablet six wide computer column">
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr ng-show="Model.Projects.length == 0">
+                    <td class="disabled">
+                        <span>empty</span>
+                    </td>
+                </tr>
+                    <tr class="top aligned" ng-repeat="Project in Model.Projects">
+                        <td>
+                            <b>{{Project.Title}}</b>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="sixteen wide column">
+            <hr />
+            <footer>
+                <p>&copy; 2017 - Project Manager</p>
+            </footer>
+        </div>
+    </div>
 </div>
 <!-- Edit Project Modal -->
 <div id="edit-project-modal" class="ui small modal">
