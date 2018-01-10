@@ -18,8 +18,22 @@
                 <div class="field">
                     <label>Email</label>
                     <div class="ui left icon input">
-                        <i class="user icon"></i>
+                        <i class="mail icon"></i>
                         <input name="email" placeholder="E-mail address" type="email" ng-model="Model.Email">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>UserName</label>
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input name="userName" placeholder="UserName" type="text" ng-model="Model.UserName">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Company Name</label>
+                    <div class="ui left icon input">
+                        <i class="users icon"></i>
+                        <input name="companyName" placeholder="Company Name" type="text" ng-model="Model.CompanyName">
                     </div>
                 </div>
                 <div class="field">
@@ -82,6 +96,40 @@
                             {
                                 type: 'email',
                                 prompt: 'The Email field is not a valid e-mail address.'
+                            }
+                        ]
+                    },
+                    userName: {
+                        identifier: 'userName',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a UserName'
+                            },
+                            {
+                                type: 'length[3]',
+                                prompt: 'Enter UserName (minimum 3 characters)'
+                            },
+                            {
+                                type: 'maxLength[32]',
+                                prompt: 'Enter UserName (maximum 32 characters)'
+                            }
+                        ]
+                    },
+                    companyName: {
+                        identifier: 'companyName',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a Company Name'
+                            },
+                            {
+                                type: 'length[2]',
+                                prompt: 'Enter Company Name (minimum 2 characters)'
+                            },
+                            {
+                                type: 'maxLength[64]',
+                                prompt: 'Enter Company Name (maximum 64 characters)'
                             }
                         ]
                     },

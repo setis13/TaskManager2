@@ -488,6 +488,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\TaskManagerAuthorizeAttribute.cs" />
     <Compile Include="Attributes\ValidateAntiForgeryTokenAttribute.cs" />
+    <Compile Include="Controllers\CompanyApiController.cs" />
     <Compile Include="Controllers\ProjectsApiController.cs" />
     <Compile Include="Controllers\HomeApiController.cs" />
     <Compile Include="Controllers\AccountApiController.cs" />

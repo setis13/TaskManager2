@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using TaskManager.Data.Contracts.Context;
 using TaskManager.Data.Contracts.Entities.Base;
@@ -59,7 +60,7 @@ namespace TaskManager.Data.Repositories.Base {
         public virtual void Insert(T entity, Guid userId) {
             entity.CreatedDate = entity.LastModifiedDate = DateTime.UtcNow;
             entity.CreatedById = entity.LastModifiedById = userId;
-            var entityEntry = Context.Entry(entity);
+            DbEntityEntry<T> entityEntry = Context.Entry(entity);
             if (entityEntry.State != EntityState.Detached) {
                 entityEntry.State = EntityState.Added;
             } else {
@@ -74,7 +75,9 @@ namespace TaskManager.Data.Repositories.Base {
         public virtual void Update(T entity, Guid userId) {
             entity.LastModifiedDate = DateTime.UtcNow;
             entity.LastModifiedById = userId;
-            var entityEntry = Context.Entry(entity);
+            DbEntityEntry<T> entityEntry = Context.Entry(entity);
+            entityEntry.CurrentValues[nameof(entity.CreatedDate)] = entityEntry.OriginalValues[nameof(entity.CreatedDate)];
+            entityEntry.CurrentValues[nameof(entity.CreatedById)] = entityEntry.OriginalValues[nameof(entity.CreatedById)];
             if (entityEntry.State == EntityState.Detached) {
                 DbSet.Attach(entity);
             }
@@ -92,7 +95,7 @@ namespace TaskManager.Data.Repositories.Base {
         ///     Deletes existing entity by its id </summary>
         /// <param name="id">Entity Id</param>
         public virtual void DeleteById(Guid id) {
-            var entity = GetById(id);
+            T entity = GetById(id);
             if (entity == null) return;
             Delete(entity);
         }
@@ -115,6 +118,8 @@ namespace TaskManager.Data.Repositories.Base {
             entity.LastModifiedById = userId;
             entity.IsDeleted = true;
             var entityEntry = Context.Entry(entity);
+            entityEntry.CurrentValues[nameof(entity.CreatedDate)] = entityEntry.OriginalValues[nameof(entity.CreatedDate)];
+            entityEntry.CurrentValues[nameof(entity.CreatedById)] = entityEntry.OriginalValues[nameof(entity.CreatedById)];
             if (entityEntry.State == EntityState.Detached) {
                 DbSet.Attach(entity);
             }

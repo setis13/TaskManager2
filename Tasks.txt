@@ -2,3 +2,4 @@
 2. ViewBag.Title нужны ли?
 3. проверить db ограничения по длинне
 реализовать lifetimemanager, попробую сделать servicelocator для quertz, webapi,mvc. если не получится, то пользоваться одним host но надо его закинуть в конвертору и ещу куда нибдуь куда надо
+4. <input name="email" pla переименовать name в id

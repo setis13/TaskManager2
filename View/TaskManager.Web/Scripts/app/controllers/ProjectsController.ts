@@ -23,8 +23,6 @@ namespace Controllers {
                 }
             });
 
-            $scope.Model = this.Model = new Models.ProjectsModel();
-
             $scope.Create_OnClick = this.Create_OnClick;
             $scope.Edit_OnClick = this.Edit_OnClick;
             $scope.Ok_OnClick = this.Ok_OnClick;
@@ -35,6 +33,8 @@ namespace Controllers {
         }
 
         public Load = () => {
+            this.$scope.Model = this.Model = new Models.ProjectsModel();
+
             var $this = this;
             $.ajax({
                 url: '/api/Projects/GetData/',
@@ -97,8 +97,8 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this.ShowBusySaving();
                         $this._projectModal.modal('hide');
+                        $this.Load();
                     } else {
                         $this.Model.EditProject.Error = result.error;
                         $this.$scope.$apply();
@@ -131,8 +131,8 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this.ShowBusyDeleting();
                         this._projectModal.modal('hide');
+                        $this.Load();
                     } else {
                         $this.Model.EditProject.Error = result.error;
                         $this.$scope.$apply();

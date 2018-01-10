@@ -27,14 +27,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                <tr ng-show="Model.Projects.length == 0">
-                    <td class="disabled">
-                        <span>empty</span>
-                    </td>
-                </tr>
-                    <tr class="top aligned" ng-repeat="Project in Model.Projects">
+                    <tr ng-show="Model.Projects.length == 0">
+                        <td class="disabled">
+                            <span>empty</span>
+                        </td>
+                    </tr>
+                    <tr class="top aligned" ng-repeat="project in Model.Projects">
                         <td>
-                            <b>{{Project.Title}}</b>
+                            <div class="content">
+                                <b>{{project.Title}}</b>
+                                <div class="pull-right">
+                                    <a href="" ng-click="Edit_OnClick(project)">edit</a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -93,7 +98,16 @@
                         {
                             type: 'empty',
                             prompt: 'Please enter a name'
+                        },
+                        {
+                            type: 'length[2]',
+                            prompt: 'Enter Company Name (minimum 2 characters)'
+                        },
+                        {
+                            type: 'maxLength[32]',
+                            prompt: 'Enter Company Name (maximum 32 characters)'
                         }
+
                     ]
                 }
             }

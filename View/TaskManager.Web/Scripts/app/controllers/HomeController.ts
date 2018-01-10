@@ -137,7 +137,6 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this.ShowBusySaving();
                         this._taskModal.modal('hide');
                     } else {
                         $this.Model.EditTask.Error = result.error;
@@ -171,7 +170,6 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this.ShowBusyDeleting();
                         this._taskModal.modal('hide');
                     } else {
                         $this.Model.EditTask.Error = result.error;
@@ -206,7 +204,6 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this.ShowBusySaving();
                         this._subTaskModal.modal('hide');
                     } else {
                         $this.Model.EditSubTask.Error = result.error;
@@ -240,7 +237,6 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this.ShowBusyDeleting();
                         this._subTaskModal.modal('hide');
                     } else {
                         $this.Model.EditSubTask.Error = result.error;

@@ -21,6 +21,12 @@ namespace TaskManager.Common.Identity {
 
         #endregion [ .ctor ]  
 
+        /// <summary>
+        ///     Company ID </summary>
+        /// <remarks> 
+        /// Every user has company, but database integrity requires nullable type
+        /// The user is created first, then the company
+        ///  </remarks>
         public Guid? CompanyId { get; set; }
 
         [NotMapped]

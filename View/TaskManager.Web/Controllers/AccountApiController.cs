@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
@@ -9,6 +10,7 @@ using TaskManager.Common;
 using TaskManager.Common.Identity;
 using TaskManager.Logic.Contracts;
 using TaskManager.Logic.Contracts.Dtos;
+using TaskManager.Logic.Contracts.Services;
 using TaskManager.Web.Controllers.Base;
 using TaskManager.Web.Models;
 
@@ -63,23 +65,40 @@ namespace TaskManager.Web.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<WebApiResult> Register(RegisterViewModel model) {
             try {
+                // to Trim and to Lower strings
+                model.CompanyName = model.CompanyName?.Trim().ToLower();
+                model.Email = model.Email?.Trim().ToLower();
+                model.UserName = model.UserName?.Trim();
+
                 if (!ModelState.IsValid) {
                     return WebApiResult.Failed(base.GetErrors());
                 }
-                if ("exist company name") {
-                    return WebApiResult.Failed("Company already exists");
+                if (UserManager.Users.Any(e => e.UserName == model.UserName)) {
+                    return WebApiResult.Failed($"User with this name '{model.UserName}' already exists");
+                }
+                var service = ServicesHost.GetService<ICompanyService>();
+                if (service.GetCompanyByName(model.CompanyName) != null) {
+                    return WebApiResult.Failed($"Company with this name '{model.CompanyName}' already exists");
                 }
 
+                // Creates user
                 var user = new TaskManagerUser {
                     UserName = model.UserName,
                     Email = model.Email
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded) {
+                    var userDto = Mapper.Map<UserDto>(user);
+                    // Creates company
                     var companyDto = new CompanyDto();
-
+                    companyDto.Name = model.CompanyName;
+                    service.Save(companyDto, userDto);
+                    // Modifies user
+                    user.CompanyId = userDto.CompanyId = companyDto.EntityId;
+                    await UserManager.UpdateAsync(user);
+                    // Sign in
                     await SignInManager.SignInAsync(user, isPersistent: true, rememberBrowser: false);
-                    return WebApiResult.Succeed(new { ReturnUrl = "/Home", UserId = user.Id });
+                    return WebApiResult.Succeed(new { ReturnUrl = "/Home", User = userDto, Company = companyDto });
                 }
                 AddErrors(result);
 

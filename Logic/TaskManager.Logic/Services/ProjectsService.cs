@@ -32,7 +32,6 @@ namespace TaskManager.Logic.Services {
             var rep = UnitOfWork.GetRepository<Project>();
             var model = rep.GetById(projectDto.EntityId);
             if (model == null) {
-                projectDto.EntityId = Guid.NewGuid();
                 projectDto.CompanyId = userDto.CompanyId;
                 model = this.Mapper.Map<Project>(projectDto);
                 this.UnitOfWork.GetRepository<Project>().Insert(model, userDto.Id);
