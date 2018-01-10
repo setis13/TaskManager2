@@ -140,6 +140,22 @@
                    ng-model="Model.EditTask.Title">
         </div>
         <div class="field">
+            <label>Project</label>
+            <!--<div id="project" class="ui selection dropdown">
+                <i class="dropdown icon"></i>
+                <div class="default text">Project</div>
+                <div class="menu"
+                     ng-repeat="project ins in Model.Projects">
+                    <div class="item" data-value="{{project.EntityId}}">{{project.Title}}</div>
+                </div>
+            </div>-->
+
+            <select id="project" class="ui dropdown"
+                    placeholder="Project"
+                    ng-options="project as project.Title for project in Model.Projects track by project.EntityId"
+                    ng-model="Model.EditTask.ProjectId"></select>
+        </div>
+        <div class="field">
             <label>Urgency</label>
             <button class="ui button"
                     ng-class="TaskPriorityClasses[Model.EditTask.Priority]"

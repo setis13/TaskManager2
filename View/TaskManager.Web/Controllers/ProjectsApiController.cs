@@ -34,15 +34,13 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(500);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
-                    var userDto = Mapper.Map<UserDto>(base.UserManager.FindById(userId));
                     List<ProjectDto> projects = this.ServicesHost
-                        .GetService<IProjectsService>().GetData(userDto);
+                        .GetService<IProjectsService>().GetData(GetUserDto());
                     return WebApiResult.Succeed(new { Projects = projects });
                 });
             } catch (Exception e) {
                 Logger.e("GetData", e);
-                return WebApiResult.Failed(e.GetBaseException().Message);
+                return WebApiResult.Failed(e.Message);
             }
         }
 
@@ -57,14 +55,12 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(500);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
-                    var userDto = Mapper.Map<UserDto>(base.UserManager.FindById(userId));
-                    this.ServicesHost.GetService<IProjectsService>().Save(project, userDto);
+                    this.ServicesHost.GetService<IProjectsService>().Save(project, GetUserDto());
                     return WebApiResult.Succeed();
                 });
             } catch (Exception e) {
                 Logger.e("Save", e);
-                return WebApiResult.Failed(e.GetBaseException().Message);
+                return WebApiResult.Failed(e.Message);
             }
         }
 
@@ -79,14 +75,12 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(500);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
-                    var userDto = Mapper.Map<UserDto>(base.UserManager.FindById(userId));
-                    this.ServicesHost.GetService<IProjectsService>().Delete(id, userDto);
+                    this.ServicesHost.GetService<IProjectsService>().Delete(id, GetUserDto());
                     return WebApiResult.Succeed();
                 });
             } catch (Exception e) {
                 Logger.e("Delete", e);
-                return WebApiResult.Failed(e.GetBaseException().Message);
+                return WebApiResult.Failed(e.Message);
             }
         }
     }

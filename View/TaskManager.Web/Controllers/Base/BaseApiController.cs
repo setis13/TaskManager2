@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TaskManager.Common.Extensions;
 using TaskManager.Logic.Contracts;
+using TaskManager.Logic.Contracts.Dtos;
 using TaskManager.Logic.Identity;
 
 namespace TaskManager.Web.Controllers.Base {
@@ -52,6 +53,11 @@ namespace TaskManager.Web.Controllers.Base {
 
         protected string GetErrors() {
             return String.Join(Environment.NewLine, ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)).GetHtml();
+        }
+
+        protected UserDto GetUserDto() {
+            Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
+            return Mapper.Map<UserDto>(this.UserManager.FindById(userId));
         }
     }
 }

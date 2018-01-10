@@ -37,7 +37,7 @@ namespace TaskManager.Web.Controllers {
 
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, change to shouldLockout: true
-                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, true, shouldLockout: false);
+                var result = await SignInManager.PasswordSignInAsync(model.Login, model.Password, true, shouldLockout: false);
                 switch (result) {
                     case SignInStatus.Success:
                         return WebApiResult.Succeed(new { ReturnUrl = "/Home" });
@@ -54,7 +54,7 @@ namespace TaskManager.Web.Controllers {
                 }
             } catch (Exception e) {
                 Logger.e("Login", e);
-                return WebApiResult.Failed(e.GetBaseException().Message);
+                return WebApiResult.Failed(e.Message);
             }
         }
 
@@ -107,7 +107,7 @@ namespace TaskManager.Web.Controllers {
 
             } catch (Exception e) {
                 Logger.e("Register", e);
-                return WebApiResult.Failed(e.GetBaseException().Message);
+                return WebApiResult.Failed(e.Message);
             }
         }
     }

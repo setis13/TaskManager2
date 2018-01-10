@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
@@ -31,19 +32,24 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(500);
 #endif
                 return await Task.Factory.StartNew(() => {
+
                     List<UserDto> users;
                     List<ProjectDto> projects;
                     List<Task1Dto> tasks;
+                    List<SubTaskDto> subtasks;
+                    List<CommentDto> comments;
+
+                    var user = GetUserDto();
+                    users = Mapper.Map<List<UserDto>>(
+                        this.UserManager.Users.Where(e => e.CompanyId == user.CompanyId));
+
                     this.ServicesHost.GetService<ITaskService>().GetData(
-                        null,
-                        out users,
-                        out projects,
-                        out tasks);
+                        user, null, out projects, out tasks, out subtasks, out comments);
                     return WebApiResult.Succeed(new { Projects = projects, Users = users, Tasks = tasks });
                 });
             } catch (Exception e) {
                 Logger.e("GetData", e);
-                return WebApiResult.Failed(e.GetBaseException().Message);
+                return WebApiResult.Failed(e.Message);
             }
         }
 
@@ -52,13 +58,18 @@ namespace TaskManager.Web.Controllers {
         [HttpPost, Route("SaveTask")]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<WebApiResult> SaveTask(Guid id) {
+        public async Task<WebApiResult> SaveTask(Task1Dto task) {
             try {
-                await Task.Delay(1000);
-                throw new Exception("SaveTask err");
+#if DEBUG
+                await Task.Delay(500);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    this.ServicesHost.GetService<ITaskService>().SaveTask(task, GetUserDto());
+                    return WebApiResult.Succeed();
+                });
             } catch (Exception e) {
                 Logger.e("SaveTask", e);
-                return WebApiResult.Failed(e.GetBaseException().Message);
+                return WebApiResult.Failed(e.Message);
             }
         }
 
@@ -69,11 +80,16 @@ namespace TaskManager.Web.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<WebApiResult> DeleteTask(Guid id) {
             try {
-                await Task.Delay(1000);
-                throw new Exception("DeleteTask err");
+#if DEBUG
+                await Task.Delay(500);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    this.ServicesHost.GetService<ITaskService>().DeleteTask(id, GetUserDto());
+                    return WebApiResult.Succeed();
+                });
             } catch (Exception e) {
                 Logger.e("DeleteTask", e);
-                return WebApiResult.Failed(e.GetBaseException().Message);
+                return WebApiResult.Failed(e.Message);
             }
         }
 
@@ -82,13 +98,18 @@ namespace TaskManager.Web.Controllers {
         [HttpPost, Route("SaveSubTask")]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<WebApiResult> SaveSubTask(Guid id) {
+        public async Task<WebApiResult> SaveSubTask(SubTaskDto subtask) {
             try {
-                await Task.Delay(1000);
-                throw new Exception("SaveSubTask err");
+#if DEBUG
+                await Task.Delay(500);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    this.ServicesHost.GetService<ITaskService>().SaveSubTask(subtask, GetUserDto());
+                    return WebApiResult.Succeed();
+                });
             } catch (Exception e) {
                 Logger.e("SaveSubTask", e);
-                return WebApiResult.Failed(e.GetBaseException().Message);
+                return WebApiResult.Failed(e.Message);
             }
         }
 
@@ -99,11 +120,16 @@ namespace TaskManager.Web.Controllers {
         [ValidateAntiForgeryToken]
         public async Task<WebApiResult> DeleteSubTask(Guid id) {
             try {
-                await Task.Delay(1000);
-                throw new Exception("DeleteSubTask err");
+#if DEBUG
+                await Task.Delay(500);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    this.ServicesHost.GetService<ITaskService>().DeleteSubTask(id, GetUserDto());
+                    return WebApiResult.Succeed();
+                });
             } catch (Exception e) {
                 Logger.e("DeleteSubTask", e);
-                return WebApiResult.Failed(e.GetBaseException().Message);
+                return WebApiResult.Failed(e.Message);
             }
         }
     }

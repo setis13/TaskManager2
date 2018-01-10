@@ -18,13 +18,13 @@
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="user icon"></i>
-                        <input name="email" placeholder="E-mail address" type="email" ng-model="Model.Email">
+                        <input id="login" placeholder="Login" type="text" ng-model="Model.Login">
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="lock icon"></i>
-                        <input name="password" placeholder="Password" type="password" ng-model="Model.Password">
+                        <input id="password" placeholder="Password" type="password" ng-model="Model.Password">
                     </div>
                 </div>
                 <button class="fluid ui primary button" lb-busy="Saving" type="submit" ng-click="Login()">
@@ -65,15 +65,11 @@
             .form({
                 fields: {
                     email: {
-                        identifier: 'email',
+                        identifier: 'login',
                         rules: [
                             {
                                 type: 'empty',
-                                prompt: 'Please enter a email'
-                            },
-                            {
-                                type: 'email',
-                                prompt: 'The Email field is not a valid e-mail address.'
+                                prompt: 'Please enter a login or email'
                             }
                         ]
                     },

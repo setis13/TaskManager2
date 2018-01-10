@@ -127,7 +127,9 @@ namespace Controllers {
             $.ajax({
                 url: '/api/Home/SaveTask?id=' + this.Model.EditTask.EntityId,
                 type: 'POST',
-                data: {},
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(this.Model.EditTask),
                 beforeSend(xhr) {
                     $this.ShowBusySaving();
                 },
@@ -138,6 +140,7 @@ namespace Controllers {
                 success: (result) => {
                     if (result.success) {
                         this._taskModal.modal('hide');
+                        $this.Load();
                     } else {
                         $this.Model.EditTask.Error = result.error;
                         $this.$scope.$apply();
@@ -171,6 +174,7 @@ namespace Controllers {
                 success: (result) => {
                     if (result.success) {
                         this._taskModal.modal('hide');
+                        $this.Load();
                     } else {
                         $this.Model.EditTask.Error = result.error;
                         $this.$scope.$apply();
@@ -194,7 +198,9 @@ namespace Controllers {
             $.ajax({
                 url: '/api/Home/SaveSubTask?id=' + this.Model.EditSubTask.EntityId,
                 type: 'POST',
-                data: {},
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(this.Model.EditSubTask),
                 beforeSend(xhr) {
                     $this.ShowBusySaving();
                 },
@@ -205,6 +211,7 @@ namespace Controllers {
                 success: (result) => {
                     if (result.success) {
                         this._subTaskModal.modal('hide');
+                        $this.Load();
                     } else {
                         $this.Model.EditSubTask.Error = result.error;
                         $this.$scope.$apply();
@@ -238,6 +245,7 @@ namespace Controllers {
                 success: (result) => {
                     if (result.success) {
                         this._subTaskModal.modal('hide');
+                        $this.Load();
                     } else {
                         $this.Model.EditSubTask.Error = result.error;
                         $this.$scope.$apply();

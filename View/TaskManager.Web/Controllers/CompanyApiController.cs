@@ -42,7 +42,7 @@ namespace TaskManager.Web.Controllers {
                 });
             } catch (Exception e) {
                 Logger.e("GetData", e);
-                return WebApiResult.Failed(e.GetBaseException().Message);
+                return WebApiResult.Failed(e.Message);
             }
         }
 
@@ -64,7 +64,7 @@ namespace TaskManager.Web.Controllers {
                 });
             } catch (Exception e) {
                 Logger.e("Save", e);
-                return WebApiResult.Failed(e.GetBaseException().Message);
+                return WebApiResult.Failed(e.Message);
             }
         }
     }
