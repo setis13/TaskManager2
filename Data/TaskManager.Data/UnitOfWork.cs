@@ -82,8 +82,7 @@ namespace TaskManager.Data {
                     }
                 }
 
-                throw new DbEntityValidationException(
-                    "Entity Validation Failed - errors follow:\n" + sb.ToString(), ex);
+                throw new DbEntityValidationException("Entity Validation Failed - errors follow:\n" + sb.ToString(), ex);
                 // Add the original exception as the innerException
             }
         }

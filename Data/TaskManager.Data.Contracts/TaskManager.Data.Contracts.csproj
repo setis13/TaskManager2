@@ -65,6 +65,7 @@
     <Compile Include="Entities\Base\BaseEntity.cs" />
     <Compile Include="Entities\Task1.cs" />
     <Compile Include="Entities\Company.cs" />
+    <Compile Include="Entities\TaskUser.cs" />
     <Compile Include="Entities\Todo.cs" />
     <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\SubTask.cs" />

@@ -14,6 +14,7 @@ namespace TaskManager.Logic.Contracts.Dtos {
         public TimeSpan TotalWork { get; set; }
         public float Progress { get; set; } 
         public byte Status { get; set; }
+        public List<Guid> UserIds { get; set; }
         public List<CommentDto> Comments { get; set; }
         public List<SubTaskDto> SubTasks { get; set; }
     }

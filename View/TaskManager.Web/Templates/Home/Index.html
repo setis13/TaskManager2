@@ -44,7 +44,7 @@
                         </div>
                         <div>
                             <span class="label">Owner</span>&nbsp;
-                            <span class="value">Admin</span>
+                            <span class="value">{{Model.UserName(task.CreatedById)}}</span>
                         </div>
                         <div>
                             <span class="label">Date</span>&nbsp;
@@ -64,7 +64,7 @@
                         </div>
                         <div>
                             <span class="label">Responsible</span>&nbsp;
-                            <span class="value">user1 user2 user3</span>
+                            <span class="value">{{Model.UserNames(task.UserIds)}}</span>
                         </div>
                         <div class="ui progress green value" id="example1" data-percent="15">
                             <div class="bar">
@@ -172,10 +172,10 @@
         </div>
         <div class="field">
             <label>Responsible</label>
-            <select id="selected-users" class="ui fluid dropdown"
+            <select id="task-users" class="ui fluid dropdown"
                     placeholder="Responsible" multiple
-                    ng-options="user as user.UserName for user in Model.Users track by user.Id"
-                    ng-model="Model.SelectedUsers"></select>
+                    ng-options="user.Id as user.UserName for user in Model.Users"
+                    ng-model="Model.EditTask.UserIds"></select>
         </div>
         <div class="field">
             <label>Description</label>
@@ -269,8 +269,8 @@
                         }
                     ]
                 },
-                selected_users: {
-                    identifier: 'selected-users',
+                task_users: {
+                    identifier: 'task-users',
                     rules: [
                         {
                             type: 'empty',

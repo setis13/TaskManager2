@@ -32,6 +32,7 @@ namespace TaskManager.Logic.Services {
 
             var projectRep = UnitOfWork.GetRepository<Project>();
             var taskRep = UnitOfWork.GetRepository<Task1>();
+            var taskuserRep = UnitOfWork.GetRepository<TaskUser>();
             var subtaskRep = UnitOfWork.GetRepository<SubTask>();
             var commentRep = UnitOfWork.GetRepository<Comment>();
 
@@ -58,13 +59,16 @@ namespace TaskManager.Logic.Services {
 
             var taskIds = tasks1.Select(e => e.EntityId).ToList();
             var subtaskIds = subtasks1.Select(e => e.EntityId).ToList();
-            commentsQuery = commentsQuery.Where(e => 
+
+            var taskuserList = taskuserRep.SearchFor(e => taskIds.Contains(e.TaskId)).ToList();
+            commentsQuery = commentsQuery.Where(e =>
                 (e.TaskId != null && taskIds.Contains(e.TaskId.Value)) ||
                 (e.SubTaskId != null && subtaskIds.Contains(e.SubTaskId.Value)));
 
             var comments1 = Mapper.Map<List<CommentDto>>(commentsQuery);
 
             subtasks1.ForEach(st => st.Comments = comments1.Where(c => c.SubTaskId == st.EntityId).ToList());
+            tasks1.ForEach(t => t.UserIds = taskuserList.Where(c => c.TaskId == t.EntityId).Select(e => e.UserId).ToList());
             tasks1.ForEach(t => t.Comments = comments1.Where(c => c.TaskId == t.EntityId).ToList());
             tasks1.ForEach(t => t.SubTasks = subtasks1.Where(st => st.TaskId == t.EntityId).ToList());
 
@@ -83,12 +87,35 @@ namespace TaskManager.Logic.Services {
             var model = rep.GetById(taskDto.EntityId);
             if (model == null) {
                 taskDto.CompanyId = userDto.CompanyId;
+                taskDto.Index = (rep.SearchFor(e => e.CompanyId == userDto.CompanyId).Max(e => (int?)e.Index) ?? 0) + 1;
                 model = this.Mapper.Map<Task1>(taskDto);
-                this.UnitOfWork.GetRepository<Task1>().Insert(model, userDto.Id);
+                rep.Insert(model, userDto.Id);
             } else {
                 taskDto.CompanyId = userDto.CompanyId;
                 this.Mapper.Map(taskDto, model);
-                this.UnitOfWork.GetRepository<Task1>().Update(model, userDto.Id);
+                rep.Update(model, userDto.Id);
+            }
+            this.UnitOfWork.SaveChanges();
+
+            this.SaveTaskUsers(taskDto, userDto);
+        }
+
+        /// <summary>
+        ///     Synchronizes responsibles </summary>
+        /// <param name="taskDto">task DTO</param>
+        /// <param name="userDto">user who updates the task</param>
+        private void SaveTaskUsers(Task1Dto taskDto, UserDto userDto) {
+            var rep = UnitOfWork.GetRepository<TaskUser>();
+            var models = rep.SearchFor(e => e.TaskId == taskDto.EntityId).ToList();
+            foreach (var model in models) {
+                if (!taskDto.UserIds.Contains(model.UserId)) {
+                    rep.DeleteById(model.EntityId);
+                }
+            }
+            foreach (var userId in taskDto.UserIds) {
+                if (models.Any(e => e.UserId == userId) == false) {
+                    rep.Insert(new TaskUser() { TaskId = taskDto.EntityId, UserId = userId }, userDto.Id);
+                }
             }
             this.UnitOfWork.SaveChanges();
         }
@@ -101,9 +128,23 @@ namespace TaskManager.Logic.Services {
             var rep = UnitOfWork.GetRepository<Task1>();
             var model = rep.GetById(taskId);
             if (model != null && model.CompanyId == userDto.CompanyId) {
-                this.UnitOfWork.GetRepository<Task1>().MarkAsDelete(model, userDto.Id);
+                rep.MarkAsDelete(model, userDto.Id);
                 this.UnitOfWork.SaveChanges();
             }
+            DeleteTaskUsers(taskId, userDto);
+        }
+
+        /// <summary>
+        ///     Deletes responsibles by id </summary>
+        /// <param name="taskId">task id</param>
+        /// <param name="userDto">user who deletes responsibles</param>
+        private void DeleteTaskUsers(Guid taskId, UserDto userDto) {
+            var rep = UnitOfWork.GetRepository<TaskUser>();
+            var models = rep.SearchFor(e => e.TaskId == taskId).ToList();
+            foreach (TaskUser model in models) {
+                rep.MarkAsDelete(model, userDto.Id);
+            }
+            this.UnitOfWork.SaveChanges();
         }
 
         /// <summary>
@@ -115,12 +156,13 @@ namespace TaskManager.Logic.Services {
             var model = rep.GetById(subtaskDto.EntityId);
             if (model == null) {
                 subtaskDto.CompanyId = userDto.CompanyId;
+                subtaskDto.Order = (rep.SearchFor(e => e.CompanyId == userDto.CompanyId).Max(e => (int?)e.Order) ?? 0) + 1;
                 model = this.Mapper.Map<SubTask>(subtaskDto);
-                this.UnitOfWork.GetRepository<SubTask>().Insert(model, userDto.Id);
+                rep.Insert(model, userDto.Id);
             } else {
                 subtaskDto.CompanyId = userDto.CompanyId;
                 this.Mapper.Map(subtaskDto, model);
-                this.UnitOfWork.GetRepository<SubTask>().Update(model, userDto.Id);
+                rep.Update(model, userDto.Id);
             }
             this.UnitOfWork.SaveChanges();
         }
@@ -133,7 +175,7 @@ namespace TaskManager.Logic.Services {
             var rep = UnitOfWork.GetRepository<SubTask>();
             var model = rep.GetById(subtaskId);
             if (model != null && model.CompanyId == userDto.CompanyId) {
-                this.UnitOfWork.GetRepository<SubTask>().MarkAsDelete(model, userDto.Id);
+                rep.MarkAsDelete(model, userDto.Id);
                 this.UnitOfWork.SaveChanges();
             }
         }

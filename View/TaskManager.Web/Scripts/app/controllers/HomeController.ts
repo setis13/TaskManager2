@@ -27,15 +27,22 @@ namespace Controllers {
                     $this.Model.EditTask = null;
                     $this.ResetForm(form);
                     $this.$scope.$apply();
+
+                    //  resets dropdown
+                    (<any>$('#task-users')).dropdown("restore defaults");
+                    (<any>$('#project')).dropdown("restore defaults");
+                    // NOTES: default text was changed after selected because this code restores it
+                    (<any>$('#project')).parent().find('.text.default').html($('#project > option[value=""]').html());
                 },
                 onShow() {
                     // NOTES: event.onVisibly works withount timeout, but has delay
+                    // sets selected value in dropdown
                     setTimeout(() => {
+                        if ($('#task-users').val().length > 0) {
+                            (<any>$('#task-users')).dropdown("set selected", $('#task-users').val());
+                        }
                         if ($('#project').val() !== "") {
                             (<any>$('#project')).dropdown("set selected", $('#project').val());
-                        } else {
-                            (<any>$('#project')).dropdown("restore defaults");
-                            (<any>$('#project')).parent().find('.text.default').html($('#project > option[value=""]').html());
                         }
                     });
                 }
@@ -114,11 +121,11 @@ namespace Controllers {
             var clone = task.Clone();
             this.Model.EditTask = clone;
             this._taskModal.modal('show');
-            //(<any>$('#project')).dropdown("set selected", task.ProjectId);
         }
 
-        public CreateSubTask_OnClick = () => {
+        public CreateSubTask_OnClick = (task: Models.TaskModel) => {
             var subtask = new Models.SubTaskModel(null);
+            subtask.TaskId = task.EntityId;
             this.Model.EditSubTask = subtask;
             this._subTaskModal.modal('show');
         }

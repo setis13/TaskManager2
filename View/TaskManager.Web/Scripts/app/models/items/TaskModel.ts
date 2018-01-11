@@ -11,6 +11,7 @@
         public Progress: number;
         public Status: Enums.TaskStatusEnum;
         public SubTasks: Array<SubTaskModel>;
+        public UserIds: Array<string>;
         //public Comments: Array<CommentModel>;
         
         //extra
@@ -26,6 +27,7 @@
             super(data);
 
             this.SubTasks = new Array();
+            this.UserIds = new Array();
             if (data != null) {
                 this.CompanyId = data.CompanyId;
                 this.ProjectId = data.ProjectId;
@@ -39,6 +41,9 @@
                 this.Status = data.Status;
                 for (var i = 0; i < data.SubTasks.length; i++) {
                     this.SubTasks.push(new SubTaskModel(data.SubTasks[i]));
+                }
+                for (var i = 0; i < data.UserIds.length; i++) {
+                    this.UserIds.push(data.UserIds[i]);
                 }
             }
         }
@@ -62,6 +67,9 @@
 
             for (var i = 0; i < this.SubTasks.length; i++) {
                 clone.SubTasks.push(this.SubTasks[i].Clone());
+            }
+            for (var i = 0; i < this.UserIds.length; i++) {
+                clone.UserIds.push(this.UserIds[i]);
             }
 
             return clone;
