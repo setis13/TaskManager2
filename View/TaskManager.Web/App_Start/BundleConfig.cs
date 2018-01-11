@@ -52,6 +52,7 @@ namespace TaskManager.Web {
                 .Include(
                     "~/Scripts/jquery-{version}.js",
                     "~/Scripts/moment.js",
+                    "~/Scripts/moment-duration-format.js",
                     "~/Scripts/linq.js",
                     "~/Scripts/toastr.js",
                     "~/Scripts/semantic.js",

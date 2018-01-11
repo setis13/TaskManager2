@@ -6,24 +6,20 @@
         public Title: string;
         public Description: string;
         public Priority: Enums.TaskPriorityEnum = 0;
-        public ActualWork: moment.Duration;
-        public TotalWork: moment.Duration;
+        public ActualWork: string;
+        public TotalWork: string;
         public Progress: number;
         public Status: Enums.TaskStatusEnum;
         public SubTasks: Array<SubTaskModel>;
         //public Comments: Array<CommentModel>;
-
+        
         //extra
         public get TotalWorkHours(): string {
-            if (this.TotalWork != null) {
-                return this.TotalWork.asHours().toString();
-            } else {
-                return null;
-            }
+            return moment.duration(this.TotalWork).asHours().toFixed(1);
         }
         public set TotalWorkHours(str: string) {
-            var value = parseInt(str);
-            this.TotalWork = moment.duration(!isNaN(value) ? value : 0, "hours");
+            var value = parseFloat(str);
+            this.TotalWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d [days] hh:mm:ss");
         }
 
         constructor(data: any) {
@@ -37,8 +33,8 @@
                 this.Title = data.Title;
                 this.Description = data.Description;
                 this.Priority = data.Priority;
-                this.ActualWork = moment.duration(data.ActualWork);
-                this.TotalWork = moment.duration(data.TotalWork);
+                this.ActualWork = moment.duration(data.ActualWork).format("d [days] hh:mm:ss");
+                this.TotalWork = moment.duration(data.TotalWork).format("d [days] hh:mm:ss");
                 this.Progress = data.Progress;
                 this.Status = data.Status;
                 for (var i = 0; i < data.SubTasks.length; i++) {

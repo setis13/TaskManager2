@@ -5,11 +5,20 @@
         public Order: number;
         public Title: string;
         public Description: string;
-        public ActualWork: moment.Duration;
-        public TotalWork: moment.Duration;
+        public ActualWork: string;
+        public TotalWork: string;
         public Progress: number;
         public Status: Enums.TaskStatusEnum;
         //public Comments: Array<CommentModel>;
+
+        //extra
+        public get TotalWorkHours(): string {
+            return moment.duration(this.TotalWork).asHours().toFixed(1);
+        }
+        public set TotalWorkHours(str: string) {
+            var value = parseFloat(str);
+            this.TotalWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d [days] hh:mm:ss");
+        }
 
         constructor(data: any) {
             super(data);
@@ -20,8 +29,8 @@
                 this.Order = data.Order;
                 this.Title = data.Title;
                 this.Description = data.Description;
-                this.ActualWork = moment.duration(data.ActualWork);
-                this.TotalWork = moment.duration(data.TotalWork);
+                this.ActualWork = moment.duration(data.ActualWork).format("d [days] hh:mm:ss");
+                this.TotalWork = moment.duration(data.TotalWork).format("d [days] hh:mm:ss");
                 this.Progress = data.Progress;
                 this.Status = data.Status;
                 //this.Comments = new Array();

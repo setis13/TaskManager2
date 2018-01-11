@@ -8,7 +8,7 @@ namespace Controllers {
     export class HomeController extends BaseController {
 
         private taskPriorityClasses: { [index: number]: string } =
-            { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
+        { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
 
         public Model: Models.HomeModel;
 
@@ -27,6 +27,17 @@ namespace Controllers {
                     $this.Model.EditTask = null;
                     $this.ResetForm(form);
                     $this.$scope.$apply();
+                },
+                onShow() {
+                    // NOTES: event.onVisibly works withount timeout, but has delay
+                    setTimeout(() => {
+                        if ($('#project').val() !== "") {
+                            (<any>$('#project')).dropdown("set selected", $('#project').val());
+                        } else {
+                            (<any>$('#project')).dropdown("restore defaults");
+                            (<any>$('#project')).parent().find('.text.default').html($('#project > option[value=""]').html());
+                        }
+                    });
                 }
             });
             this._subTaskModal = (<any>$("#edit-subtask-modal")).modal({
@@ -103,6 +114,7 @@ namespace Controllers {
             var clone = task.Clone();
             this.Model.EditTask = clone;
             this._taskModal.modal('show');
+            //(<any>$('#project')).dropdown("set selected", task.ProjectId);
         }
 
         public CreateSubTask_OnClick = () => {

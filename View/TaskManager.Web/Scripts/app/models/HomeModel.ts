@@ -28,5 +28,16 @@
                 this.Users.push(new UserModel(data.Users[i]));
             }
         }
+
+        public ProjectName(projectId: string) {
+            if (projectId != null) {
+                return Enumerable.From(this.Projects)
+                    .Where(e => e.EntityId === projectId)
+                    .Select(e => e.Title)
+                    .FirstOrDefault(projectId.substr(0, 8));
+            } else {
+                return "";
+            }
+        }
     }
 }
