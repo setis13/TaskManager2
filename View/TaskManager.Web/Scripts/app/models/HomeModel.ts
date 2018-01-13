@@ -29,6 +29,30 @@
             }
         }
 
+        public SetSubTasks(subTasks: any) {
+            // removes old subtasks
+            for (var i = 0; i < subTasks.length; i++) {
+                var task = Enumerable.From(this.Tasks).First(e => e.EntityId === subTasks[i].TaskId);
+                for (var j = 0; j < task.SubTasks.length; j++) {
+                    if (task.SubTasks[j].EntityId === subTasks[i].EntityId) {
+                        task.SubTasks.splice(j, 1);
+                        break;
+                    }
+                }
+            }
+            // adds new subtasks
+            for (var i = 0; i < subTasks.length; i++) {
+                var task = Enumerable.From(this.Tasks).First(e => e.EntityId === subTasks[i].TaskId);
+                var j = 0;
+                for (j = 0; j < task.SubTasks.length; j++) {
+                    if (task.SubTasks[j].Order > subTasks[i].Order) {
+                        break;
+                    }
+                }
+                task.SubTasks.splice(j, 0, new SubTaskModel(subTasks[i]));
+            }
+        }
+
         public ProjectName(projectId: string): string {
             return Enumerable.From(this.Projects)
                 .Where(e => e.EntityId === projectId)

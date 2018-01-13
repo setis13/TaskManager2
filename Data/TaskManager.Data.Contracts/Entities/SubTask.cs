@@ -12,7 +12,7 @@ namespace TaskManager.Data.Contracts.Entities {
         public int Order { get; set; }
         [DataType("VARCHAR"), MaxLength(64), Required]
         public string Title { get; set; }
-        [DataType("VARCHAR"), MaxLength(1024), Required]
+        [DataType("VARCHAR"), MaxLength(1024)]
         public string Description { get; set; }
         public TimeSpan ActualWork { get; set; }
         public TimeSpan TotalWork { get; set; }

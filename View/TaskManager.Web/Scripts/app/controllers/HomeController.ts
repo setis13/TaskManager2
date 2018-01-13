@@ -72,6 +72,8 @@ namespace Controllers {
 
             $scope.CreateSubTask_OnClick = this.CreateSubTask_OnClick;
             $scope.EditSubTask_OnClick = this.EditSubTask_OnClick;
+            $scope.UpSubTask_OnClick = this.UpSubTask_OnClick;
+            $scope.DownSubTask_OnClick = this.DownSubTask_OnClick;
             $scope.SubTaskOk_OnClick = this.SubTaskOk_OnClick;
             $scope.SubTaskCancel_OnClick = this.SubTaskCancel_OnClick;
             $scope.SubTaskDelete_OnClick = this.SubTaskDelete_OnClick;
@@ -94,7 +96,6 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this.$scope.$apply();
                         this.Model.SetData(result.data);
                     } else {
                         $this.Error(result.error);
@@ -133,6 +134,64 @@ namespace Controllers {
             var clone = subtask.Clone();
             this.Model.EditSubTask = clone;
             this._subTaskModal.modal('show');
+        }
+
+        public UpSubTask_OnClick = (subtask: Models.SubTaskModel) => {
+            var $this = this;
+            $.ajax({
+                url: '/api/Home/UpSubTask?id=' + subtask.EntityId,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: {},
+                beforeSend(xhr) {
+                    $this.ShowBusyRow($("#subtask-" + subtask.EntityId));
+                },
+                complete() {
+                    $this.HideBusyRow($("#subtask-" + subtask.EntityId));
+                    $this.$scope.$apply();
+                },
+                success: (result) => {
+                    if (result.success) {
+                        $this.Model.SetSubTasks(result.data.SubTasks);
+                    } else {
+                        $this.Error(result.error);
+                    }
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    toastr.error(jqXhr.statusText);
+                }
+            });
+        }
+
+        public DownSubTask_OnClick = (subtask: Models.SubTaskModel) => {
+            var $this = this;
+            $.ajax({
+                url: '/api/Home/DownSubTask?id=' + subtask.EntityId,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: {},
+                beforeSend(xhr) {
+                    $this.ShowBusyRow($("#subtask-" + subtask.EntityId));
+                },
+                complete() {
+                    $this.HideBusyRow($("#subtask-" + subtask.EntityId));
+                    $this.$scope.$apply();
+                },
+                success: (result) => {
+                    if (result.success) {
+                        $this.Model.SetSubTasks(result.data.SubTasks);
+                    } else {
+                        $this.Error(result.error);
+                    }
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    toastr.error(jqXhr.statusText);
+                }
+            });
         }
 
         public TaskOk_OnClick = () => {

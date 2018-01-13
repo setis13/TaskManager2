@@ -26,16 +26,17 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="top aligned" ng-repeat-start="task in Model.Tasks">
+            <tr id="task-{{task.EntityId}}" class="top aligned"
+                ng-repeat-start="task in Model.Tasks">
                 <td colspan="2">
                     <div class="content">
                         <div>
                             <span class="label">Task#</span>&nbsp;
                             <span class="value"><b>{{task.Index}}</b></span>&nbsp;
                             <div class="pull-right">
-                                <a href="" ng-click="EditTask_OnClick(task)">edit</a>
-                                &nbsp;|&nbsp;
                                 <a href="" ng-click="CreateSubTask_OnClick(task)">add subtask</a>
+                                &nbsp;|&nbsp;
+                                <a href="" ng-click="EditTask_OnClick(task)">edit</a>
                             </div>
                         </div>
                         <div>
@@ -83,15 +84,22 @@
                     22
                 </td>
             </tr>
-
-            <tr class="top aligned" ng-repeat-end ng-repeat="subTask in task.SubTasks">
+            <!-- subtasks -->
+            <tr id="subtask-{{subTask.EntityId}}" class="top aligned"
+                ng-repeat-end ng-repeat="subTask in task.SubTasks">
                 <td class="header"></td>
                 <td>
                     <div class="content">
                         <div>
                             <span class="label">Index</span>&nbsp;
                             <span class="value"><b>{{task.Index}}</b>/<b>{{subTask.Order}}</b></span>
-                            <a class="pull-right" href="" ng-click="EditSubTask_OnClick(subTask)">edit</a>
+                            <div class="pull-right">
+                                <a href="" ng-click="UpSubTask_OnClick(subTask)">up</a>
+                                &nbsp;|&nbsp;
+                                <a href="" ng-click="DownSubTask_OnClick(subTask)">down</a>
+                                &nbsp;|&nbsp;
+                                <a href="" ng-click="EditSubTask_OnClick(subTask)">edit</a>
+                            </div>
                         </div>
                         <div>
                             <span class="label">Date</span>&nbsp;

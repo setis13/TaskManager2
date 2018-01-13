@@ -36,15 +36,13 @@ namespace TaskManager.Web.Controllers {
                     List<UserDto> users;
                     List<ProjectDto> projects;
                     List<Task1Dto> tasks;
-                    List<SubTaskDto> subtasks;
-                    List<CommentDto> comments;
 
                     var user = GetUserDto();
                     users = Mapper.Map<List<UserDto>>(
                         this.UserManager.Users.Where(e => e.CompanyId == user.CompanyId));
 
                     this.ServicesHost.GetService<ITaskService>().GetData(
-                        user, null, out projects, out tasks, out subtasks, out comments);
+                        user, null, out projects, out tasks);
                     return WebApiResult.Succeed(new { Projects = projects, Users = users, Tasks = tasks });
                 });
             } catch (Exception e) {
@@ -129,6 +127,46 @@ namespace TaskManager.Web.Controllers {
                 });
             } catch (Exception e) {
                 Logger.e("DeleteSubTask", e);
+                return WebApiResult.Failed(e.Message);
+            }
+        }
+
+        /// <summary>
+        ///     POST: /api/Home/UpSubTask </summary>
+        [HttpPost, Route("UpSubTask")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<WebApiResult> UpSubTask(Guid id) {
+            try {
+#if DEBUG
+                await Task.Delay(500);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    var subTasks = this.ServicesHost.GetService<ITaskService>().UpSubTask(id, GetUserDto());
+                    return WebApiResult.Succeed(new { SubTasks = subTasks });
+                });
+            } catch (Exception e) {
+                Logger.e("UpSubTask", e);
+                return WebApiResult.Failed(e.Message);
+            }
+        }
+
+        /// <summary>
+        ///     POST: /api/Home/DownSubTask </summary>
+        [HttpPost, Route("DownSubTask")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<WebApiResult> DownSubTask(Guid id) {
+            try {
+#if DEBUG
+                await Task.Delay(500);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    var subTasks = this.ServicesHost.GetService<ITaskService>().DownSubTask(id, GetUserDto());
+                    return WebApiResult.Succeed(new { SubTasks = subTasks });
+                });
+            } catch (Exception e) {
+                Logger.e("DownSubTask", e);
                 return WebApiResult.Failed(e.Message);
             }
         }

@@ -22,13 +22,9 @@ namespace TaskManager.Logic.Services {
         /// <param name="historyDeep">minimum date of tasks</param>
         /// <param name="projects">out parameter</param>
         /// <param name="tasks">out parameter</param>
-        /// <param name="subtasks">out parameter</param>
-        /// <param name="comments">out parameter</param>
         public void GetData(UserDto user, DateTime? historyDeep,
             out List<ProjectDto> projects,
-            out List<Task1Dto> tasks,
-            out List<SubTaskDto> subtasks,
-            out List<CommentDto> comments) {
+            out List<Task1Dto> tasks) {
 
             var projectRep = UnitOfWork.GetRepository<Project>();
             var taskRep = UnitOfWork.GetRepository<Task1>();
@@ -70,12 +66,10 @@ namespace TaskManager.Logic.Services {
             subtasks1.ForEach(st => st.Comments = comments1.Where(c => c.SubTaskId == st.EntityId).ToList());
             tasks1.ForEach(t => t.UserIds = taskuserList.Where(c => c.TaskId == t.EntityId).Select(e => e.UserId).ToList());
             tasks1.ForEach(t => t.Comments = comments1.Where(c => c.TaskId == t.EntityId).ToList());
-            tasks1.ForEach(t => t.SubTasks = subtasks1.Where(st => st.TaskId == t.EntityId).ToList());
+            tasks1.ForEach(t => t.SubTasks = subtasks1.Where(st => st.TaskId == t.EntityId).OrderBy(e => e.Order).ToList());
 
             projects = projects1;
             tasks = tasks1;
-            subtasks = subtasks1;
-            comments = comments1;
         }
 
         /// <summary>
@@ -177,6 +171,70 @@ namespace TaskManager.Logic.Services {
             if (model != null && model.CompanyId == userDto.CompanyId) {
                 rep.MarkAsDelete(model, userDto.Id);
                 this.UnitOfWork.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        ///     Changes a order of a subtask </summary>
+        /// <param name="subtaskId">subtask id</param>
+        /// <param name="userDto">user who changes the subtask</param>
+        /// <returns>Changed subtasks</returns>
+        public IEnumerable<SubTaskDto> UpSubTask(Guid subtaskId, UserDto userDto) {
+            var rep = UnitOfWork.GetRepository<SubTask>();
+            var subTask = rep.GetById(subtaskId);
+            if (subTask != null) {
+                var models = rep.SearchFor(e =>
+                    e.CompanyId == userDto.CompanyId &&
+                    e.TaskId == subTask.TaskId).OrderBy(e => e.Order).ToList();
+                // to swap
+                for (int i = models.Count - 1; i >=  /* skips first */ 1; i--) {
+                    if (models[i].EntityId == subtaskId) {
+                        var tmp = models[i];
+                        models[i] = models[i - 1];
+                        models[i - 1] = tmp;
+                        break;
+                    }
+                }
+                // sets order
+                for (int i = 0; i < models.Count; i++) {
+                    if (models[i].Order != i + 1) {
+                        models[i].Order = i + 1;
+                        yield return Mapper.Map<SubTaskDto>(models[i]);
+                    }
+                }
+                UnitOfWork.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        ///     Changes a order of a subtask </summary>
+        /// <param name="subtaskId">subtask id</param>
+        /// <param name="userDto">user who changes the subtask</param>
+        /// <returns>Changed subtasks</returns>
+        public IEnumerable<SubTaskDto> DownSubTask(Guid subtaskId, UserDto userDto) {
+            var rep = UnitOfWork.GetRepository<SubTask>();
+            var subTask = rep.GetById(subtaskId);
+            if (subTask != null) {
+                var models = rep.SearchFor(e =>
+                e.CompanyId == userDto.CompanyId &&
+                e.TaskId == subTask.TaskId).OrderBy(e => e.Order).ToList();
+                // to swap
+                for (int i = 0; i < models.Count /* skips last */ - 1; i++) {
+                    if (models[i].EntityId == subtaskId) {
+                        var tmp = models[i];
+                        models[i] = models[i + 1];
+                        models[i + 1] = tmp;
+                        break;
+                    }
+                }
+                // sets order
+                for (int i = 0; i < models.Count; i++) {
+                    if (models[i].Order != i + 1) {
+                        models[i].Order = i + 1;
+                        yield return Mapper.Map<SubTaskDto>(models[i]);
+                    }
+                }
+                UnitOfWork.SaveChanges();
             }
         }
     }

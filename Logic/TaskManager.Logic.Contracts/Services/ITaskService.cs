@@ -15,13 +15,9 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="historyDeep">minimum date of tasks</param>
         /// <param name="projects">out parameter</param>
         /// <param name="tasks">out parameter</param>
-        /// <param name="subtasks">out parameter</param>
-        /// <param name="comments">out parameter</param>
         void GetData(UserDto user, DateTime? historyDeep,
             out List<ProjectDto> projects,
-            out List<Task1Dto> tasks,
-            out List<SubTaskDto> subtasks,
-            out List<CommentDto> comments);
+            out List<Task1Dto> tasks);
 
         /// <summary>
         ///     Creates or Updates task </summary>
@@ -46,5 +42,19 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="subtaskId">subtask id</param>
         /// <param name="userDto">user who deletes the subtask</param>
         void DeleteSubTask(Guid subtaskId, UserDto userDto);
+
+        /// <summary>
+        ///     Changes a order of a subtask </summary>
+        /// <param name="subtaskId">subtask id</param>
+        /// <param name="userDto">user who changes the subtask</param>
+        /// <returns>Changed subtasks</returns>
+        IEnumerable<SubTaskDto> UpSubTask(Guid subtaskId, UserDto userDto);
+
+        /// <summary>
+        ///     Changes a order of a subtask </summary>
+        /// <param name="subtaskId">subtask id</param>
+        /// <param name="userDto">user who changes the subtask</param>
+        /// <returns>Changed subtasks</returns>
+        IEnumerable<SubTaskDto> DownSubTask(Guid subtaskId, UserDto userDto);
     }
 }

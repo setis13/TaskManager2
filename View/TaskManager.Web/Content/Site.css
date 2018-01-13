@@ -2,17 +2,20 @@
 html, body {
     height: auto;
 }
-body footer {
-    margin-bottom: 1em;
-}
+
+    body footer {
+        margin-bottom: 1em;
+    }
 
 /*** Text colors ***/
 .content .label {
     color: grey;
 }
+
 .content .value {
     color: black;
 }
+
 .content .extra {
     color: grey;
     font-size: 0.9em;
@@ -22,6 +25,7 @@ body footer {
 .content .pull-right {
     float: right;
 }
+
 .content .pull-left {
     float: left;
 }
@@ -30,9 +34,11 @@ body footer {
 .content .ui.progress.green.value {
     margin: 0.3em 0em 0em;
 }
+
 .ui.table tr th.left-merge {
     border-left: none;
 }
+
 td.header {
     background: #f9fafb;
 }
@@ -50,4 +56,9 @@ td.header {
 /* the size of main container when loading */
 .ui.main.container.dimmable.dimmed {
     min-height: 20em;
+}
+/* table row dimmer */
+tr td div.ui.dimmer {
+    border-top: 1px solid rgba(34, 36, 38, 0.1);
+    z-index: 1;
 }

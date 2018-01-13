@@ -4,3 +4,4 @@
 реализовать lifetimemanager, попробую сделать servicelocator для quertz, webapi,mvc. если не получится, то пользоваться одним host но надо его закинуть в конвертору и ещу куда нибдуь куда надо
 4. <input name="email" pla переименовать name в id
 5. username or email in login form
+6. нужны ли $this.$scope.$apply();

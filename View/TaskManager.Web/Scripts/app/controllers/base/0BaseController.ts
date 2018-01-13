@@ -64,6 +64,20 @@ namespace Controllers {
             $("#loader").hide();
         }
 
+        // shows busy in a table->tr
+        protected ShowBusyRow(row) {
+            row.addClass("dimmable dimmed");
+            row.find("td:first-child")
+                .append($('<div />').attr('class', 'ui active dimmer inverted')
+                    .append($('<div />').attr('class', 'ui loader')));
+        }
+
+        // hides busy in a table->tr
+        protected HideBusyRow(row) {
+            row.removeClass("dimmable dimmed");
+            row.find("td:first-child > .ui.dimmer").remove();
+        }
+
         protected DeleteLoader() {
             $("#loader").remove();
         }
