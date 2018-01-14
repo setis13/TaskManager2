@@ -22,7 +22,7 @@
                 <th class="one wide"></th>
                 <th class="three wide left-merge"></th>
                 <th class="four wide">Title</th>
-                <th class="eigth wide">Notes</th>
+                <th class="eigth wide">Comments</th>
             </tr>
         </thead>
         <tbody>
@@ -81,7 +81,50 @@
                     <p ng-bind-html="task.Description | nl2br"></p>
                 </td>
                 <td>
-                    22
+                    <div class="ui middle aligned divided list">
+                        <div class="item">
+                            <div class="center aligned">
+                                <a>show all comments</a>
+                            </div>
+                        </div>
+                        <div class="item">
+                                <div>
+                                    <span>
+                                        <b>1/15 Anton</b>
+                                    </span>
+                                    <div class="right floated content">
+                                        in progress&nbsp;<b>5h</b>&nbsp;<b>15%</b>
+                                    </div>
+                                </div>
+                            <div class="content">
+                                Description Description Description Description Description Description Description Description Description Description Description Description
+                            </div>
+                        </div>
+                        <div class="item">
+                                <div class="header">
+                                    <span>
+                                        <b>1/15 Anton</b>
+                                    </span>
+                                    <div class="right floated content">
+                                        <div class="ui label">
+                                            <i class="mail icon"></i> in progress
+                                        </div>
+                                        <div class="ui label">
+                                            <i class="mail icon"></i> 5h
+                                        </div>
+                                        <div class="ui label">
+                                            <i class="mail icon"></i> 10%
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="content">
+                                Description Description Description Description Description Description Description Description Description Description Description Description
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="ui button">Add</div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <!-- subtasks -->
