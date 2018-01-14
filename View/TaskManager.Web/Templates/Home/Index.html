@@ -78,7 +78,7 @@
                     <p>
                         <b>{{task.Title}}</b>
                     </p>
-                    <p>{{task.Description}}</p>
+                    <p ng-bind-html="task.Description | nl2br"></p>
                 </td>
                 <td>
                     22
@@ -103,15 +103,15 @@
                         </div>
                         <div>
                             <span class="label">Date</span>&nbsp;
-                            <span class="value">{{task.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
+                            <span class="value">{{subTask.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
                         </div>
                         <div>
                             <span class="label">Status</span>&nbsp;
-                            <span class="value">{{TaskStatusNames[task.Status]}}</span>
+                            <span class="value">{{TaskStatusNames[subTask.Status]}}</span>
                         </div>
                         <div>
                             <span class="label">Actual Hours</span>
-                            <span class="value">{{task.ActualWorkHours | number:1}}h / {{task.TotalWorkHours | number:1}}h</span>
+                            <span class="value">{{subTask.ActualWorkHours | number:1}}h / {{subTask.TotalWorkHours | number:1}}h</span>
                         </div>
                         <div class="ui progress green value" id="example2" data-percent="15">
                             <div class="bar">
@@ -124,7 +124,7 @@
                     <p>
                         <b>{{subTask.Title}}</b>
                     </p>
-                    <p>{{subTask.Description}}</p>
+                    <p ng-bind-html="subTask.Description | nl2br"></p>
                 </td>
                 <td class="seven wide">
                     22

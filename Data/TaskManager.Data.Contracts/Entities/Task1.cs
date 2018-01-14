@@ -15,8 +15,20 @@ namespace TaskManager.Data.Contracts.Entities {
         [DataType("VARCHAR"), MaxLength(1024)]
         public string Description { get; set; }
         public byte Priority { get; set; }
-        public TimeSpan ActualWork { get; set; }
-        public TimeSpan TotalWork { get; set; }
+        // more then 24 hours
+        //http://qaru.site/questions/41643/how-do-i-map-timespan-with-greater-than-24-hours-to-sql-server-code-first
+        public Int64 ActualWorkTicks { get; set; }
+        [NotMapped]
+        public TimeSpan ActualWork {
+            get { return TimeSpan.FromTicks(ActualWorkTicks); }
+            set { ActualWorkTicks = value.Ticks; }
+        }
+        public Int64 TotalWorkTicks { get; set; }
+        [NotMapped]
+        public TimeSpan TotalWork {
+            get { return TimeSpan.FromTicks(TotalWorkTicks); }
+            set { TotalWorkTicks = value.Ticks; }
+        }
         public float Progress { get; set; }
         public byte Status { get; set; }
 

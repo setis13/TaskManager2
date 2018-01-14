@@ -13,14 +13,25 @@
         public SubTasks: Array<SubTaskModel>;
         public UserIds: Array<string>;
         //public Comments: Array<CommentModel>;
-        
+
         //extra
+        private _totalWork: string;
         public get TotalWorkHours(): string {
-            return moment.duration(this.TotalWork).asHours().toFixed(1);
+            return this._totalWork;
         }
         public set TotalWorkHours(str: string) {
+            this._totalWork = str;
             var value = parseFloat(str);
-            this.TotalWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d [days] hh:mm:ss");
+            this.TotalWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
+        }
+        private _actualWork: string;
+        public get ActualWorkHours(): string {
+            return this._actualWork;
+        }
+        public set ActualWorkHours(str: string) {
+            this._actualWork = str;
+            var value = parseFloat(str);
+            this.ActualWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
         }
 
         constructor(data: any) {
@@ -35,8 +46,8 @@
                 this.Title = data.Title;
                 this.Description = data.Description;
                 this.Priority = data.Priority;
-                this.ActualWork = moment.duration(data.ActualWork).format("d [days] hh:mm:ss");
-                this.TotalWork = moment.duration(data.TotalWork).format("d [days] hh:mm:ss");
+                this._actualWork = moment.duration(data.ActualWork).asHours().toFixed(1);
+                this._totalWork = moment.duration(data.TotalWork).asHours().toFixed(1);
                 this.Progress = data.Progress;
                 this.Status = data.Status;
                 for (var i = 0; i < data.SubTasks.length; i++) {
@@ -60,14 +71,15 @@
             clone.Title = this.Title;
             clone.Description = this.Description;
             clone.Priority = this.Priority;
-            clone.ActualWork = this.ActualWork;
-            clone.TotalWork = this.TotalWork;
+            clone._actualWork = this._actualWork;
+            clone._totalWork = this._totalWork;
             clone.Progress = this.Progress;
             clone.Status = this.Status;
 
-            for (var i = 0; i < this.SubTasks.length; i++) {
-                clone.SubTasks.push(this.SubTasks[i].Clone());
-            }
+            // skips subtasks for saving only the task
+            //for (var i = 0; i < this.SubTasks.length; i++) {
+            //    clone.SubTasks.push(this.SubTasks[i].Clone());
+            //}
             for (var i = 0; i < this.UserIds.length; i++) {
                 clone.UserIds.push(this.UserIds[i]);
             }

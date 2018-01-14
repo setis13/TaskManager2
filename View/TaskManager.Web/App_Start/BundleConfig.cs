@@ -72,6 +72,8 @@ namespace TaskManager.Web {
                     "~/Scripts/app/controllers", "*.js", true)
                 .IncludeDirectory(
                     "~/Scripts/app/", "*.js", false)
+                .IncludeDirectory(
+                    "~/Scripts/app/filters", "*.js", false)
             );
 
             bundles.Add(new StyleBundle("~/Content/Common")
