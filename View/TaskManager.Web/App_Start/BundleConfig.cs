@@ -56,6 +56,7 @@ namespace TaskManager.Web {
                     "~/Scripts/linq.js",
                     "~/Scripts/toastr.js",
                     "~/Scripts/semantic.js",
+                    "~/Scripts/semantic-calendar.js",
                     "~/Content/components/*.js",
                     "~/Scripts/angular.js",
                     "~/Scripts/angular-route.js",
@@ -80,6 +81,7 @@ namespace TaskManager.Web {
                 .Include(
                     "~/Content/toastr.css",
                     "~/Content/semantic.css",
+                    "~/Content/semantic-calendar.css",
                     "~/Content/components/*.css",
                     "~/Content/Site.css"
                     ));

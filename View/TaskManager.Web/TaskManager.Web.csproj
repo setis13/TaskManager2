@@ -395,6 +395,8 @@
     <Content Include="Content\components\visit.min.js" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\logo_64.png" />
+    <Content Include="Content\semantic-calendar.css" />
+    <Content Include="Content\semantic-calendar.min.css" />
     <Content Include="Content\semantic.css" />
     <Content Include="Content\semantic.min.css" />
     <Content Include="Content\Site.css" />
@@ -432,6 +434,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\angular-sanitize.min.js.map" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -445,6 +451,8 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\semantic-calendar.js" />
+    <Content Include="Scripts\semantic-calendar.min.js" />
     <Content Include="Scripts\semantic.js" />
     <Content Include="Scripts\semantic.min.js" />
     <Content Include="Scripts\toastr.js" />
@@ -528,6 +536,7 @@
     <TypeScriptCompile Include="Scripts\app\models\base\1BaseModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\AccountModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\ProjectModel.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\items\CommentModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\ProjectsModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\UserModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\HomeModel.ts" />

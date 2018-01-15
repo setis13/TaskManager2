@@ -6,12 +6,14 @@
         public Tasks: Array<TaskModel>;
         public EditTask: TaskModel;
         public EditSubTask: SubTaskModel;
+        public EditComment: CommentModel;
 
         constructor() {
             super();
 
             this.EditTask = null;
             this.EditSubTask = null;
+            this.EditComment = null;
         }
 
         public SetData(data: any) {
@@ -58,6 +60,36 @@
                 .Where(e => e.EntityId === projectId)
                 .Select(e => e.Title)
                 .FirstOrDefault(projectId.substr(0, 8));
+        }
+        public TaskIndexByComment(comment: CommentModel): string {
+            if (comment == null) {
+                return null;
+            }
+            var taskId = null;
+            // takes taskId by subTaskId
+            if (this.EditComment.SubTaskId != null) {
+                var subtask = Enumerable.From(this.Tasks)
+                    .SelectMany(e => e.SubTasks)
+                    .FirstOrDefault(null, e => e.EntityId === this.EditComment.SubTaskId);
+                if (subtask != null) {
+                    taskId = this.EditComment.TaskId;
+                } else {
+                    return this.EditComment.SubTaskId.substr(0, 8);
+                }
+            }
+            // takes taskId
+            else if (this.EditComment.TaskId != null) {
+                taskId = this.EditComment.TaskId;
+            }
+            // gets task title
+            if (taskId != null) {
+                return Enumerable.From(this.Tasks)
+                    .Where(e => e.EntityId === taskId)
+                    .Select(e => e.Index.toString())
+                    .FirstOrDefault(taskId.substr(0, 8));
+            } else {
+                return "?";
+            }
         }
 
         public UserNames(userIds: Array<string>): string {

@@ -7,7 +7,9 @@ namespace TaskManager.Logic.Contracts.Dtos {
         public Guid? TaskId { get; set; }
         public Guid? SubTaskId { get; set; }
         public DateTime Date { get; set; }
-        public string Description { get; set; }
+        public byte Status { get; set; }
         public TimeSpan ActualWork { get; set; }
+        public float Percent { get; set; }
+        public string Description { get; set; }
     }
 }

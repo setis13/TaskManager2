@@ -1,5 +1,6 @@
 ﻿declare var form: any;
 declare var form2: any;
+declare var form3: any;
 declare var TaskPriorityNames: { [id: number]: string; };
 declare var TaskStatusNames: { [id: number]: string; };
 
@@ -16,6 +17,7 @@ namespace Controllers {
 
         private _taskModal: any;
         private _subTaskModal: any;
+        private _commentModal: any;
 
         constructor($scope: any, $http: ng.IHttpProvider, $location: ng.ILocationService) {
             super($scope, $http, $location);
@@ -55,6 +57,19 @@ namespace Controllers {
                     $this.$scope.$apply();
                 }
             });
+            this._commentModal = (<any>$("#edit-comment-modal")).modal({
+                closable: false,
+                onShow() {
+                    (<any>$('#date')).calendar({
+                        type: 'date'
+                    });
+                },
+                onHidden() {
+                    $this.Model.EditComment = null;
+                    $this.ResetForm(form3);
+                    $this.$scope.$apply();
+                }
+            });
 
             $scope.Model = this.Model = new Models.HomeModel();
 
@@ -69,7 +84,7 @@ namespace Controllers {
             $scope.TaskOk_OnClick = this.TaskOk_OnClick;
             $scope.TaskCancel_OnClick = this.TaskCancel_OnClick;
             $scope.TaskDelete_OnClick = this.TaskDelete_OnClick;
-
+            
             $scope.CreateSubTask_OnClick = this.CreateSubTask_OnClick;
             $scope.EditSubTask_OnClick = this.EditSubTask_OnClick;
             $scope.UpSubTask_OnClick = this.UpSubTask_OnClick;
@@ -77,6 +92,9 @@ namespace Controllers {
             $scope.SubTaskOk_OnClick = this.SubTaskOk_OnClick;
             $scope.SubTaskCancel_OnClick = this.SubTaskCancel_OnClick;
             $scope.SubTaskDelete_OnClick = this.SubTaskDelete_OnClick;
+
+            $scope.AddTaskComment_OnClick = this.AddTaskComment_OnClick;
+            $scope.AddSubTaskComment_OnClick = this.AddSubTaskComment_OnClick;
 
             this.Load();
         }
@@ -134,6 +152,29 @@ namespace Controllers {
             var clone = subtask.Clone();
             this.Model.EditSubTask = clone;
             this._subTaskModal.modal('show');
+        }
+
+        public AddTaskComment_OnClick = (task: Models.TaskModel) => {
+            var comment = new Models.CommentModel(null);
+            comment.TaskId = task.EntityId;
+            this.Model.EditComment = comment;
+            this._commentModal.modal('show');
+        }
+        public AddSubTaskComment_OnClick = (subtask: Models.SubTaskModel) => {
+            var comment = new Models.CommentModel(null);
+            comment.SubTaskId = subtask.EntityId;
+            this.Model.EditComment = comment;
+            this._commentModal.modal('show');
+        }
+        public EditTaskComment_OnClick = (task: Models.TaskModel, comment: Models.CommentModel) => {
+            var clone = comment.Clone();
+            this.Model.EditComment = clone;
+            this._commentModal.modal('show');
+        }
+        public EditSubTaskComment_OnClick = (task: Models.SubTaskModel, comment: Models.CommentModel) => {
+            var clone = comment.Clone();
+            this.Model.EditComment = clone;
+            this._commentModal.modal('show');
         }
 
         public UpSubTask_OnClick = (subtask: Models.SubTaskModel) => {

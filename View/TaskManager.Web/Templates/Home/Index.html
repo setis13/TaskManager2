@@ -81,48 +81,39 @@
                     <p ng-bind-html="task.Description | nl2br"></p>
                 </td>
                 <td>
-                    <div class="ui middle aligned divided list">
+                    <div class="ui middle aligned divided items">
                         <div class="item">
-                            <div class="center aligned">
-                                <a>show all comments</a>
+                            <div class="content">
+                                <div class="center aligned">
+                                    <a>show all comments</a>
+                                </div>
                             </div>
                         </div>
                         <div class="item">
-                                <div>
-                                    <span>
-                                        <b>1/15 Anton</b>
-                                    </span>
-                                    <div class="right floated content">
-                                        in progress&nbsp;<b>5h</b>&nbsp;<b>15%</b>
+                            <div class="content">
+                                <div class="ui small header">1/15 Anton</div>
+                                &nbsp;|&nbsp;
+                                <a href="" ng-click="EditTask_OnClick(task)">edit</a>
+                                <div class="right floated">
+                                    <div class="ui blue label">
+                                        in progress
+                                    </div>
+                                    <div class="ui red label">
+                                        5h
+                                    </div>
+                                    <div class="ui green label">
+                                        10%
                                     </div>
                                 </div>
-                            <div class="content">
-                                Description Description Description Description Description Description Description Description Description Description Description Description
-                            </div>
-                        </div>
-                        <div class="item">
-                                <div class="header">
-                                    <span>
-                                        <b>1/15 Anton</b>
-                                    </span>
-                                    <div class="right floated content">
-                                        <div class="ui label">
-                                            <i class="mail icon"></i> in progress
-                                        </div>
-                                        <div class="ui label">
-                                            <i class="mail icon"></i> 5h
-                                        </div>
-                                        <div class="ui label">
-                                            <i class="mail icon"></i> 10%
-                                        </div>
-                                    </div>
+                                <div class="description">
+                                    Description Description Description Description Description Description Description Description Description Description Description Description
                                 </div>
-                            <div class="content">
-                                Description Description Description Description Description Description Description Description Description Description Description Description
                             </div>
                         </div>
                         <div class="item">
-                            <div class="ui button">Add</div>
+                            <div class="content">
+                                <button class="ui primary button" ng-click="AddTaskComment_OnClick(task)">Add</button>
+                            </div>
                         </div>
                     </div>
                 </td>
@@ -184,7 +175,7 @@
 <!-- Edit Task Modal -->
 <div id="edit-task-modal" class="ui small modal">
     <i class="close icon" ng-click="TaskCancel_OnClick()"></i>
-    <div class="header">{{Model.EditTask.EntityId == null ? 'Create Task' : 'Edit Task ' + "'" + Model.EditTask.Title + "'"}}</div>
+    <div class="header">{{Model.EditTask.EntityId == null ? 'Create Task' : 'Edit Task #' + Model.EditTask.Index}}</div>
     <div id="form-task" class="ui validate form content">
         <div class="ui red message ng-hide" ng-hide="Model.EditTask.Error == null">
             <p ng-bind-html="Model.EditTask.Error"></p>
@@ -256,7 +247,7 @@
 <!-- Edit SubTask Modal -->
 <div id="edit-subtask-modal" class="ui small modal">
     <i class="close icon" ng-click="SubTaskCancel_OnClick()"></i>
-    <div class="header">{{Model.EditSubTask.EntityId == null ? 'Create SubTask' : 'Edit SubTask ' + "'" + Model.EditSubTask.Title + "'"}}</div>
+    <div class="header">{{Model.EditSubTask.EntityId == null ? 'Create SubTask' : 'Edit SubTask #' + Model.EditSubTask.Order}}</div>
     <div id="form-subtask" class="ui validate form content">
         <div class="ui red message ng-hide" ng-hide="Model.EditSubTask.Error == null">
             <p ng-bind-html="Model.EditSubTask.Error"></p>
@@ -299,6 +290,78 @@
              ng-click="SubTaskOk_OnClick()"
              lb-busy="Saving">
             {{Model.EditSubTask.EntityId == null ? 'Create' : 'Save'}}
+        </div>
+    </div>
+</div>
+<!-- Edit Comment Modal -->
+<div id="edit-comment-modal" class="ui small modal">
+    <i class="close icon" ng-click="CommentCancel_OnClick()"></i>
+    <div class="header">{{(Model.EditComment.EntityId == null ? 'Create Comment on the Task #' : 'Edit Comment on the Task #') + Model.TaskIndexByComment(Model.EditComment)}}</div>
+    <div id="form-comment" class="ui validate form content">
+        <div class="ui red message ng-hide" ng-hide="Model.EditComment.Error == null">
+            <p ng-bind-html="Model.EditComment.Error"></p>
+        </div>
+        <div class="field">
+            <label>Date</label>
+
+            <div class="ui calendar" id="date">
+                <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" placeholder="Date" ng-model="Model.EditComment.Date">
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Status</label>
+            <!-- Semantic UI Dropdown not getting binded with AngularJS Model https://github.com/Semantic-Org/Semantic-UI/issues/1913 -->
+            <select id="status" class="ui dropdown" ng-model="Model.EditComment.Status">
+                <option value="">Status</option>
+                <option ng-repeat="(id, name) in TaskStatusNames" value="{{id}}">{{name}}</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Actual Hours</label>
+            <div class="ui right labeled input">
+                <input id="actual-hours" placeholder="Actual Hours" type="text"
+                       ng-model="Model.EditComment.ActualWorkHours"
+                       ng-model-options="{ updateOn: 'blur'}">
+                <div class="ui label">
+                    hours
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Progress</label>
+            <div class="ui right labeled input">
+                <input id="progress" placeholder="Progress" type="text"
+                       ng-model="Model.EditComment.Progress">
+                <div class="ui label">
+                    %
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <textarea placeholder="Description" rows="2"
+                      ng-model="Model.EditComment.Description"></textarea>
+        </div>
+        <div class="ui error message"></div>
+    </div>
+    <div class="actions">
+        <div class="ui red button left floated"
+             ng-click="CommentDelete_OnClick()"
+             ng-show="Model.EditComment.EntityId != null"
+             lb-busy="Deleting">
+            Delete
+        </div>
+        <div class="ui clear button"
+             ng-click="CommentCancel_OnClick()">
+            Cancel
+        </div>
+        <div class="ui primary button"
+             ng-click="CommentOk_OnClick()"
+             lb-busy="Saving">
+            {{Model.EditComment.EntityId == null ? 'Create' : 'Save'}}
         </div>
     </div>
 </div>
@@ -370,6 +433,12 @@
                         }
                     ]
                 }
+            }
+        });
+
+    form3 = $('#form-comment')
+        .form({
+            fields: {
             }
         });
 </script>

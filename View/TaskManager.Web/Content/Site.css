@@ -57,7 +57,8 @@ td.header {
 .ui.main.container.dimmable.dimmed {
     min-height: 20em;
 }
-/* table row dimmer */
+
+/*** table row dimmer ***/
 tr td div.ui.dimmer {
     border-top: 1px solid rgba(34, 36, 38, 0.1);
     z-index: 1;
