@@ -12,7 +12,7 @@
         public Status: Enums.TaskStatusEnum;
         public SubTasks: Array<SubTaskModel>;
         public UserIds: Array<string>;
-        //public Comments: Array<CommentModel>;
+        public Comments: Array<CommentModel>;
 
         //extra
         private _totalWork: string;
@@ -52,6 +52,9 @@
                 this.Status = data.Status;
                 for (var i = 0; i < data.SubTasks.length; i++) {
                     this.SubTasks.push(new SubTaskModel(data.SubTasks[i]));
+                }
+                for (var i = 0; i < data.Comments.length; i++) {
+                    this.Comments.push(new CommentModel(data.Comments[i]));
                 }
                 for (var i = 0; i < data.UserIds.length; i++) {
                     this.UserIds.push(data.UserIds[i]);

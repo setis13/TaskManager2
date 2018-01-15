@@ -9,7 +9,7 @@ namespace TaskManager.Logic.Contracts.Dtos {
         public DateTime Date { get; set; }
         public byte Status { get; set; }
         public TimeSpan ActualWork { get; set; }
-        public float Percent { get; set; }
+        public float Progress { get; set; }
         public string Description { get; set; }
     }
 }

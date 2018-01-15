@@ -3,11 +3,11 @@
         public CompanyId: string;
         public TaskId: string;
         public SubTaskId: string;
-        public Date: moment.Moment;
+        public Date: string;
         public Status: Enums.TaskStatusEnum;
-        public Description: string;
         public ActualWork: string;
         public Progress: number;
+        public Description: string;
 
         private _actualWork: string;
         public get ActualWorkHours(): string {
@@ -19,6 +19,16 @@
             this.ActualWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
         }
 
+        private _dateMoment: moment.Moment;
+        public get DateMoment(): moment.Moment {
+            return this._dateMoment;
+        }
+        public set DateMoment(m: moment.Moment) {
+            this._dateMoment = m;
+            this.Date = this._dateMoment.toString();
+            console.log(this.Date);
+        }
+
         constructor(data: any) {
             super(data);
 
@@ -26,7 +36,7 @@
                 this.CompanyId = data.CompanyId;
                 this.TaskId = data.TaskId;
                 this.SubTaskId = data.SubTaskId;
-                this.Date = moment(data.Date);
+                this.DateMoment = moment(data.Date);
                 this.Status = data.Status;
                 this.Description = data.Description;
                 this._actualWork = moment.duration(data.ActualWork).asHours().toFixed(1);
@@ -45,7 +55,7 @@
             clone.CompanyId = this.CompanyId;
             clone.TaskId = this.TaskId;
             clone.SubTaskId = this.SubTaskId;
-            clone.Date = this.Date.clone();
+            clone.DateMoment = this.DateMoment.clone();
             clone.Status = this.Status;
             clone.Description = this.Description;
             clone._actualWork = this._actualWork;

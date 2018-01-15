@@ -10,9 +10,11 @@ namespace TaskManager.Data.Contracts.Entities {
         public Guid? SubTaskId { get; set; }
 
         public DateTime Date { get; set; }
+        public byte Status { get; set; }
+        public TimeSpan ActualWork { get; set; }
+        public float Progress { get; set; }
         [DataType("VARCHAR"), MaxLength(2048)]
         public string Description { get; set; }
-        public TimeSpan ActualWork { get; set; }
 
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }

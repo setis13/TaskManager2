@@ -56,5 +56,17 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="userDto">user who changes the subtask</param>
         /// <returns>Changed subtasks</returns>
         IEnumerable<SubTaskDto> DownSubTask(Guid subtaskId, UserDto userDto);
+
+        /// <summary>
+        ///     Creates or Updates comment </summary>
+        /// <param name="commentDto">comment DTO</param>
+        /// <param name="userDto">user who updates the comment</param>
+        void SaveComment(CommentDto commentDto, UserDto userDto);
+
+        /// <summary>
+        ///     Deletes comment by id </summary>
+        /// <param name="commentId">comment id</param>
+        /// <param name="userDto">user who deletes the comment</param>
+        void DeleteComment(Guid commentId, UserDto userDto);
     }
 }

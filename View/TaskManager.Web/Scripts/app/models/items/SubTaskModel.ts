@@ -9,7 +9,7 @@
         public TotalWork: string;
         public Progress: number;
         public Status: Enums.TaskStatusEnum;
-        //public Comments: Array<CommentModel>;
+        public Comments: Array<CommentModel>;
 
         //extra
         private _totalWork: string;
@@ -44,10 +44,10 @@
                 this._totalWork = moment.duration(data.TotalWork).asHours().toFixed(1);
                 this.Progress = data.Progress;
                 this.Status = data.Status;
-                //this.Comments = new Array();
-                //for (var i = 0; i < data.Comments.length; i++) {
-                //    this.Comments.push(new CommentsModel(data.subtasks[i]));
-                //}
+                this.Comments = new Array();
+                for (var i = 0; i < data.Comments.length; i++) {
+                    this.Comments.push(new CommentModel(data.Comments[i]));
+                }
             }
         }
 

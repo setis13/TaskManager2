@@ -237,5 +237,38 @@ namespace TaskManager.Logic.Services {
                 UnitOfWork.SaveChanges();
             }
         }
+
+        /// <summary>
+        ///     Creates or Updates comment </summary>
+        /// <param name="commentDto">comment DTO</param>
+        /// <param name="userDto">user who updates the comment</param>
+        public void SaveComment(CommentDto commentDto, UserDto userDto) {
+            var rep = UnitOfWork.GetRepository<Comment>();
+            var model = rep.GetById(commentDto.EntityId);
+            if (model == null) {
+                commentDto.CompanyId = userDto.CompanyId;
+                model = this.Mapper.Map<Comment>(commentDto);
+                rep.Insert(model, userDto.Id);
+            } else {
+                commentDto.CompanyId = userDto.CompanyId;
+                this.Mapper.Map(commentDto, model);
+                rep.Update(model, userDto.Id);
+            }
+            this.UnitOfWork.SaveChanges();
+
+        }
+
+        /// <summary>
+        ///     Deletes comment by id </summary>
+        /// <param name="commentId">comment id</param>
+        /// <param name="userDto">user who deletes the comment</param>
+        public void DeleteComment(Guid commentId, UserDto userDto) {
+            var rep = UnitOfWork.GetRepository<Comment>();
+            var model = rep.GetById(commentId);
+            if (model != null && model.CompanyId == userDto.CompanyId) {
+                rep.MarkAsDelete(model, userDto.Id);
+                this.UnitOfWork.SaveChanges();
+            }
+        }
     }
 }

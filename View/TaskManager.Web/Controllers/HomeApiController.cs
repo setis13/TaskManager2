@@ -170,5 +170,45 @@ namespace TaskManager.Web.Controllers {
                 return WebApiResult.Failed(e.Message);
             }
         }
+
+        /// <summary>
+        ///     POST: /api/Home/SaveComment </summary>
+        [HttpPost, Route("SaveComment")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<WebApiResult> SaveComment(CommentDto comment) {
+            try {
+#if DEBUG
+                await Task.Delay(500);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    this.ServicesHost.GetService<ITaskService>().SaveComment(comment, GetUserDto());
+                    return WebApiResult.Succeed();
+                });
+            } catch (Exception e) {
+                Logger.e("SaveComment", e);
+                return WebApiResult.Failed(e.Message);
+            }
+        }
+
+        /// <summary>
+        ///     POST: /api/Home/DeleteComment </summary>
+        [HttpPost, Route("DeleteComment")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<WebApiResult> DeleteComment(Guid id) {
+            try {
+#if DEBUG
+                await Task.Delay(500);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    this.ServicesHost.GetService<ITaskService>().DeleteComment(id, GetUserDto());
+                    return WebApiResult.Succeed();
+                });
+            } catch (Exception e) {
+                Logger.e("DeleteComment", e);
+                return WebApiResult.Failed(e.Message);
+            }
+        }
     }
 }

@@ -95,6 +95,11 @@ namespace Controllers {
 
             $scope.AddTaskComment_OnClick = this.AddTaskComment_OnClick;
             $scope.AddSubTaskComment_OnClick = this.AddSubTaskComment_OnClick;
+            $scope.EditTaskComment_OnClick = this.EditTaskComment_OnClick;
+            $scope.EditSubTaskComment_OnClick = this.EditSubTaskComment_OnClick;
+            $scope.CommentOk_OnClick = this.CommentOk_OnClick;
+            $scope.CommentCancel_OnClick = this.CommentCancel_OnClick;
+            $scope.CommentDelete_OnClick = this.CommentDelete_OnClick;
 
             this.Load();
         }
@@ -171,7 +176,7 @@ namespace Controllers {
             this.Model.EditComment = clone;
             this._commentModal.modal('show');
         }
-        public EditSubTaskComment_OnClick = (task: Models.SubTaskModel, comment: Models.CommentModel) => {
+        public EditSubTaskComment_OnClick = (subtask: Models.SubTaskModel, comment: Models.CommentModel) => {
             var clone = comment.Clone();
             this.Model.EditComment = clone;
             this._commentModal.modal('show');
@@ -367,6 +372,77 @@ namespace Controllers {
                         $this.Load();
                     } else {
                         $this.Model.EditSubTask.Error = result.error;
+                        $this.$scope.$apply();
+                    }
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    toastr.error(jqXhr.statusText);
+                }
+            });
+        }
+
+        public CommentOk_OnClick = () => {
+            this.Model.EditComment.Error = null;
+            if (!super.ValidateForm(form3)) {
+                this._commentModal.modal("refresh");
+                return;
+            }
+
+            var $this = this;
+            $.ajax({
+                url: '/api/Home/SaveComment?id=' + this.Model.EditComment.EntityId,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(this.Model.EditComment),
+                beforeSend(xhr) {
+                    $this.ShowBusySaving();
+                },
+                complete() {
+                    $this.HideBusySaving();
+                    $this.$scope.$apply();
+                },
+                success: (result) => {
+                    if (result.success) {
+                        this._commentModal.modal('hide');
+                        $this.Load();
+                    } else {
+                        $this.Model.EditComment.Error = result.error;
+                        $this.$scope.$apply();
+                    }
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    toastr.error(jqXhr.statusText);
+                }
+            });
+        }
+
+        public CommentCancel_OnClick = () => {
+            this._commentModal.modal('hide');
+        }
+
+        public CommentDelete_OnClick = () => {
+            this.Model.EditComment.Error = null;
+            var $this = this;
+            $.ajax({
+                url: '/api/Home/DeleteComment?id=' + this.Model.EditComment.EntityId,
+                type: 'POST',
+                data: {},
+                beforeSend(xhr) {
+                    $this.ShowBusyDeleting();
+                },
+                complete() {
+                    $this.HideBusyDeleting();
+                    $this.$scope.$apply();
+                },
+                success: (result) => {
+                    if (result.success) {
+                        this._commentModal.modal('hide');
+                        $this.Load();
+                    } else {
+                        $this.Model.EditComment.Error = result.error;
                         $this.$scope.$apply();
                     }
                 },

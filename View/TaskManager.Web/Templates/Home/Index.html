@@ -89,25 +89,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="item">
+                        <div class="item" ng-repeat="comment in task.Comments">
                             <div class="content">
                                 <div class="ui small header">1/15 Anton</div>
                                 &nbsp;|&nbsp;
-                                <a href="" ng-click="EditTask_OnClick(task)">edit</a>
+                                <a href="" ng-click="EditTaskComment_OnClick(task, comment)">edit</a>
                                 <div class="right floated">
                                     <div class="ui blue label">
-                                        in progress
+                                        {{TaskStatusNames[task.Status]}}
                                     </div>
                                     <div class="ui red label">
-                                        5h
+                                        {{task.ActualWorkHours | number:1}}h
                                     </div>
                                     <div class="ui green label">
-                                        10%
+                                        {{task.Progress | number:2}}%
                                     </div>
                                 </div>
                                 <div class="description">
-                                    Description Description Description Description Description Description Description Description Description Description Description Description
-                                </div>
+                                    <p ng-bind-html="comment.Description | nl2br"></p>
+                                    </div>
                             </div>
                         </div>
                         <div class="item">
@@ -303,11 +303,10 @@
         </div>
         <div class="field">
             <label>Date</label>
-
             <div class="ui calendar" id="date">
                 <div class="ui input left icon">
                     <i class="calendar icon"></i>
-                    <input type="text" placeholder="Date" ng-model="Model.EditComment.Date">
+                    <input type="text" placeholder="Date" ng-model="Model.EditComment.DateMoment">
                 </div>
             </div>
         </div>
@@ -439,6 +438,34 @@
     form3 = $('#form-comment')
         .form({
             fields: {
+                actual_hours: {
+                    identifier: 'actual-hours',
+                    rules: [
+                        {
+                            type: 'regExp[/^[0-9.]{1,10}$/]',
+                            prompt: 'Please enter valid actual hours'
+                        }
+                        /* implement regex: Please enter other than zero */
+                    ]
+                },
+                date: {
+                    identifier: 'date',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter a date'
+                        }
+                    ]
+                },
+                status: {
+                    identifier: 'status',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Please enter a status'
+                        }
+                    ]
+                },
             }
         });
 </script>
