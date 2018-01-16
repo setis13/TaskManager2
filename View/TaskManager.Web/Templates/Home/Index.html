@@ -435,7 +435,6 @@
                 }
             }
         });
-    console.log("check validator of #form-comment");
     form3 = $('#form-comment')
         .form({
             fields: {
@@ -443,7 +442,7 @@
                     identifier: 'actual-hours',
                     rules: [
                         {
-                            type: 'regExp[/^[0-9.]{1,10}$/]',
+                            type: 'regExp[/^[0-9.]{0,10}$/]',
                             prompt: 'Please enter valid actual hours'
                         }
                         /* implement regex: Please enter other than zero */

@@ -15,8 +15,12 @@
         }
         public set ActualWorkHours(str: string) {
             this._actualWork = str;
-            var value = parseFloat(str);
-            this.ActualWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
+            if (str != null && str !== '') {
+                var value = parseFloat(str);
+                this.ActualWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
+            } else {
+                this.ActualWork = null;
+            }
         }
 
         private _dateMoment: moment.Moment;
@@ -28,10 +32,18 @@
             this.Date = this._dateMoment.format("YYYY-MM-DD");
         }
         public get ProgressPercent(): number {
-            return this.Progress * 100;
+            if (this.Progress === null) {
+                return null;
+            } else {
+                return this.Progress * 100;
+            }
         }
         public set ProgressPercent(p: number) {
-            this.Progress = p / 100;
+            if (p != null && p !== <any>'') {
+                this.Progress = p / 100;
+            } else {
+                this.Progress = null;
+            }
         }
 
         constructor(data: any) {
@@ -43,11 +55,11 @@
                 this.SubTaskId = data.SubTaskId;
                 this.DateMoment = moment(data.Date);
                 this.Status = data.Status.toString();
-                this.Description = data.Description;
-                this.ActualWorkHours = moment.duration(data.ActualWork).asHours().toFixed(1);
+                this.Description = data.Description !== null ? data.Description : '';
+                this.ActualWorkHours = data.ActualWork != null ? moment.duration(data.ActualWork).asHours().toFixed(1) : null;
                 this.Progress = data.Progress;
             } else {
-                this.DateMoment = moment(null);
+                this.DateMoment = moment();
             }
         }
 

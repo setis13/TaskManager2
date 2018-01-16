@@ -135,7 +135,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        this.Model.SetData(result.data);
+                        $this.Model.SetData(result.data);
                     } else {
                         $this.Error(result.error);
                     }
@@ -279,7 +279,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        this._taskModal.modal('hide');
+                        $this._taskModal.modal('hide');
                         $this.Load();
                     } else {
                         $this.Model.EditTask.Error = result.error;
@@ -313,7 +313,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        this._taskModal.modal('hide');
+                        $this._taskModal.modal('hide');
                         $this.Load();
                     } else {
                         $this.Model.EditTask.Error = result.error;
@@ -350,7 +350,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        this._subTaskModal.modal('hide');
+                        $this._subTaskModal.modal('hide');
                         $this.Load();
                     } else {
                         $this.Model.EditSubTask.Error = result.error;
@@ -384,7 +384,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        this._subTaskModal.modal('hide');
+                        $this._subTaskModal.modal('hide');
                         $this.Load();
                     } else {
                         $this.Model.EditSubTask.Error = result.error;
@@ -421,7 +421,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        this._commentModal.modal('hide');
+                        $this._commentModal.modal('hide');
                         $this.Load();
                     } else {
                         $this.Model.EditComment.Error = result.error;
@@ -455,7 +455,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        this._commentModal.modal('hide');
+                        $this._commentModal.modal('hide');
                         $this.Load();
                     } else {
                         $this.Model.EditComment.Error = result.error;

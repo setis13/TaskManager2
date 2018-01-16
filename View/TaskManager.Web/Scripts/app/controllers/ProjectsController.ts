@@ -50,7 +50,7 @@ namespace Controllers {
                 success: (result) => {
                     if (result.success) {
                         $this.$scope.$apply();
-                        this.Model.SetData(result.data);
+                        $this.Model.SetData(result.data);
                     } else {
                         $this.Error(result.error);
                     }
@@ -131,7 +131,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        this._projectModal.modal('hide');
+                        $this._projectModal.modal('hide');
                         $this.Load();
                     } else {
                         $this.Model.EditProject.Error = result.error;
