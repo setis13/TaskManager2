@@ -63,3 +63,18 @@ tr td div.ui.dimmer {
     border-top: 1px solid rgba(34, 36, 38, 0.1);
     z-index: 1;
 }
+
+/*** fixed items ***/
+td.tasks-comments > .item {
+    margin-bottom: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+}
+
+td.tasks-comments > .ui.items {
+    margin-top: 0;
+}
+
+td.tasks-comments > .ui.divided.items > .item {
+    padding: 0.5em 0em;
+}

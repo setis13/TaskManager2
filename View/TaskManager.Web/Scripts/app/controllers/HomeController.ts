@@ -19,6 +19,9 @@ namespace Controllers {
         private _subTaskModal: any;
         private _commentModal: any;
 
+        // tasks with all comments
+        private ShowAllComments: Array<string> = new Array();
+
         constructor($scope: any, $http: ng.IHttpProvider, $location: ng.ILocationService) {
             super($scope, $http, $location);
 
@@ -101,7 +104,7 @@ namespace Controllers {
             $scope.TaskOk_OnClick = this.TaskOk_OnClick;
             $scope.TaskCancel_OnClick = this.TaskCancel_OnClick;
             $scope.TaskDelete_OnClick = this.TaskDelete_OnClick;
-            
+
             $scope.CreateSubTask_OnClick = this.CreateSubTask_OnClick;
             $scope.EditSubTask_OnClick = this.EditSubTask_OnClick;
             $scope.UpSubTask_OnClick = this.UpSubTask_OnClick;
@@ -117,6 +120,10 @@ namespace Controllers {
             $scope.CommentOk_OnClick = this.CommentOk_OnClick;
             $scope.CommentCancel_OnClick = this.CommentCancel_OnClick;
             $scope.CommentDelete_OnClick = this.CommentDelete_OnClick;
+
+            $scope.ShowAllComments_OnClick = this.ShowAllComments_OnClick;
+            $scope.ShowAllComments = this.ShowAllComments;
+            $scope.GetComments = this.GetComments;
 
             this.Load();
         }
@@ -468,6 +475,23 @@ namespace Controllers {
                     toastr.error(jqXhr.statusText);
                 }
             });
+        }
+
+        public ShowAllComments_OnClick = (taskId: string) => {
+            if (this.ShowAllComments.indexOf(taskId) !== -1) {
+                this.ShowAllComments.splice($.inArray(taskId, this.ShowAllComments), 1);
+            } else {
+                this.ShowAllComments.push(taskId);
+            }
+        }
+
+        // task or subtask
+        public GetComments = (task: any) => {
+            if (this.ShowAllComments.indexOf(task.EntityId) !== -1) {
+                return task.Comments;
+            } else {
+                return Enumerable.From(task.Comments).TakeFromLast(3).ToArray();
+            }
         }
     }
 }

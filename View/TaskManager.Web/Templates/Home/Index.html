@@ -81,16 +81,18 @@
                     <p ng-bind-html="task.Description | nl2br"></p>
                 </td>
                 <!-- Task -> Comments -->
-                <td>
-                    <div class="ui middle aligned divided items">
-                        <div class="item">
-                            <div class="content">
-                                <div class="center aligned">
-                                    <a>show all comments</a>
-                                </div>
+                <td class="tasks-comments">
+                    <div class="item" ng-show="task.Comments.length > 3">
+                        <div class="content">
+                            <div class="center aligned">
+                                <a href="" ng-click="ShowAllComments_OnClick(task.EntityId)">
+                                    {{ShowAllComments.indexOf(task.EntityId) == -1 ? 'show all comments' : 'hide comments'}}
+                                </a>
                             </div>
                         </div>
-                        <div class="item" ng-repeat="comment in task.Comments">
+                    </div>
+                    <div class="ui middle aligned divided items">
+                        <div class="item" ng-repeat="comment in GetComments(task)">
                             <div class="content">
                                 <div class="ui small header">{{comment.DateMoment.format("MM/DD")}} {{Model.UserName(comment.CreatedById)}}</div>
                                 &nbsp;|&nbsp;
