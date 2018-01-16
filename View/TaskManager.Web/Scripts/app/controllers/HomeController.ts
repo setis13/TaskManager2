@@ -21,6 +21,7 @@ namespace Controllers {
 
         constructor($scope: any, $http: ng.IHttpProvider, $location: ng.ILocationService) {
             super($scope, $http, $location);
+
             var $this = this;
 
             this._taskModal = (<any>$("#edit-task-modal")).modal({

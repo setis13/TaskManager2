@@ -14,8 +14,10 @@ namespace TaskManager.Data.Contracts.Entities {
         public Int64? ActualWorkTicks { get; set; }
         [NotMapped]
         public TimeSpan? ActualWork {
-            get { return TimeSpan.FromTicks(ActualWorkTicks); }
-            set { ActualWorkTicks = value.Ticks; }
+            get { return ActualWorkTicks != null ? 
+                    TimeSpan.FromTicks(ActualWorkTicks.Value) :
+                    (TimeSpan?) null; }
+            set { ActualWorkTicks = value?.Ticks; }
         }
         public float? Progress { get; set; }
         [DataType("VARCHAR"), MaxLength(2048)]

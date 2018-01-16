@@ -108,7 +108,7 @@
                                 </div>
                                 <div class="description">
                                     <p ng-bind-html="comment.Description | nl2br"></p>
-                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="item">
@@ -435,6 +435,12 @@
                 }
             }
         });
+
+
+    $.fn.form.settings.rules.nullablePercent = function (value) {
+        return value == null || value === '' || (value >= 0 && value <= 100);
+    }
+
     form3 = $('#form-comment')
         .form({
             fields: {
@@ -466,6 +472,15 @@
                         }
                     ]
                 },
+                progress: {
+                    identifier: 'progress',
+                    rules: [
+                        {
+                            type: 'nullablePercent[value]',
+                            prompt: 'Please enter valid percent value'
+                        }
+                    ]
+                }
             }
         });
 </script>
