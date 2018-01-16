@@ -40,8 +40,8 @@
                 this.Order = data.Order;
                 this.Title = data.Title;
                 this.Description = data.Description;
-                this._actualWork = moment.duration(data.ActualWork).asHours().toFixed(1);
-                this._totalWork = moment.duration(data.TotalWork).asHours().toFixed(1);
+                this.ActualWorkHours = moment.duration(data.ActualWork).asHours().toFixed(1);
+                this.TotalWorkHours = moment.duration(data.TotalWork).asHours().toFixed(1);
                 this.Progress = data.Progress;
                 this.Status = data.Status;
                 this.Comments = new Array();
@@ -62,8 +62,8 @@
             clone.Order = this.Order;
             clone.Title = this.Title;
             clone.Description = this.Description;
-            clone._actualWork = this._actualWork;
-            clone._totalWork = this._totalWork;
+            clone.ActualWorkHours = this.ActualWorkHours;
+            clone.TotalWorkHours = this.TotalWorkHours;
             clone.Progress = this.Progress;
             clone.Status = this.Status;
 

@@ -30,7 +30,7 @@ namespace Controllers {
                     $this.ResetForm(form);
                     $this.$scope.$apply();
 
-                    //  resets dropdown
+                    // resets dropdown
                     (<any>$('#task-users')).dropdown("restore defaults");
                     (<any>$('#project')).dropdown("restore defaults");
                     // NOTES: default text was changed after selected because this code restores it
@@ -61,13 +61,29 @@ namespace Controllers {
                 closable: false,
                 onShow() {
                     (<any>$('#date')).calendar({
-                        type: 'date'
+                        type: 'date',
+                        onChange: function (date, text) {
+                            $this.Model.EditComment.DateMoment = moment(date);
+                        }
+                    }).calendar("set date", $this.Model.EditComment.DateMoment.toDate());
+
+                    // NOTES: event.onVisibly works withount timeout, but has delay
+                    // sets selected value in dropdown
+                    setTimeout(() => {
+                        if ($('#status').val() !== "") {
+                            (<any>$('#status')).dropdown("set selected", $('#status').val());
+                        }
                     });
                 },
                 onHidden() {
                     $this.Model.EditComment = null;
                     $this.ResetForm(form3);
                     $this.$scope.$apply();
+
+                    // resets dropdown
+                    (<any>$('#status')).dropdown("restore defaults");
+                    // NOTES: default text was changed after selected because this code restores it
+                    (<any>$('#status')).parent().find('.text.default').html($('#status > option[value=""]').html());
                 }
             });
 
@@ -249,7 +265,7 @@ namespace Controllers {
 
             var $this = this;
             $.ajax({
-                url: '/api/Home/SaveTask?id=' + this.Model.EditTask.EntityId,
+                url: '/api/Home/SaveTask',
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
@@ -320,7 +336,7 @@ namespace Controllers {
 
             var $this = this;
             $.ajax({
-                url: '/api/Home/SaveSubTask?id=' + this.Model.EditSubTask.EntityId,
+                url: '/api/Home/SaveSubTask',
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',
@@ -391,7 +407,7 @@ namespace Controllers {
 
             var $this = this;
             $.ajax({
-                url: '/api/Home/SaveComment?id=' + this.Model.EditComment.EntityId,
+                url: '/api/Home/SaveComment',
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: 'json',

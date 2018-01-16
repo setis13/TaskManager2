@@ -38,6 +38,7 @@
             super(data);
 
             this.SubTasks = new Array();
+            this.Comments = new Array();
             this.UserIds = new Array();
             if (data != null) {
                 this.CompanyId = data.CompanyId;
@@ -46,8 +47,8 @@
                 this.Title = data.Title;
                 this.Description = data.Description;
                 this.Priority = data.Priority;
-                this._actualWork = moment.duration(data.ActualWork).asHours().toFixed(1);
-                this._totalWork = moment.duration(data.TotalWork).asHours().toFixed(1);
+                this.ActualWorkHours = moment.duration(data.ActualWork).asHours().toFixed(1);
+                this.TotalWorkHours = moment.duration(data.TotalWork).asHours().toFixed(1);
                 this.Progress = data.Progress;
                 this.Status = data.Status;
                 for (var i = 0; i < data.SubTasks.length; i++) {
@@ -74,8 +75,8 @@
             clone.Title = this.Title;
             clone.Description = this.Description;
             clone.Priority = this.Priority;
-            clone._actualWork = this._actualWork;
-            clone._totalWork = this._totalWork;
+            clone.ActualWorkHours = this.ActualWorkHours;
+            clone.TotalWorkHours = this.TotalWorkHours;
             clone.Progress = this.Progress;
             clone.Status = this.Status;
 

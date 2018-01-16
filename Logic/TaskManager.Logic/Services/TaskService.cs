@@ -255,7 +255,6 @@ namespace TaskManager.Logic.Services {
                 rep.Update(model, userDto.Id);
             }
             this.UnitOfWork.SaveChanges();
-
         }
 
         /// <summary>

@@ -25,8 +25,13 @@
         }
         public set DateMoment(m: moment.Moment) {
             this._dateMoment = m;
-            this.Date = this._dateMoment.toString();
-            console.log(this.Date);
+            this.Date = this._dateMoment.format("YYYY-MM-DD");
+        }
+        public get ProgressPercent(): number {
+            return this.Progress * 100;
+        }
+        public set ProgressPercent(p: number) {
+            this.Progress = p / 100;
         }
 
         constructor(data: any) {
@@ -37,12 +42,12 @@
                 this.TaskId = data.TaskId;
                 this.SubTaskId = data.SubTaskId;
                 this.DateMoment = moment(data.Date);
-                this.Status = data.Status;
+                this.Status = data.Status.toString();
                 this.Description = data.Description;
-                this._actualWork = moment.duration(data.ActualWork).asHours().toFixed(1);
+                this.ActualWorkHours = moment.duration(data.ActualWork).asHours().toFixed(1);
                 this.Progress = data.Progress;
             } else {
-                this.CreatedDate = moment(null);
+                this.DateMoment = moment(null);
             }
         }
 
@@ -58,7 +63,7 @@
             clone.DateMoment = this.DateMoment.clone();
             clone.Status = this.Status;
             clone.Description = this.Description;
-            clone._actualWork = this._actualWork;
+            clone.ActualWorkHours = this.ActualWorkHours;
             clone.Progress = this.Progress;
 
             return clone;

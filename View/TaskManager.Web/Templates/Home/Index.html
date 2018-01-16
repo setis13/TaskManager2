@@ -80,6 +80,7 @@
                     </p>
                     <p ng-bind-html="task.Description | nl2br"></p>
                 </td>
+                <!-- Task -> Comments -->
                 <td>
                     <div class="ui middle aligned divided items">
                         <div class="item">
@@ -91,18 +92,18 @@
                         </div>
                         <div class="item" ng-repeat="comment in task.Comments">
                             <div class="content">
-                                <div class="ui small header">1/15 Anton</div>
+                                <div class="ui small header">{{comment.DateMoment.format("MM/DD")}} {{Model.UserName(comment.CreatedById)}}</div>
                                 &nbsp;|&nbsp;
                                 <a href="" ng-click="EditTaskComment_OnClick(task, comment)">edit</a>
                                 <div class="right floated">
                                     <div class="ui blue label">
-                                        {{TaskStatusNames[task.Status]}}
+                                        {{TaskStatusNames[comment.Status]}}
                                     </div>
                                     <div class="ui red label">
-                                        {{task.ActualWorkHours | number:1}}h
+                                        {{comment.ActualWorkHours | number:1}}h
                                     </div>
                                     <div class="ui green label">
-                                        {{task.Progress | number:2}}%
+                                        {{comment.ProgressPercent | number:0}}%
                                     </div>
                                 </div>
                                 <div class="description">
@@ -306,7 +307,7 @@
             <div class="ui calendar" id="date">
                 <div class="ui input left icon">
                     <i class="calendar icon"></i>
-                    <input type="text" placeholder="Date" ng-model="Model.EditComment.DateMoment">
+                    <input type="text" placeholder="Date">
                 </div>
             </div>
         </div>
@@ -333,7 +334,7 @@
             <label>Progress</label>
             <div class="ui right labeled input">
                 <input id="progress" placeholder="Progress" type="text"
-                       ng-model="Model.EditComment.Progress">
+                       ng-model="Model.EditComment.ProgressPercent">
                 <div class="ui label">
                     %
                 </div>
@@ -434,7 +435,7 @@
                 }
             }
         });
-
+    console.log("check validator of #form-comment");
     form3 = $('#form-comment')
         .form({
             fields: {
