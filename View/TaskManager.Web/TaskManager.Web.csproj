@@ -531,6 +531,7 @@
     <TypeScriptCompile Include="Scripts\app\enums\RoleName.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\TaskPriorityEnum.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\TaskStatusEnum.ts" />
+    <TypeScriptCompile Include="Scripts\app\filters\set_progress_data_percent.ts" />
     <TypeScriptCompile Include="Scripts\app\filters\nl2br.ts" />
     <TypeScriptCompile Include="Scripts\app\models\base\0ModelBase.ts" />
     <TypeScriptCompile Include="Scripts\app\models\base\1BaseModel.ts" />

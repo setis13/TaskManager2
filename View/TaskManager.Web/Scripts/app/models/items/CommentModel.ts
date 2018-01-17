@@ -59,7 +59,14 @@
                 this.ActualWorkHours = data.ActualWork != null ? moment.duration(data.ActualWork).asHours().toFixed(1) : null;
                 this.Progress = data.Progress;
             } else {
+                this.CompanyId = null;
+                this.TaskId = null;
+                this.SubTaskId = null;
                 this.DateMoment = moment();
+                this.Status = 0;
+                this.Description = '';
+                this.ActualWorkHours = null;
+                this.Progress = null;
             }
         }
 

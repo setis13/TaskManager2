@@ -66,27 +66,30 @@
                 return null;
             }
             var taskId = null;
+            var subtaskName = "";
             // takes taskId by subTaskId
-            if (this.EditComment.SubTaskId != null) {
+            if (comment.SubTaskId != null) {
                 var subtask = Enumerable.From(this.Tasks)
                     .SelectMany(e => e.SubTasks)
-                    .FirstOrDefault(null, e => e.EntityId === this.EditComment.SubTaskId);
+                    .FirstOrDefault(null, e => e.EntityId === comment.SubTaskId);
                 if (subtask != null) {
-                    taskId = this.EditComment.TaskId;
+                    subtaskName = "/" + subtask.Order;
+                    taskId = subtask.TaskId;
                 } else {
-                    return this.EditComment.SubTaskId.substr(0, 8);
+                    return comment.SubTaskId.substr(0, 8);
                 }
             }
             // takes taskId
-            else if (this.EditComment.TaskId != null) {
-                taskId = this.EditComment.TaskId;
+            else if (comment.TaskId != null) {
+                taskId = comment.TaskId;
             }
+
             // gets task title
             if (taskId != null) {
                 return Enumerable.From(this.Tasks)
                     .Where(e => e.EntityId === taskId)
                     .Select(e => e.Index.toString())
-                    .FirstOrDefault(taskId.substr(0, 8));
+                    .FirstOrDefault(taskId.substr(0, 8)) + subtaskName;
             } else {
                 return "?";
             }

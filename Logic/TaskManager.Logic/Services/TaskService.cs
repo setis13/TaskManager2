@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using AutoMapper;
 using TaskManager.Data.Contracts;
 using TaskManager.Data.Contracts.Entities;
@@ -59,7 +60,9 @@ namespace TaskManager.Logic.Services {
             var taskuserList = taskuserRep.SearchFor(e => taskIds.Contains(e.TaskId)).ToList();
             commentsQuery = commentsQuery.Where(e =>
                 (e.TaskId != null && taskIds.Contains(e.TaskId.Value)) ||
-                (e.SubTaskId != null && subtaskIds.Contains(e.SubTaskId.Value)));
+                (e.SubTaskId != null && subtaskIds.Contains(e.SubTaskId.Value)))
+                .OrderBy(e => e.Date)
+                .ThenBy(e => e.CreatedDate);
 
             var comments1 = Mapper.Map<List<CommentDto>>(commentsQuery);
 
@@ -171,6 +174,8 @@ namespace TaskManager.Logic.Services {
             if (model != null && model.CompanyId == userDto.CompanyId) {
                 rep.MarkAsDelete(model, userDto.Id);
                 this.UnitOfWork.SaveChanges();
+
+                UpdateTask(model.TaskId, userDto);
             }
         }
 
@@ -255,6 +260,8 @@ namespace TaskManager.Logic.Services {
                 rep.Update(model, userDto.Id);
             }
             this.UnitOfWork.SaveChanges();
+
+            UpdateTaskOrSubTask(model.TaskId, model.SubTaskId, userDto);
         }
 
         /// <summary>
@@ -267,6 +274,107 @@ namespace TaskManager.Logic.Services {
             if (model != null && model.CompanyId == userDto.CompanyId) {
                 rep.MarkAsDelete(model, userDto.Id);
                 this.UnitOfWork.SaveChanges();
+
+                UpdateTaskOrSubTask(model.TaskId, model.SubTaskId, userDto);
+            }
+        }
+
+        private void UpdateTaskOrSubTask(Guid? taskId, Guid? subTaskId, UserDto userDto) {
+            if (taskId != null) {
+                UpdateTask(taskId.Value, userDto);
+            }
+            if (subTaskId != null) {
+                UpdateSubTask(subTaskId.Value, userDto);
+            }
+        }
+
+        /// <summary>
+        ///     Updates ActualWork, Progress, Status for task by comments </summary>
+        /// <param name="taskId">task id</param>
+        /// <param name="userDto">user who updates the task</param>
+        private void UpdateTask(Guid taskId, UserDto userDto) {
+            var taskRep = UnitOfWork.GetRepository<Task1>();
+            var subtaskRep = UnitOfWork.GetRepository<SubTask>();
+            var commentRep = UnitOfWork.GetRepository<Comment>();
+
+            var task = taskRep.GetById(taskId);
+            var subtaskIds = subtaskRep.SearchFor(e => e.CompanyId == userDto.CompanyId && e.TaskId == taskId).Select(e => e.EntityId).ToList();
+            // Orders by Date,CreatedDate
+            var comments = commentRep
+                .SearchFor(e => e.CompanyId == userDto.CompanyId && (e.TaskId == taskId || subtaskIds.Contains(e.SubTaskId.Value)))
+                .OrderBy(e => e.Date).ThenBy(e => e.CreatedDate);
+
+            TimeSpan actualHours;
+            float progress;
+            byte status;
+
+            GetActualValuesByComments(comments, out actualHours, out progress, out status);
+
+            task.ActualWork = actualHours;
+            task.Status = status;
+            task.Progress = progress;
+
+            taskRep.Update(task, userDto.Id);
+            UnitOfWork.SaveChanges();
+        }
+
+        /// <summary>
+        ///     Updates ActualWork, Progress, Status for subtask by comments </summary>
+        /// <param name="subtaskId">subtask id</param>
+        /// <param name="userDto">user who updates the task</param>
+        private void UpdateSubTask(Guid subtaskId, UserDto userDto) {
+            var subtaskRep = UnitOfWork.GetRepository<SubTask>();
+            var commentRep = UnitOfWork.GetRepository<Comment>();
+
+            var subtask = subtaskRep.GetById(subtaskId);
+            // Orders by Date,CreatedDate
+            var comments = commentRep
+                .SearchFor(e => e.CompanyId == userDto.CompanyId && (e.SubTaskId == subtaskId))
+                .OrderBy(e => e.Date).ThenBy(e => e.CreatedDate);
+
+            TimeSpan actualHours;
+            float progress;
+            byte status;
+
+            GetActualValuesByComments(comments, out actualHours, out progress, out status);
+
+            subtask.ActualWork = actualHours;
+            subtask.Status = status;
+            subtask.Progress = progress;
+
+            subtaskRep.Update(subtask, userDto.Id);
+            UnitOfWork.SaveChanges();
+        }
+
+        /// <summary>
+        ///     Returns last ActualWork, Progress, Status of comments </summary>
+        /// <param name="comments">Query of comments</param>
+        /// <param name="actualHours">out</param>
+        /// <param name="progress">out</param>
+        /// <param name="status">out</param>
+        private void GetActualValuesByComments(IQueryable<Comment> comments,
+            out TimeSpan actualHours, out float progress, out byte status) {
+            var commentList = comments.Select(e => new { e.ActualWorkTicks, e.Progress, e.Status }).ToList();
+
+            actualHours = new TimeSpan();
+            progress = 0f;
+            status = 0;
+            if (commentList.Any()) {
+                // Actual Hours
+                var ticks = commentList.Where(e => e.ActualWorkTicks != null).Sum(e => e.ActualWorkTicks);
+                if (ticks != null) {
+                    actualHours = new TimeSpan(ticks.Value);
+                }
+                // Progress
+                var lastComment = commentList.LastOrDefault(e => e.Progress != null);
+                if (lastComment != null && lastComment.Progress != null) {
+                    progress = lastComment.Progress.Value;
+                }
+                // Status
+                lastComment = commentList.LastOrDefault();
+                if (lastComment != null) {
+                    status = lastComment.Status;
+                }
             }
         }
     }

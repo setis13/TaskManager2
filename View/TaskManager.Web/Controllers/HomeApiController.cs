@@ -13,6 +13,10 @@ using TaskManager.Web.Controllers.Base;
 using TaskManager.Web.Models;
 
 namespace TaskManager.Web.Controllers {
+    status doen't have default
+    subtask was dessapeared when added comment
+    don't set status and progress when added comment for subtask
+    to calculate total hours and percents for task and subtasks
     [Authorize]
     [HostAuthentication(DefaultAuthenticationTypes.ApplicationCookie)]
     [RoutePrefix("api/Home")]

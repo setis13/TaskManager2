@@ -67,7 +67,8 @@
                             <span class="label">Responsible</span>&nbsp;
                             <span class="value">{{Model.UserNames(task.UserIds)}}</span>
                         </div>
-                        <div class="ui progress green value" id="example1" data-percent="15">
+                        <span class="ng-hide">{{task | set_progress_data_percent}}</span>
+                        <div class="ui progress green value" id="progress-{{task.EntityId}}">
                             <div class="bar">
                                 <div class="progress"></div>
                             </div>
@@ -101,10 +102,12 @@
                                     <div class="ui blue label">
                                         {{TaskStatusNames[comment.Status]}}
                                     </div>
-                                    <div class="ui red label">
+                                    <div class="ui red label"
+                                         ng-show="comment.ActualWorkHours != null">
                                         {{comment.ActualWorkHours | number:1}}h
                                     </div>
-                                    <div class="ui green label">
+                                    <div class="ui green label"
+                                         ng-show="comment.ProgressPercent != null">
                                         {{comment.ProgressPercent | number:0}}%
                                     </div>
                                 </div>
@@ -122,35 +125,36 @@
                 </td>
             </tr>
             <!-- subtasks -->
-            <tr id="subtask-{{subTask.EntityId}}" class="top aligned"
-                ng-repeat-end ng-repeat="subTask in task.SubTasks">
+            <tr id="subtask-{{subtask.EntityId}}" class="top aligned"
+                ng-repeat-end ng-repeat="subtask in task.SubTasks">
                 <td class="header"></td>
                 <td>
                     <div class="content">
                         <div>
                             <span class="label">Index</span>&nbsp;
-                            <span class="value"><b>{{task.Index}}</b>/<b>{{subTask.Order}}</b></span>
+                            <span class="value"><b>{{task.Index}}</b>/<b>{{subtask.Order}}</b></span>
                             <div class="pull-right">
-                                <a href="" ng-click="UpSubTask_OnClick(subTask)">up</a>
+                                <a href="" ng-click="UpSubTask_OnClick(subtask)">up</a>
                                 &nbsp;|&nbsp;
-                                <a href="" ng-click="DownSubTask_OnClick(subTask)">down</a>
+                                <a href="" ng-click="DownSubTask_OnClick(subtask)">down</a>
                                 &nbsp;|&nbsp;
-                                <a href="" ng-click="EditSubTask_OnClick(subTask)">edit</a>
+                                <a href="" ng-click="EditSubTask_OnClick(subtask)">edit</a>
                             </div>
                         </div>
                         <div>
                             <span class="label">Date</span>&nbsp;
-                            <span class="value">{{subTask.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
+                            <span class="value">{{subtask.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
                         </div>
                         <div>
                             <span class="label">Status</span>&nbsp;
-                            <span class="value">{{TaskStatusNames[subTask.Status]}}</span>
+                            <span class="value">{{TaskStatusNames[subtask.Status]}}</span>
                         </div>
                         <div>
                             <span class="label">Actual Hours</span>
-                            <span class="value">{{subTask.ActualWorkHours | number:1}}h / {{subTask.TotalWorkHours | number:1}}h</span>
+                            <span class="value">{{subtask.ActualWorkHours | number:1}}h / {{subtask.TotalWorkHours | number:1}}h</span>
                         </div>
-                        <div class="ui progress green value" id="example2" data-percent="15">
+                        <span class="ng-hide">{{subtask | set_progress_data_percent}}</span>
+                        <div class="ui progress green value" id="progress-{{subtask.EntityId}}">
                             <div class="bar">
                                 <div class="progress"></div>
                             </div>
@@ -159,12 +163,51 @@
                 </td>
                 <td class="four wide">
                     <p>
-                        <b>{{subTask.Title}}</b>
+                        <b>{{subtask.Title}}</b>
                     </p>
-                    <p ng-bind-html="subTask.Description | nl2br"></p>
+                    <p ng-bind-html="subtask.Description | nl2br"></p>
                 </td>
-                <td class="seven wide">
-                    22
+                <!-- SubTask -> Comments -->
+                <td class="subtasks-comments">
+                    <div class="item" ng-show="subtask.Comments.length > 3">
+                        <div class="content">
+                            <div class="center aligned">
+                                <a href="" ng-click="ShowAllComments_OnClick(subtask.EntityId)">
+                                    {{ShowAllComments.indexOf(subtask.EntityId) == -1 ? 'show all comments' : 'hide comments'}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui middle aligned divided items">
+                        <div class="item" ng-repeat="comment in GetComments(subtask)">
+                            <div class="content">
+                                <div class="ui small header">{{comment.DateMoment.format("MM/DD")}} {{Model.UserName(comment.CreatedById)}}</div>
+                                &nbsp;|&nbsp;
+                                <a href="" ng-click="EditTaskComment_OnClick(subtask, comment)">edit</a>
+                                <div class="right floated">
+                                    <div class="ui blue label">
+                                        {{TaskStatusNames[comment.Status]}}
+                                    </div>
+                                    <div class="ui red label"
+                                         ng-show="comment.ActualWorkHours != null">
+                                        {{comment.ActualWorkHours | number:1}}h
+                                    </div>
+                                    <div class="ui green label"
+                                         ng-show="comment.ProgressPercent != null">
+                                        {{comment.ProgressPercent | number:0}}%
+                                    </div>
+                                </div>
+                                <div class="description">
+                                    <p ng-bind-html="comment.Description | nl2br"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="content">
+                                <button class="ui primary button" ng-click="AddSubTaskComment_OnClick(subtask)">Add</button>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
 
@@ -367,10 +410,6 @@
         </div>
     </div>
 </div>
-<script language="javascript">
-    $('#example1').progress({ showActivity: false }); // TODO: !!!!
-    $('#example2').progress({ showActivity: false }); // TODO: !!!!
-</script>
 <script language="javascript">
     InitDropdown();
     form = $('#form-task')

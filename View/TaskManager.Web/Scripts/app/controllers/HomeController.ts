@@ -9,7 +9,7 @@ namespace Controllers {
     export class HomeController extends BaseController {
 
         private taskPriorityClasses: { [index: number]: string } =
-        { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
+            { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
 
         public Model: Models.HomeModel;
 
@@ -485,7 +485,7 @@ namespace Controllers {
             }
         }
 
-        // task or subtask
+        // Gets comments of task or subtask
         public GetComments = (task: any) => {
             if (this.ShowAllComments.indexOf(task.EntityId) !== -1) {
                 return task.Comments;
