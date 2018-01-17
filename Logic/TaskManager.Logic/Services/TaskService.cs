@@ -30,9 +30,11 @@ namespace TaskManager.Logic.Services {
         /// <param name="historyDeep">minimum date of tasks</param>
         /// <param name="projects">out parameter</param>
         /// <param name="tasks">out parameter</param>
+        /// <param name="historyFilters">out parameter</param>
         public void GetData(UserDto user, DateTime? historyDeep,
             out List<ProjectDto> projects,
-            out List<Task1Dto> tasks) {
+            out List<Task1Dto> tasks,
+            out List<DateTime> historyFilters) {
 
             var projectRep = UnitOfWork.GetRepository<Project>();
             var taskRep = UnitOfWork.GetRepository<Task1>();
@@ -44,6 +46,9 @@ namespace TaskManager.Logic.Services {
             var tasksQuery = taskRep.SearchFor(e => e.CompanyId == user.CompanyId);
             var subtasksQuery = subtaskRep.SearchFor(e => e.CompanyId == user.CompanyId);
             var commentsQuery = commentRep.SearchFor(e => e.CompanyId == user.CompanyId);
+
+            historyFilters = tasksQuery.Select(e => e.CreatedDate).ToList()
+                .Select(e => e.Date.AddDays(-e.Date.Day + 1)).Distinct().ToList();
 
             if (historyDeep == null) {
                 var statuses = new List<TaskStatusEnum>() {

@@ -7,6 +7,8 @@
         public EditTask: TaskModel;
         public EditSubTask: SubTaskModel;
         public EditComment: CommentModel;
+        public HistoryFilters: { [id: string]: string; };
+        public SelectedHistoryFilter: string = "0";
 
         constructor() {
             super();
@@ -20,6 +22,7 @@
             this.Users = new Array();
             this.Projects = new Array();
             this.Tasks = new Array();
+            this.HistoryFilters = {};
             for (var i = 0; i < data.Users.length; i++) {
                 this.Users.push(new UserModel(data.Users[i]));
             }
@@ -28,6 +31,10 @@
             }
             for (var i = 0; i < data.Tasks.length; i++) {
                 this.Tasks.push(new TaskModel(data.Tasks[i]));
+            }
+            for (var i = 0; i < data.HistoryFilters.length; i++) {
+                this.HistoryFilters[moment(data.HistoryFilters[i]).format('MM/DD/YYYY')] =
+                    moment(data.HistoryFilters[i]).format('MMM YYYY');
             }
         }
 

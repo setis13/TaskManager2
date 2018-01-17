@@ -26,24 +26,25 @@ namespace TaskManager.Web.Controllers {
         [HttpPost, Route("GetData")]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<WebApiResult> GetData() {
+        public async Task<WebApiResult> GetData(DateTime? historyFilter = null) {
             try {
 #if DEBUG
-                await Task.Delay(500);
+                await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
 
                     List<UserDto> users;
                     List<ProjectDto> projects;
                     List<Task1Dto> tasks;
+                    List<DateTime> historyFilters;
 
                     var user = GetUserDto();
                     users = Mapper.Map<List<UserDto>>(
                         this.UserManager.Users.Where(e => e.CompanyId == user.CompanyId));
 
                     this.ServicesHost.GetService<ITaskService>().GetData(
-                        user, null, out projects, out tasks);
-                    return WebApiResult.Succeed(new { Projects = projects, Users = users, Tasks = tasks });
+                        user, historyFilter, out projects, out tasks, out historyFilters);
+                    return WebApiResult.Succeed(new { Projects = projects, Users = users, Tasks = tasks, HistoryFilters = historyFilters });
                 });
             } catch (Exception e) {
                 Logger.e("GetData", e);
@@ -59,7 +60,7 @@ namespace TaskManager.Web.Controllers {
         public async Task<WebApiResult> SaveTask(Task1Dto task) {
             try {
 #if DEBUG
-                await Task.Delay(500);
+                await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
                     this.ServicesHost.GetService<ITaskService>().SaveTask(task, GetUserDto());
@@ -79,7 +80,7 @@ namespace TaskManager.Web.Controllers {
         public async Task<WebApiResult> DeleteTask(Guid id) {
             try {
 #if DEBUG
-                await Task.Delay(500);
+                await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
                     this.ServicesHost.GetService<ITaskService>().DeleteTask(id, GetUserDto());
@@ -99,7 +100,7 @@ namespace TaskManager.Web.Controllers {
         public async Task<WebApiResult> SaveSubTask(SubTaskDto subtask) {
             try {
 #if DEBUG
-                await Task.Delay(500);
+                await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
                     this.ServicesHost.GetService<ITaskService>().SaveSubTask(subtask, GetUserDto());
@@ -119,7 +120,7 @@ namespace TaskManager.Web.Controllers {
         public async Task<WebApiResult> DeleteSubTask(Guid id) {
             try {
 #if DEBUG
-                await Task.Delay(500);
+                await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
                     this.ServicesHost.GetService<ITaskService>().DeleteSubTask(id, GetUserDto());
@@ -139,7 +140,7 @@ namespace TaskManager.Web.Controllers {
         public async Task<WebApiResult> UpSubTask(Guid id) {
             try {
 #if DEBUG
-                await Task.Delay(500);
+                await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
                     var subTasks = this.ServicesHost.GetService<ITaskService>().UpSubTask(id, GetUserDto());
@@ -159,7 +160,7 @@ namespace TaskManager.Web.Controllers {
         public async Task<WebApiResult> DownSubTask(Guid id) {
             try {
 #if DEBUG
-                await Task.Delay(500);
+                await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
                     var subTasks = this.ServicesHost.GetService<ITaskService>().DownSubTask(id, GetUserDto());
@@ -179,7 +180,7 @@ namespace TaskManager.Web.Controllers {
         public async Task<WebApiResult> SaveComment(CommentDto comment) {
             try {
 #if DEBUG
-                await Task.Delay(500);
+                await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
                     this.ServicesHost.GetService<ITaskService>().SaveComment(comment, GetUserDto());
@@ -199,7 +200,7 @@ namespace TaskManager.Web.Controllers {
         public async Task<WebApiResult> DeleteComment(Guid id) {
             try {
 #if DEBUG
-                await Task.Delay(500);
+                await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
                     this.ServicesHost.GetService<ITaskService>().DeleteComment(id, GetUserDto());

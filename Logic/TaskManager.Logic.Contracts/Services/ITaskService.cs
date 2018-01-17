@@ -15,9 +15,11 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="historyDeep">minimum date of tasks</param>
         /// <param name="projects">out parameter</param>
         /// <param name="tasks">out parameter</param>
+        /// <param name="historyFilters">out parameter</param>
         void GetData(UserDto user, DateTime? historyDeep,
             out List<ProjectDto> projects,
-            out List<Task1Dto> tasks);
+            out List<Task1Dto> tasks,
+            out List<DateTime> historyFilters);
 
         /// <summary>
         ///     Creates or Updates task </summary>

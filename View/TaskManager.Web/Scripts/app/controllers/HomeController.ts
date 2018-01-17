@@ -87,6 +87,8 @@ namespace Controllers {
                 }
             });
 
+            (<any>$("#history-filter")).dropdown().dropdown({ maxSelections: 1 });
+
             $scope.Model = this.Model = new Models.HomeModel();
 
             $scope.TaskStatusNames = TaskStatusNames;
@@ -121,13 +123,15 @@ namespace Controllers {
             $scope.ShowedAllComments = this.ShowedAllComments;
             $scope.CheckNewValue = this.CheckNewValue;
 
+            $scope.HistoryFilter_OnChange = this.HistoryFilter_OnChange;
+
             this.Load();
         }
 
         public Load = () => {
             var $this = this;
             $.ajax({
-                url: '/api/Home/GetData/',
+                url: '/api/Home/GetData/' + (this.Model.SelectedHistoryFilter !== '0' ? '?historyFilter=' + this.Model.SelectedHistoryFilter : ''),
                 type: 'POST',
                 data: {},
                 beforeSend(xhr) {
@@ -150,6 +154,10 @@ namespace Controllers {
                     $this.$scope.$apply();
                 }
             });
+        }
+
+        public HistoryFilter_OnChange = () => {
+            this.Load();
         }
 
         public TaskPriority_OnClick = () => {
@@ -491,7 +499,7 @@ namespace Controllers {
                 }
             }
         }
-        
+
         private lastKey: { [id: string]: string; } = {};
         private lastValue: { [id: string]: any; } = {};
         // Returns true if value or key is changed.
