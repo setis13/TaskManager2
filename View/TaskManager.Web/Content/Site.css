@@ -16,6 +16,18 @@ html, body {
     color: black;
 }
 
+    .content .value.red {
+        color: red;
+    }
+
+    .content .value.green {
+        color: green;
+    }
+
+    .content .value.brue {
+        color: blue;
+    }
+
 .content .extra {
     color: grey;
     font-size: 0.9em;
@@ -67,9 +79,12 @@ tr td div.ui.dimmer {
 /*** fixed items ***/
 td.tasks-comments > .item {
     margin-bottom: 0.5em;
-    padding-bottom: 0.5em;
-    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
 }
+
+    td.tasks-comments > .item.border {
+        padding-bottom: 0.5em;
+        border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+    }
 
 td.tasks-comments > .ui.items {
     margin-top: 0;

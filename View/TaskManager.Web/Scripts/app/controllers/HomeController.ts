@@ -9,7 +9,7 @@ namespace Controllers {
     export class HomeController extends BaseController {
 
         private taskPriorityClasses: { [index: number]: string } =
-            { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
+        { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
 
         public Model: Models.HomeModel;
 
@@ -18,9 +18,6 @@ namespace Controllers {
         private _taskModal: any;
         private _subTaskModal: any;
         private _commentModal: any;
-
-        // tasks with all comments
-        private ShowAllComments: Array<string> = new Array();
 
         constructor($scope: any, $http: ng.IHttpProvider, $location: ng.ILocationService) {
             super($scope, $http, $location);
@@ -74,9 +71,8 @@ namespace Controllers {
                     // NOTES: event.onVisibly works withount timeout, but has delay
                     // sets selected value in dropdown
                     setTimeout(() => {
-                        if ($('#status').val() !== "") {
-                            (<any>$('#status')).dropdown("set selected", $('#status').val());
-                        }
+                        // status without empty value
+                        (<any>$('#status')).dropdown("set selected", $('#status').val());
                     });
                 },
                 onHidden() {
@@ -121,9 +117,9 @@ namespace Controllers {
             $scope.CommentCancel_OnClick = this.CommentCancel_OnClick;
             $scope.CommentDelete_OnClick = this.CommentDelete_OnClick;
 
-            $scope.ShowAllComments_OnClick = this.ShowAllComments_OnClick;
-            $scope.ShowAllComments = this.ShowAllComments;
-            $scope.GetComments = this.GetComments;
+            $scope.ToggleAllComments_OnClick = this.ToggleAllComments_OnClick;
+            $scope.ShowedAllComments = this.ShowedAllComments;
+            $scope.CheckNewValue = this.CheckNewValue;
 
             this.Load();
         }
@@ -477,20 +473,47 @@ namespace Controllers {
             });
         }
 
-        public ShowAllComments_OnClick = (taskId: string) => {
-            if (this.ShowAllComments.indexOf(taskId) !== -1) {
-                this.ShowAllComments.splice($.inArray(taskId, this.ShowAllComments), 1);
+        public static MIN_COMMENTS = 3;
+        // Scope. Array of taskIds that show all comments.
+        private ShowedAllComments: Array<string> = new Array();
+        public ToggleAllComments_OnClick = (taskId: string, comments: Array<Models.CommentModel>) => {
+            if (this.ShowedAllComments.indexOf(taskId) !== -1) {
+                this.ShowedAllComments.splice($.inArray(taskId, this.ShowedAllComments), 1);
+
+                for (var i = 0; i < comments.length; i++) {
+                    comments[i].Visible = i > comments.length - HomeController.MIN_COMMENTS - 1;
+                }
             } else {
-                this.ShowAllComments.push(taskId);
+                this.ShowedAllComments.push(taskId);
+
+                for (var i = 0; i < comments.length; i++) {
+                    comments[i].Visible = true;
+                }
             }
         }
+        
+        private lastKey: { [id: string]: string; } = {};
+        private lastValue: { [id: string]: any; } = {};
+        // Returns true if value or key is changed.
+        // For colored properties of comment
+        public CheckNewValue = (propertyName: string, key: string, value: any) => {
+            if (value == null) {
+                return false;
+            }
 
-        // Gets comments of task or subtask
-        public GetComments = (task: any) => {
-            if (this.ShowAllComments.indexOf(task.EntityId) !== -1) {
-                return task.Comments;
+            if (this.lastKey[propertyName] == null) {
+                this.lastKey[propertyName] = key;
+                this.lastValue[propertyName] = value;
+                return true;
             } else {
-                return Enumerable.From(task.Comments).TakeFromLast(3).ToArray();
+                if (this.lastKey[propertyName] === key && this.lastValue[propertyName] === value) {
+
+                    return false;
+                } else {
+                    this.lastKey[propertyName] = key;
+                    this.lastValue[propertyName] = value;
+                    return true;
+                }
             }
         }
     }

@@ -14,3 +14,8 @@ add comment
  table view
   to view last 3 comments
   1/15 Anton: description     status/percent
+9. возможно понадобятся локи, вдруг 2 пользователя редактируют одну таску, хотя в Mercurial небыло локов
+10. delete subtasks and comments
+11. 7 часов отобразились неверно
+12. add comment. last percent
+13.  Actual Hours 70.0h / 50.0h выделить красным 

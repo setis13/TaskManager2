@@ -15,20 +15,21 @@
         public Comments: Array<CommentModel>;
 
         //extra
-        private _totalWork: string;
-        public get TotalWorkHours(): string {
+        private _totalWork: any; // uses string in modal or number in tempate
+        public get TotalWorkHours(): any {
             return this._totalWork;
         }
-        public set TotalWorkHours(str: string) {
+        public set TotalWorkHours(str: any) {
             this._totalWork = str;
             var value = parseFloat(str);
             this.TotalWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
         }
-        private _actualWork: string;
-        public get ActualWorkHours(): string {
+        //extra
+        private _actualWork: any; // uses string in modal or number in tempate
+        public get ActualWorkHours(): any {
             return this._actualWork;
         }
-        public set ActualWorkHours(str: string) {
+        public set ActualWorkHours(str: any) {
             this._actualWork = str;
             var value = parseFloat(str);
             this.ActualWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
@@ -45,17 +46,19 @@
                 this.ProjectId = data.ProjectId;
                 this.Index = data.Index;
                 this.Title = data.Title;
-                this.Description = data.Description;
+                this.Description = data.Description !== null ? data.Description : '';
                 this.Priority = data.Priority;
-                this.ActualWorkHours = moment.duration(data.ActualWork).asHours().toFixed(1);
-                this.TotalWorkHours = moment.duration(data.TotalWork).asHours().toFixed(1);
+                this.ActualWorkHours = moment.duration(data.ActualWork).asHours();
+                this.TotalWorkHours = moment.duration(data.TotalWork).asHours();
                 this.Progress = data.Progress;
                 this.Status = data.Status;
                 for (var i = 0; i < data.SubTasks.length; i++) {
                     this.SubTasks.push(new SubTaskModel(data.SubTasks[i]));
                 }
                 for (var i = 0; i < data.Comments.length; i++) {
-                    this.Comments.push(new CommentModel(data.Comments[i]));
+                    var comment = new CommentModel(data.Comments[i]);
+                    comment.Visible = i > data.Comments.length - Controllers.HomeController.MIN_COMMENTS - 1;
+                    this.Comments.push(comment);
                 }
                 for (var i = 0; i < data.UserIds.length; i++) {
                     this.UserIds.push(data.UserIds[i]);

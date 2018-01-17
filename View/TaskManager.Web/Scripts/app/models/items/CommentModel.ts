@@ -9,6 +9,9 @@
         public Progress: number;
         public Description: string;
 
+        // extra
+        public Visible: boolean = true;
+        // extra
         private _actualWork: string;
         public get ActualWorkHours(): string {
             return this._actualWork;
@@ -22,7 +25,7 @@
                 this.ActualWork = null;
             }
         }
-
+        // extra
         private _dateMoment: moment.Moment;
         public get DateMoment(): moment.Moment {
             return this._dateMoment;
@@ -31,11 +34,12 @@
             this._dateMoment = m;
             this.Date = this._dateMoment.format("YYYY-MM-DD");
         }
+        // extra
         public get ProgressPercent(): number {
             if (this.Progress === null) {
                 return null;
             } else {
-                return this.Progress * 100;
+                return Math.round(this.Progress * 100);
             }
         }
         public set ProgressPercent(p: number) {
@@ -63,7 +67,7 @@
                 this.TaskId = null;
                 this.SubTaskId = null;
                 this.DateMoment = moment();
-                this.Status = 0;
+                this.Status = Enums.TaskStatusEnum.InProgress; // default status
                 this.Description = '';
                 this.ActualWorkHours = null;
                 this.Progress = null;
