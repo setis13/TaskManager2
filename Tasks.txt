@@ -5,17 +5,4 @@
 6. нужны ли $this.$scope.$apply();
 7. дата отображается неверно
 8. Notes -> Comments
-add comment
- form task
-  nullable actual hours 
-  nullable percent
-  status
-  text
- table view
-  to view last 3 comments
-  1/15 Anton: description     status/percent
-9. возможно понадобятся локи, вдруг 2 пользователя редактируют одну таску, хотя в Mercurial небыло локов
-10. delete subtasks and comments
-11. 7 часов отобразились неверно
-12. add comment. last percent
-13.  Actual Hours 70.0h / 50.0h выделить красным 
+9. проверить может ли пользователь переписать createdById

@@ -18,6 +18,8 @@ namespace TaskManager.Web.Controllers {
     [RoutePrefix("api/Home")]
     public class HomeApiController : BaseApiController {
 
+        private ITaskService _service => this.ServicesHost.GetService<ITaskService>();
+
         public HomeApiController(IServicesHost servicesHost, IMapper mapper) : base(servicesHost, mapper) {
         }
 
@@ -42,8 +44,7 @@ namespace TaskManager.Web.Controllers {
                     users = Mapper.Map<List<UserDto>>(
                         this.UserManager.Users.Where(e => e.CompanyId == user.CompanyId));
 
-                    this.ServicesHost.GetService<ITaskService>().GetData(
-                        user, historyFilter, out projects, out tasks, out historyFilters);
+                    this._service.GetData(user, historyFilter, out projects, out tasks, out historyFilters);
                     return WebApiResult.Succeed(new { Projects = projects, Users = users, Tasks = tasks, HistoryFilters = historyFilters });
                 });
             } catch (Exception e) {
@@ -63,7 +64,7 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    this.ServicesHost.GetService<ITaskService>().SaveTask(task, GetUserDto());
+                    this._service.SaveTask(task, GetUserDto());
                     return WebApiResult.Succeed();
                 });
             } catch (Exception e) {
@@ -83,7 +84,7 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    this.ServicesHost.GetService<ITaskService>().DeleteTask(id, GetUserDto());
+                    this._service.DeleteTask(id, GetUserDto());
                     return WebApiResult.Succeed();
                 });
             } catch (Exception e) {
@@ -103,7 +104,7 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    this.ServicesHost.GetService<ITaskService>().SaveSubTask(subtask, GetUserDto());
+                    this._service.SaveSubTask(subtask, GetUserDto());
                     return WebApiResult.Succeed();
                 });
             } catch (Exception e) {
@@ -123,7 +124,7 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    this.ServicesHost.GetService<ITaskService>().DeleteSubTask(id, GetUserDto());
+                    this._service.DeleteSubTask(id, GetUserDto());
                     return WebApiResult.Succeed();
                 });
             } catch (Exception e) {
@@ -143,7 +144,7 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    var subTasks = this.ServicesHost.GetService<ITaskService>().UpSubTask(id, GetUserDto());
+                    var subTasks = this._service.UpSubTask(id, GetUserDto());
                     return WebApiResult.Succeed(new { SubTasks = subTasks });
                 });
             } catch (Exception e) {
@@ -163,7 +164,7 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    var subTasks = this.ServicesHost.GetService<ITaskService>().DownSubTask(id, GetUserDto());
+                    var subTasks = this._service.DownSubTask(id, GetUserDto());
                     return WebApiResult.Succeed(new { SubTasks = subTasks });
                 });
             } catch (Exception e) {
@@ -183,7 +184,7 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    this.ServicesHost.GetService<ITaskService>().SaveComment(comment, GetUserDto());
+                    this._service.SaveComment(comment, GetUserDto());
                     return WebApiResult.Succeed();
                 });
             } catch (Exception e) {
@@ -203,7 +204,7 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(100);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    this.ServicesHost.GetService<ITaskService>().DeleteComment(id, GetUserDto());
+                    this._service.DeleteComment(id, GetUserDto());
                     return WebApiResult.Succeed();
                 });
             } catch (Exception e) {

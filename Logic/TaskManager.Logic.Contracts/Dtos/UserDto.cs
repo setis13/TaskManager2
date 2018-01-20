@@ -5,8 +5,9 @@ namespace TaskManager.Logic.Contracts.Dtos {
         public Guid Id { get; set; }
         /// <summary>
         ///     Company ID </summary>
-        /// <remarks> I want to have company for every user because I don't use Nullable[Guid] </remarks>
+        /// <remarks> User can create a object only with company ID </remarks>
         public Guid CompanyId { get; set; }
+        public Guid? InvitationCompanyId { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
     }

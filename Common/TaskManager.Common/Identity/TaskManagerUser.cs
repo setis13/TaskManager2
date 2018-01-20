@@ -23,11 +23,13 @@ namespace TaskManager.Common.Identity {
 
         /// <summary>
         ///     Company ID </summary>
-        /// <remarks> 
-        /// Every user has company, but database integrity requires nullable type
-        /// The user is created first, then the company
-        ///  </remarks>
         public Guid? CompanyId { get; set; }
+        /// <summary>
+        ///     Invitation company ID </summary>
+        /// <remarks>
+        /// User can receive an invitation
+        /// </remarks>
+        public Guid? InvitationCompanyId { get; set; }
 
         [NotMapped]
         public object Company { get; set; }

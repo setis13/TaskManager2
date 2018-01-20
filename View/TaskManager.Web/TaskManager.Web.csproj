@@ -519,6 +519,7 @@
     <TypeScriptCompile Include="Scripts\app\app.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\base\0BaseController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\AccountController.ts" />
+    <TypeScriptCompile Include="Scripts\app\controllers\CompanyController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\ProjectsController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\LoginController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\HomeController.ts" />
@@ -533,6 +534,8 @@
     <TypeScriptCompile Include="Scripts\app\models\base\0ModelBase.ts" />
     <TypeScriptCompile Include="Scripts\app\models\base\1BaseModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\AccountModel.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\Company1Model.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\items\CompanyModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\ProjectModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\CommentModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\ProjectsModel.ts" />

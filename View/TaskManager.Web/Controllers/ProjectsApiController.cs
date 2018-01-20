@@ -20,6 +20,8 @@ namespace TaskManager.Web.Controllers {
     [RoutePrefix("api/Projects")]
     public class ProjectsApiController : BaseApiController {
 
+        private IProjectsService _service => this.ServicesHost.GetService<IProjectsService>();
+
         public ProjectsApiController(IServicesHost servicesHost, IMapper mapper) : base(servicesHost, mapper) {
         }
 
@@ -34,8 +36,7 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(500);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    List<ProjectDto> projects = this.ServicesHost
-                        .GetService<IProjectsService>().GetData(GetUserDto());
+                    List<ProjectDto> projects = _service.GetData(GetUserDto());
                     return WebApiResult.Succeed(new { Projects = projects });
                 });
             } catch (Exception e) {
@@ -55,7 +56,7 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(500);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    this.ServicesHost.GetService<IProjectsService>().Save(project, GetUserDto());
+                    this._service.Save(project, GetUserDto());
                     return WebApiResult.Succeed();
                 });
             } catch (Exception e) {
@@ -75,7 +76,7 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(500);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    this.ServicesHost.GetService<IProjectsService>().Delete(id, GetUserDto());
+                    this._service.Delete(id, GetUserDto());
                     return WebApiResult.Succeed();
                 });
             } catch (Exception e) {

@@ -52,4 +52,4 @@ app.controller('SignUpController', Controllers.SignUpController);
 app.controller('AccountController', Controllers.AccountController);
 app.controller('HomeController', Controllers.HomeController);
 app.controller('ProjectsController', Controllers.ProjectsController);
-//app.controller('CompanyController', Controllers.CompanyController);
+app.controller('CompanyController', Controllers.CompanyController);
