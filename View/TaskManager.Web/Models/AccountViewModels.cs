@@ -12,8 +12,7 @@ namespace TaskManager.Web.Models {
     }
 
     public class RegisterViewModel {
-        [Required]
-        [StringLength(64, MinimumLength = 3)]
+        [StringLength(64)]
         [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
         [Required]

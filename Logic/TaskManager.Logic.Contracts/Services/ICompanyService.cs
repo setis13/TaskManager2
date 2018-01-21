@@ -18,13 +18,13 @@ namespace TaskManager.Logic.Contracts.Services {
         CompanyDto GetCompanyByName(string name);
         /// <summary>
         ///     Gets company by owner ID</summary>
-        /// <param name="ownerId">Owner ID</param>
+        /// <param name="ownerId">Company Owner ID</param>
         /// <returns>Compnay DTO</returns>
         CompanyDto GetCompanyByOwnerId(Guid ownerId);
         /// <summary>
-        ///     Creates or Updates project </summary>
-        /// <param name="companyDto">project DTO</param>
-        /// <param name="userDto">user who updates the project</param>
-        void Save(CompanyDto companyDto, UserDto userDto);
+        ///     Creates new Company for User </summary>
+        /// <param name="companyDto">Creating company</param>
+        /// <param name="userDto">Company Owner DTO</param>
+        void CreateCompany(CompanyDto companyDto, UserDto userDto);
     }
 }

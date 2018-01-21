@@ -5,7 +5,7 @@
         constructor(data: any) {
             super(data);
 
-            this.Name = data.Name;
+            this.Name = data != null ? data.Name : null;
         }
     }
 }

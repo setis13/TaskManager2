@@ -52,20 +52,20 @@ namespace TaskManager.Logic.Services {
         }
 
         /// <summary>
-        ///     Creates or Updates company </summary>
-        /// <param name="companyDto">company DTO</param>
-        /// <param name="userDto">user who updates the company</param>
-        public void Save(CompanyDto companyDto, UserDto userDto) {
+        ///     Creates new Company for User </summary>
+        /// <param name="companyDto">Creating company</param>
+        /// <param name="userDto">Company Owner DTO</param>
+        public void CreateCompany(CompanyDto companyDto, UserDto userDto) {
             var rep = UnitOfWork.GetRepository<Company>();
-            var model = rep.GetById(companyDto.EntityId);
-            if (model == null) {
-                model = this.Mapper.Map<Company>(companyDto);
+            var oldCompany = rep.GetById(userDto.CompanyId);
+            if (oldCompany == null) {
+                var model = this.Mapper.Map<Company>(companyDto);
                 this.UnitOfWork.GetRepository<Company>().Insert(model, userDto.Id);
+                UnitOfWork.SaveChanges();
+                // Modify TaskManagerUser.CompanyId in caller method
             } else {
-                this.Mapper.Map(companyDto, model);
-                this.UnitOfWork.GetRepository<Company>().Update(model, userDto.Id);
+                throw new Exception("Company already exists");
             }
-            this.UnitOfWork.SaveChanges();
         }
     }
 }

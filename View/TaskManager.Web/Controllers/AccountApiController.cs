@@ -35,9 +35,13 @@ namespace TaskManager.Web.Controllers {
                     return WebApiResult.Failed(base.GetErrors());
                 }
 
+                // gets user by email
+                var user = await UserManager.FindByEmailAsync(model.Login);
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, change to shouldLockout: true
-                var result = await SignInManager.PasswordSignInAsync(model.Login, model.Password, true, shouldLockout: false);
+                var result = await SignInManager.PasswordSignInAsync(
+                    user != null ? user.UserName : model.Login, model.Password, true, shouldLockout: false);
                 switch (result) {
                     case SignInStatus.Success:
                         return WebApiResult.Succeed(new { ReturnUrl = "/Home" });
@@ -66,7 +70,7 @@ namespace TaskManager.Web.Controllers {
         public async Task<WebApiResult> Register(RegisterViewModel model) {
             try {
                 // to Trim and to Lower strings
-                model.CompanyName = model.CompanyName?.Trim().ToLower();
+                model.CompanyName = model.CompanyName?.Trim();
                 model.Email = model.Email?.Trim().ToLower();
                 model.UserName = model.UserName?.Trim();
 
@@ -77,7 +81,7 @@ namespace TaskManager.Web.Controllers {
                     return WebApiResult.Failed($"User with this name '{model.UserName}' already exists");
                 }
                 var service = ServicesHost.GetService<ICompanyService>();
-                if (service.GetCompanyByName(model.CompanyName) != null) {
+                if (model.CompanyName != null && service.GetCompanyByName(model.CompanyName) != null) {
                     return WebApiResult.Failed($"Company with this name '{model.CompanyName}' already exists");
                 }
 
@@ -88,14 +92,17 @@ namespace TaskManager.Web.Controllers {
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded) {
+                    CompanyDto companyDto = null;
                     var userDto = Mapper.Map<UserDto>(user);
-                    // Creates company
-                    var companyDto = new CompanyDto();
-                    companyDto.Name = model.CompanyName;
-                    service.Save(companyDto, userDto);
-                    // Modifies user
-                    user.CompanyId = userDto.CompanyId = companyDto.EntityId;
-                    await UserManager.UpdateAsync(user);
+                    if (model.CompanyName != null) {
+                        // Creates company
+                        companyDto = new CompanyDto();
+                        companyDto.Name = model.CompanyName;
+                        service.CreateCompany(companyDto, userDto);
+                        // Modifies user
+                        user.CompanyId = userDto.CompanyId = companyDto.EntityId;
+                        await UserManager.UpdateAsync(user);
+                    }
                     // Sign in
                     await SignInManager.SignInAsync(user, isPersistent: true, rememberBrowser: false);
                     return WebApiResult.Succeed(new { ReturnUrl = "/Home", User = userDto, Company = companyDto });

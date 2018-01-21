@@ -6,9 +6,16 @@
 
         constructor(data: any) {
             super();
-            this.Id = data.Id;
-            this.UserName = data.UserName;
-            this.Email = data.Email;
+
+            if (data != null) {
+                this.Id = data.Id;
+                this.UserName = data.UserName;
+                this.Email = data.Email;
+            } else {
+                this.Id = null;
+                this.UserName = null;
+                this.Email = null;
+            }
         }
     }
 }
