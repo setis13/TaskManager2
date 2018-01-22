@@ -15,8 +15,6 @@ using TaskManager.Logic.Contracts.Services;
 using TaskManager.Web.Controllers.Base;
 using TaskManager.Web.Models;
 
-check all
-
 namespace TaskManager.Web.Controllers {
     [Authorize]
     [HostAuthentication(DefaultAuthenticationTypes.ApplicationCookie)]
@@ -41,9 +39,19 @@ namespace TaskManager.Web.Controllers {
                 return await Task.Factory.StartNew(() => {
                     Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
                     var userDto = Mapper.Map<UserDto>(base.UserManager.FindById(userId));
-                    CompanyDto company = this._service.GetCompanyById(userDto.CompanyId);
+                    CompanyDto company = null, invitationCompany = null;
+                    // company
+                    if (userDto.CompanyId != Guid.Empty) {
+                        company = this._service.GetCompanyById(userDto.CompanyId);
+                    }
+                    // invitation company
+                    if (userDto.InvitationCompanyId != null) {
+                        invitationCompany = this._service.GetCompanyById(userDto.InvitationCompanyId.Value);
+                    }
+                    // users
                     List<UserDto> users = Mapper.Map<List<UserDto>>(this.UserManager.Users
                         .Where(e => e.CompanyId == userDto.CompanyId));
+                    // invited users, but they were not accepted a invitation
                     List<UserDto> invitedUsers = new List<UserDto>();
                     // I am owner of my company
                     if (company != null && company.CreatedById == userDto.Id) {
@@ -52,6 +60,7 @@ namespace TaskManager.Web.Controllers {
                     }
                     return WebApiResult.Succeed(new {
                         Company = company,
+                        InvitationCompany = invitationCompany,
                         Users = users,
                         InvitedUsers = invitedUsers
                     });
@@ -74,10 +83,16 @@ namespace TaskManager.Web.Controllers {
 #endif
                 return await Task.Factory.StartNew(() => {
                     Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
-                    var model = base.UserManager.FindById(userId);
-                    if (model.CompanyId != null) {
-                        model.CompanyId = null;
-                        base.UserManager.Update(model);
+                    var user = base.UserManager.FindById(userId);
+                    var userDto = Mapper.Map<UserDto>(user);
+                    if (user.CompanyId != null) {
+                        var oldCompanyId = user.CompanyId.Value;
+                        user.CompanyId = null;
+                        base.UserManager.Update(user);
+                        // removes company if it is empty
+                        if (base.UserManager.Users.Any(e => e.CompanyId == oldCompanyId) == false) {
+                            _service.DeleteCompany(oldCompanyId, userDto);
+                        }
                     } else {
                         throw new Exception("User doesn't have a company");
                     }

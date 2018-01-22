@@ -1,5 +1,6 @@
 ﻿namespace Models {
     export class HomeModel extends ModelBase {
+        public Loaded: boolean = false;
         public Users: Array<UserModel>;
         public SelectedUsers: Array<UserModel>;
         public Projects: Array<ProjectModel>;
@@ -19,6 +20,7 @@
         }
 
         public SetData(data: any) {
+            this.Loaded = true;
             this.Users = new Array();
             this.Projects = new Array();
             this.Tasks = new Array();

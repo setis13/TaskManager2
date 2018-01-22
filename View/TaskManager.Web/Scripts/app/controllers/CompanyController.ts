@@ -54,7 +54,7 @@ namespace Controllers {
         }
 
         public Load = () => {
-            this.$scope.Model = this.Model = new Models.Company1Model();
+            this.$scope.Model = null;
 
             var $this = this;
             $.ajax({
@@ -70,7 +70,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this.$scope.$apply();
+                        this.$scope.Model = $this.Model = new Models.Company1Model();
                         $this.Model.SetData(result.data);
                     } else {
                         $this.Error(result.error);
@@ -79,12 +79,9 @@ namespace Controllers {
                 error: (jqXhr) => {
                     console.error(jqXhr.statusText);
                     $this.Error(jqXhr.statusText);
-                    $this.$scope.$apply();
                 }
             });
         }
-
-check all
 
         public Leave_OnClick = () => {
             if (!confirm("Please confirm to leave from the company")) {
@@ -119,9 +116,6 @@ check all
         }
 
         public Accept_OnClick = (user: Models.UserModel) => {
-            if (!confirm("Please confirm to accept invitation to the company")) {
-                return;
-            }
             var $this = this;
             $.ajax({
                 url: '/api/Company/AcceptCompany',
@@ -130,10 +124,10 @@ check all
                 dataType: 'json',
                 data: {},
                 beforeSend(xhr) {
-                    $this.ShowBusyRow($("#user-" + user.Id));
+                    $this.scope.Accepting = true;
                 },
                 complete() {
-                    $this.ShowBusyRow($("#user-" + user.Id));
+                    $this.scope.Accepting = false;
                     $this.$scope.$apply();
                 },
                 success: (result) => {
@@ -162,10 +156,10 @@ check all
                 dataType: 'json',
                 data: {},
                 beforeSend(xhr) {
-                    $this.ShowBusyRow($("#user-" + user.Id));
+                    $this.scope.Rejecting = true;
                 },
                 complete() {
-                    $this.HideBusyRow($("#user-" + user.Id));
+                    $this.scope.Rejecting = false;
                     $this.$scope.$apply();
                 },
                 success: (result) => {

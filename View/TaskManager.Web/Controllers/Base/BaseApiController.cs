@@ -55,9 +55,18 @@ namespace TaskManager.Web.Controllers.Base {
             return String.Join(Environment.NewLine, ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)).GetHtml();
         }
 
+        /// <summary>
+        ///     Gets current user DTO </summary>
+        /// <remarks>
+        /// The method is used to get/set data. So here I implemented to check by a company
+        /// </remarks>
         protected UserDto GetUserDto() {
             Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
-            return Mapper.Map<UserDto>(this.UserManager.FindById(userId));
+            var userDto = Mapper.Map<UserDto>(this.UserManager.FindById(userId));
+            if (userDto.CompanyId == Guid.Empty) {
+                throw new Exception("Please create a company");
+            }
+            return userDto;
         }
     }
 }

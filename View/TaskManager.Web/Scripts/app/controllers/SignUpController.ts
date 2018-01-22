@@ -36,7 +36,6 @@
                 success: (result) => {
                     if (result.success) {
                         $this.ShowBusySaving();
-                        $this.$scope.$apply();
                         window.location.href = result.data.ReturnUrl;
                     } else {
                         $this.Error(result.error);
@@ -44,7 +43,6 @@
                 },
                 error: (jqXhr) => {
                     $this.Error(jqXhr.statusText);
-                    $this.$scope.$apply();
                 }
             });
         }

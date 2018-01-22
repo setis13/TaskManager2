@@ -46,7 +46,6 @@
                 },
                 error: (jqXhr) => {
                     $this.Error(jqXhr.statusText);
-                    $this.$scope.$apply();
                 }
             });
         }

@@ -49,7 +49,6 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this.$scope.$apply();
                         $this.Model.SetData(result.data);
                     } else {
                         $this.Error(result.error);
@@ -58,7 +57,6 @@ namespace Controllers {
                 error: (jqXhr) => {
                     console.error(jqXhr.statusText);
                     $this.Error(jqXhr.statusText);
-                    $this.$scope.$apply();
                 }
             });
         }
@@ -101,7 +99,6 @@ namespace Controllers {
                         $this.Load();
                     } else {
                         $this.Model.EditProject.Error = result.error;
-                        $this.$scope.$apply();
                     }
                 },
                 error: (jqXhr) => {
@@ -135,7 +132,6 @@ namespace Controllers {
                         $this.Load();
                     } else {
                         $this.Model.EditProject.Error = result.error;
-                        $this.$scope.$apply();
                     }
                 },
                 error: (jqXhr) => {

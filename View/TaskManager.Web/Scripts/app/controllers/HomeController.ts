@@ -151,7 +151,6 @@ namespace Controllers {
                 error: (jqXhr) => {
                     console.error(jqXhr.statusText);
                     $this.Error(jqXhr.statusText);
-                    $this.$scope.$apply();
                 }
             });
         }
@@ -295,7 +294,6 @@ namespace Controllers {
                         $this.Load();
                     } else {
                         $this.Model.EditTask.Error = result.error;
-                        $this.$scope.$apply();
                     }
                 },
                 error: (jqXhr) => {
@@ -329,7 +327,6 @@ namespace Controllers {
                         $this.Load();
                     } else {
                         $this.Model.EditTask.Error = result.error;
-                        $this.$scope.$apply();
                     }
                 },
                 error: (jqXhr) => {
@@ -366,7 +363,6 @@ namespace Controllers {
                         $this.Load();
                     } else {
                         $this.Model.EditSubTask.Error = result.error;
-                        $this.$scope.$apply();
                     }
                 },
                 error: (jqXhr) => {
@@ -400,7 +396,6 @@ namespace Controllers {
                         $this.Load();
                     } else {
                         $this.Model.EditSubTask.Error = result.error;
-                        $this.$scope.$apply();
                     }
                 },
                 error: (jqXhr) => {
@@ -437,7 +432,6 @@ namespace Controllers {
                         $this.Load();
                     } else {
                         $this.Model.EditComment.Error = result.error;
-                        $this.$scope.$apply();
                     }
                 },
                 error: (jqXhr) => {
@@ -471,7 +465,6 @@ namespace Controllers {
                         $this.Load();
                     } else {
                         $this.Model.EditComment.Error = result.error;
-                        $this.$scope.$apply();
                     }
                 },
                 error: (jqXhr) => {
