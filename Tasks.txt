@@ -7,3 +7,10 @@
 8. Notes -> Comments
 9. проверить может ли пользователь переписать createdById
 10. icon in a web-tabs
+11. туда ли я присваиваю ошибки? 
+                success: (result) => {
+                    if (result.success) {
+                    } else {
+                        $this.Model.ChangePassword.Error(result.error);!!!
+                    }
+                },

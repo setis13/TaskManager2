@@ -13,6 +13,7 @@ using TaskManager.Logic.Contracts.Dtos;
 using TaskManager.Logic.Contracts.Services;
 using TaskManager.Web.Controllers.Base;
 using TaskManager.Web.Models;
+using TaskManager.Common.Extensions;
 
 namespace TaskManager.Web.Controllers {
 
@@ -116,6 +117,31 @@ namespace TaskManager.Web.Controllers {
                 Logger.e("Register", e);
                 return WebApiResult.Failed(e.Message);
             }
+        }
+
+        /// <summary>
+        ///     POST: /api/Account/ChangePassword </summary>
+        [HttpPost, Route("ChangePassword")]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<WebApiResult> ChangePassword(ChangePasswordModel model) {
+#if DEBUG
+            await Task.Delay(500);
+#endif
+            return await Task.Factory.StartNew(() => {
+                if (!ModelState.IsValid) {
+                    return WebApiResult.Failed("Invalid model state");
+                }
+                Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
+                var user = base.UserManager.FindById(userId);
+                var result = UserManager.ChangePassword(user.Id, model.OldPassword, model.NewPassword);
+                if (result.Succeeded) {
+                    SignInManager.SignIn(user, true, true);
+                    return WebApiResult.Succeed();
+                } else {
+                    return WebApiResult.Failed(String.Join(Environment.NewLine, result.Errors));
+                }
+            });
         }
     }
 }

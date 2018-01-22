@@ -29,4 +29,16 @@ namespace TaskManager.Web.Models {
         [Display(Name = "Password")]
         public string Password { get; set; }
     }
+
+    public class ChangePasswordModel {
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Old Password")]
+        public string OldPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        public string NewPassword { get; set; }
+    }
 }

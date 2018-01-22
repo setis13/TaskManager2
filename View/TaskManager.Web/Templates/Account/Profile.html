@@ -5,9 +5,6 @@
                 <i class="user icon"></i>
                 <div class="content">
                     <span class="header">pilipenko</span>
-                    <div class="description">
-                        <a href="" ng-click="RenameUserTitle_OnClick()">rename</a>
-                    </div>
                 </div>
             </div>
             <div class="item">
@@ -27,3 +24,77 @@
         </div>
     </div>
 </div>
+<!-- Change Password Modal -->
+<div id="change-password-modal" class="ui small modal">
+    <i class="close icon" ng-click="ChangePasswordCancel_OnClick()"></i>
+    <div class="header">Change Password</div>
+    <div id="form-change-password" class="ui validate form content">
+        <div class="ui red message ng-hide" ng-hide="Model.ChangePassword.Error == null">
+            <p ng-bind-html="Model.ChangePassword.Error"></p>
+        </div>
+        <div class="field">
+            <label>Old Password</label>
+            <input id="old-password" placeholder="Old Password" type="password"
+                   ng-model="Model.ChangePassword.OldPassword">
+        </div>
+        <div class="field">
+            <label>New Password</label>
+            <input id="new-password" placeholder="New Password" type="password"
+                   ng-model="Model.ChangePassword.NewPassword">
+        </div>
+        <div class="field">
+            <label>Confirm Password</label>
+            <input id="confirm-password" placeholder="Confirm Password" type="password">
+        </div>
+        <div class="ui error message"></div>
+    </div>
+    <div class="actions">
+        <div class="ui clear button"
+             ng-click="ChangePasswordCancel_OnClick()">
+            Cancel
+        </div>
+        <div class="ui primary button"
+             ng-click="ChangePasswordOk_OnClick()"
+             lb-busy="Saving">
+            Save
+        </div>
+    </div>
+</div>
+<script language="javascript">
+    form = $('#form-change-password')
+        .form({
+            fields: {
+                old_password: {
+                    identifier: 'old-password',
+                    rules: [
+                         {
+                             type: 'empty',
+                             prompt: 'Please enter Old Password'
+                         }
+                    ]
+                },
+                new_password: {
+                    identifier: 'new-password',
+                    rules: [
+                         {
+                             type: 'empty',
+                             prompt: 'Please enter a New Password'
+                         }
+                    ]
+                },
+                confirm_password: {
+                    identifier: 'confirm-password',
+                    rules: [
+                         {
+                             type: 'empty',
+                             prompt: 'Please enter Confirm Password'
+                         },
+                         {
+                             type: 'match[new-password]',
+                             prompt: 'New Password does not match the confirm password'
+                         }
+                    ]
+                },
+            }
+        });
+</script>
