@@ -19,7 +19,8 @@
     <table class="ui celled table">
         <thead>
             <tr>
-                <th class="one wide">
+                <th class="one wide"></th>
+                <th class="three wide left-merge">
                     <select id="history-filter" class="ui dropdown"
                             ng-model="Model.SelectedHistoryFilter"
                             ng-change="HistoryFilter_OnChange()"
@@ -28,7 +29,6 @@
                         <option ng-repeat="(id, name) in Model.HistoryFilters" value="{{id}}">{{name}}</option>
                     </select>
                 </th>
-                <th class="three wide left-merge"></th>
                 <th class="four wide">Title</th>
                 <th class="eigth wide">Comments</th>
             </tr>

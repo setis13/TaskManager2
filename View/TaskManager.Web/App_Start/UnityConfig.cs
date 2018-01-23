@@ -52,6 +52,7 @@ namespace TaskManager.Web {
             container.RegisterType<ICompanyService, CompanyService>(new HierarchicalLifetimeManager());
             container.RegisterType<IProjectsService, ProjectsService>(new HierarchicalLifetimeManager());
             container.RegisterType<ITaskService, TaskService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IReportService, ReportService>(new HierarchicalLifetimeManager());
 
             // Register AutoMapper
             container.RegisterMapper();

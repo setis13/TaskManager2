@@ -83,6 +83,7 @@
     <Compile Include="Services\Base\IEntityReadonlyService.cs" />
     <Compile Include="Services\Base\IService.cs" />
     <Compile Include="Services\ICompanyService.cs" />
+    <Compile Include="Services\IReportService.cs" />
     <Compile Include="Services\IProjectsService.cs" />
     <Compile Include="Services\ITaskService.cs" />
     <Compile Include="Services\ISessionService.cs" />

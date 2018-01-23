@@ -458,6 +458,8 @@
     <Content Include="Templates\Account\Profile.html" />
     <Content Include="Templates\Projects\Index.html" />
     <Content Include="Templates\Company\Index.html" />
+    <Content Include="Templates\Report\Period.html" />
+    <Content Include="Templates\Report\Single.html" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -493,6 +495,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\TaskManagerAuthorizeAttribute.cs" />
     <Compile Include="Attributes\ValidateAntiForgeryTokenAttribute.cs" />
+    <Compile Include="Controllers\ReportApiController.cs" />
     <Compile Include="Controllers\CompanyApiController.cs" />
     <Compile Include="Controllers\ProjectsApiController.cs" />
     <Compile Include="Controllers\HomeApiController.cs" />
@@ -520,6 +523,7 @@
     <TypeScriptCompile Include="Scripts\app\controllers\base\0BaseController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\AccountController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\CompanyController.ts" />
+    <TypeScriptCompile Include="Scripts\app\controllers\ReportController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\ProjectsController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\LoginController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\HomeController.ts" />

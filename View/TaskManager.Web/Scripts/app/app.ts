@@ -35,6 +35,18 @@ app.config([
                 templateUrl: '/Templates/Company/Index.html',
                 controller: 'CompanyController',
             })
+            .when('/report_single',
+            {
+                title: 'SingleReport',
+                templateUrl: '/Templates/Report/Single.html',
+                controller: 'ReportController',
+            })
+            .when('/report_period',
+            {
+                title: 'PeriodReport',
+                templateUrl: '/Templates/Report/Period.html',
+                controller: 'ReportController',
+            })
             .when('/',
             {
                 title: 'Home',
@@ -56,3 +68,4 @@ app.controller('AccountController', Controllers.AccountController);
 app.controller('HomeController', Controllers.HomeController);
 app.controller('ProjectsController', Controllers.ProjectsController);
 app.controller('CompanyController', Controllers.CompanyController);
+app.controller('ReportController', Controllers.ReportController);
