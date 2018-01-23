@@ -39,12 +39,12 @@ namespace TaskManager.Web {
             );
             routes.MapRoute(
                 name: "ReportSingle",
-                url: "report-single",
+                url: "report_single",
                 defaults: new { controller = "Home", action = "Index" }
             );
             routes.MapRoute(
                 name: "ReportPeriod",
-                url: "report-period",
+                url: "report_period",
                 defaults: new { controller = "Home", action = "Index" }
             );
             routes.MapRoute(

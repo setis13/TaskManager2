@@ -17,6 +17,14 @@ namespace Controllers {
             $scope._OnClick = this._OnClick;
 
             this.Load();
+            $this.HideLoader();
+
+            (<any>$('#date')).calendar({
+                type: 'date',
+                onChange: function (date, text) {
+                   // $this.Model.EditComment.DateMoment = moment(date);
+                }
+            })/*.calendar("set date", $this.Model.EditComment.DateMoment.toDate())*/;
         }
 
         public Load = () => {
