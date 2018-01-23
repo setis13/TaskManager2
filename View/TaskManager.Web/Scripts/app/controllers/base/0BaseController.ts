@@ -18,10 +18,8 @@ namespace Controllers {
             this.http = $http;
             this.location = $location;
 
-            this.scope.isActive = this.isActive;
-
-            this.$scope.check = (val, providedInt) => (val & providedInt);
-            this.$scope.Math = Math;
+            this.scope.check = (val, providedInt) => (val & providedInt);
+            this.scope.Math = Math;
         }
 
         private Loading(val: boolean): void {
@@ -100,10 +98,6 @@ namespace Controllers {
 
         protected Error(message: string) {
             this.Model.Error = message;
-        }
-
-        protected isActive = (path) => {
-            return this.location.path().match(path + "$") ? 'active' : '';
         }
 
         protected UrlForAction(action: string, controller: string = ''): string {

@@ -7,6 +7,9 @@ app.run($rootScope => {
     $rootScope.$on("$routeChangeSuccess", (event, currentRoute, previousRoute) => {
         $rootScope.title = currentRoute.title;
     });
+    $rootScope.isActive = function (path) {
+        return location.pathname.match(path + "$") ? 'active' : '';
+    }
 });
 
 app.config([
