@@ -48,6 +48,9 @@ namespace TaskManager.Logic.Services {
         /// <param name="projectId">project id</param>
         /// <param name="userDto">user who deletes the project</param>
         public void Delete(Guid projectId, UserDto userDto) {
+            if (userDto.CompanyId == Guid.Empty) {
+                throw new Exception("Please create a company");
+            }
             var rep = UnitOfWork.GetRepository<Project>();
             var model = rep.GetById(projectId);
             if (model != null && model.CompanyId == userDto.CompanyId) {

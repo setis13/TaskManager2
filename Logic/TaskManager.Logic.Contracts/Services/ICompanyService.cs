@@ -26,5 +26,10 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="companyDto">Creating company</param>
         /// <param name="userDto">Company Owner DTO</param>
         void CreateCompany(CompanyDto companyDto, UserDto userDto);
+        /// <summary>
+        ///     Deletes company </summary>
+        /// <param name="companyId">Company ID</param>
+        /// <param name="userDto">User DTO</param>
+        void DeleteCompany(Guid companyId, UserDto userDto);
     }
 }

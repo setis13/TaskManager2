@@ -67,5 +67,22 @@ namespace TaskManager.Logic.Services {
                 throw new Exception("Company already exists");
             }
         }
+
+        /// <summary>
+        ///     Deletes company </summary>
+        /// <param name="companyId">Company ID</param>
+        /// <param name="userDto">User DTO</param>
+        public void DeleteCompany(Guid companyId, UserDto userDto) {
+            var rep = UnitOfWork.GetRepository<Company>();
+            var company = rep.GetById(userDto.CompanyId);
+            if (company != null) {
+                company.Name += "_DELETED";
+                company.IsDeleted = true;
+                this.UnitOfWork.GetRepository<Company>().Update(company, userDto.Id);
+                UnitOfWork.SaveChanges();
+            } else {
+                throw new Exception("Company was not found");
+            }
+        }
     }
 }
