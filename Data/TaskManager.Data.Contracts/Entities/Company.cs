@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using TaskManager.Common.Identity;
 using TaskManager.Data.Contracts.Entities.Base;
 
@@ -8,6 +10,6 @@ namespace TaskManager.Data.Contracts.Entities {
         [DataType("VARCHAR"), MaxLength(64), Required]
         public string Name { get; set; }
 
-        public Collection<TaskManagerUser> Users { get; set; }
+        public ICollection<TaskManagerUser> Users { get; set; }
     }
 }

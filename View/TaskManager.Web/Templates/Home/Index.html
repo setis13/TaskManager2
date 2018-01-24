@@ -282,8 +282,10 @@
             <label>Responsible</label>
             <select id="task-users" class="ui fluid dropdown"
                     placeholder="Responsible" multiple
-                    ng-options="user.Id as user.UserName for user in Model.Users"
-                    ng-model="Model.EditTask.UserIds"></select>
+                    ng-model="Model.EditTask.UserIds">
+                <option value="">Responsible</option>
+                <option ng-repeat="user in Model.Users" value="{{user.Id}}">{{user.UserName}}</option>
+            </select>
         </div>
         <div class="field">
             <label>Description</label>
@@ -430,7 +432,12 @@
     </div>
 </div>
 <script language="javascript">
-    InitDropdown();
+    
+    var taskUsersDropdown = $('#task-users').dropdown();
+    var projectDropdown = $('#project').dropdown();
+    var statusDropdown = $('#status').dropdown();
+    var historyFilterDropdown = $("#history-filter").dropdown();
+
     form = $('#form-task')
         .form({
             fields: {

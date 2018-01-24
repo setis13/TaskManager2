@@ -1,4 +1,6 @@
 ﻿declare var form: any;
+declare var TaskPriorityNames: { [id: number]: string; };
+declare var TaskStatusNames: { [id: number]: string; };
 
 namespace Controllers {
 
@@ -14,6 +16,8 @@ namespace Controllers {
             super($scope, $http, $location);
             var $this = this;
 
+            this.$scope.TaskPriorityNames = TaskPriorityNames;
+            this.$scope.TaskStatusNames = TaskStatusNames;
             this.$scope.Model = this.Model = new Models.ReportSingleModel();
 
             $scope.GenerateSingle_OnClick = this.GenerateSingle_OnClick;

@@ -66,7 +66,7 @@ namespace TaskManager.Logic.Services {
                     if (start <= comments[i].Date && comments[i].Date <= end) {
                         var dto = Mapper.Map<ReportCommentDto>(comments[i]);
                         if (i - 1 >= 0) {
-                            dto.DeltaProgress = comments[i - 1].Progress - comments[i].Progress;
+                            dto.DeltaProgress = comments[i].Progress - comments[i - 1].Progress;
                         }
                         commentTaskDtos.Add(dto);
                     }
@@ -100,7 +100,7 @@ namespace TaskManager.Logic.Services {
                     if (start <= comments[i].Date && comments[i].Date <= end) {
                         var dto = Mapper.Map<ReportCommentDto>(comments[i]);
                         if (i - 1 >= 0) {
-                            dto.DeltaProgress = comments[i - 1].Progress - comments[i].Progress;
+                            dto.DeltaProgress = comments[i].Progress - comments[i - 1].Progress;
                         }
                         commentSubTaskDtos.Add(dto);
                     }

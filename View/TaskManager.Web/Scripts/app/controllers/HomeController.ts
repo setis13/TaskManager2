@@ -1,6 +1,10 @@
 ﻿declare var form: any;
 declare var form2: any;
 declare var form3: any;
+declare var taskUsersDropdown: any;
+declare var projectDropdown: any;
+declare var statusDropdown: any;
+declare var historyFilterDropdown: any;
 declare var TaskPriorityNames: { [id: number]: string; };
 declare var TaskStatusNames: { [id: number]: string; };
 
@@ -19,10 +23,20 @@ namespace Controllers {
         private _subTaskModal: any;
         private _commentModal: any;
 
+        private _taskUsersDropdown: any;
+        private _projectDropdown: any;
+        private _statusDropdown: any;
+        private _historyFilterDropdown: any;
+
         constructor($scope: any, $http: ng.IHttpProvider, $location: ng.ILocationService) {
             super($scope, $http, $location);
 
             var $this = this;
+
+            this._taskUsersDropdown = taskUsersDropdown;
+            this._projectDropdown = projectDropdown;
+            this._statusDropdown = statusDropdown;
+            this._historyFilterDropdown = historyFilterDropdown;
 
             this._taskModal = (<any>$("#edit-task-modal")).modal({
                 closable: false,
@@ -32,8 +46,8 @@ namespace Controllers {
                     $this.$scope.$apply();
 
                     // resets dropdown
-                    (<any>$('#task-users')).dropdown("restore defaults");
-                    (<any>$('#project')).dropdown("restore defaults");
+                    $this._taskUsersDropdown.dropdown("restore defaults");
+                    $this._projectDropdown.dropdown("restore defaults");
                     // NOTES: default text was changed after selected because this code restores it
                     (<any>$('#project')).parent().find('.text.default').html($('#project > option[value=""]').html());
                 },
@@ -42,10 +56,10 @@ namespace Controllers {
                     // sets selected value in dropdown
                     setTimeout(() => {
                         if ($('#task-users').val().length > 0) {
-                            (<any>$('#task-users')).dropdown("set selected", $('#task-users').val());
+                            $this._taskUsersDropdown.dropdown("set selected", $('#task-users').val());
                         }
                         if ($('#project').val() !== "") {
-                            (<any>$('#project')).dropdown("set selected", $('#project').val());
+                            $this._projectDropdown.dropdown("set selected", $('#project').val());
                         }
                     });
                 }
@@ -72,7 +86,7 @@ namespace Controllers {
                     // sets selected value in dropdown
                     setTimeout(() => {
                         // status without empty value
-                        (<any>$('#status')).dropdown("set selected", $('#status').val());
+                        $this._statusDropdown.dropdown("set selected", $('#status').val());
                     });
                 },
                 onHidden() {
@@ -81,13 +95,13 @@ namespace Controllers {
                     $this.$scope.$apply();
 
                     // resets dropdown
-                    (<any>$('#status')).dropdown("restore defaults");
+                    $this._statusDropdown.dropdown("restore defaults");
                     // NOTES: default text was changed after selected because this code restores it
                     (<any>$('#status')).parent().find('.text.default').html($('#status > option[value=""]').html());
                 }
             });
 
-            (<any>$("#history-filter")).dropdown().dropdown({ maxSelections: 1 });
+            $this._historyFilterDropdown.dropdown({ maxSelections: 1 });
 
             $scope.Model = this.Model = new Models.HomeModel();
 

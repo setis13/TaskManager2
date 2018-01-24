@@ -45,15 +45,17 @@
     <div ng-repeat="project in Model.ReportProjects">
         <span>{{project.Title}}</span>
         <div ng-repeat="task in project.ReportTasks">
-            <div ng-repeat="comment in task.ReportComments">
-                <span>{{comment.Message}}</span>
-            </div>
-            <span>{{task.Title}}</span>
+            <div>&nbsp;&nbsp;{{task.Title}} {{TaskStatusNames[task.Status]}} {{task.ActualWorkHours}}h/{{task.TotalWorkHours}}h {{task.Progress}}%</div>
+            <div>&nbsp;&nbsp;{{task.Description}}</div>
+            <ul>
+                <li ng-repeat="comment in task.ReportComments">{{comment.Description}} {{TaskStatusNames[comment.Status]}} {{comment.ActualWorkHours}}h{{comment.Progress}}% +{{comment.DeltaProgress}}</li>
+            </ul>
             <div ng-repeat="subtask in task.ReportSubTasks">
-                <span>{{subtask.Title}}</span>
-                <div ng-repeat="comment in subtask.ReportComments">
-                    <span>{{comment.Message}}</span>
-                </div>
+                <div>&nbsp;&nbsp;{{subtask.Title}} {{TaskStatusNames[subtask.Status]}} {{subtask.ActualWorkHours}}h/{{subtask.TotalWorkHours}}h {{subtask.Progress}}%</div>
+                <div>&nbsp;&nbsp;{{subtask.Description}}</div>
+                <ul>
+                    <li ng-repeat="comment in subtask.ReportComments">{{comment.Description}} {{TaskStatusNames[comment.Status]}} {{comment.ActualWorkHours}}h{{comment.Progress}}% +{{comment.DeltaProgress}}</li>
+                </ul>
             </div>
         </div>
     </div>

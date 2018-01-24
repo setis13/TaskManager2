@@ -5,6 +5,8 @@
 
         constructor(data: any) {
             super(data);
+
+            this.DeltaProgress = data.DeltaProgress;
         }
     }
 }
