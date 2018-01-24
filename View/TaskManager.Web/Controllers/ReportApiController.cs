@@ -37,9 +37,8 @@ namespace TaskManager.Web.Controllers {
                 await Task.Delay(500);
 #endif
                 return await Task.Factory.StartNew(() => {
-                
-                    return WebApiResult.Succeed(new {
-                    });
+                    var projectDtos = _service.GetSingleDayData(date, GetUserDto());
+                    return WebApiResult.Succeed(new { ReportProjects = projectDtos });
                 });
             } catch (Exception e) {
                 Logger.e("GetSingle", e);
@@ -67,6 +66,5 @@ namespace TaskManager.Web.Controllers {
                 return WebApiResult.Failed(e.Message);
             }
         }
-
     }
 }

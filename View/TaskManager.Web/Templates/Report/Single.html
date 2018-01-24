@@ -1,5 +1,5 @@
 ﻿<!-- loader -->
-<div id="loader" class="ui dimmer transition active inverted">
+<div id="loader" class="ui dimmer transition active inverted ng-hide">
     <div class="ui loader"></div>
 </div>
 <!-- a error on the page -->
@@ -23,17 +23,9 @@
                 </div>
             </div>
 
-            <div class="three wide field">
-                <div class="ui calendar" id="date">
-                    <div class="ui input left icon">
-                        <i class="calendar icon"></i>
-                        <input type="text" placeholder="Date">
-                    </div>
-                </div>
-            </div>
-
             <div class="two wide field">
                 <button class="ui primary button"
+                        lb-busy="Generating"
                         ng-click="GenerateSingle_OnClick()">
                     Generate
                 </button>
@@ -49,4 +41,20 @@
      role="textbox"
      contenteditable="true"
      aria-multiline="true"
-     style="min-height: 54px;"></div>
+     style="min-height: 54px;">
+    <div ng-repeat="project in Model.ReportProjects">
+        <span>{{project.Title}}</span>
+        <div ng-repeat="task in project.ReportTasks">
+            <div ng-repeat="comment in task.ReportComments">
+                <span>{{comment.Message}}</span>
+            </div>
+            <span>{{task.Title}}</span>
+            <div ng-repeat="subtask in task.ReportSubTasks">
+                <span>{{subtask.Title}}</span>
+                <div ng-repeat="comment in subtask.ReportComments">
+                    <span>{{comment.Message}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

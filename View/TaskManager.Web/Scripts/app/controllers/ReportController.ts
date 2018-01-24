@@ -4,7 +4,7 @@ namespace Controllers {
 
     export class ReportController extends BaseController {
 
-        public Model: Models.ProjectsModel;
+        public Model: Models.ReportSingleModel;
 
         static $inject = ["$scope", "$http", "$location"];
 
@@ -14,37 +14,38 @@ namespace Controllers {
             super($scope, $http, $location);
             var $this = this;
 
-            $scope._OnClick = this._OnClick;
+            this.$scope.Model = this.Model = new Models.ReportSingleModel();
 
-            this.Load();
-            $this.HideLoader();
+            $scope.GenerateSingle_OnClick = this.GenerateSingle_OnClick;
 
             (<any>$('#date')).calendar({
                 type: 'date',
                 onChange: function (date, text) {
-                   // $this.Model.EditComment.DateMoment = moment(date);
+                    $this.Model.Date = moment(date);
                 }
-            })/*.calendar("set date", $this.Model.EditComment.DateMoment.toDate())*/;
+            }).calendar("set date", $this.Model.Date.toDate());
+        }
+
+        public GenerateSingle_OnClick = () => {
+            this.Load();
         }
 
         public Load = () => {
-            this.$scope.Model = this.Model = new Models.Model();
-
             var $this = this;
             $.ajax({
-                url: '/api/Report/Get/',
+                url: '/api/Report/GetSingle?date=' + this.Model.Date.format("YYYY-MM-DD"),
                 type: 'POST',
                 data: {},
                 beforeSend(xhr) {
-                    $this.ShowLoader();
+                    $this.$scope.Generating = true;
                 },
                 complete() {
-                    $this.HideLoader();
+                    $this.$scope.Generating = false;
                     $this.$scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this.Model.Set(result.data);
+                        $this.Model.SetData(result.data);
                     } else {
                         $this.Error(result.error);
                     }

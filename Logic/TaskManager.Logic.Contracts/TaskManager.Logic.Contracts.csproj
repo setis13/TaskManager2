@@ -66,11 +66,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\ReportCommentDto.cs" />
+    <Compile Include="Dtos\ReportProjectDto.cs" />
     <Compile Include="Dtos\ProjectDto.cs" />
     <Compile Include="Dtos\SessionDto.cs" />
     <Compile Include="Dtos\CommentDto.cs" />
+    <Compile Include="Dtos\ReportSubTaskDto.cs" />
     <Compile Include="Dtos\SubTaskDto.cs" />
     <Compile Include="Dtos\CompanyDto.cs" />
+    <Compile Include="Dtos\ReportTaskDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Dtos\TodoDto.cs" />
     <Compile Include="Dtos\Task1Dto.cs" />

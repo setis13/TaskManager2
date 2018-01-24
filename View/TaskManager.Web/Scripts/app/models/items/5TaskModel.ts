@@ -1,15 +1,18 @@
 ﻿namespace Models {
-    export class SubTaskModel extends BaseModel {
+    export class TaskModel extends BaseModel {
         public CompanyId: string;
-        public TaskId: string;
-        public Order: number;
+        public ProjectId: string;
+        public Index: number;
         public Title: string;
         public Description: string;
+        public Priority: Enums.TaskPriorityEnum = 0;
         public ActualWork: string;
         public TotalWork: string;
         public Progress: number;
         public Status: Enums.TaskStatusEnum;
-        public Comments: Array<CommentModel>;
+        public SubTasks: Array<SubTaskModel> = new Array();
+        public UserIds: Array<string> = new Array();
+        public Comments: Array<CommentModel> = new Array();
 
         //extra
         private _totalWork: any; // uses string in modal or number in tempate
@@ -37,38 +40,53 @@
 
             if (data != null) {
                 this.CompanyId = data.CompanyId;
-                this.TaskId = data.TaskId;
-                this.Order = data.Order;
+                this.ProjectId = data.ProjectId;
+                this.Index = data.Index;
                 this.Title = data.Title;
                 this.Description = data.Description !== null ? data.Description : '';
+                this.Priority = data.Priority;
                 this.ActualWorkHours = moment.duration(data.ActualWork).asHours();
                 this.TotalWorkHours = moment.duration(data.TotalWork).asHours();
                 this.Progress = data.Progress;
                 this.Status = data.Status;
-                this.Comments = new Array();
-                for (var i = 0; i < data.Comments.length; i++) {
+                for (var i = 0; data.SubTasks != null &&i < data.SubTasks.length; i++) {
+                    this.SubTasks.push(new SubTaskModel(data.SubTasks[i]));
+                }
+                for (var i = 0; data.Comments != null &&i < data.Comments.length; i++) {
                     var comment = new CommentModel(data.Comments[i]);
                     comment.Visible = i > data.Comments.length - Controllers.HomeController.MIN_COMMENTS - 1;
                     this.Comments.push(comment);
                 }
+                for (var i = 0; data.UserIds != null && i < data.UserIds.length; i++) {
+                    this.UserIds.push(data.UserIds[i]);
+                }
             }
         }
 
-        public Clone(): SubTaskModel {
-            var clone = new SubTaskModel(null);
+        public Clone(): TaskModel {
+            var clone = new TaskModel(null);
 
             clone.EntityId = this.EntityId;
             clone.CreatedDate = this.CreatedDate.clone();
 
             clone.CompanyId = this.CompanyId;
-            clone.TaskId = this.TaskId;
-            clone.Order = this.Order;
+            clone.ProjectId = this.ProjectId;
+            clone.Index = this.Index;
             clone.Title = this.Title;
             clone.Description = this.Description;
+            clone.Priority = this.Priority;
             clone.ActualWorkHours = this.ActualWorkHours;
             clone.TotalWorkHours = this.TotalWorkHours;
             clone.Progress = this.Progress;
             clone.Status = this.Status;
+
+            // skips subtasks for saving only the task
+            //for (var i = 0; i < this.SubTasks.length; i++) {
+            //    clone.SubTasks.push(this.SubTasks[i].Clone());
+            //}
+            for (var i = 0; i < this.UserIds.length; i++) {
+                clone.UserIds.push(this.UserIds[i]);
+            }
 
             return clone;
         }
