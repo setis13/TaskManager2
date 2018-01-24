@@ -77,10 +77,10 @@ namespace TaskManager.Logic.Services {
 
             var comments1 = Mapper.Map<List<CommentDto>>(commentsQuery);
 
-            subtasks1.ForEach(st => st.Comments = comments1.Where(c => c.SubTaskId == st.EntityId).ToList());
-            tasks1.ForEach(t => t.UserIds = taskuserList.Where(c => c.TaskId == t.EntityId).Select(e => e.UserId).ToList());
-            tasks1.ForEach(t => t.Comments = comments1.Where(c => c.TaskId == t.EntityId).ToList());
-            tasks1.ForEach(t => t.SubTasks = subtasks1.Where(st => st.TaskId == t.EntityId).OrderBy(e => e.Order).ToList());
+            subtasks1.ForEach(st => st.Comments.AddRange(comments1.Where(c => c.SubTaskId == st.EntityId)));
+            tasks1.ForEach(t => t.UserIds.AddRange(taskuserList.Where(c => c.TaskId == t.EntityId).Select(e => e.UserId)));
+            tasks1.ForEach(t => t.Comments.AddRange(comments1.Where(c => c.TaskId == t.EntityId)));
+            tasks1.ForEach(t => t.SubTasks.AddRange(subtasks1.Where(st => st.TaskId == t.EntityId).OrderBy(e => e.Order)));
 
             projects = projects1;
             tasks = tasks1;
