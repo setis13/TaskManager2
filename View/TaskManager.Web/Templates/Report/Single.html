@@ -10,53 +10,99 @@
     </div>
     <p>{{Model.Error}}</p>
 </div>
-<!-- company is null -->
-<div>
-    <div class="ui validate form content">
-        <div class="fields">
-            <div class="three wide field">
-                <div class="ui calendar" id="date">
-                    <div class="ui input left icon">
-                        <i class="calendar icon"></i>
-                        <input type="text" placeholder="Date">
+<!-- tools -->
+<div class="ui grid">
+    <div class="row">
+        <div class="column">
+            <div class="ui validate form content">
+                <div class="fields">
+                    <div class="three wide field">
+                        <div class="ui calendar" id="start">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" placeholder="Date">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="two wide field">
+                        <button class="ui primary button"
+                                lb-busy="Generating"
+                                ng-click="GenerateReport_OnClick()">
+                            Generate
+                        </button>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" ng-model="Model.ShowStatus">
+                        <label>Show Status</label>
                     </div>
                 </div>
             </div>
-
-            <div class="two wide field">
-                <button class="ui primary button"
-                        lb-busy="Generating"
-                        ng-click="GenerateSingle_OnClick()">
-                    Generate
-                </button>
-            </div>
         </div>
     </div>
-</div>
-<div id="content"
-     class="ui segment"
-     aria-label="Message Body"
-     tabindex="1"
-     hidefocus="true"
-     role="textbox"
-     contenteditable="true"
-     aria-multiline="true"
-     style="min-height: 54px;">
-    <div ng-repeat="project in Model.ReportProjects">
-        <span>{{project.Title}}</span>
-        <div ng-repeat="task in project.ReportTasks">
-            <div>&nbsp;&nbsp;{{task.Title}} {{TaskStatusNames[task.Status]}} {{task.ActualWorkHours}}h/{{task.TotalWorkHours}}h {{task.Progress}}%</div>
-            <div>&nbsp;&nbsp;{{task.Description}}</div>
-            <ul>
-                <li ng-repeat="comment in task.ReportComments">{{comment.Description}} {{TaskStatusNames[comment.Status]}} {{comment.ActualWorkHours}}h{{comment.Progress}}% +{{comment.DeltaProgress}}</li>
-            </ul>
-            <div ng-repeat="subtask in task.ReportSubTasks">
-                <div>&nbsp;&nbsp;{{subtask.Title}} {{TaskStatusNames[subtask.Status]}} {{subtask.ActualWorkHours}}h/{{subtask.TotalWorkHours}}h {{subtask.Progress}}%</div>
-                <div>&nbsp;&nbsp;{{subtask.Description}}</div>
-                <ul>
-                    <li ng-repeat="comment in subtask.ReportComments">{{comment.Description}} {{TaskStatusNames[comment.Status]}} {{comment.ActualWorkHours}}h{{comment.Progress}}% +{{comment.DeltaProgress}}</li>
+    <div class="row">
+        <div class="sixteen wide mobile eight wide tablet ten wide computer column">
+            <div id="content"
+                 ng-show="Model.ReportProjects != null"
+                 class="ui segment"
+                 aria-label="Message Body"
+                 tabindex="1"
+                 hidefocus="true"
+                 role="textbox"
+                 contenteditable="true"
+                 aria-multiline="true"
+                 style="min-height: 54px;">
+                <div style="margin-bottom: 1em;">{{Model.Start.format('MM/DD/YYYY')}}</div>
+                <ul style="list-style: none; margin: 0em; padding: 0em;">
+                    <li ng-repeat="project in Model.ReportProjects" style="margin-bottom: 1em;">
+                        <div>{{project.Title}}&nbsp;<span style="color: green">[{{project.SumActualWorkHours}}h]&nbsp;</span></div>
+                        <ul style="list-style: circle; margin-left: 0em;">
+                            <li ng-repeat="task in project.ReportTasks">
+                                <div>
+                                    <span>{{task.Title}}</span>&nbsp;
+                                    <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[task.Status]}}&nbsp;</span>
+                                    <span style="color: green">[{{task.SumActualWorkHours}}h]&nbsp;</span>
+                                    <span>{{task.Progress | percent | number:0}}%</span>
+                                </div>
+                                <i ng-bind-html="task.Description | nl2br"></i>
+                                <ul style="list-style: disc;">
+                                    <li ng-repeat="comment in task.ReportComments">
+                                        <span ng-bind-html="comment.Description | nl2br"></span>&nbsp;
+                                        <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[comment.Status]}}&nbsp;</span>
+                                        <span style="color: green" ng-show="comment.ActualWorkHours != null">[{{comment.ActualWorkHours}}h]</span>&nbsp;
+                                        <span ng-show="comment.Progress != null">{{comment.Progress | percent | number:0}}%</span><font size="1"><span style="color: green;" ng-show="comment.DeltaProgress != null && comment.DeltaProgress != 0">+{{comment.DeltaProgress | percent | number:0}}%</span></font>
+                                    </li>
+                                </ul>
+                                <ul style="list-style: circle; margin-left: 0em;">
+                                    <li ng-repeat="subtask in task.ReportSubTasks">
+                                        <div>
+                                            <span>{{subtask.Title}}</span>&nbsp;
+                                            <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[subtask.Status]}}&nbsp;</span>
+                                            <span style="color: gray">[{{subtask.SumActualWorkHours}}h]&nbsp;</span>
+                                            <span>{{subtask.Progress | percent | number:0}}%</span>
+                                        </div>
+                                        <i ng-bind-html="subtask.Description | nl2br"></i>
+                                        <ul style="list-style: disc;">
+                                            <li ng-repeat="comment in subtask.ReportComments">
+                                                <span ng-bind-html="comment.Description | nl2br"></span>&nbsp;
+                                                <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[comment.Status]}}&nbsp;</span>
+                                                <span style="color: green" ng-show="comment.ActualWorkHours != null">[{{comment.ActualWorkHours}}h]</span>&nbsp;
+                                                <span ng-show="comment.Progress != null">{{comment.Progress | percent | number:0}}%</span><font size="1"><span style="color: green;" ng-show="comment.DeltaProgress != null && comment.DeltaProgress != 0">+{{comment.DeltaProgress | percent | number:0}}%</span></font>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
+<script language="javascript">
+    var start = moment();
+    var end = null;
+</script>

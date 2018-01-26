@@ -37,13 +37,13 @@ app.config([
             })
             .when('/report_single',
             {
-                title: 'SingleReport',
+                title: 'Report, One Day',
                 templateUrl: '/Templates/Report/Single.html',
                 controller: 'ReportController',
             })
             .when('/report_period',
             {
-                title: 'PeriodReport',
+                title: 'Report, Period',
                 templateUrl: '/Templates/Report/Period.html',
                 controller: 'ReportController',
             })

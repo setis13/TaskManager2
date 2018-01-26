@@ -105,5 +105,30 @@ namespace Controllers {
                 return '/' + action;
             return '/' + controller + '/' + action;
         }
+
+        private lastKey: { [id: string]: string; } = {};
+        private lastValue: { [id: string]: any; } = {};
+        // Returns true if value or key is changed.
+        // For colored properties of comment
+        public CheckNewValue = (propertyName: string, key: string, value: any) => {
+            if (value == null) {
+                return false;
+            }
+
+            if (this.lastKey[propertyName] == null) {
+                this.lastKey[propertyName] = key;
+                this.lastValue[propertyName] = value;
+                return true;
+            } else {
+                if (this.lastKey[propertyName] === key && this.lastValue[propertyName] === value) {
+
+                    return false;
+                } else {
+                    this.lastKey[propertyName] = key;
+                    this.lastValue[propertyName] = value;
+                    return true;
+                }
+            }
+        }
     }
 }

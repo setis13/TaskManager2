@@ -34,36 +34,53 @@ namespace Controllers {
             var $this = this;
 
             this._taskUsersDropdown = taskUsersDropdown;
-            this._projectDropdown = projectDropdown;
+            //this._projectDropdown = projectDropdown;
             this._statusDropdown = statusDropdown;
             this._historyFilterDropdown = historyFilterDropdown;
 
-            this._taskModal = (<any>$("#edit-task-modal")).modal({
-                closable: false,
-                onHidden() {
-                    $this.Model.EditTask = null;
-                    $this.ResetForm(form);
-                    $this.$scope.$apply();
+            //this._taskModal = (<any>$("#edit-task-modal")).modal({
+            //    closable: false,
+            //    onHidden() {
+            //        $this.Model.EditTask = null;
+            //        $this.ResetForm(form);
+            //        $this.$scope.$apply();
 
-                    // resets dropdown
-                    $this._taskUsersDropdown.dropdown("restore defaults");
-                    $this._projectDropdown.dropdown("restore defaults");
-                    // NOTES: default text was changed after selected because this code restores it
-                    (<any>$('#project')).parent().find('.text.default').html($('#project > option[value=""]').html());
-                },
-                onShow() {
-                    // NOTES: event.onVisibly works withount timeout, but has delay
-                    // sets selected value in dropdown
-                    setTimeout(() => {
-                        if ($('#task-users').val().length > 0) {
-                            $this._taskUsersDropdown.dropdown("set selected", $('#task-users').val());
-                        }
-                        if ($('#project').val() !== "") {
-                            $this._projectDropdown.dropdown("set selected", $('#project').val());
-                        }
-                    });
-                }
-            });
+            //        setTimeout(() => {
+            //        // resets dropdown
+            //        $this._taskUsersDropdown.dropdown("restore defaults");
+            //        //$this._projectDropdown.dropdown("restore defaults");
+            //        // NOTES: default text was changed after selected because this code restores it
+            //        //console.log((<any>$('#project')).length);
+            //        //console.log("default:" + (<any>$('#project')).parent().find('.text.default').html());
+            //        //(<any>$('#project')).parent().find('.text.default').html($('#project > option[value=""]').html());
+            //        //$this._projectDropdown.dropdown("set selected", '');
+            //        //$this._projectDropdown.dropdown("clear");
+            //        //$this._projectDropdown.dropdown({ placeholder: "123" });
+            //        }, 500);
+            //    },
+            //    onShow() {
+            //        // NOTES: event.onVisibly works withount timeout, but has delay
+            //        // sets selected value in dropdown
+            //        setTimeout(() => {
+            //            if ($('#task-users').val().length > 0) {
+            //                $this._taskUsersDropdown.dropdown("set selected", $('#task-users').val());
+            //            }
+            //            console.log(" - model: " + $this.Model.EditTask.ProjectId);
+            //            console.log(" - project: " + $('#project').val());
+            //            if ($this.Model.EditTask.ProjectId != undefined) {
+            //                $this._projectDropdown.dropdown("set selected", $this.Model.EditTask.ProjectId);
+            //            } else {
+            //                console.log("default");
+            //                (<any>$('#project')).dropdown("destroy");
+            //                (<any>$('#project')).dropdown();
+            //            }
+            //            //$('#project').val($this.Model.EditTask.ProjectId).change();
+            //            //if ($('#project').val() !== "") {
+            //              //  $this._projectDropdown.dropdown("set selected", $('#project').val());
+            //            //}
+            //        },500);
+            //    }
+            //});
             this._subTaskModal = (<any>$("#edit-subtask-modal")).modal({
                 closable: false,
                 onHidden() {
@@ -142,6 +159,14 @@ namespace Controllers {
             this.Load();
         }
 
+        public InitTaskModal() {
+            setTimeout(() => {
+                console.log(" - model: " + this.Model.EditTask.ProjectId);
+                (<any>$('#project')).dropdown({ placeholder: "123" }).dropdown("set selected", this.Model.EditTask.ProjectId);
+                //(<any>$('#project')).dropdown();
+            }, 500);
+        }
+
         public Load = () => {
             var $this = this;
             $.ajax({
@@ -180,12 +205,16 @@ namespace Controllers {
         public CreateTask_OnClick = () => {
             var task = new Models.TaskModel(null);
             this.Model.EditTask = task;
-            this._taskModal.modal('show');
+            this.Model.ShowEditTask = true;
+            //this._taskModal.modal('show');
+            this.InitTaskModal();
         }
         public EditTask_OnClick = (task: Models.TaskModel) => {
             var clone = task.Clone();
             this.Model.EditTask = clone;
-            this._taskModal.modal('show');
+            this.Model.ShowEditTask = true;
+            this.InitTaskModal();
+            //this._taskModal.modal('show');
         }
 
         public CreateSubTask_OnClick = (task: Models.TaskModel) => {
@@ -284,7 +313,7 @@ namespace Controllers {
         public TaskOk_OnClick = () => {
             this.Model.EditTask.Error = null;
             if (!super.ValidateForm(form)) {
-                this._taskModal.modal("refresh");
+                //this._taskModal.modal("refresh");
                 return;
             }
 
@@ -304,7 +333,8 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this._taskModal.modal('hide');
+                        //$this._taskModal.modal('hide');
+                        $this.Model.EditTask = null;
                         $this.Load();
                     } else {
                         $this.Model.EditTask.Error = result.error;
@@ -318,7 +348,9 @@ namespace Controllers {
         }
 
         public TaskCancel_OnClick = () => {
-            this._taskModal.modal('hide');
+            //this._taskModal.modal('hide');
+            this.Model.ShowEditTask = false;
+
         }
 
         public TaskDelete_OnClick = () => {
@@ -503,31 +535,6 @@ namespace Controllers {
 
                 for (var i = 0; i < comments.length; i++) {
                     comments[i].Visible = true;
-                }
-            }
-        }
-
-        private lastKey: { [id: string]: string; } = {};
-        private lastValue: { [id: string]: any; } = {};
-        // Returns true if value or key is changed.
-        // For colored properties of comment
-        public CheckNewValue = (propertyName: string, key: string, value: any) => {
-            if (value == null) {
-                return false;
-            }
-
-            if (this.lastKey[propertyName] == null) {
-                this.lastKey[propertyName] = key;
-                this.lastValue[propertyName] = value;
-                return true;
-            } else {
-                if (this.lastKey[propertyName] === key && this.lastValue[propertyName] === value) {
-
-                    return false;
-                } else {
-                    this.lastKey[propertyName] = key;
-                    this.lastValue[propertyName] = value;
-                    return true;
                 }
             }
         }

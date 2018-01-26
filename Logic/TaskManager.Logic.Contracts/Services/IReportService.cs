@@ -10,9 +10,10 @@ namespace TaskManager.Logic.Contracts.Services {
 
         /// <summary>
         ///     Gets data for report by day </summary>
-        /// <param name="date">Day</param>
+        /// <param name="start">Start Date and Time</param>
+        /// <param name="end">End Date and Time</param>
         /// <param name="user">User DTO</param>
         /// <returns>List of Project DTOs</returns>
-        List<ReportProjectDto> GetSingleDayData(DateTime date, UserDto user);
+        List<ReportProjectDto> GetData(DateTime start, DateTime end, UserDto user);
     }
 }

@@ -17,19 +17,16 @@ namespace TaskManager.Logic.Services {
 
         /// <summary>
         ///     Gets data for report by day </summary>
-        /// <param name="date">Day</param>
+        /// <param name="start">Start Date and Time</param>
+        /// <param name="end">End Date and Time</param>
         /// <param name="user">User DTO</param>
         /// <returns>List of Project DTOs</returns>
-        public List<ReportProjectDto> GetSingleDayData(DateTime date, UserDto user) {
+        public List<ReportProjectDto> GetData(DateTime start, DateTime end, UserDto user) {
             var projectDtos = new List<ReportProjectDto>();
             var taskDtos = new List<ReportTaskDto>();
             var subtaskDtos = new List<ReportSubTaskDto>();
             var commentTaskDtos = new List<ReportCommentDto>();
             var commentSubTaskDtos = new List<ReportCommentDto>();
-
-            // gets all time of day
-            var start = date.Date;
-            var end = date.Date.AddDays(1).AddMilliseconds(-1);
 
             var commentRep = UnitOfWork.GetRepository<Comment>();
             var subtaskRep = UnitOfWork.GetRepository<SubTask>();
@@ -67,6 +64,8 @@ namespace TaskManager.Logic.Services {
                         var dto = Mapper.Map<ReportCommentDto>(comments[i]);
                         if (i - 1 >= 0) {
                             dto.DeltaProgress = comments[i].Progress - comments[i - 1].Progress;
+                        } else {
+                            dto.DeltaProgress = comments[i].Progress;
                         }
                         commentTaskDtos.Add(dto);
                     }
@@ -101,6 +100,8 @@ namespace TaskManager.Logic.Services {
                         var dto = Mapper.Map<ReportCommentDto>(comments[i]);
                         if (i - 1 >= 0) {
                             dto.DeltaProgress = comments[i].Progress - comments[i - 1].Progress;
+                        } else {
+                            dto.DeltaProgress = comments[i].Progress;
                         }
                         commentSubTaskDtos.Add(dto);
                     }
@@ -114,13 +115,16 @@ namespace TaskManager.Logic.Services {
             var subtasks = subtaskRep.SearchFor(e => subtaskIds.Contains(e.EntityId)).ToList();
             subtaskDtos = Mapper.Map<List<ReportSubTaskDto>>(subtasks);
             // gets tasks
-            var taskIds = totalComments1.Select(e => e.TaskId.Value).Union(subtasks.Select(e=>e.TaskId)).ToList();
+            var taskIds = totalComments1.Select(e => e.TaskId.Value).Union(subtasks.Select(e => e.TaskId)).ToList();
             var tasks = taskRep.SearchFor(e => taskIds.Contains(e.EntityId)).ToList();
             taskDtos = Mapper.Map<List<ReportTaskDto>>(tasks);
             // gets projects
             var projectIds = tasks.Select(e => e.ProjectId).ToList();
             var projects = projectRep.SearchFor(e => projectIds.Contains(e.EntityId)).ToList();
             projectDtos = Mapper.Map<List<ReportProjectDto>>(projects);
+            // addes all subtasks by tasks
+            subtasks = subtaskRep.SearchFor(e => taskIds.Contains(e.TaskId) && !subtaskIds.Contains(e.EntityId)).ToList();
+            subtaskDtos.AddRange(Mapper.Map<List<ReportSubTaskDto>>(subtasks));
 
             // NOTES: we have all prepared collections.
             // To prepare result
@@ -143,7 +147,7 @@ namespace TaskManager.Logic.Services {
                 }
                 taskDto.ReportComments.Add(commentDto);
             }
-            foreach (var subtaskDto in subtaskDtos) {
+            foreach (var subtaskDto in subtaskDtos.OrderBy(e => e.Order)) {
                 var taskDto = taskDtos.FirstOrDefault(e => e.EntityId == subtaskDto.TaskId);
                 // if a task was deleted
                 if (taskDto == null) {
@@ -152,7 +156,7 @@ namespace TaskManager.Logic.Services {
                 }
                 taskDto.ReportSubTasks.Add(subtaskDto);
             }
-            foreach (var taskDto in taskDtos) {
+            foreach (var taskDto in taskDtos.OrderByDescending(e => e.Index)) {
                 var projectDto = projectDtos.FirstOrDefault(e => e.EntityId == taskDto.ProjectId);
                 // if a project was deleted
                 if (projectDto == null) {

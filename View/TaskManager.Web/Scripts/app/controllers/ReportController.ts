@@ -1,12 +1,14 @@
 ﻿declare var form: any;
 declare var TaskPriorityNames: { [id: number]: string; };
 declare var TaskStatusNames: { [id: number]: string; };
+declare var start;
+declare var end;
 
 namespace Controllers {
 
     export class ReportController extends BaseController {
 
-        public Model: Models.ReportSingleModel;
+        public Model: Models.ReportModel;
 
         static $inject = ["$scope", "$http", "$location"];
 
@@ -18,26 +20,41 @@ namespace Controllers {
 
             this.$scope.TaskPriorityNames = TaskPriorityNames;
             this.$scope.TaskStatusNames = TaskStatusNames;
-            this.$scope.Model = this.Model = new Models.ReportSingleModel();
+            this.$scope.Model = this.Model = new Models.ReportModel();
+            this.Model.Start = start;
+            this.Model.End = end;
 
-            $scope.GenerateSingle_OnClick = this.GenerateSingle_OnClick;
+            $scope.GenerateReport_OnClick = this.GenerateReport_OnClick;
 
-            (<any>$('#date')).calendar({
+            $scope.CheckNewValue = this.CheckNewValue;
+
+            (<any>$('#start')).calendar({
                 type: 'date',
+                endCalendar: $('#end'),
                 onChange: function (date, text) {
-                    $this.Model.Date = moment(date);
+                    $this.Model.Start = moment(date);
                 }
-            }).calendar("set date", $this.Model.Date.toDate());
+            }).calendar("set date", this.Model.Start.toDate());
+
+            (<any>$('#end')).calendar({
+                type: 'date',
+                startCalendar: $('#start'),
+                onChange: function (date, text) {
+                    $this.Model.End = moment(date);
+                }
+            }).calendar("set date", (this.Model.End != null ? $this.Model.End.toDate() : null));
         }
 
-        public GenerateSingle_OnClick = () => {
+        public GenerateReport_OnClick = () => {
             this.Load();
         }
 
         public Load = () => {
             var $this = this;
             $.ajax({
-                url: '/api/Report/GetSingle?date=' + this.Model.Date.format("YYYY-MM-DD"),
+                url: '/api/Report/GetData?start='
+                + this.Model.Start.format("YYYY-MM-DD")
+                + '&end=' + (this.Model.End != null ? this.Model.End.format("YYYY-MM-DD") : 'null'),
                 type: 'POST',
                 data: {},
                 beforeSend(xhr) {

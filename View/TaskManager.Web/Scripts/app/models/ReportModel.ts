@@ -1,12 +1,13 @@
 ﻿namespace Models {
-    export class ReportSingleModel extends ModelBase {
-        public Date: moment.Moment;
-        public ReportProjects: Array<ReportProjectModel>;
+    export class ReportModel extends ModelBase {
+        public Start: moment.Moment = null;
+        public End: moment.Moment = null;
+        public ShowStatus: boolean = true;
+        public ReportProjects: Array<ReportProjectModel> = null;
 
         constructor() {
             super();
 
-            this.Date = moment();
         }
 
         public SetData(data: any) {

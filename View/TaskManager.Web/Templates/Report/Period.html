@@ -1,5 +1,5 @@
 ﻿<!-- loader -->
-<div id="loader" class="ui dimmer transition active inverted">
+<div id="loader" class="ui dimmer transition active inverted ng-hide">
     <div class="ui loader"></div>
 </div>
 <!-- a error on the page -->
@@ -10,3 +10,89 @@
     </div>
     <p>{{Model.Error}}</p>
 </div>
+<div class="ui grid">
+    <!-- tools -->
+    <div class="row">
+        <div class="column">
+            <div class="ui validate form content">
+                <div class="fields">
+                    <div class="three wide field">
+                        <div class="ui calendar" id="start">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" placeholder="Start">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="three wide field">
+                        <div class="ui calendar" id="end">
+                            <div class="ui input left icon">
+                                <i class="calendar icon"></i>
+                                <input type="text" placeholder="End">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="two wide field">
+                        <button class="ui primary button"
+                                lb-busy="Generating"
+                                ng-click="GenerateReport_OnClick()">
+                            Generate
+                        </button>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" ng-model="Model.ShowStatus">
+                        <label>Show Status</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="sixteen wide mobile eight wide tablet ten wide computer column">
+            <div id="content"
+                 ng-show="Model.ReportProjects != null"
+                 class="ui segment"
+                 aria-label="Message Body"
+                 tabindex="1"
+                 hidefocus="true"
+                 role="textbox"
+                 contenteditable="true"
+                 aria-multiline="true"
+                 style="min-height: 54px;">
+                <div style="margin-bottom: 1em;">{{Model.Start.format('MM/DD/YYYY')}} - {{Model.End.format('MM/DD/YYYY')}}</div>
+                <ul style="list-style: none; margin: 0em; padding: 0em;">
+                    <li ng-repeat="project in Model.ReportProjects" style="margin-bottom: 1em;">
+                        <div>{{project.Title}}&nbsp;<span style="color: green">[{{project.SumActualWorkHours}}h]&nbsp;</span></div>
+                        <ul style="list-style: circle; margin-left: 0em;">
+                            <li ng-repeat="task in project.ReportTasks">
+                                <div>
+                                    <span>{{task.Title}}</span>&nbsp;
+                                    <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[task.Status]}}&nbsp;</span>
+                                    <span style="color: green">[{{task.SumActualWorkHours}}h]&nbsp;</span>
+                                    <span>{{task.Progress | percent | number:0}}%</span>
+                                </div>
+                                <ul style="list-style: circle; margin-left: 0em;">
+                                    <li ng-repeat="subtask in task.ReportSubTasks">
+                                        <div>
+                                            <span>{{subtask.Title}}</span>&nbsp;
+                                            <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[subtask.Status]}}&nbsp;</span>
+                                            <span style="color: green">[{{subtask.SumActualWorkHours}}h]&nbsp;</span>
+                                            <span>{{subtask.Progress | percent | number:0}}%</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script language="javascript">
+    var start = moment().add('days', -26);
+    var end = moment();
+</script>

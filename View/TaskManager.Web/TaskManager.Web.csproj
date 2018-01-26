@@ -533,6 +533,7 @@
     <TypeScriptCompile Include="Scripts\app\enums\RoleName.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\TaskPriorityEnum.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\TaskStatusEnum.ts" />
+    <TypeScriptCompile Include="Scripts\app\filters\percent.ts" />
     <TypeScriptCompile Include="Scripts\app\filters\set_progress_data_percent.ts" />
     <TypeScriptCompile Include="Scripts\app\filters\nl2br.ts" />
     <TypeScriptCompile Include="Scripts\app\models\base\0ModelBase.ts" />
@@ -546,7 +547,7 @@
     <TypeScriptCompile Include="Scripts\app\models\items\3CommentModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\ReportSubTaskModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\ReportTaskModel.ts" />
-    <TypeScriptCompile Include="Scripts\app\models\ReportSingleModel.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\ReportModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\ProjectsModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\1UserModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\HomeModel.ts" />

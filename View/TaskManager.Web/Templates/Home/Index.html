@@ -239,7 +239,7 @@
     </footer>
 </div>
 <!-- Edit Task Modal -->
-<div id="edit-task-modal" class="ui small modal">
+<modal id="edit-task-modal" class="ui small modal" ng-model="Model.ShowEditTask">
     <i class="close icon" ng-click="TaskCancel_OnClick()"></i>
     <div class="header">{{Model.EditTask.EntityId == null ? 'Create Task' : 'Edit Task #' + Model.EditTask.Index}}</div>
     <div id="form-task" class="ui validate form content">
@@ -254,9 +254,10 @@
         <div class="field">
             <label>Project</label>
             <!-- Semantic UI Dropdown not getting binded with AngularJS Model https://github.com/Semantic-Org/Semantic-UI/issues/1913 -->
-            <select id="project" class="ui dropdown" ng-model="Model.EditTask.ProjectId">
+            <select id="project" class="ui dropdown" ng-model="Model.EditTask.ProjectId"
+                        ng-options="project.EntityId as project.Title for project in Model.Projects">
                 <option value="">Project</option>
-                <option ng-repeat="project in Model.Projects" value="{{project.EntityId}}">{{project.Title}}</option>
+                <!--<option ng-repeat="project in Model.Projects" value="{{project.EntityId}}">{{project.Title}}</option>-->
             </select>
         </div>
         <div class="field">
@@ -311,7 +312,7 @@
             {{Model.EditTask.EntityId == null ? 'Create' : 'Save'}}
         </div>
     </div>
-</div>
+</modal>
 <!-- Edit SubTask Modal -->
 <div id="edit-subtask-modal" class="ui small modal">
     <i class="close icon" ng-click="SubTaskCancel_OnClick()"></i>
@@ -432,9 +433,8 @@
     </div>
 </div>
 <script language="javascript">
-    
     var taskUsersDropdown = $('#task-users').dropdown();
-    var projectDropdown = $('#project').dropdown();
+    //var projectDropdown = $('#project').dropdown();
     var statusDropdown = $('#status').dropdown();
     var historyFilterDropdown = $("#history-filter").dropdown();
 

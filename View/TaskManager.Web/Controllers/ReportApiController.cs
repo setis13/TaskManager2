@@ -27,42 +27,25 @@ namespace TaskManager.Web.Controllers {
         }
 
         /// <summary>
-        ///     POST: /api/Company/GetSingle </summary>
-        [HttpPost, Route("GetSingle")]
+        ///     POST: /api/Company/GetData </summary>
+        [HttpPost, Route("GetData")]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<WebApiResult> GetSingle(DateTime date) {
+        public async Task<WebApiResult> GetData(DateTime start, DateTime? end) {
             try {
 #if DEBUG
                 await Task.Delay(500);
 #endif
                 return await Task.Factory.StartNew(() => {
-                    var projectDtos = _service.GetSingleDayData(date, GetUserDto());
+                    // gets all time of day
+                    start = start.Date;
+                    end = (end?.Date ?? start).AddDays(1).AddMilliseconds(-1);
+
+                    var projectDtos = _service.GetData(start, end.Value, GetUserDto());
                     return WebApiResult.Succeed(new { ReportProjects = projectDtos });
                 });
             } catch (Exception e) {
                 Logger.e("GetSingle", e);
-                return WebApiResult.Failed(e.Message);
-            }
-        }
-
-        /// <summary>
-        ///     POST: /api/Company/GetPeriod </summary>
-        [HttpPost, Route("GetPeriod")]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public async Task<WebApiResult> GetPeriod(DateTime start, DateTime end) {
-            try {
-#if DEBUG
-                await Task.Delay(500);
-#endif
-                return await Task.Factory.StartNew(() => {
-
-                    return WebApiResult.Succeed(new {
-                    });
-                });
-            } catch (Exception e) {
-                Logger.e("GetPeriod", e);
                 return WebApiResult.Failed(e.Message);
             }
         }
