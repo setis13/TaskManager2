@@ -38,6 +38,7 @@ angular.module('BusyDirective', [])
                     // restores the color
                     if (buttonClass != null) {
                         element.addClass(buttonClass);
+                        buttonClass = null;
                     }
                     element.removeClass("loading");
                     element.removeClass("readonly");
@@ -46,44 +47,3 @@ angular.module('BusyDirective', [])
         }
         return { link: link };
     })
-
-
-    .directive('modal', function ($compile) {
-        return {
-            restrict: 'E',
-            replace: true,
-            transclude: true,
-            require: 'ngModel',
-            template: '<div class="ui modal" ng-transclude></div>',
-            link: function (scope, element, attrs, ngModel) {
-                (<any>element).modal({
-                    onHide: function () {
-                        (<any>ngModel).$setViewValue(false);
-                    }
-                });
-                scope.$watch(function () {
-                    return (<any>ngModel).$modelValue;
-                }, function (modelValue) {
-                    (<any>element).modal(modelValue ? 'show' : 'hide');
-                    console.log(<any>"toogle modal:" + modelValue);
-                    if (modelValue && inner != null) {
-                        var linkFn = $compile(inner);
-                        var content = linkFn(scope);
-                        element.append(content);
-                    } else {
-                        if (inner == null) {
-                            inner = element.html();
-                        }
-                            element.html('');
-                    }
-                });
-                scope.$on('$destroy', function () {
-                    (<any>element).modal('hide');
-                    element.remove();
-                    console.log("destroy");
-                });
-            }
-        }
-    });
-
-var inner = null;

@@ -61,28 +61,30 @@
 }
 @section Scripts {
     <script language="javascript">
-        form = $('.ui.form')
-            .form({
-                fields: {
-                    email: {
-                        identifier: 'login',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter a login or email'
-                            }
-                        ]
-                    },
-                    password: {
-                        identifier: 'password',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter a password'
-                            }
-                        ]
+        var form = function () {
+            return $('.ui.form')
+                .form({
+                    fields: {
+                        email: {
+                            identifier: 'login',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a login or email'
+                                }
+                            ]
+                        },
+                        password: {
+                            identifier: 'password',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a password'
+                                }
+                            ]
+                        }
                     }
-                }
-            });
+                });
+        }
     </script>
 }

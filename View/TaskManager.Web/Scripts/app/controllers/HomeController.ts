@@ -19,106 +19,14 @@ namespace Controllers {
 
         static $inject = ["$scope", "$http", "$location"];
 
-        private _taskModal: any;
-        private _subTaskModal: any;
-        private _commentModal: any;
-
-        private _taskUsersDropdown: any;
-        private _projectDropdown: any;
-        private _statusDropdown: any;
-        private _historyFilterDropdown: any;
-
         constructor($scope: any, $http: ng.IHttpProvider, $location: ng.ILocationService) {
             super($scope, $http, $location);
 
             var $this = this;
 
-            this._taskUsersDropdown = taskUsersDropdown;
-            //this._projectDropdown = projectDropdown;
-            this._statusDropdown = statusDropdown;
-            this._historyFilterDropdown = historyFilterDropdown;
-
-            //this._taskModal = (<any>$("#edit-task-modal")).modal({
-            //    closable: false,
-            //    onHidden() {
-            //        $this.Model.EditTask = null;
-            //        $this.ResetForm(form);
-            //        $this.$scope.$apply();
-
-            //        setTimeout(() => {
-            //        // resets dropdown
-            //        $this._taskUsersDropdown.dropdown("restore defaults");
-            //        //$this._projectDropdown.dropdown("restore defaults");
-            //        // NOTES: default text was changed after selected because this code restores it
-            //        //console.log((<any>$('#project')).length);
-            //        //console.log("default:" + (<any>$('#project')).parent().find('.text.default').html());
-            //        //(<any>$('#project')).parent().find('.text.default').html($('#project > option[value=""]').html());
-            //        //$this._projectDropdown.dropdown("set selected", '');
-            //        //$this._projectDropdown.dropdown("clear");
-            //        //$this._projectDropdown.dropdown({ placeholder: "123" });
-            //        }, 500);
-            //    },
-            //    onShow() {
-            //        // NOTES: event.onVisibly works withount timeout, but has delay
-            //        // sets selected value in dropdown
-            //        setTimeout(() => {
-            //            if ($('#task-users').val().length > 0) {
-            //                $this._taskUsersDropdown.dropdown("set selected", $('#task-users').val());
-            //            }
-            //            console.log(" - model: " + $this.Model.EditTask.ProjectId);
-            //            console.log(" - project: " + $('#project').val());
-            //            if ($this.Model.EditTask.ProjectId != undefined) {
-            //                $this._projectDropdown.dropdown("set selected", $this.Model.EditTask.ProjectId);
-            //            } else {
-            //                console.log("default");
-            //                (<any>$('#project')).dropdown("destroy");
-            //                (<any>$('#project')).dropdown();
-            //            }
-            //            //$('#project').val($this.Model.EditTask.ProjectId).change();
-            //            //if ($('#project').val() !== "") {
-            //              //  $this._projectDropdown.dropdown("set selected", $('#project').val());
-            //            //}
-            //        },500);
-            //    }
-            //});
-            this._subTaskModal = (<any>$("#edit-subtask-modal")).modal({
-                closable: false,
-                onHidden() {
-                    $this.Model.EditSubTask = null;
-                    $this.ResetForm(form2);
-                    $this.$scope.$apply();
-                }
+            setTimeout(() => {
+                $("#history-filter").dropdown({ maxSelections: 1 });
             });
-            this._commentModal = (<any>$("#edit-comment-modal")).modal({
-                closable: false,
-                onShow() {
-                    (<any>$('#date')).calendar({
-                        type: 'date',
-                        onChange: function (date, text) {
-                            $this.Model.EditComment.DateMoment = moment(date);
-                        }
-                    }).calendar("set date", $this.Model.EditComment.DateMoment.toDate());
-
-                    // NOTES: event.onVisibly works withount timeout, but has delay
-                    // sets selected value in dropdown
-                    setTimeout(() => {
-                        // status without empty value
-                        $this._statusDropdown.dropdown("set selected", $('#status').val());
-                    });
-                },
-                onHidden() {
-                    $this.Model.EditComment = null;
-                    $this.ResetForm(form3);
-                    $this.$scope.$apply();
-
-                    // resets dropdown
-                    $this._statusDropdown.dropdown("restore defaults");
-                    // NOTES: default text was changed after selected because this code restores it
-                    (<any>$('#status')).parent().find('.text.default').html($('#status > option[value=""]').html());
-                }
-            });
-
-            $this._historyFilterDropdown.dropdown({ maxSelections: 1 });
 
             $scope.Model = this.Model = new Models.HomeModel();
 
@@ -161,10 +69,23 @@ namespace Controllers {
 
         public InitTaskModal() {
             setTimeout(() => {
-                console.log(" - model: " + this.Model.EditTask.ProjectId);
-                (<any>$('#project')).dropdown({ placeholder: "123" }).dropdown("set selected", this.Model.EditTask.ProjectId);
-                //(<any>$('#project')).dropdown();
-            }, 500);
+                $('#project').dropdown("set selected", this.Model.EditTask.ProjectId);
+                $('#task-users').dropdown("set selected", this.Model.EditTask.UserIds);
+            });
+        }
+        public InitSubTaskModal() {
+        }
+        public InitCommentModal() {
+            var $this = this;
+            setTimeout(() => {
+                $('#status').dropdown("set selected", this.Model.EditComment.Status);
+                $('#date').calendar({
+                    type: 'date',
+                    onChange: function (date, text) {
+                        $this.Model.EditComment.DateMoment = moment(date);
+                    }
+                }).calendar("set date", this.Model.EditComment.DateMoment.toDate());
+            });
         }
 
         public Load = () => {
@@ -205,51 +126,47 @@ namespace Controllers {
         public CreateTask_OnClick = () => {
             var task = new Models.TaskModel(null);
             this.Model.EditTask = task;
-            this.Model.ShowEditTask = true;
-            //this._taskModal.modal('show');
             this.InitTaskModal();
         }
         public EditTask_OnClick = (task: Models.TaskModel) => {
             var clone = task.Clone();
             this.Model.EditTask = clone;
-            this.Model.ShowEditTask = true;
             this.InitTaskModal();
-            //this._taskModal.modal('show');
         }
 
         public CreateSubTask_OnClick = (task: Models.TaskModel) => {
             var subtask = new Models.SubTaskModel(null);
             subtask.TaskId = task.EntityId;
             this.Model.EditSubTask = subtask;
-            this._subTaskModal.modal('show');
+            this.InitSubTaskModal();
         }
         public EditSubTask_OnClick = (subtask: Models.SubTaskModel) => {
             var clone = subtask.Clone();
             this.Model.EditSubTask = clone;
-            this._subTaskModal.modal('show');
+            this.InitSubTaskModal();
         }
 
         public AddTaskComment_OnClick = (task: Models.TaskModel) => {
             var comment = new Models.CommentModel(null);
             comment.TaskId = task.EntityId;
             this.Model.EditComment = comment;
-            this._commentModal.modal('show');
+            this.InitCommentModal();
         }
         public AddSubTaskComment_OnClick = (subtask: Models.SubTaskModel) => {
             var comment = new Models.CommentModel(null);
             comment.SubTaskId = subtask.EntityId;
             this.Model.EditComment = comment;
-            this._commentModal.modal('show');
+            this.InitCommentModal();
         }
         public EditTaskComment_OnClick = (task: Models.TaskModel, comment: Models.CommentModel) => {
             var clone = comment.Clone();
             this.Model.EditComment = clone;
-            this._commentModal.modal('show');
+            this.InitCommentModal();
         }
         public EditSubTaskComment_OnClick = (subtask: Models.SubTaskModel, comment: Models.CommentModel) => {
             var clone = comment.Clone();
             this.Model.EditComment = clone;
-            this._commentModal.modal('show');
+            this.InitCommentModal();
         }
 
         public UpSubTask_OnClick = (subtask: Models.SubTaskModel) => {
@@ -313,7 +230,7 @@ namespace Controllers {
         public TaskOk_OnClick = () => {
             this.Model.EditTask.Error = null;
             if (!super.ValidateForm(form)) {
-                //this._taskModal.modal("refresh");
+                $("#edit-task-modal").modal("refresh");
                 return;
             }
 
@@ -333,7 +250,6 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        //$this._taskModal.modal('hide');
                         $this.Model.EditTask = null;
                         $this.Load();
                     } else {
@@ -348,9 +264,7 @@ namespace Controllers {
         }
 
         public TaskCancel_OnClick = () => {
-            //this._taskModal.modal('hide');
-            this.Model.ShowEditTask = false;
-
+            this.Model.EditTask = null;
         }
 
         public TaskDelete_OnClick = () => {
@@ -369,7 +283,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this._taskModal.modal('hide');
+                        $this.Model.EditTask = null;
                         $this.Load();
                     } else {
                         $this.Model.EditTask.Error = result.error;
@@ -385,7 +299,7 @@ namespace Controllers {
         public SubTaskOk_OnClick = () => {
             this.Model.EditSubTask.Error = null;
             if (!super.ValidateForm(form2)) {
-                this._subTaskModal.modal("refresh");
+                $("#edit-subtask-modal").modal("refresh");
                 return;
             }
 
@@ -405,7 +319,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this._subTaskModal.modal('hide');
+                        $this.Model.EditSubTask = null;
                         $this.Load();
                     } else {
                         $this.Model.EditSubTask.Error = result.error;
@@ -419,7 +333,7 @@ namespace Controllers {
         }
 
         public SubTaskCancel_OnClick = () => {
-            this._subTaskModal.modal('hide');
+            this.Model.EditSubTask = null;
         }
 
         public SubTaskDelete_OnClick = () => {
@@ -438,7 +352,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this._subTaskModal.modal('hide');
+                        $this.Model.EditSubTask = null;
                         $this.Load();
                     } else {
                         $this.Model.EditSubTask.Error = result.error;
@@ -454,7 +368,7 @@ namespace Controllers {
         public CommentOk_OnClick = () => {
             this.Model.EditComment.Error = null;
             if (!super.ValidateForm(form3)) {
-                this._commentModal.modal("refresh");
+                $("#edit-comment-modal").modal("refresh");
                 return;
             }
 
@@ -474,7 +388,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this._commentModal.modal('hide');
+                        $this.Model.EditComment = null;
                         $this.Load();
                     } else {
                         $this.Model.EditComment.Error = result.error;
@@ -488,7 +402,7 @@ namespace Controllers {
         }
 
         public CommentCancel_OnClick = () => {
-            this._commentModal.modal('hide');
+            this.Model.EditComment = null;
         }
 
         public CommentDelete_OnClick = () => {
@@ -507,7 +421,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this._commentModal.modal('hide');
+                        $this.Model.EditComment = null;
                         $this.Load();
                     } else {
                         $this.Model.EditComment.Error = result.error;

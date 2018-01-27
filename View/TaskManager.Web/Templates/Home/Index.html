@@ -239,7 +239,7 @@
     </footer>
 </div>
 <!-- Edit Task Modal -->
-<modal id="edit-task-modal" class="ui small modal" ng-model="Model.ShowEditTask">
+<modal id="edit-task-modal" class="ui small modal" ng-model="Model.EditTask">
     <i class="close icon" ng-click="TaskCancel_OnClick()"></i>
     <div class="header">{{Model.EditTask.EntityId == null ? 'Create Task' : 'Edit Task #' + Model.EditTask.Index}}</div>
     <div id="form-task" class="ui validate form content">
@@ -253,11 +253,10 @@
         </div>
         <div class="field">
             <label>Project</label>
-            <!-- Semantic UI Dropdown not getting binded with AngularJS Model https://github.com/Semantic-Org/Semantic-UI/issues/1913 -->
-            <select id="project" class="ui dropdown" ng-model="Model.EditTask.ProjectId"
-                        ng-options="project.EntityId as project.Title for project in Model.Projects">
+            <select id="project" class="ui dropdown"
+                    ng-model="Model.EditTask.ProjectId"
+                    ng-options="project.EntityId as project.Title for project in Model.Projects">
                 <option value="">Project</option>
-                <!--<option ng-repeat="project in Model.Projects" value="{{project.EntityId}}">{{project.Title}}</option>-->
             </select>
         </div>
         <div class="field">
@@ -281,11 +280,10 @@
         </div>
         <div class="field">
             <label>Responsible</label>
-            <select id="task-users" class="ui fluid dropdown"
-                    placeholder="Responsible" multiple
-                    ng-model="Model.EditTask.UserIds">
+            <select id="task-users" class="ui fluid dropdown" multiple
+                    ng-model="Model.EditTask.UserIds"
+                    ng-options="user.Id as user.UserName for user in Model.Users">
                 <option value="">Responsible</option>
-                <option ng-repeat="user in Model.Users" value="{{user.Id}}">{{user.UserName}}</option>
             </select>
         </div>
         <div class="field">
@@ -314,7 +312,7 @@
     </div>
 </modal>
 <!-- Edit SubTask Modal -->
-<div id="edit-subtask-modal" class="ui small modal">
+<modal id="edit-subtask-modal" class="ui small modal" ng-model="Model.EditSubTask">
     <i class="close icon" ng-click="SubTaskCancel_OnClick()"></i>
     <div class="header">{{Model.EditSubTask.EntityId == null ? 'Create SubTask' : 'Edit SubTask #' + Model.EditSubTask.Order}}</div>
     <div id="form-subtask" class="ui validate form content">
@@ -361,9 +359,9 @@
             {{Model.EditSubTask.EntityId == null ? 'Create' : 'Save'}}
         </div>
     </div>
-</div>
+</modal>
 <!-- Edit Comment Modal -->
-<div id="edit-comment-modal" class="ui small modal">
+<modal id="edit-comment-modal" class="ui small modal" ng-model="Model.EditComment">
     <i class="close icon" ng-click="CommentCancel_OnClick()"></i>
     <div class="header">{{(Model.EditComment.EntityId == null ? 'Create Comment on the Task #' : 'Edit Comment on the Task #') + Model.TaskIndexByComment(Model.EditComment)}}</div>
     <div id="form-comment" class="ui validate form content">
@@ -381,8 +379,9 @@
         </div>
         <div class="field">
             <label>Status</label>
-            <!-- Semantic UI Dropdown not getting binded with AngularJS Model https://github.com/Semantic-Org/Semantic-UI/issues/1913 -->
-            <select id="status" class="ui dropdown" ng-model="Model.EditComment.Status" convert-to-number>
+            <select id="status" class="ui dropdown"
+                    ng-model="Model.EditComment.Status" convert-to-number
+                    ng-options="id as name for (id, name) in TaskStatusNames">
                 <option ng-repeat="(id, name) in TaskStatusNames" value="{{id}}">{{name}}</option>
             </select>
         </div>
@@ -431,123 +430,132 @@
             {{Model.EditComment.EntityId == null ? 'Create' : 'Save'}}
         </div>
     </div>
-</div>
+</modal>
 <script language="javascript">
-    var taskUsersDropdown = $('#task-users').dropdown();
-    //var projectDropdown = $('#project').dropdown();
-    var statusDropdown = $('#status').dropdown();
-    var historyFilterDropdown = $("#history-filter").dropdown();
-
-    form = $('#form-task')
-        .form({
-            fields: {
-                title: {
-                    identifier: 'title',
-                    rules: [
-                        {
-                            type: 'empty',
-                            prompt: 'Please enter a title'
-                        }
-                    ]
-                },
-                task_users: {
-                    identifier: 'task-users',
-                    rules: [
-                        {
-                            type: 'empty',
-                            prompt: 'Please choose responsible users'
-                        }
-                    ]
-                },
-                total_hours: {
-                    identifier: 'total-hours',
-                    rules: [
-                        {
-                            type: 'empty',
-                            prompt: 'Please enter total hours'
-                        },
-                        {
-                            type: 'regExp[/^[0-9.]{1,10}$/]',
-                            prompt: 'Please enter valid total hours'
-                        }
-                        /* implement regex: Please enter other than zero */
-                    ]
+    var form = function () {
+        return $('#form-task')
+            .form({
+                fields: {
+                    title: {
+                        identifier: 'title',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a title'
+                            }
+                        ]
+                    },
+                    project: {
+                        identifier: 'project',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please select a project'
+                            }
+                        ]
+                    },
+                    task_users: {
+                        identifier: 'task-users',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please choose responsible users'
+                            }
+                        ]
+                    },
+                    total_hours: {
+                        identifier: 'total-hours',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter total hours'
+                            },
+                            {
+                                type: 'regExp[/^[0-9.]{1,10}$/]',
+                                prompt: 'Please enter valid total hours'
+                            }
+                            /* implement regex: Please enter other than zero */
+                        ]
+                    }
                 }
-            }
-        });
-    form2 = $('#form-subtask')
-        .form({
-            fields: {
-                title: {
-                    identifier: 'title2',
-                    rules: [
-                        {
-                            type: 'empty',
-                            prompt: 'Please enter a title'
-                        }
-                    ]
-                },
-                total_hours: {
-                    identifier: 'total-hours2',
-                    rules: [
-                        {
-                            type: 'empty',
-                            prompt: 'Please enter total hours'
-                        },
-                        {
-                            type: 'regExp[/^[0-9.]{1,10}$/]',
-                            prompt: 'Please enter valid total hours'
-                        }
-                    ]
+            });
+    }
+    var form2 = function () {
+        return $('#form-subtask')
+            .form({
+                fields: {
+                    title: {
+                        identifier: 'title2',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a title'
+                            }
+                        ]
+                    },
+                    total_hours: {
+                        identifier: 'total-hours2',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter total hours'
+                            },
+                            {
+                                type: 'regExp[/^[0-9.]{1,10}$/]',
+                                prompt: 'Please enter valid total hours'
+                            }
+                        ]
+                    }
                 }
-            }
-        });
-
+            });
+    }
 
     $.fn.form.settings.rules.nullablePercent = function (value) {
         return value == null || value === '' || (value >= 0 && value <= 100);
     }
 
-    form3 = $('#form-comment')
-        .form({
-            fields: {
-                actual_hours: {
-                    identifier: 'actual-hours',
-                    rules: [
-                        {
-                            type: 'regExp[/^[0-9.]{0,10}$/]',
-                            prompt: 'Please enter valid actual hours'
-                        }
-                        /* implement regex: Please enter other than zero */
-                    ]
-                },
-                date: {
-                    identifier: 'date',
-                    rules: [
-                        {
-                            type: 'empty',
-                            prompt: 'Please enter a date'
-                        }
-                    ]
-                },
-                status: {
-                    identifier: 'status',
-                    rules: [
-                        {
-                            type: 'empty',
-                            prompt: 'Please enter a status'
-                        }
-                    ]
-                },
-                progress: {
-                    identifier: 'progress',
-                    rules: [
-                        {
-                            type: 'nullablePercent[value]',
-                            prompt: 'Please enter valid percent value'
-                        }
-                    ]
+    var form3 = function () {
+        return $('#form-comment')
+            .form({
+                fields: {
+                    actual_hours: {
+                        identifier: 'actual-hours',
+                        rules: [
+                            {
+                                type: 'regExp[/^[0-9.]{0,10}$/]',
+                                prompt: 'Please enter valid actual hours'
+                            }
+                            /* implement regex: Please enter other than zero */
+                        ]
+                    },
+                    date: {
+                        identifier: 'date',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a date'
+                            }
+                        ]
+                    },
+                    status: {
+                        identifier: 'status',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a status'
+                            }
+                        ]
+                    },
+                    progress: {
+                        identifier: 'progress',
+                        rules: [
+                            {
+                                type: 'nullablePercent[value]',
+                                prompt: 'Please enter valid percent value'
+                            }
+                        ]
+                    }
                 }
-            }
-        });
+            });
+    }
 </script>

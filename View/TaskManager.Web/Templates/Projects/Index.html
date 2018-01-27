@@ -56,7 +56,7 @@
     </div>
 </div>
 <!-- Edit Project Modal -->
-<div id="edit-project-modal" class="ui small modal">
+<modal id="edit-project-modal" class="ui small modal" ng-model="Model.EditProject">
     <i class="close icon" ng-click="Cancel_OnClick()"></i>
     <div class="header">{{Model.EditProject.EntityId == null ? 'Create Project' : 'Edit Project ' + "'" + Model.EditProject.Title + "'"}}</div>
     <div id="form-project" class="ui validate form content">
@@ -87,29 +87,31 @@
             {{Model.EditProject.EntityId == null ? 'Create' : 'Save'}}
         </div>
     </div>
-</div>
+</modal>
 <script language="javascript">
-    form = $('#form-project')
-        .form({
-            fields: {
-                title: {
-                    identifier: 'title',
-                    rules: [
-                        {
-                            type: 'empty',
-                            prompt: 'Please enter a name'
-                        },
-                        {
-                            type: 'length[2]',
-                            prompt: 'Enter Company Name (minimum 2 characters)'
-                        },
-                        {
-                            type: 'maxLength[32]',
-                            prompt: 'Enter Company Name (maximum 32 characters)'
-                        }
+    var form = function () {
+        return $('#form-project')
+            .form({
+                fields: {
+                    title: {
+                        identifier: 'title',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a name'
+                            },
+                            {
+                                type: 'length[2]',
+                                prompt: 'Enter Company Name (minimum 2 characters)'
+                            },
+                            {
+                                type: 'maxLength[32]',
+                                prompt: 'Enter Company Name (maximum 32 characters)'
+                            }
 
-                    ]
+                        ]
+                    }
                 }
-            }
-        });
+            });
+    }
 </script>

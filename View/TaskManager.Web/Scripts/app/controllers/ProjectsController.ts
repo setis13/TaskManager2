@@ -8,20 +8,9 @@ namespace Controllers {
 
         static $inject = ["$scope", "$http", "$location"];
 
-        private _projectModal: any;
-
         constructor($scope: any, $http: ng.IHttpProvider, $location: ng.ILocationService) {
             super($scope, $http, $location);
             var $this = this;
-
-            this._projectModal = (<any>$("#edit-project-modal")).modal({
-                closable: false,
-                onHidden() {
-                    $this.Model.EditProject = null;
-                    $this.ResetForm();
-                    $this.$scope.$apply();
-                }
-            });
 
             $scope.Create_OnClick = this.Create_OnClick;
             $scope.Edit_OnClick = this.Edit_OnClick;
@@ -64,18 +53,16 @@ namespace Controllers {
         public Create_OnClick = () => {
             var Project = new Models.ProjectModel(null);
             this.Model.EditProject = Project;
-            this._projectModal.modal('show');
         }
         public Edit_OnClick = (Project: Models.ProjectModel) => {
             var clone = Project.Clone();
             this.Model.EditProject = clone;
-            this._projectModal.modal('show');
         }
 
         public Ok_OnClick = () => {
             this.Model.EditProject.Error = null;
             if (!super.ValidateForm()) {
-                this._projectModal.modal("refresh");
+                $("#edit-project-modal").modal("refresh");
                 return;
             }
 
@@ -95,7 +82,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this._projectModal.modal('hide');
+                        this.Model.EditProject = null;
                         $this.Load();
                     } else {
                         $this.Model.EditProject.Error = result.error;
@@ -109,7 +96,7 @@ namespace Controllers {
         }
 
         public Cancel_OnClick = () => {
-            this._projectModal.modal('hide');
+            this.Model.EditProject = null;
         }
 
         public Delete_OnClick = () => {
@@ -128,7 +115,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this._projectModal.modal('hide');
+                        this.Model.EditProject = null;
                         $this.Load();
                     } else {
                         $this.Model.EditProject.Error = result.error;

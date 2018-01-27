@@ -144,7 +144,7 @@
     </div>
 </div>
 <!-- Find User Modal -->
-<div id="find-user-modal" class="ui small modal">
+<modal id="find-user-modal" class="ui small modal" ng-model="Model.FindUser">
     <i class="close icon" ng-click="UserCancel_OnClick()"></i>
     <div class="header">Find and Invite User</div>
     <div id="form-find-user" class="ui validate form content">
@@ -178,9 +178,9 @@
             {{Model.FindUser.Id == null ? 'Find' : 'Invite'}}
         </div>
     </div>
-</div>
+</modal>
 <!-- Create Company Modal -->
-<div id="create-company-modal" class="ui small modal">
+<modal id="create-company-modal" class="ui small modal" ng-model="Model.EditCompany">
     <i class="close icon" ng-click="CompanyCancel_OnClick()"></i>
     <div class="header">{{Model.EditCompamy.EntityId == null ? 'Create New Compamy' : 'Edit My Company'}}</div>
     <div id="form-create-company" class="ui validate form content">
@@ -205,34 +205,38 @@
             {{Model.EditCompany.EntityId == null ? 'Create' : 'Save'}}
         </div>
     </div>
-</div>
+</modal>
 <script language="javascript">
-    form1 = $('#find-user-modal')
-        .form({
-            fields: {
-                username_or_email: {
-                    identifier: 'username-or-email',
-                    rules: [
-                         {
-                             type: 'empty',
-                             prompt: 'Please enter a UserName or Email'
-                         }
-                    ]
-                },
-            }
-        });
-    form2 = $('#create-company-modal')
-        .form({
-            fields: {
-                title: {
-                    identifier: 'title',
-                    rules: [
-                         {
-                             type: 'empty',
-                             prompt: 'Please enter a Title'
-                         }
-                    ]
-                },
-            }
-        });
+    var form1 = function () {
+        return $('#find-user-modal')
+            .form({
+                fields: {
+                    username_or_email: {
+                        identifier: 'username-or-email',
+                        rules: [
+                             {
+                                 type: 'empty',
+                                 prompt: 'Please enter a UserName or Email'
+                             }
+                        ]
+                    },
+                }
+            });
+    }
+    var form2 = function () {
+        return $('#create-company-modal')
+            .form({
+                fields: {
+                    title: {
+                        identifier: 'title',
+                        rules: [
+                             {
+                                 type: 'empty',
+                                 prompt: 'Please enter a Title'
+                             }
+                        ]
+                    },
+                }
+            });
+    }
 </script>

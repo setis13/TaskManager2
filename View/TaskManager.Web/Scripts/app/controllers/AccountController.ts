@@ -4,21 +4,11 @@
 
         public Model: Models.AccountModel;
 
-        private _changePasswordModal: any;
-
         constructor($scope: any, $http: ng.IHttpProvider, $location: ng.ILocationService) {
             super($scope, $http, $location);
             $scope.Model = this.Model = new Models.AccountModel();
 
             var $this = this;
-            this._changePasswordModal = (<any>$("#change-password-modal")).modal({
-                closable: false,
-                onHidden() {
-                    $this.Model.ChangePassword = null;
-                    $this.ResetForm();
-                    $this.$scope.$apply();
-                }
-            });
 
             $scope.ChangePassword_OnClick = this.ChangePassword_OnClick;
             $scope.ChangePasswordOk_OnClick = this.ChangePasswordOk_OnClick;
@@ -27,13 +17,12 @@
 
         public ChangePassword_OnClick = () => {
             this.Model.ChangePassword = new Models.ChangePasswordModel();
-            this._changePasswordModal.modal('show');
         }
 
         public ChangePasswordOk_OnClick = () => {
             this.Model.ChangePassword.Error = null;
             if (!super.ValidateForm()) {
-                this._changePasswordModal.modal("refresh");
+                $("#change-password-modal").modal("refresh");
                 return;
             }
 
@@ -53,7 +42,7 @@
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this._changePasswordModal.modal('hide');
+                        $this.Model.ChangePassword = null;
                         toastr.success("Password was changed");
                     } else {
                         $this.Model.ChangePassword.Error = result.error;
@@ -67,7 +56,7 @@
         }
 
         public ChangePasswordCancel_OnClick = () => {
-            this._changePasswordModal.modal('hide');
+            this.Model.ChangePassword = null;
         }
     }
 }

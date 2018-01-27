@@ -518,7 +518,6 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\app\api\AntiForgeryToken.ts" />
     <TypeScriptCompile Include="Scripts\app\api\Functions.ts" />
-    <TypeScriptCompile Include="Scripts\app\api\Init.ts" />
     <TypeScriptCompile Include="Scripts\app\app.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\base\0BaseController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\AccountController.ts" />
@@ -528,6 +527,7 @@
     <TypeScriptCompile Include="Scripts\app\controllers\LoginController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\HomeController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\SignUpController.ts" />
+    <TypeScriptCompile Include="Scripts\app\directives\ModalDirective.ts" />
     <TypeScriptCompile Include="Scripts\app\directives\BusyDirective.ts" />
     <TypeScriptCompile Include="Scripts\app\directives\convertToNumber.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\RoleName.ts" />
@@ -568,6 +568,7 @@
     <TypeScriptCompile Include="Scripts\typings\linq\linq.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\moment-duration-format\moment-duration-format.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\moment\moment.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\semantic\semantic.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\toastr\toastr.d.ts" />
   </ItemGroup>
   <ItemGroup>

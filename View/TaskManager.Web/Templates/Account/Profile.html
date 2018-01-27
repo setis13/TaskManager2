@@ -61,40 +61,42 @@
     </div>
 </div>
 <script language="javascript">
-    form = $('#form-change-password')
-        .form({
-            fields: {
-                old_password: {
-                    identifier: 'old-password',
-                    rules: [
-                         {
-                             type: 'empty',
-                             prompt: 'Please enter Old Password'
-                         }
-                    ]
-                },
-                new_password: {
-                    identifier: 'new-password',
-                    rules: [
-                         {
-                             type: 'empty',
-                             prompt: 'Please enter a New Password'
-                         }
-                    ]
-                },
-                confirm_password: {
-                    identifier: 'confirm-password',
-                    rules: [
-                         {
-                             type: 'empty',
-                             prompt: 'Please enter Confirm Password'
-                         },
-                         {
-                             type: 'match[new-password]',
-                             prompt: 'New Password does not match the confirm password'
-                         }
-                    ]
-                },
-            }
-        });
+    var form = function () {
+        return $('#form-change-password')
+            .form({
+                fields: {
+                    old_password: {
+                        identifier: 'old-password',
+                        rules: [
+                             {
+                                 type: 'empty',
+                                 prompt: 'Please enter Old Password'
+                             }
+                        ]
+                    },
+                    new_password: {
+                        identifier: 'new-password',
+                        rules: [
+                             {
+                                 type: 'empty',
+                                 prompt: 'Please enter a New Password'
+                             }
+                        ]
+                    },
+                    confirm_password: {
+                        identifier: 'confirm-password',
+                        rules: [
+                             {
+                                 type: 'empty',
+                                 prompt: 'Please enter Confirm Password'
+                             },
+                             {
+                                 type: 'match[new-password]',
+                                 prompt: 'New Password does not match the confirm password'
+                             }
+                        ]
+                    },
+                }
+            });
+    }
 </script>

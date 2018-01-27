@@ -9,28 +9,9 @@ namespace Controllers {
 
         static $inject = ["$scope", "$http", "$location"];
 
-        private _findModal: any;
-        private _createModal: any;
-
         constructor($scope: any, $http: ng.IHttpProvider, $location: ng.ILocationService) {
             super($scope, $http, $location);
             var $this = this;
-
-            this._findModal = (<any>$("#find-user-modal")).modal({
-                closable: false,
-                onHidden() {
-                    $this.ResetForm(form1);
-                    $this.$scope.$apply();
-                }
-            });
-
-            this._createModal = (<any>$("#create-company-modal")).modal({
-                closable: false,
-                onHidden() {
-                    $this.ResetForm(form2);
-                    $this.$scope.$apply();
-                }
-            });
 
             $scope.UserId = UserId;
 
@@ -243,10 +224,13 @@ namespace Controllers {
         public FindUser_OnClick = () => {
             var user = new Models.UserModel(null);
             this.Model.FindUser = user;
-            this._findModal.modal('show');
         }
 
         public UserOk_OnClick = () => {
+            if (!super.ValidateForm(form1)) {
+                $("#find-user-modal").modal("refresh");
+                return;
+            }
             var $this = this;
             if (this.Model.FindUser.Id == null) {
                 $.ajax({
@@ -292,7 +276,7 @@ namespace Controllers {
                     },
                     success: (result) => {
                         if (result.success) {
-                            $this._findModal.modal('hide');
+                            $this.Model.FindUser = null;
                             $this.Load();
                         } else {
                             $this.Model.FindUser.Error = result.error;
@@ -307,17 +291,21 @@ namespace Controllers {
         }
 
         public UserCancel_OnClick = () => {
-            this._findModal.modal('hide');
             this.Model.FindUser = null;
         }
 
         public CreateCompany_OnClick = () => {
             var company = new Models.CompanyModel(null);
             this.Model.EditCompany = company;
-            this._createModal.modal('show');
         }
 
         public CompanyOk_OnClick = (subtask: Models.CompanyModel) => {
+            this.Model.EditCompany.Error = null;
+            if (!super.ValidateForm(form2)) {
+                $("#create-company-modal").modal("refresh");
+                return;
+            }
+
             var $this = this;
             $.ajax({
                 url: '/api/Company/CreateCompany',
@@ -334,7 +322,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.success) {
-                        $this._createModal.modal('hide');
+                        $this.Model.EditCompany = null;
                         $this.Load();
                     } else {
                         $this.Model.EditCompany.Error = result.error;
@@ -348,7 +336,6 @@ namespace Controllers {
         }
 
         public CompanyCancel_OnClick = () => {
-            this._createModal.modal('hide');
             this.Model.EditCompany = null;
         }
     }

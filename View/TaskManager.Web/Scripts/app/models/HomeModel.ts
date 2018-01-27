@@ -11,8 +11,6 @@
         public HistoryFilters: { [id: string]: string; };
         public SelectedHistoryFilter: string = "0";
 
-        public ShowEditTask: boolean = false;
-
         constructor() {
             super();
 

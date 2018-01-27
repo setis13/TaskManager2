@@ -83,75 +83,77 @@
 }
 @section Scripts {
     <script language="javascript">
-        form = $('.ui.form')
-            .form({
-                fields: {
-                    email: {
-                        identifier: 'email',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter a email'
-                            },
-                            {
-                                type: 'email',
-                                prompt: 'The Email field is not a valid e-mail address.'
-                            }
-                        ]
-                    },
-                    userName: {
-                        identifier: 'userName',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter a UserName'
-                            },
-                            {
-                                type: 'length[3]',
-                                prompt: 'Enter UserName (minimum 3 characters)'
-                            },
-                            {
-                                type: 'maxLength[32]',
-                                prompt: 'Enter UserName (maximum 32 characters)'
-                            }
-                        ]
-                    },
-                    companyName: {
-                        identifier: 'companyName',
-                        rules: [
-                            {
-                                type: 'maxLength[64]',
-                                prompt: 'Enter Company Name (maximum 64 characters)'
-                            }
-                        ]
-                    },
-                    password: {
-                        identifier: 'password',
-                        rules: [
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter a password'
-                            },
-                            {
-                                type: 'length[6]',
-                                prompt: 'Enter password (minimum 6 characters)'
-                            }
-                        ]
-                    },
-                    confirmPassword: {
-                        identifier: 'confirmPassword',
-                        rules: [
-                            {
-                                type: 'match[password]',
-                                prompt: 'Passwords not match'
-                            },
-                            {
-                                type: 'empty',
-                                prompt: 'Please enter a confirm password'
-                            },
-                        ]
-                    },
-                }
-            });
+        var form = function () {
+            return $('.ui.form')
+                .form({
+                    fields: {
+                        email: {
+                            identifier: 'email',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a email'
+                                },
+                                {
+                                    type: 'email',
+                                    prompt: 'The Email field is not a valid e-mail address.'
+                                }
+                            ]
+                        },
+                        userName: {
+                            identifier: 'userName',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a UserName'
+                                },
+                                {
+                                    type: 'length[3]',
+                                    prompt: 'Enter UserName (minimum 3 characters)'
+                                },
+                                {
+                                    type: 'maxLength[32]',
+                                    prompt: 'Enter UserName (maximum 32 characters)'
+                                }
+                            ]
+                        },
+                        companyName: {
+                            identifier: 'companyName',
+                            rules: [
+                                {
+                                    type: 'maxLength[64]',
+                                    prompt: 'Enter Company Name (maximum 64 characters)'
+                                }
+                            ]
+                        },
+                        password: {
+                            identifier: 'password',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a password'
+                                },
+                                {
+                                    type: 'length[6]',
+                                    prompt: 'Enter password (minimum 6 characters)'
+                                }
+                            ]
+                        },
+                        confirmPassword: {
+                            identifier: 'confirmPassword',
+                            rules: [
+                                {
+                                    type: 'match[password]',
+                                    prompt: 'Passwords not match'
+                                },
+                                {
+                                    type: 'empty',
+                                    prompt: 'Please enter a confirm password'
+                                },
+                            ]
+                        },
+                    }
+                });
+        }
     </script>
 }

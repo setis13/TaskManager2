@@ -62,8 +62,8 @@ namespace TaskManager.Logic.Services {
             }
 
             var projects1 = Mapper.Map<List<ProjectDto>>(projectsQuery);
-            var tasks1 = Mapper.Map<List<Task1Dto>>(tasksQuery);
-            var subtasks1 = Mapper.Map<List<SubTaskDto>>(subtasksQuery);
+            var tasks1 = Mapper.Map<List<Task1Dto>>(tasksQuery.OrderByDescending(e => e.Index));
+            var subtasks1 = Mapper.Map<List<SubTaskDto>>(subtasksQuery.OrderBy(e => e.Order));
 
             var taskIds = tasks1.Select(e => e.EntityId).ToList();
             var subtaskIds = subtasks1.Select(e => e.EntityId).ToList();
@@ -80,7 +80,7 @@ namespace TaskManager.Logic.Services {
             subtasks1.ForEach(st => st.Comments.AddRange(comments1.Where(c => c.SubTaskId == st.EntityId)));
             tasks1.ForEach(t => t.UserIds.AddRange(taskuserList.Where(c => c.TaskId == t.EntityId).Select(e => e.UserId)));
             tasks1.ForEach(t => t.Comments.AddRange(comments1.Where(c => c.TaskId == t.EntityId)));
-            tasks1.ForEach(t => t.SubTasks.AddRange(subtasks1.Where(st => st.TaskId == t.EntityId).OrderBy(e => e.Order)));
+            tasks1.ForEach(t => t.SubTasks.AddRange(subtasks1.Where(st => st.TaskId == t.EntityId)));
 
             projects = projects1;
             tasks = tasks1;

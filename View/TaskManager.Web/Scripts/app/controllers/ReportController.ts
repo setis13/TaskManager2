@@ -28,7 +28,7 @@ namespace Controllers {
 
             $scope.CheckNewValue = this.CheckNewValue;
 
-            (<any>$('#start')).calendar({
+            $('#start').calendar({
                 type: 'date',
                 endCalendar: $('#end'),
                 onChange: function (date, text) {
@@ -36,7 +36,7 @@ namespace Controllers {
                 }
             }).calendar("set date", this.Model.Start.toDate());
 
-            (<any>$('#end')).calendar({
+            $('#end').calendar({
                 type: 'date',
                 startCalendar: $('#start'),
                 onChange: function (date, text) {
