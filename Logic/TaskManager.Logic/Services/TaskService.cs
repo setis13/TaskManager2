@@ -62,7 +62,7 @@ namespace TaskManager.Logic.Services {
             }
 
             var projects1 = Mapper.Map<List<ProjectDto>>(projectsQuery);
-            var tasks1 = Mapper.Map<List<Task1Dto>>(tasksQuery.OrderByDescending(e => e.Index));
+            var tasks1 = Mapper.Map<List<Task1Dto>>(tasksQuery.OrderBy(e => e.Index));
             var subtasks1 = Mapper.Map<List<SubTaskDto>>(subtasksQuery.OrderBy(e => e.Order));
 
             var taskIds = tasks1.Select(e => e.EntityId).ToList();

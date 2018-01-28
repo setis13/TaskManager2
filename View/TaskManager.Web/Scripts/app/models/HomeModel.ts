@@ -9,7 +9,11 @@
         public EditSubTask: SubTaskModel;
         public EditComment: CommentModel;
         public HistoryFilters: { [id: string]: string; };
-        public SelectedHistoryFilter: string = "0";
+        public SelectedHistoryFilter: string = '';
+        public SelectedUserFilter: string = '';
+        public SortBy: Enums.SortByEnum;
+
+        public FilteredTasks: Array<TaskModel>;
 
         constructor() {
             super();
@@ -19,8 +23,42 @@
             this.EditComment = null;
         }
 
+        public ApplyClientFilter() {
+            var tasks: Array<TaskModel>;
+            switch (this.SortBy) {
+                case Enums.SortByEnum.TaskId:
+                    tasks = Enumerable.From(this.Tasks).OrderBy(e => e.Index).ToArray();
+                    break;
+                case Enums.SortByEnum.TaskIdDesc:
+                    tasks = Enumerable.From(this.Tasks).OrderByDescending(e => e.Index).ToArray();
+                    break;
+                case Enums.SortByEnum.Urgency:
+                    tasks = Enumerable.From(this.Tasks).OrderBy(e => e.Priority).ToArray();
+                    break;
+                case Enums.SortByEnum.UrgencyDesc:
+                    tasks = Enumerable.From(this.Tasks).OrderByDescending(e => e.Priority).ToArray();
+                    break;
+                default:
+                    tasks = this.Tasks;
+                    break;
+            }
+
+            if (this.SelectedUserFilter == '') {
+                this.FilteredTasks = tasks;
+            } else {
+                this.FilteredTasks = Array();
+                for (var i = 0; i < tasks.length; i++) {
+                    var task = tasks[i];
+                    if (task.UserIds.indexOf(this.SelectedUserFilter) != -1) {
+                        this.FilteredTasks.push(task);
+                    }
+                }
+            }
+        }
+
         public SetData(data: any) {
             this.Loaded = true;
+            this.SortBy = data.SortBy;
             this.Users = new Array();
             this.Projects = new Array();
             this.Tasks = new Array();
@@ -38,6 +76,7 @@
                 this.HistoryFilters[moment(data.HistoryFilters[i]).format('MM/DD/YYYY')] =
                     moment(data.HistoryFilters[i]).format('MMM YYYY');
             }
+            this.ApplyClientFilter();
         }
 
         public SetSubTasks(subTasks: any) {

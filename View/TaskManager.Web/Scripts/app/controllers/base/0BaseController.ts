@@ -119,5 +119,10 @@ namespace Controllers {
                 }
             }
         }
+
+        public ResetCheckNewValue() {
+            this.lastKey = {};
+            this.lastValue = {};
+        }
     }
 }

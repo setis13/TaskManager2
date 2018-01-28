@@ -531,6 +531,7 @@
     <TypeScriptCompile Include="Scripts\app\directives\BusyDirective.ts" />
     <TypeScriptCompile Include="Scripts\app\directives\convertToNumber.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\RoleName.ts" />
+    <TypeScriptCompile Include="Scripts\app\enums\SortByEnum.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\TaskPriorityEnum.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\TaskStatusEnum.ts" />
     <TypeScriptCompile Include="Scripts\app\filters\percent.ts" />

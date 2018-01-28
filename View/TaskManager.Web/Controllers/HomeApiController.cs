@@ -45,7 +45,7 @@ namespace TaskManager.Web.Controllers {
                         this.UserManager.Users.Where(e => e.CompanyId == user.CompanyId));
 
                     this._service.GetData(user, historyFilter, out projects, out tasks, out historyFilters);
-                    return WebApiResult.Succeed(new { Projects = projects, Users = users, Tasks = tasks, HistoryFilters = historyFilters });
+                    return WebApiResult.Succeed(new { Projects = projects, Users = users, Tasks = tasks, HistoryFilters = historyFilters, SortBy = user.SortBy });
                 });
             } catch (Exception e) {
                 Logger.e("GetData", e);

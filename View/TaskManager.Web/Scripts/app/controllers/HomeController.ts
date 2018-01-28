@@ -25,7 +25,8 @@ namespace Controllers {
             var $this = this;
 
             setTimeout(() => {
-                $("#history-filter").dropdown({ maxSelections: 1 });
+                $("#history-filter").dropdown();
+                $('#user-filter').dropdown();
             });
 
             $scope.Model = this.Model = new Models.HomeModel();
@@ -63,6 +64,11 @@ namespace Controllers {
             $scope.CheckNewValue = this.CheckNewValue;
 
             $scope.HistoryFilter_OnChange = this.HistoryFilter_OnChange;
+            $scope.UserFilter_OnChange = this.UserFilter_OnChange;
+
+            $scope.ClearFilters_OnClick = this.ClearFilters_OnClick;
+            $scope.SortByTaskId_OnClick = this.SortByTaskId_OnClick;
+            $scope.SortByUrgency_OnClick = this.SortByUrgency_OnClick;
 
             this.Load();
         }
@@ -116,7 +122,58 @@ namespace Controllers {
         }
 
         public HistoryFilter_OnChange = () => {
+            super.ResetCheckNewValue();
             this.Load();
+        }
+
+        public UserFilter_OnChange = () => {
+            super.ResetCheckNewValue();
+            this.Model.ApplyClientFilter();
+        }
+
+        public ClearFilters_OnClick = () => {
+            super.ResetCheckNewValue();
+            setTimeout(() => {
+                $("#history-filter").dropdown('restore defaults');
+                $("#user-filter").dropdown('restore defaults');
+                $('#history-filter').parent().find('.text.default').html($('#history-filter > option[value=""]').html());
+                $('#user-filter').parent().find('.text.default').html($('#user-filter > option[value=""]').html());
+            });
+        }
+
+        public SortByTaskId_OnClick = () => {
+            this.Model.SortBy = this.Model.SortBy != Enums.SortByEnum.TaskIdDesc ?
+                Enums.SortByEnum.TaskIdDesc : Enums.SortByEnum.TaskId;
+            this.Model.ApplyClientFilter();
+            this.SaveSorting();
+
+        }
+        public SortByUrgency_OnClick = () => {
+            this.Model.SortBy = this.Model.SortBy != Enums.SortByEnum.UrgencyDesc ?
+                Enums.SortByEnum.UrgencyDesc : Enums.SortByEnum.Urgency;
+            this.Model.ApplyClientFilter();
+            this.SaveSorting();
+        }
+
+        private SaveSorting() {
+            var $this = this;
+            $.ajax({
+                url: '/api/Account/SaveSorting?sortby=' + this.Model.SortBy,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: {},
+                success: (result) => {
+                    if (result.success == false) {
+                        $this.Model.Error = result.error;
+                        $this.$scope.$apply();
+                    }
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    toastr.error(jqXhr.statusText);
+                }
+            });
         }
 
         public TaskPriority_OnClick = () => {

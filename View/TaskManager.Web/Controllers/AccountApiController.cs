@@ -143,5 +143,28 @@ namespace TaskManager.Web.Controllers {
                 }
             });
         }
+
+        /// <summary>
+        ///     POST: /api/Account/SaveSorting </summary>
+        [HttpPost, Route("SaveSorting")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<WebApiResult> SaveSorting(byte sortby) {
+            try {
+#if DEBUG
+                await Task.Delay(100);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
+                    var user = base.UserManager.FindById(userId);
+                    user.SortBy = sortby;
+                    base.UserManager.Update(user);
+                    return WebApiResult.Succeed();
+                });
+            } catch (Exception e) {
+                Logger.e("SaveSorting", e);
+                return WebApiResult.Failed(e.Message);
+            }
+        }
     }
 }

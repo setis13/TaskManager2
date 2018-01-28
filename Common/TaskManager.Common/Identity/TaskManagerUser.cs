@@ -30,6 +30,9 @@ namespace TaskManager.Common.Identity {
         /// User can receive an invitation
         /// </remarks>
         public Guid? InvitationCompanyId { get; set; }
+        /// <summary>
+        ///     See Scripts/app/enums/SortByEnum.ts </summary>
+        public byte SortBy { get; set; }
 
         [NotMapped]
         public object Company { get; set; }
