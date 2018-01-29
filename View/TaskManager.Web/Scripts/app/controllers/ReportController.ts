@@ -18,9 +18,9 @@ namespace Controllers {
             super($scope, $http, $location);
             var $this = this;
 
-            this.$scope.TaskPriorityNames = TaskPriorityNames;
-            this.$scope.TaskStatusNames = TaskStatusNames;
-            this.$scope.Model = this.Model = new Models.ReportModel();
+            this.scope.TaskPriorityNames = TaskPriorityNames;
+            this.scope.TaskStatusNames = TaskStatusNames;
+            this.scope.Model = this.Model = new Models.ReportModel();
             this.Model.Start = start;
             this.Model.End = end;
 
@@ -58,11 +58,11 @@ namespace Controllers {
                 type: 'POST',
                 data: {},
                 beforeSend(xhr) {
-                    $this.$scope.Generating = true;
+                    $this.scope.Generating = true;
                 },
                 complete() {
-                    $this.$scope.Generating = false;
-                    $this.$scope.$apply();
+                    $this.scope.Generating = false;
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {

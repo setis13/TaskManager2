@@ -2,7 +2,8 @@
 @{
     ViewBag.Title = "Log in";
 }
-<div class="ui aligned center aligned grid" ng-controller="LoginController">
+
+<div class="ui center aligned grid" ng-controller="LoginController">
     <div class="column">
         <div class="ui header blue">
             <img class="ui small image" src="/Content/images/logo.png">
@@ -35,6 +36,15 @@
         </div>
         <div class="ui message">
             Don't have an account? <a target="_self" href="@Url.Action("Register")">Sign Up</a>
+        </div>
+        <div class="ui message">
+            <div class="ui container left aligned">
+                example user
+                <br>
+                login: <i>john</i>
+                <br>
+                password: <i>123456</i>
+            </div>
         </div>
     </div>
 </div>

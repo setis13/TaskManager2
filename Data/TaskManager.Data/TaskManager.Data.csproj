@@ -115,7 +115,9 @@
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="UserSession.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="script.sql" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

@@ -25,7 +25,7 @@
     </div>
 </div>
 <!-- Change Password Modal -->
-<div id="change-password-modal" class="ui small modal">
+<modal id="change-password-modal" class="ui small modal" ng-model="Model.ChangePassword">
     <i class="close icon" ng-click="ChangePasswordCancel_OnClick()"></i>
     <div class="header">Change Password</div>
     <div id="form-change-password" class="ui validate form content">
@@ -59,7 +59,7 @@
             Save
         </div>
     </div>
-</div>
+</modal>
 <script language="javascript">
     var form = function () {
         return $('#form-change-password')

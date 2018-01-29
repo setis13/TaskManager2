@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity.Migrations;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using TaskManager.Common.Enums;
@@ -36,11 +37,22 @@ namespace TaskManager.Data.Context {
                 }
             });
 
-            // createa admin if doesn't exist
+            //// creates admin if doesn't exist
+            //if (userManager.FindById(admin.Id) == null) {
+            //    // createa User
+            //    userManager.Create(admin, "123456");
+            //    userManager.SetLockoutEnabled(admin.Id, false);
+            //}
+
+            // creates default database
             if (userManager.FindById(admin.Id) == null) {
-                // createa User
-                userManager.Create(admin, "123456");
-                userManager.SetLockoutEnabled(admin.Id, false);
+                var assembly = Assembly.GetExecutingAssembly();
+                var resourceName = "TaskManager.Data.script.sql";
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                using (StreamReader reader = new StreamReader(stream)) {
+                    string result = reader.ReadToEnd();
+                    context.DbContext.Database.ExecuteSqlCommand(result);
+                }
             }
 
             base.Seed(context);

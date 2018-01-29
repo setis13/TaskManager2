@@ -19,7 +19,6 @@ namespace TaskManager.Web.Controllers {
             if (arr.Length > 0 && arr[1].ToLower() == "home") {
                 return RedirectToAction("Index");
             }
-            ViewBag.Title = "Home Page";
             return View();
         }
     }

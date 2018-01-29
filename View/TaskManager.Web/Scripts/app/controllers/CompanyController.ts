@@ -35,7 +35,7 @@ namespace Controllers {
         }
 
         public Load = () => {
-            this.$scope.Model = null;
+            this.scope.Model = null;
 
             var $this = this;
             $.ajax({
@@ -47,11 +47,11 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideLoader();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
-                        this.$scope.Model = $this.Model = new Models.Company1Model();
+                        this.scope.Model = $this.Model = new Models.Company1Model();
                         $this.Model.SetData(result.data);
                     } else {
                         $this.Error(result.error);
@@ -80,7 +80,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.scope.Leaving = false;
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -109,7 +109,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.scope.Accepting = false;
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -141,7 +141,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.scope.Rejecting = false;
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -173,7 +173,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.ShowBusyRow($("#user-" + user.Id));
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -205,7 +205,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.ShowBusyRow($("#user-" + user.Id));
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -244,7 +244,7 @@ namespace Controllers {
                     },
                     complete() {
                         $this.HideBusySaving();
-                        $this.$scope.$apply();
+                        $this.scope.$apply();
                     },
                     success: (result) => {
                         if (result.success) {
@@ -272,7 +272,7 @@ namespace Controllers {
                     },
                     complete() {
                         $this.HideBusySaving();
-                        $this.$scope.$apply();
+                        $this.scope.$apply();
                     },
                     success: (result) => {
                         if (result.success) {
@@ -318,7 +318,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideBusySaving();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {

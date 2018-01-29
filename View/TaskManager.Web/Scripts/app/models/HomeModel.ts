@@ -12,6 +12,7 @@
         public SelectedHistoryFilter: string = '';
         public SelectedUserFilter: string = '';
         public SortBy: Enums.SortByEnum;
+        public Now: moment.Moment = moment();
 
         public FilteredTasks: Array<TaskModel>;
 
@@ -43,13 +44,13 @@
                     break;
             }
 
-            if (this.SelectedUserFilter == '') {
+            if (this.SelectedUserFilter === '') {
                 this.FilteredTasks = tasks;
             } else {
                 this.FilteredTasks = Array();
                 for (var i = 0; i < tasks.length; i++) {
                     var task = tasks[i];
-                    if (task.UserIds.indexOf(this.SelectedUserFilter) != -1) {
+                    if (task.UserIds.indexOf(this.SelectedUserFilter) !== -1) {
                         this.FilteredTasks.push(task);
                     }
                 }

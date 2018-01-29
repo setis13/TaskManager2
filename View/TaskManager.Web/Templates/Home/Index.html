@@ -12,13 +12,18 @@
 </div>
 <div ng-show="Model.Loaded">
     <!-- panel -->
-    <div class="content">
+<div class="ui three column stackable grid">
+    <!-- create task -->
+    <div class="three wide column">
         <button class="ui primary button" ng-click="CreateTask_OnClick()">Create&nbsp;Task</button>
+    </div>
+    <!-- filter -->
+    <div class="eight wide column">
         <select id="history-filter" class="ui dropdown"
                 ng-model="Model.SelectedHistoryFilter"
                 ng-change="HistoryFilter_OnChange()">
             <option value="">History Filter</option>
-            <option ng-repeat="(id, name) in Model.HistoryFilters" value="{{id}}">{{name}}</option>
+            <option ng-repeat="(id, name) in Model.HistoryFilters" value="{{id}}">{{name}} - today</option>
         </select>
         <select id="user-filter" class="ui dropdown"
                 ng-model="Model.SelectedUserFilter"
@@ -30,31 +35,33 @@
              ng-click="ClearFilters_OnClick()">
             Clear
         </div>
-        <div class="pull-right">
-            <span class="label">Sort by</span>&nbsp;
-            <div class="ui right labeled icon button"
-                 ng-class="Model.SortBy == 1 || Model.SortBy == 2 ? 'primary' : ''"
-                 ng-click="SortByTaskId_OnClick()">
-                <i class="long arrow icon"
-                   ng-class="Model.SortBy == 1 ? 'up' : 'down'"></i>
-                Task#
-            </div>
-            <div class="ui right labeled icon button"
-                 ng-class="Model.SortBy == 3 || Model.SortBy == 4 ? 'primary' : ''"
-                 ng-click="SortByUrgency_OnClick()">
-                <i class="long arrow icon"
-                   ng-class="Model.SortBy == 3 ? 'up' : 'down'"></i>
-                Urgency
-            </div>
+    </div>
+    <!-- sorting -->
+    <div class="five wide column right aligned content">
+        <span class="label">Sort by</span>&nbsp;
+        <div class="ui right labeled icon button"
+             ng-class="Model.SortBy == 1 || Model.SortBy == 2 ? 'primary' : ''"
+             ng-click="SortByTaskId_OnClick()">
+            <i class="long arrow icon"
+               ng-class="Model.SortBy == 1 ? 'up' : 'down'"></i>
+            Task#
+        </div>
+        <div class="ui right labeled icon button"
+             ng-class="Model.SortBy == 3 || Model.SortBy == 4 ? 'primary' : ''"
+             ng-click="SortByUrgency_OnClick()">
+            <i class="long arrow icon"
+               ng-class="Model.SortBy == 3 ? 'up' : 'down'"></i>
+            Urgency
         </div>
     </div>
+</div>
     <!-- tasks -->
     <table class="ui celled table">
         <thead>
             <tr>
-                <th class="one wide"></th>
+                <th class="one wide">Tasks</th>
                 <th class="three wide left-merge"></th>
-                <th class="four wide">Tasks</th>
+                <th class="four wide">Desctiptions</th>
                 <th class="eigth wide">Comments</th>
             </tr>
         </thead>
@@ -130,6 +137,7 @@
                         </div>
                     </div>
                     <div class="ui middle aligned divided items">
+                        {{ResetCheckNewValue();""}}
                         <div class="item" ng-repeat="comment in task.Comments" ng-show="comment.Visible">
                             <div class="content">
                                 <div class="ui small header">{{comment.DateMoment.format("MM/DD")}} {{Model.UserName(comment.CreatedById)}}</div>
@@ -222,6 +230,7 @@
                         </div>
                     </div>
                     <div class="ui middle aligned divided items">
+                        {{ResetCheckNewValue();""}}
                         <div class="item" ng-repeat="comment in subtask.Comments" ng-show="comment.Visible">
                             <div class="content">
                                 <div class="ui small header">{{comment.DateMoment.format("MM/DD")}} {{Model.UserName(comment.CreatedById)}}</div>

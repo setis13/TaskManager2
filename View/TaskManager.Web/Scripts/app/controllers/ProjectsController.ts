@@ -22,7 +22,7 @@ namespace Controllers {
         }
 
         public Load = () => {
-            this.$scope.Model = this.Model = new Models.ProjectsModel();
+            this.scope.Model = this.Model = new Models.ProjectsModel();
 
             var $this = this;
             $.ajax({
@@ -34,7 +34,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideLoader();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -78,7 +78,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideBusySaving();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -111,7 +111,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideBusyDeleting();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {

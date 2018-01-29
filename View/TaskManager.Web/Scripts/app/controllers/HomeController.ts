@@ -62,6 +62,7 @@ namespace Controllers {
             $scope.ToggleAllComments_OnClick = this.ToggleAllComments_OnClick;
             $scope.ShowedAllComments = this.ShowedAllComments;
             $scope.CheckNewValue = this.CheckNewValue;
+            $scope.ResetCheckNewValue = this.ResetCheckNewValue;
 
             $scope.HistoryFilter_OnChange = this.HistoryFilter_OnChange;
             $scope.UserFilter_OnChange = this.UserFilter_OnChange;
@@ -105,7 +106,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideLoader();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -122,17 +123,14 @@ namespace Controllers {
         }
 
         public HistoryFilter_OnChange = () => {
-            super.ResetCheckNewValue();
             this.Load();
         }
 
         public UserFilter_OnChange = () => {
-            super.ResetCheckNewValue();
             this.Model.ApplyClientFilter();
         }
 
         public ClearFilters_OnClick = () => {
-            super.ResetCheckNewValue();
             setTimeout(() => {
                 $("#history-filter").dropdown('restore defaults');
                 $("#user-filter").dropdown('restore defaults');
@@ -164,9 +162,9 @@ namespace Controllers {
                 dataType: 'json',
                 data: {},
                 success: (result) => {
-                    if (result.success == false) {
+                    if (result.success === false) {
                         $this.Model.Error = result.error;
-                        $this.$scope.$apply();
+                        $this.scope.$apply();
                     }
                 },
                 error: (jqXhr) => {
@@ -239,7 +237,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideBusyRow($("#subtask-" + subtask.EntityId));
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -268,7 +266,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideBusyRow($("#subtask-" + subtask.EntityId));
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -303,7 +301,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideBusySaving();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -336,7 +334,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideBusyDeleting();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -372,7 +370,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideBusySaving();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -405,7 +403,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideBusyDeleting();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -441,7 +439,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideBusySaving();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {
@@ -474,7 +472,7 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideBusyDeleting();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {

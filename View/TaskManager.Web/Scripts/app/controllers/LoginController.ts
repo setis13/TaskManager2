@@ -32,7 +32,7 @@
                 },
                 complete() {
                     $this.HideBusySaving();
-                    $this.$scope.$apply();
+                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.success) {

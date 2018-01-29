@@ -14,7 +14,7 @@ namespace TaskManager.Logic.Contracts.Dtos {
                 .DefaultIfEmpty(0)
                 .Sum() +
              ReportSubTasks
-                .Select(e => e.ActualWork.Ticks)
+                .Select(e => e.SumActualWork.Ticks)
                 .DefaultIfEmpty(0)
                 .Sum());
 

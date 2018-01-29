@@ -47,7 +47,7 @@ namespace TaskManager.Logic.Services {
             var subtasksQuery = subtaskRep.SearchFor(e => e.CompanyId == user.CompanyId);
             var commentsQuery = commentRep.SearchFor(e => e.CompanyId == user.CompanyId);
 
-            historyFilters = tasksQuery.Select(e => e.CreatedDate).ToList()
+            historyFilters = commentsQuery.Select(e => e.Date).ToList()
                 .Select(e => e.Date.AddDays(-e.Date.Day + 1)).Distinct().ToList();
 
             if (historyDeep == null) {
@@ -57,15 +57,32 @@ namespace TaskManager.Logic.Services {
                 }.Cast<int>().ToList();
                 tasksQuery = tasksQuery.Where(e => statuses.Contains(e.Status));
             } else {
-                tasksQuery = tasksQuery.Where(e => e.CreatedDate >= historyDeep);
-                subtasksQuery = subtasksQuery.Where(e => e.CreatedDate >= historyDeep);
+                var statuses = new List<TaskStatusEnum>() {
+                    TaskStatusEnum.Done,
+                    TaskStatusEnum.Failed,
+                    TaskStatusEnum.Rejected,
+                }.Cast<int>().ToList();
+                // filtering by a task comments
+                var tasksQuery1 = tasksQuery.Where(e => statuses.Contains(e.Status))
+                     .Join(commentsQuery.Where(c => c.TaskId != null), t => t.EntityId, c => c.TaskId, (t, c) => new { t, c }).DefaultIfEmpty()
+                     .Where(e => e.t != null && (e.c == null || e.c.Date >= historyDeep))
+                     .Select(e => e.t).Distinct();
+                // filtering by a subtask comments
+                var tasksQuery2 = tasksQuery.Where(e => statuses.Contains(e.Status))
+                       .Join(subtasksQuery, t => t.EntityId, s => s.TaskId, (t, s) => new { t, s }).DefaultIfEmpty()
+                       .Join(commentsQuery.Where(c => c.SubTaskId != null), t => t.s.EntityId, c => c.SubTaskId, (e, c) => new { e.t, c }).DefaultIfEmpty()
+                       .Where(e => e.t != null && (e.c == null || e.c.Date >= historyDeep))
+                       .Select(e => e.t).Distinct();
+                // union
+                tasksQuery = tasksQuery1.Union(tasksQuery2).Distinct();
             }
 
             var projects1 = Mapper.Map<List<ProjectDto>>(projectsQuery);
-            var tasks1 = Mapper.Map<List<Task1Dto>>(tasksQuery.OrderBy(e => e.Index));
-            var subtasks1 = Mapper.Map<List<SubTaskDto>>(subtasksQuery.OrderBy(e => e.Order));
 
+            var tasks1 = Mapper.Map<List<Task1Dto>>(tasksQuery.OrderBy(e => e.Index));
             var taskIds = tasks1.Select(e => e.EntityId).ToList();
+
+            var subtasks1 = Mapper.Map<List<SubTaskDto>>(subtasksQuery.Where(e => taskIds.Contains(e.TaskId)).OrderBy(e => e.Order));
             var subtaskIds = subtasks1.Select(e => e.EntityId).ToList();
 
             var taskuserList = taskuserRep.SearchFor(e => taskIds.Contains(e.TaskId)).ToList();

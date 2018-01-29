@@ -103,14 +103,12 @@ namespace Controllers {
             if (value == null) {
                 return false;
             }
-
             if (this.lastKey[propertyName] == null) {
                 this.lastKey[propertyName] = key;
                 this.lastValue[propertyName] = value;
                 return true;
             } else {
                 if (this.lastKey[propertyName] === key && this.lastValue[propertyName] === value) {
-
                     return false;
                 } else {
                     this.lastKey[propertyName] = key;
@@ -120,7 +118,7 @@ namespace Controllers {
             }
         }
 
-        public ResetCheckNewValue() {
+        public ResetCheckNewValue = () => {
             this.lastKey = {};
             this.lastValue = {};
         }
