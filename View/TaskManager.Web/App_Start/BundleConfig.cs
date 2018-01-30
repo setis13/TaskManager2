@@ -2,13 +2,32 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web.Optimization;
+using BundleTransformer.Core.Builders;
+using BundleTransformer.Core.Orderers;
+using BundleTransformer.Core.Transformers;
+using TaskManager.Common;
 
 namespace TaskManager.Web {
     public class BundleConfig {
+        protected sealed class TaskManagerStylesBundle : Bundle {
+            public TaskManagerStylesBundle(string virtualPath) : base(virtualPath) {
+                this.Builder = new NullBuilder();
+                this.Orderer = new NullOrderer();
+                Transforms.Add(new StyleTransformer());
+            }
+        }
 
-        public class AsIsBundleOrderer : IBundleOrderer {
+        protected sealed class TaskManagerScriptsBundle : Bundle {
+            public TaskManagerScriptsBundle(string virtualPath) : base(virtualPath) {
+                this.Builder = new NullBuilder();
+                this.Orderer = new AsIsBundleOrderer();
+                Transforms.Add(new ScriptTransformer());
+            }
+        }
 
+        protected class AsIsBundleOrderer : IBundleOrderer {
             private void Bubble<T>(T[] arr, Comparison<T> comparison) {
                 for (int write = 0; write < arr.Length; write++) {
                     for (int sort = 0; sort < arr.Length - 1; sort++) {
@@ -20,7 +39,6 @@ namespace TaskManager.Web {
                         }
                     }
                 }
-
             }
 
             /// <summary>
@@ -47,8 +65,7 @@ namespace TaskManager.Web {
 
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles) {
-
-            bundles.Add(new ScriptBundle("~/Scripts/Common") { Orderer = new AsIsBundleOrderer() }
+            bundles.Add(new TaskManagerScriptsBundle("~/Scripts/Common")
                 .Include(
                     "~/Scripts/jquery-{version}.js",
                     "~/Scripts/moment.js",
@@ -77,7 +94,7 @@ namespace TaskManager.Web {
                     "~/Scripts/app/filters", "*.js", false)
             );
 
-            bundles.Add(new StyleBundle("~/Content/Common")
+            bundles.Add(new TaskManagerStylesBundle("~/Content/Common")
                 .Include(
                     "~/Content/toastr.css",
                     "~/Content/semantic.css",
