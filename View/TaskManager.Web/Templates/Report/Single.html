@@ -54,7 +54,7 @@
                  contenteditable="true"
                  aria-multiline="true"
                  style="min-height: 54px;">
-                <div style="margin-bottom: 1em;">{{Model.Start.format('MM/DD/YYYY')}}</div>
+                <div style="margin-bottom: 1em;">{{Model.Start.format('MM/DD/YYYY')}}&nbsp;<span style="color: green">[{{Model.SumActualWorkHours}}h]</span></div>
                 <ul style="list-style: none; margin: 0em; padding: 0em;">
                     <li ng-repeat="project in Model.ReportProjects" style="margin-bottom: 1em;">
                         <div>{{project.Title}}&nbsp;<span style="color: green">[{{project.SumActualWorkHours}}h]&nbsp;</span></div>

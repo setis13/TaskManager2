@@ -385,6 +385,8 @@ namespace TaskManager.Logic.Services {
                 } else {
                     task.Progress = 0;
                 }
+                // sets task.status from max of subtasks
+                task.Status = subtasks.Max(e => e.Status);
             }
             if (taskComments.Any()) {
                 // sets task.status from task.last_comment
