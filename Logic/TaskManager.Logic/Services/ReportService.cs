@@ -95,7 +95,9 @@ namespace TaskManager.Logic.Services {
                         e.CreatedById == user.Id &&
                         e.SubTaskId == totalComment.SubTaskId &&
                        e.Date <= end /* && start <= e.Date // NOTE: to take an old comment */
-                    ).OrderByDescending(e => e.Date).ThenBy(e => e.CreatedDate).Take(total + 1).ToList();
+                    ).OrderByDescending(e => e.Date).ThenBy(e => e.CreatedDate).Take(total + 1)
+                    /* Replaces desc sorting to asc */
+                    .OrderBy(e => e.Date).ToList();
                 for (int i = 0; i < comments.Count; i++) {
                     // checks as before in linq
                     if (start <= comments[i].Date && comments[i].Date <= end) {

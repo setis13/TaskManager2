@@ -386,6 +386,16 @@ namespace TaskManager.Logic.Services {
                     task.Progress = 0;
                 }
                 // sets task.status from max of subtasks
+                if (subtasks
+                    .Where(e => e.Status != (byte)TaskStatusEnum.Failed && 
+                                e.Status != (byte)TaskStatusEnum.Rejected)
+                    .All(e => e.Status == (byte)TaskStatusEnum.Done)) {
+                    task.Status = (byte)TaskStatusEnum.Done;
+                } else if (subtasks.Any(e => e.Status == (byte)TaskStatusEnum.InProgress)) {
+                    task.Status = (byte)TaskStatusEnum.InProgress;
+                } else {
+                    task.Status = (byte)TaskStatusEnum.NotStarted;
+                }
                 task.Status = subtasks.Max(e => e.Status);
             }
             if (taskComments.Any()) {
