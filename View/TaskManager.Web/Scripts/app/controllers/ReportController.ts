@@ -28,35 +28,70 @@ namespace Controllers {
 
             $scope.CheckNewValue = this.CheckNewValue;
 
-            $('#start').calendar({
-                type: 'date',
-                endCalendar: $('#end'),
-                onChange: function (date, text) {
-                    $this.Model.Start = moment(date);
-                }
-            }).calendar("set date", this.Model.Start.toDate());
+            setTimeout(() => {
+                $('#start').calendar({
+                    type: 'date',
+                    endCalendar: $('#end'),
+                    onChange: function (date, text) {
+                        $this.Model.Start = moment(date);
+                    }
+                }).calendar("set date", this.Model.Start.toDate());
 
-            $('#end').calendar({
-                type: 'date',
-                startCalendar: $('#start'),
-                onChange: function (date, text) {
-                    $this.Model.End = moment(date);
-                }
-            }).calendar("set date", (this.Model.End != null ? $this.Model.End.toDate() : null));
-        }
+                $('#end').calendar({
+                    type: 'date',
+                    startCalendar: $('#start'),
+                    onChange: function (date, text) {
+                        $this.Model.End = moment(date);
+                    }
+                }).calendar("set date", (this.Model.End != null ? $this.Model.End.toDate() : null));
 
-        public GenerateReport_OnClick = () => {
+                $('#projects-filter').dropdown();
+            });
+
             this.Load();
         }
 
         public Load = () => {
             var $this = this;
             $.ajax({
-                url: '/api/Report/GetData?start='
-                + this.Model.Start.format("YYYY-MM-DD")
-                + '&end=' + (this.Model.End != null ? this.Model.End.format("YYYY-MM-DD") : 'null'),
+                url: '/api/Projects/GetData/',
                 type: 'POST',
                 data: {},
+                beforeSend(xhr) {
+                    $this.ShowLoader();
+                },
+                complete() {
+                    $this.HideLoader();
+                    $this.scope.$apply();
+                },
+                success: (result) => {
+                    if (result.Success) {
+                        $this.Model.SetData(result.Data);
+                    } else {
+                        $this.Error(result.Message);
+                    }
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    $this.Error(jqXhr.statusText);
+                }
+            });
+        }
+
+        public GenerateReport_OnClick = () => {
+            this.Generate();
+        }
+
+        public Generate = () => {
+            var $this = this;
+            $.ajax({
+                url: '/api/Report/GetData',
+                type: 'POST',
+                data: {
+                    Start: this.Model.Start.format("YYYY-MM-DD"),
+                    End: this.Model.End != null ? this.Model.End.format("YYYY-MM-DD") : 'null',
+                    ProjectIds: this.Model.SelectedProjectsFilter
+                },
                 beforeSend(xhr) {
                     $this.scope.Generating = true;
                 },
@@ -66,7 +101,7 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.Success) {
-                        $this.Model.SetData(result.Data);
+                        $this.Model.SetData2(result.Data);
                     } else {
                         $this.Error(result.Message);
                     }

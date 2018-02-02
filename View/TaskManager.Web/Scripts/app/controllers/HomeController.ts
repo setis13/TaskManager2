@@ -13,7 +13,7 @@ namespace Controllers {
     export class HomeController extends BaseController {
 
         private taskPriorityClasses: { [index: number]: string } =
-        { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
+            { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
 
         public Model: Models.HomeModel;
 
@@ -27,6 +27,7 @@ namespace Controllers {
             setTimeout(() => {
                 $("#history-filter").dropdown();
                 $('#user-filter').dropdown();
+                $('#project-filter').dropdown();
             });
 
             $scope.Model = this.Model = new Models.HomeModel();
@@ -66,6 +67,7 @@ namespace Controllers {
 
             $scope.HistoryFilter_OnChange = this.HistoryFilter_OnChange;
             $scope.UserFilter_OnChange = this.UserFilter_OnChange;
+            $scope.ProjectFilter_OnChange = this.ProjectFilter_OnChange;
 
             $scope.ClearFilters_OnClick = this.ClearFilters_OnClick;
             $scope.SortByTaskId_OnClick = this.SortByTaskId_OnClick;
@@ -130,12 +132,18 @@ namespace Controllers {
             this.Model.ApplyClientFilter();
         }
 
+        public ProjectFilter_OnChange = () => {
+            this.Model.ApplyClientFilter();
+        }
+
         public ClearFilters_OnClick = () => {
             setTimeout(() => {
                 $("#history-filter").dropdown('restore defaults');
                 $("#user-filter").dropdown('restore defaults');
+                $("#project-filter").dropdown('restore defaults');
                 $('#history-filter').parent().find('.text.default').html($('#history-filter > option[value=""]').html());
                 $('#user-filter').parent().find('.text.default').html($('#user-filter > option[value=""]').html());
+                $('#project-filter').parent().find('.text.default').html($('#project-filter > option[value=""]').html());
             });
         }
 

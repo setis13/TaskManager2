@@ -1,5 +1,5 @@
 ﻿<!-- loader -->
-<div id="loader" class="ui dimmer transition active inverted ng-hide">
+<div id="loader" class="ui dimmer transition active inverted">
     <div class="ui loader"></div>
 </div>
 <!-- a error on the page -->
@@ -32,7 +32,13 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="three wide field">
+                        <select id="projects-filter" class="ui dropdown" multiple
+                                ng-model="Model.SelectedProjectsFilter">
+                            <option value="">Projects Filter</option>
+                            <option ng-repeat="project in Model.Projects" value="{{project.EntityId}}">{{project.Title}}</option>
+                        </select>
+                    </div>
                     <div class="two wide field">
                         <button class="ui primary button"
                                 lb-busy="Generating"

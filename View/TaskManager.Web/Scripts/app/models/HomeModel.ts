@@ -11,6 +11,7 @@
         public HistoryFilters: { [id: string]: string; };
         public SelectedHistoryFilter: string = '';
         public SelectedUserFilter: string = '';
+        public SelectedProjectFilter: string = '';
         public SortBy: Enums.SortByEnum;
         public Now: moment.Moment = moment();
 
@@ -25,36 +26,33 @@
         }
 
         public ApplyClientFilter() {
-            var tasks: Array<TaskModel>;
+            var tasks: linq.Enumerable<TaskModel> = Enumerable.From(this.Tasks);
             switch (this.SortBy) {
                 case Enums.SortByEnum.TaskId:
-                    tasks = Enumerable.From(this.Tasks).OrderBy(e => e.Index).ToArray();
+                    tasks = tasks.OrderBy(e => e.Index);
                     break;
                 case Enums.SortByEnum.TaskIdDesc:
-                    tasks = Enumerable.From(this.Tasks).OrderByDescending(e => e.Index).ToArray();
+                    tasks = tasks.OrderByDescending(e => e.Index);
                     break;
                 case Enums.SortByEnum.Urgency:
-                    tasks = Enumerable.From(this.Tasks).OrderBy(e => e.Priority).ToArray();
+                    tasks = tasks.OrderBy(e => e.Priority);
                     break;
                 case Enums.SortByEnum.UrgencyDesc:
-                    tasks = Enumerable.From(this.Tasks).OrderByDescending(e => e.Priority).ToArray();
+                    tasks = tasks.OrderByDescending(e => e.Priority);
                     break;
                 default:
-                    tasks = this.Tasks;
                     break;
             }
 
-            if (this.SelectedUserFilter === '') {
-                this.FilteredTasks = tasks;
-            } else {
-                this.FilteredTasks = Array();
-                for (var i = 0; i < tasks.length; i++) {
-                    var task = tasks[i];
-                    if (task.UserIds.indexOf(this.SelectedUserFilter) !== -1) {
-                        this.FilteredTasks.push(task);
-                    }
-                }
+            if (this.SelectedUserFilter !== '') {
+                tasks = tasks.Where(e => e.UserIds.indexOf(this.SelectedUserFilter) !== -1);
             }
+
+            if (this.SelectedProjectFilter !== '') {
+                tasks = tasks.Where(e => e.ProjectId == this.SelectedProjectFilter);
+            }
+
+            this.FilteredTasks = tasks.ToArray();
         }
 
         public SetData(data: any) {

@@ -19,9 +19,10 @@ namespace TaskManager.Logic.Services {
         ///     Gets data for report by day </summary>
         /// <param name="start">Start Date and Time</param>
         /// <param name="end">End Date and Time</param>
+        /// <param name="projectIds">a filter by projects</param>
         /// <param name="user">User DTO</param>
         /// <returns>List of Project DTOs</returns>
-        public List<ReportProjectDto> GetData(DateTime start, DateTime end, UserDto user) {
+        public List<ReportProjectDto> GetData(DateTime start, DateTime end, List<Guid> projectIds, UserDto user) {
             var projectDtos = new List<ReportProjectDto>();
             var taskDtos = new List<ReportTaskDto>();
             var subtaskDtos = new List<ReportSubTaskDto>();
@@ -123,8 +124,8 @@ namespace TaskManager.Logic.Services {
             var tasks = taskRep.SearchFor(e => taskIds.Contains(e.EntityId)).ToList();
             taskDtos = Mapper.Map<List<ReportTaskDto>>(tasks);
             // gets projects
-            var projectIds = tasks.Select(e => e.ProjectId).ToList();
-            var projects = projectRep.SearchFor(e => projectIds.Contains(e.EntityId)).ToList();
+            var projectIds2 = tasks.Select(e => e.ProjectId).ToList();
+            var projects = projectRep.SearchFor(e => projectIds2.Contains(e.EntityId)).ToList();
             projectDtos = Mapper.Map<List<ReportProjectDto>>(projects);
             // addes all subtasks by tasks
             subtasks = subtaskRep.SearchFor(e => taskIds.Contains(e.TaskId) && !subtaskIds.Contains(e.EntityId)).ToList();
@@ -168,6 +169,10 @@ namespace TaskManager.Logic.Services {
                     projectDtos.Add(projectDto);
                 }
                 projectDto.ReportTasks.Add(taskDto);
+            }
+            // to filter by projects
+            if (projectIds != null && projectIds.Any()) {
+                projectDtos = projectDtos.Where(e => projectIds.Contains(e.EntityId)).ToList();
             }
             return projectDtos;
         }

@@ -12,49 +12,59 @@
 </div>
 <div ng-show="Model.Loaded">
     <!-- panel -->
-<div class="ui three column stackable grid">
-    <!-- create task -->
-    <div class="three wide column">
-        <button class="ui primary button" ng-click="CreateTask_OnClick()">Create&nbsp;Task</button>
-    </div>
-    <!-- filter -->
-    <div class="eight wide column">
-        <select id="history-filter" class="ui dropdown"
-                ng-model="Model.SelectedHistoryFilter"
-                ng-change="HistoryFilter_OnChange()">
-            <option value="">History Filter</option>
-            <option ng-repeat="(id, name) in Model.HistoryFilters" value="{{id}}">{{name}} - today</option>
-        </select>
-        <select id="user-filter" class="ui dropdown"
-                ng-model="Model.SelectedUserFilter"
-                ng-change="UserFilter_OnChange()">
-            <option value="">Responsible Filter</option>
-            <option ng-repeat="user in Model.Users" value="{{user.Id}}">{{user.UserName}}</option>
-        </select>
-        <div class="ui button"
-             ng-click="ClearFilters_OnClick()">
-            Clear
+    <div class="ui three column stackable grid">
+        <div class="row">
+            <!-- create task -->
+            <div class="three wide column">
+                <button class="ui primary button" ng-click="CreateTask_OnClick()">Create&nbsp;Task</button>
+            </div>
+        </div>
+        <div class="row">
+            <!-- filter -->
+            <div class="eleven wide column">
+                <select id="history-filter" class="ui dropdown"
+                        ng-model="Model.SelectedHistoryFilter"
+                        ng-change="HistoryFilter_OnChange()">
+                    <option value="">History Filter</option>
+                    <option ng-repeat="(id, name) in Model.HistoryFilters" value="{{id}}">{{name}} - today</option>
+                </select>
+                <select id="project-filter" class="ui dropdown"
+                        ng-model="Model.SelectedProjectFilter"
+                        ng-change="ProjectFilter_OnChange()">
+                    <option value="">Project Filter</option>
+                    <option ng-repeat="project in Model.Projects" value="{{project.EntityId}}">{{project.Title}}</option>
+                </select>
+                <select id="user-filter" class="ui dropdown"
+                        ng-model="Model.SelectedUserFilter"
+                        ng-change="UserFilter_OnChange()">
+                    <option value="">Responsible Filter</option>
+                    <option ng-repeat="user in Model.Users" value="{{user.Id}}">{{user.UserName}}</option>
+                </select>
+                <div class="ui button"
+                     ng-click="ClearFilters_OnClick()">
+                    Clear
+                </div>
+            </div>
+            <!-- sorting -->
+            <div class="five wide column right aligned content">
+                <span class="label">Sort by</span>&nbsp;
+                <div class="ui right labeled icon button"
+                     ng-class="Model.SortBy == 1 || Model.SortBy == 2 ? 'primary' : ''"
+                     ng-click="SortByTaskId_OnClick()">
+                    <i class="long arrow icon"
+                       ng-class="Model.SortBy == 1 ? 'up' : 'down'"></i>
+                    Task#
+                </div>
+                <div class="ui right labeled icon button"
+                     ng-class="Model.SortBy == 3 || Model.SortBy == 4 ? 'primary' : ''"
+                     ng-click="SortByUrgency_OnClick()">
+                    <i class="long arrow icon"
+                       ng-class="Model.SortBy == 3 ? 'up' : 'down'"></i>
+                    Urgency
+                </div>
+            </div>
         </div>
     </div>
-    <!-- sorting -->
-    <div class="five wide column right aligned content">
-        <span class="label">Sort by</span>&nbsp;
-        <div class="ui right labeled icon button"
-             ng-class="Model.SortBy == 1 || Model.SortBy == 2 ? 'primary' : ''"
-             ng-click="SortByTaskId_OnClick()">
-            <i class="long arrow icon"
-               ng-class="Model.SortBy == 1 ? 'up' : 'down'"></i>
-            Task#
-        </div>
-        <div class="ui right labeled icon button"
-             ng-class="Model.SortBy == 3 || Model.SortBy == 4 ? 'primary' : ''"
-             ng-click="SortByUrgency_OnClick()">
-            <i class="long arrow icon"
-               ng-class="Model.SortBy == 3 ? 'up' : 'down'"></i>
-            Urgency
-        </div>
-    </div>
-</div>
     <!-- tasks -->
     <table class="ui celled table">
         <thead>

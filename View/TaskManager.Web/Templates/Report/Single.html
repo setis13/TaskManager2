@@ -1,5 +1,5 @@
 ﻿<!-- loader -->
-<div id="loader" class="ui dimmer transition active inverted ng-hide">
+<div id="loader" class="ui dimmer transition active inverted">
     <div class="ui loader"></div>
 </div>
 <!-- a error on the page -->
@@ -11,7 +11,7 @@
     <p>{{Model.Error}}</p>
 </div>
 <!-- tools -->
-<div class="ui grid">
+<div class="ui grid" ng-show="Model.Loaded">
     <div class="row">
         <div class="column">
             <div class="ui validate form content">
@@ -24,7 +24,13 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="three wide field">
+                        <select id="projects-filter" class="ui dropdown" multiple
+                                ng-model="Model.SelectedProjectsFilter">
+                            <option value="">Projects Filter</option>
+                            <option ng-repeat="project in Model.Projects" value="{{project.EntityId}}">{{project.Title}}</option>
+                        </select>
+                    </div>
                     <div class="two wide field">
                         <button class="ui primary button"
                                 lb-busy="Generating"

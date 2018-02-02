@@ -31,17 +31,18 @@ namespace TaskManager.Web.Controllers {
         [HttpPost, Route("GetData")]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<WebApiResult> GetData(DateTime start, DateTime? end) {
+        public async Task<WebApiResult> GetData(ReportModel model) {
             try {
+                throw new NotImplementedException();
 #if DEBUG
                 await Task.Delay(500);
 #endif
                 return await Task.Factory.StartNew(() => {
                     // gets all time of day
-                    start = start.Date;
-                    end = (end?.Date ?? start).AddDays(1).AddMilliseconds(-1);
+                    var start = model.Start.Date;
+                    var end = (model.End?.Date ?? start).AddDays(1).AddMilliseconds(-1);
 
-                    var projectDtos = _service.GetData(start, end.Value, GetUserDto());
+                    var projectDtos = _service.GetData(start, end, model.ProjectIds, GetUserDto());
 
                     var sumActualWork = new TimeSpan(projectDtos
                         .Select(e => e.SumActualWork.Ticks)
