@@ -37,10 +37,10 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
-                        $this.Model.SetData(result.data);
+                    if (result.Success) {
+                        $this.Model.SetData(result.Data);
                     } else {
-                        $this.Error(result.error);
+                        $this.Error(result.Message);
                     }
                 },
                 error: (jqXhr) => {
@@ -81,11 +81,11 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         this.Model.EditProject = null;
                         $this.Load();
                     } else {
-                        $this.Model.EditProject.Error = result.error;
+                        $this.Model.EditProject.Error = result.Message;
                     }
                 },
                 error: (jqXhr) => {
@@ -114,11 +114,11 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         this.Model.EditProject = null;
                         $this.Load();
                     } else {
-                        $this.Model.EditProject.Error = result.error;
+                        $this.Model.EditProject.Error = result.Message;
                     }
                 },
                 error: (jqXhr) => {

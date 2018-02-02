@@ -65,10 +65,10 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
-                        $this.Model.SetData(result.data);
+                    if (result.Success) {
+                        $this.Model.SetData(result.Data);
                     } else {
-                        $this.Error(result.error);
+                        $this.Error(result.Message);
                     }
                 },
                 error: (jqXhr) => {

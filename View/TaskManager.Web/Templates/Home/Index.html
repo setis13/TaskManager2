@@ -273,7 +273,7 @@
     </footer>
 </div>
 <!-- Edit Task Modal -->
-<modal id="edit-task-modal" class="ui small modal" ng-model="Model.EditTask">
+<modal id="edit-task-modal" class="ui big modal" ng-model="Model.EditTask">
     <i class="close icon" ng-click="TaskCancel_OnClick()"></i>
     <div class="header">{{Model.EditTask.EntityId == null ? 'Create Task' : 'Edit Task #' + Model.EditTask.Index}}</div>
     <div id="form-task" class="ui validate form content">
@@ -346,7 +346,7 @@
     </div>
 </modal>
 <!-- Edit SubTask Modal -->
-<modal id="edit-subtask-modal" class="ui small modal" ng-model="Model.EditSubTask">
+<modal id="edit-subtask-modal" class="ui big modal" ng-model="Model.EditSubTask">
     <i class="close icon" ng-click="SubTaskCancel_OnClick()"></i>
     <div class="header">{{Model.EditSubTask.EntityId == null ? 'Create SubTask' : 'Edit SubTask #' + Model.EditSubTask.Order}}</div>
     <div id="form-subtask" class="ui validate form content">
@@ -395,7 +395,7 @@
     </div>
 </modal>
 <!-- Edit Comment Modal -->
-<modal id="edit-comment-modal" class="ui small modal" ng-model="Model.EditComment">
+<modal id="edit-comment-modal" class="ui big modal" ng-model="Model.EditComment">
     <i class="close icon" ng-click="CommentCancel_OnClick()"></i>
     <div class="header">{{(Model.EditComment.EntityId == null ? 'Create Comment on the Task #' : 'Edit Comment on the Task #') + Model.TaskIndexByComment(Model.EditComment)}}</div>
     <div id="form-comment" class="ui validate form content">

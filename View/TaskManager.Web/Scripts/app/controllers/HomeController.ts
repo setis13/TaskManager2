@@ -109,10 +109,10 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
-                        $this.Model.SetData(result.data);
+                    if (result.Success) {
+                        $this.Model.SetData(result.Data);
                     } else {
-                        $this.Error(result.error);
+                        $this.Error(result.Message);
                     }
                 },
                 error: (jqXhr) => {
@@ -162,8 +162,8 @@ namespace Controllers {
                 dataType: 'json',
                 data: {},
                 success: (result) => {
-                    if (result.success === false) {
-                        $this.Model.Error = result.error;
+                    if (result.Success === false) {
+                        $this.Model.Error = result.Message;
                         $this.scope.$apply();
                     }
                 },
@@ -240,10 +240,10 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
-                        $this.Model.SetSubTasks(result.data.SubTasks);
+                    if (result.Success) {
+                        $this.Model.SetSubTasks(result.Data.SubTasks);
                     } else {
-                        $this.Error(result.error);
+                        $this.Error(result.Message);
                     }
                 },
                 error: (jqXhr) => {
@@ -269,10 +269,10 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
-                        $this.Model.SetSubTasks(result.data.SubTasks);
+                    if (result.Success) {
+                        $this.Model.SetSubTasks(result.Data.SubTasks);
                     } else {
-                        $this.Error(result.error);
+                        $this.Error(result.Message);
                     }
                 },
                 error: (jqXhr) => {
@@ -304,11 +304,11 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Model.EditTask = null;
                         $this.Load();
                     } else {
-                        $this.Model.EditTask.Error = result.error;
+                        $this.Model.EditTask.Error = result.Message;
                     }
                 },
                 error: (jqXhr) => {
@@ -337,11 +337,11 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Model.EditTask = null;
                         $this.Load();
                     } else {
-                        $this.Model.EditTask.Error = result.error;
+                        $this.Model.EditTask.Error = result.Message;
                     }
                 },
                 error: (jqXhr) => {
@@ -373,11 +373,11 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Model.EditSubTask = null;
                         $this.Load();
                     } else {
-                        $this.Model.EditSubTask.Error = result.error;
+                        $this.Model.EditSubTask.Error = result.Message;
                     }
                 },
                 error: (jqXhr) => {
@@ -406,11 +406,11 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Model.EditSubTask = null;
                         $this.Load();
                     } else {
-                        $this.Model.EditSubTask.Error = result.error;
+                        $this.Model.EditSubTask.Error = result.Message;
                     }
                 },
                 error: (jqXhr) => {
@@ -442,11 +442,11 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Model.EditComment = null;
                         $this.Load();
                     } else {
-                        $this.Model.EditComment.Error = result.error;
+                        $this.Model.EditComment.Error = result.Message;
                     }
                 },
                 error: (jqXhr) => {
@@ -475,11 +475,11 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Model.EditComment = null;
                         $this.Load();
                     } else {
-                        $this.Model.EditComment.Error = result.error;
+                        $this.Model.EditComment.Error = result.Message;
                     }
                 },
                 error: (jqXhr) => {

@@ -2,28 +2,27 @@
 
 namespace TaskManager.Web.Models {
     public class WebApiResult {
-        public bool success { get; private set; }
-        public string message { get; private set; }
-        public string error { get; private set; }
-        public object data { get; private set; }
+        public bool Success { get; private set; }
+        public string Message { get; private set; }
+        public object Data { get; private set; }
 
         private WebApiResult(string error) {
-            this.error = error;
-            this.success = false;
+            this.Message = error;
+            this.Success = false;
         }
 
         private WebApiResult(object data) : this() {
-            this.data = data;
+            this.Data = data;
         }
 
         private WebApiResult(object data, string message) : this() {
-            this.data = data;
-            this.message = message;
+            this.Data = data;
+            this.Message = message;
         }
 
         private WebApiResult() {
-            this.success = true;
-            this.message = "Success!";
+            this.Success = true;
+            this.Message = "Success!";
         }
 
         public static WebApiResult Failed(string error) {

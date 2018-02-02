@@ -50,11 +50,11 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         this.scope.Model = $this.Model = new Models.Company1Model();
-                        $this.Model.SetData(result.data);
+                        $this.Model.SetData(result.Data);
                     } else {
-                        $this.Error(result.error);
+                        $this.Error(result.Message);
                     }
                 },
                 error: (jqXhr) => {
@@ -83,10 +83,10 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Load();
                     } else {
-                        $this.Error(result.error);
+                        $this.Error(result.Message);
                     }
                 },
                 error: (jqXhr) => {
@@ -112,10 +112,10 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Load();
                     } else {
-                        $this.Error(result.error);
+                        $this.Error(result.Message);
                     }
                 },
                 error: (jqXhr) => {
@@ -144,10 +144,10 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Load();
                     } else {
-                        $this.Error(result.error);
+                        $this.Error(result.Message);
                     }
                 },
                 error: (jqXhr) => {
@@ -176,10 +176,10 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Load();
                     } else {
-                        $this.Error(result.error);
+                        $this.Error(result.Message);
                     }
                 },
                 error: (jqXhr) => {
@@ -208,10 +208,10 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Load();
                     } else {
-                        $this.Error(result.error);
+                        $this.Error(result.Message);
                     }
                 },
                 error: (jqXhr) => {
@@ -247,12 +247,12 @@ namespace Controllers {
                         $this.scope.$apply();
                     },
                     success: (result) => {
-                        if (result.success) {
-                            $this.Model.FindUser.Id = result.data.User.Id;
-                            $this.Model.FindUser.Email = result.data.User.Email;
-                            $this.Model.FindUser.UserName = result.data.User.UserName;
+                        if (result.Success) {
+                            $this.Model.FindUser.Id = result.Data.User.Id;
+                            $this.Model.FindUser.Email = result.Data.User.Email;
+                            $this.Model.FindUser.UserName = result.Data.User.UserName;
                         } else {
-                            $this.Model.FindUser.Error = result.error;
+                            $this.Model.FindUser.Error = result.Message;
                         }
                     },
                     error: (jqXhr) => {
@@ -275,11 +275,11 @@ namespace Controllers {
                         $this.scope.$apply();
                     },
                     success: (result) => {
-                        if (result.success) {
+                        if (result.Success) {
                             $this.Model.FindUser = null;
                             $this.Load();
                         } else {
-                            $this.Model.FindUser.Error = result.error;
+                            $this.Model.FindUser.Error = result.Message;
                         }
                     },
                     error: (jqXhr) => {
@@ -321,11 +321,11 @@ namespace Controllers {
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Model.EditCompany = null;
                         $this.Load();
                     } else {
-                        $this.Model.EditCompany.Error = result.error;
+                        $this.Model.EditCompany.Error = result.Message;
                     }
                 },
                 error: (jqXhr) => {

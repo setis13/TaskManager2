@@ -35,12 +35,12 @@
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
-                        window.location.href = result.data.ReturnUrl;
+                    if (result.Success) {
+                        window.location.href = result.Data.ReturnUrl;
                     } else {
-                        $this.Error(result.error);
-                        if (result.data && result.data.ReturnUrl) {
-                            setTimeout(() => { window.location.href = result.data.ReturnUrl; }, 1000);
+                        $this.Error(result.Message);
+                        if (result.Data && result.Data.ReturnUrl) {
+                            setTimeout(() => { window.location.href = result.Data.ReturnUrl; }, 1000);
                         }
                     }
                 },

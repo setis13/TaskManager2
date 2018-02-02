@@ -34,11 +34,11 @@
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.ShowBusySaving();
-                        window.location.href = result.data.ReturnUrl;
+                        window.location.href = result.Data.ReturnUrl;
                     } else {
-                        $this.Error(result.error);
+                        $this.Error(result.Message);
                     }
                 },
                 error: (jqXhr) => {

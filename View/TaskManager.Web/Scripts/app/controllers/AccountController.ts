@@ -41,11 +41,11 @@
                     $this.scope.$apply();
                 },
                 success: (result) => {
-                    if (result.success) {
+                    if (result.Success) {
                         $this.Model.ChangePassword = null;
                         toastr.success("Password was changed");
                     } else {
-                        $this.Model.ChangePassword.Error = result.error;
+                        $this.Model.ChangePassword.Error = result.Message;
                     }
                 },
                 error: (jqXhr) => {
