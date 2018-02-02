@@ -42,7 +42,17 @@ namespace TaskManager.Web.Controllers {
                     end = (end?.Date ?? start).AddDays(1).AddMilliseconds(-1);
 
                     var projectDtos = _service.GetData(start, end.Value, GetUserDto());
-                    return WebApiResult.Succeed(new { ReportProjects = projectDtos });
+
+                    var sumActualWork = new TimeSpan(projectDtos
+                        .Select(e => e.SumActualWork.Ticks)
+                        .DefaultIfEmpty(0)
+                        .Sum());
+
+                    return WebApiResult.Succeed(
+                        new {
+                            ReportProjects = projectDtos,
+                            SumActualWork = sumActualWork
+                        });
                 });
             } catch (Exception e) {
                 Logger.e("GetSingle", e);

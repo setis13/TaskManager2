@@ -5,3 +5,4 @@ obj
 /.vs
 /View/TaskManager.Web/logs
 /View/TaskManager.Web/Scripts/References.js
+/View/TaskManager.Web/Database.config

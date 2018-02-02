@@ -36,7 +36,9 @@ namespace TaskManager.Logic.Identity {
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null) {
                 manager.UserTokenProvider =
-                    new DataProtectorTokenProvider<TaskManagerUser, Guid>(dataProtectionProvider.Create("ASP.NET Identity"));
+                    new DataProtectorTokenProvider<TaskManagerUser, Guid>(dataProtectionProvider.Create("ASP.NET Identity")) {
+                        TokenLifespan = TimeSpan.FromDays(30 * 12)
+                    };
             }
             return manager;
         }
