@@ -93,3 +93,27 @@ td.tasks-comments > .ui.items {
 td.tasks-comments > .ui.divided.items > .item {
     padding: 0.5em 0em;
 }
+/*** menu ***/
+.ui.menu.fixed {
+    position: inherit;
+}
+
+.wide.column > .streach {
+    width: 100%;
+    min-width: 100%;
+    white-space: nowrap;
+}
+/*** login/logout to right ***/
+.ui.right.block.menu {
+    display: flex !important;
+    flex-flow: row-reverse;
+    width: 100%;
+}
+/*** word wrap ***/
+table.ui.table.flexed {
+    table-layout: fixed;
+}
+
+td.word_wrap {
+    word-wrap: break-word;
+}

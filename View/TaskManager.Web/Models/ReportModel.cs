@@ -5,6 +5,7 @@ namespace TaskManager.Web.Models {
     public class ReportModel {
         public DateTime Start { get; set; }
         public DateTime? End { get; set; }
+        public bool IncludeNew { get; set; }
         public List<Guid> ProjectIds { get; set; }
     }
 }

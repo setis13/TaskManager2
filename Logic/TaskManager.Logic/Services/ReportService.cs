@@ -19,10 +19,16 @@ namespace TaskManager.Logic.Services {
         ///     Gets data for report by day </summary>
         /// <param name="start">Start Date and Time</param>
         /// <param name="end">End Date and Time</param>
+        /// <param name="includeNew">to include new tasks without comments</param>
         /// <param name="projectIds">a filter by projects</param>
         /// <param name="user">User DTO</param>
         /// <returns>List of Project DTOs</returns>
-        public List<ReportProjectDto> GetData(DateTime start, DateTime end, List<Guid> projectIds, UserDto user) {
+        public List<ReportProjectDto> GetData(
+            DateTime start, 
+            DateTime end, 
+            bool includeNew,
+            List<Guid> projectIds, 
+            UserDto user) {
             var projectDtos = new List<ReportProjectDto>();
             var taskDtos = new List<ReportTaskDto>();
             var subtaskDtos = new List<ReportSubTaskDto>();
@@ -117,11 +123,21 @@ namespace TaskManager.Logic.Services {
 
             // gets subtasks
             var subtaskIds = totalComments2.Select(e => e.SubTaskId).ToList();
-            var subtasks = subtaskRep.SearchFor(e => subtaskIds.Contains(e.EntityId)).ToList();
+            List<SubTask> subtasks;
+            if (includeNew) {
+                subtasks = subtaskRep.SearchFor(e => subtaskIds.Contains(e.EntityId) || start <= e.CreatedDate && e.CreatedDate <= end).ToList();
+            } else {
+                subtasks = subtaskRep.SearchFor(e => subtaskIds.Contains(e.EntityId)).ToList();
+            }
             subtaskDtos = Mapper.Map<List<ReportSubTaskDto>>(subtasks);
             // gets tasks
             var taskIds = totalComments1.Select(e => e.TaskId.Value).Union(subtasks.Select(e => e.TaskId)).ToList();
-            var tasks = taskRep.SearchFor(e => taskIds.Contains(e.EntityId)).ToList();
+            List<Task1> tasks;
+            if (includeNew) {
+                tasks = taskRep.SearchFor(e => taskIds.Contains(e.EntityId) || start <= e.CreatedDate && e.CreatedDate <= end).ToList();
+            } else {
+                tasks = taskRep.SearchFor(e => taskIds.Contains(e.EntityId)).ToList();
+            }
             taskDtos = Mapper.Map<List<ReportTaskDto>>(tasks);
             // gets projects
             var projectIds2 = tasks.Select(e => e.ProjectId).ToList();

@@ -21,41 +21,41 @@
         </div>
         <div class="row">
             <!-- filter -->
-            <div class="eleven wide column">
-                <select id="history-filter" class="ui dropdown"
+            <div class="three wide column computer">
+                <select id="history-filter" class="ui dropdown streach"
                         ng-model="Model.SelectedHistoryFilter"
                         ng-change="HistoryFilter_OnChange()">
                     <option value="">History Filter</option>
                     <option ng-repeat="(id, name) in Model.HistoryFilters" value="{{id}}">{{name}} - today</option>
                 </select>
-                <select id="project-filter" class="ui dropdown"
+            </div>
+            <div class="three wide column computer">
+                <select id="project-filter" class="ui dropdown streach"
                         ng-model="Model.SelectedProjectFilter"
                         ng-change="ProjectFilter_OnChange()">
                     <option value="">Project Filter</option>
                     <option ng-repeat="project in Model.Projects" value="{{project.EntityId}}">{{project.Title}}</option>
                 </select>
-                <select id="user-filter" class="ui dropdown"
+            </div>
+            <div class="three wide column computer">
+                <select id="user-filter" class="ui dropdown streach"
                         ng-model="Model.SelectedUserFilter"
                         ng-change="UserFilter_OnChange()">
                     <option value="">Responsible Filter</option>
                     <option ng-repeat="user in Model.Users" value="{{user.Id}}">{{user.UserName}}</option>
                 </select>
-                <div class="ui button"
+            </div>
+            <div class="two wide column computer">
+                <div class="ui button streach"
                      ng-click="ClearFilters_OnClick()">
                     Clear
                 </div>
             </div>
+            <div class="one wide column computer">
+            </div>
             <!-- sorting -->
-            <div class="five wide column right aligned content">
-                <span class="label">Sort by</span>&nbsp;
-                <div class="ui right labeled icon button"
-                     ng-class="Model.SortBy == 1 || Model.SortBy == 2 ? 'primary' : ''"
-                     ng-click="SortByTaskId_OnClick()">
-                    <i class="long arrow icon"
-                       ng-class="Model.SortBy == 1 ? 'up' : 'down'"></i>
-                    Task#
-                </div>
-                <div class="ui right labeled icon button"
+            <div class="two wide column computer">
+                <div class="ui right labeled icon button streach"
                      ng-class="Model.SortBy == 3 || Model.SortBy == 4 ? 'primary' : ''"
                      ng-click="SortByUrgency_OnClick()">
                     <i class="long arrow icon"
@@ -63,16 +63,25 @@
                     Urgency
                 </div>
             </div>
+            <div class="two wide column computer">
+                <div class="ui right labeled icon button streach"
+                     ng-class="Model.SortBy == 1 || Model.SortBy == 2 ? 'primary' : ''"
+                     ng-click="SortByTaskId_OnClick()">
+                    <i class="long arrow icon"
+                       ng-class="Model.SortBy == 1 ? 'up' : 'down'"></i>
+                    Task#
+                </div>
+            </div>
         </div>
     </div>
     <!-- tasks -->
-    <table class="ui celled table">
+    <table class="ui celled table flexed">
         <thead>
             <tr>
                 <th class="one wide">Tasks</th>
                 <th class="three wide left-merge"></th>
-                <th class="four wide">Desctiptions</th>
-                <th class="eigth wide">Comments</th>
+                <th class="five wide">Desctiptions</th>
+                <th class="seven wide">Comments</th>
             </tr>
         </thead>
         <tbody>
@@ -128,7 +137,7 @@
                         </div>
                     </div>
                 </td>
-                <td>
+                <td class="word_wrap">
                     <p>
                         <b>{{task.Title}}</b>
                     </p>

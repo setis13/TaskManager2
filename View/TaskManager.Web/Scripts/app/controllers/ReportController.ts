@@ -90,7 +90,8 @@ namespace Controllers {
                 data: {
                     Start: this.Model.Start.format("YYYY-MM-DD"),
                     End: this.Model.End != null ? this.Model.End.format("YYYY-MM-DD") : 'null',
-                    ProjectIds: this.Model.SelectedProjectsFilter
+                    ProjectIds: this.Model.SelectedProjectsFilter,
+                    IncludeNew: this.Model.IncludeNew
                 },
                 beforeSend(xhr) {
                     $this.scope.Generating = true;

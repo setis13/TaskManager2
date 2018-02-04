@@ -5,6 +5,7 @@
         public Start: moment.Moment = null;
         public End: moment.Moment = null;
         public ShowStatus: boolean = true;
+        public IncludeNew: boolean = false;
         public ReportProjects: Array<ReportProjectModel> = null;
         public SumActualWork: string;
         public SelectedProjectsFilter: Array<string> = Array();

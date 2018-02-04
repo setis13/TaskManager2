@@ -19,13 +19,13 @@
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="user icon"></i>
-                        <input id="login" placeholder="Login" type="text" ng-model="Model.Login">
+                        <input id="login" name="login" placeholder="Login" type="email" ng-model="Model.Login">
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="lock icon"></i>
-                        <input id="password" placeholder="Password" type="password" ng-model="Model.Password">
+                        <input id="password" name="password" placeholder="Password" type="password" ng-model="Model.Password">
                     </div>
                 </div>
                 <button class="fluid ui primary button" lb-busy="Saving" type="submit" ng-click="Login()">

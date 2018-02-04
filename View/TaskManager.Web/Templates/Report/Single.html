@@ -39,10 +39,18 @@
                         </button>
                     </div>
                 </div>
-                <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" ng-model="Model.ShowStatus">
-                        <label>Show Status</label>
+                <div class="fields">
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" ng-model="Model.ShowStatus">
+                            <label>Show Status</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" ng-model="Model.IncludeNew">
+                            <label>Show New Tasks</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,6 +121,7 @@
     </div>
 </div>
 <script language="javascript">
+    //$(".ui.checkbox").checkbox(); ng-model="Model.ShowStatus" doesn't worked
     var start = moment();
     var end = null;
 </script>
