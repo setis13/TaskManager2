@@ -32,7 +32,7 @@
         <div class="ui stackable fixed inverted main menu">
             <div class="ui container">
                 <a ng-class="isActive('/')" href="/" class="header item">
-                    <img class="logo" src="/content/images/logo_64.png">
+                    <img class="logo mobile hidden" src="/content/images/logo_64.png">
                     Overview
                 </a>
                 <a ng-class="isActive('/projects')" href="/projects" class="item">Projects</a>
@@ -45,12 +45,11 @@
                     </div>
                 </div>
                 <div class="ui stackable inverted right block menu">
-                    <a ng-class="isActive('/profile')" class="item" href="/profile">@User.Identity.GetUserName()</a>
-     
                     @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "item" })) {
                         @Html.AntiForgeryToken()
                         <a href="#" onclick="$('#logoutForm').submit();">Log off</a>
                     }
+                    <a ng-class="isActive('/profile')" class="item" href="/profile">@User.Identity.GetUserName()</a>
                 </div>
             </div>
         </div>

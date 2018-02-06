@@ -99,6 +99,7 @@ namespace TaskManager.Web {
                     "~/Content/toastr.css",
                     "~/Content/semantic.css",
                     "~/Content/semantic-calendar.css",
+                    "~/Content/semantic-responsive.css",
                     "~/Content/components/*.css",
                     "~/Content/Site.css"
                     ));
