@@ -32,6 +32,8 @@ namespace TaskManager.Web {
 
             // Enable the application to use a cookie to store information for the signed in user
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
+                ExpireTimeSpan = TimeSpan.FromDays(30 * 12),
+                CookieName = "TaskManager",
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/login"),
                 Provider = new CookieAuthenticationProvider {
@@ -40,8 +42,7 @@ namespace TaskManager.Web {
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<TaskManagerUserManager, TaskManagerUser, Guid>(
                         validateInterval: TimeSpan.FromMinutes(20),
                         regenerateIdentityCallback: (manager, user) => user.GenerateUserIdentityAsync(manager),
-                        getUserIdCallback: TaskManager.Common.Extensions.IdentityExtensions1.GetUserId)
-
+                        getUserIdCallback: IdentityExtensions1.GetUserId)
                 }
             });
         }
