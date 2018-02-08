@@ -8,7 +8,7 @@
         <div class="ui header blue">
             <img class="ui small image" src="/Content/images/logo.png">
         </div>
-        <div class="ui form large" ng-submit="Login()">
+        <form class="ui form large" ng-submit="Login()">
             <h3 class="ui top attached header">
                 Login to your Account
             </h3>
@@ -33,7 +33,7 @@
                 </button>
                 <div class="ui error message"></div>
             </div>
-        </div>
+        </form>
         <div class="ui message">
             Don't have an account? <a target="_self" href="@Url.Action("Register")">Sign Up</a>
         </div>
