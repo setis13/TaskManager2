@@ -18,7 +18,7 @@
         constructor(data: any) {
             super(data);
 
-            this.SumActualWorkHours = moment.duration(data.SumActualWork).asHours().toFixed(0);
+            this.SumActualWorkHours = moment.duration(data.SumActualWork).asHours().toFixed(1);
 
             for (var i = 0; i < data.ReportTasks.length; i++) {
                 this.ReportTasks.push(new ReportTaskModel(data.ReportTasks[i]));

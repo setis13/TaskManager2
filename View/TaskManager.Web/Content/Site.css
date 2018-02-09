@@ -117,3 +117,11 @@ table.ui.table.flexed {
 td.word_wrap {
     word-wrap: break-word;
 }
+
+tr.disabled1 span, tr.disabled1 p, tr.disabled1 div.header {
+    color: gray!important;
+}
+
+tr.disabled1 {
+    background: #f9fafb;
+}

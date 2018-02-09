@@ -401,6 +401,7 @@
     <Content Include="Content\images\logo_64.png" />
     <Content Include="Content\semantic-calendar.css" />
     <Content Include="Content\semantic-calendar.min.css" />
+    <Content Include="Content\semantic-responsive.css" />
     <Content Include="Content\semantic.css" />
     <Content Include="Content\semantic.min.css" />
     <Content Include="Content\Site.css" />

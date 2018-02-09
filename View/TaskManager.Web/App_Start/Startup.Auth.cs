@@ -32,17 +32,18 @@ namespace TaskManager.Web {
 
             // Enable the application to use a cookie to store information for the signed in user
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
+                ExpireTimeSpan = TimeSpan.FromDays(30 * 12),
+                CookieName = "TaskManager",
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/login"),
-                Provider = new CookieAuthenticationProvider {
-                    // Enables the application to validate the security stamp when the user logs in.
-                    // This is a security feature which is used when you change a password or add an external login to your account.  
-                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<TaskManagerUserManager, TaskManagerUser, Guid>(
-                        validateInterval: TimeSpan.FromMinutes(20),
-                        regenerateIdentityCallback: (manager, user) => user.GenerateUserIdentityAsync(manager),
-                        getUserIdCallback: TaskManager.Common.Extensions.IdentityExtensions1.GetUserId)
-
-                }
+                //Provider = new CookieAuthenticationProvider {
+                //    // Enables the application to validate the security stamp when the user logs in.
+                //    // This is a security feature which is used when you change a password or add an external login to your account.  
+                //    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<TaskManagerUserManager, TaskManagerUser, Guid>(
+                //        validateInterval: TimeSpan.FromMinutes(20),
+                //        regenerateIdentityCallback: (manager, user) => user.GenerateUserIdentityAsync(manager),
+                //        getUserIdCallback: IdentityExtensions1.GetUserId)
+                //}
             });
         }
     }

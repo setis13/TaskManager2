@@ -35,6 +35,7 @@ namespace TaskManager.Web.Controllers {
                 if (!ModelState.IsValid) {
                     return WebApiResult.Failed(base.GetErrors());
                 }
+                Logger.i($"ReturnUrl: {model.ReturnUrl}");
 
                 // gets user by email
                 var user = await UserManager.FindByEmailAsync(model.Login);
@@ -45,7 +46,7 @@ namespace TaskManager.Web.Controllers {
                     user != null ? user.UserName : model.Login, model.Password, true, shouldLockout: false);
                 switch (result) {
                     case SignInStatus.Success:
-                        return WebApiResult.Succeed(new { ReturnUrl = "/Home" });
+                        return WebApiResult.Succeed(new { ReturnUrl = model.ReturnUrl ?? "/Home" });
                     case SignInStatus.LockedOut:
                         throw new NotImplementedException();
                     //return View("Lockout");

@@ -26,7 +26,11 @@ namespace TaskManager.Common {
         #region [ .ctor ]
 
         private static ILog GetLoggerInstance() {
+#if DEBUG
             var mth = new StackTrace().GetFrame(3).GetMethod();
+#else
+            var mth = new StackTrace().GetFrame(2).GetMethod();
+#endif
             if (mth?.DeclaringType != null) {
                 if (_commonLoggers.ContainsKey(mth.DeclaringType) == false) {
                     ILog logger;
@@ -44,9 +48,9 @@ namespace TaskManager.Common {
             }
         }
 
-        #endregion [ .ctor ]
+#endregion [ .ctor ]
 
-        #region [ private ]
+#region [ private ]
 
         private static void Log(LogLevel level, string message, params object[] args) {
             var _commonLogger = GetLoggerInstance();
@@ -100,9 +104,9 @@ namespace TaskManager.Common {
 #endif
         }
 
-        #endregion [ private ]
+#endregion [ private ]
 
-        #region [ Public ]
+#region [ Public ]
 
         /// <summary>
         ///     Write log from clients </summary>
@@ -142,6 +146,6 @@ namespace TaskManager.Common {
             Log(LogLevel.Debug, message, ex, args);
         }
 
-        #endregion [ Public ]
+#endregion [ Public ]
     }
 }

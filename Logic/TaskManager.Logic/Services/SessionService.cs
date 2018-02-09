@@ -68,7 +68,6 @@ namespace TaskManager.Logic.Services {
                         tempSession.LastActivity = DateTime.UtcNow;
                         this.UnitOfWork.GetRepository<Session>().Update(tempSession, userId);
                         this.UnitOfWork.SaveChanges();
-
                         return this.Mapper.Map<SessionDto>(tempSession);
                     }
                     return this.CreateNewSession(httpContext, domain);
@@ -158,6 +157,7 @@ namespace TaskManager.Logic.Services {
         /// <param name="domain">The domain.</param>
         /// <returns>The <see cref="SessionDto" />.</returns>
         private SessionDto CreateNewSession(HttpContext context, string domain) {
+
             var sessionCode = Guid.NewGuid();
             this.SetAuthenticationCookie(context, domain, sessionCode.ToString(), false,
                 /*TODO*/(int)TimeSpan.FromDays(30 * 12).TotalMinutes);
@@ -171,6 +171,7 @@ namespace TaskManager.Logic.Services {
                 IpAddress = context.Request.UserHostAddress,
                 UserAgent = context.Request.UserAgent ?? "UNKNOWN",
                 LastActivity = DateTime.UtcNow,
+                
             };
 
             // Add to the database.
