@@ -390,12 +390,11 @@ namespace TaskManager.Logic.Services {
                                 e.Status != (byte)TaskStatusEnum.Rejected)
                     .All(e => e.Status == (byte)TaskStatusEnum.Done)) {
                     task.Status = (byte)TaskStatusEnum.Done;
-                } else if (subtasks.Any(e => e.Status == (byte)TaskStatusEnum.InProgress)) {
+                } else if (subtasks.Any(e => e.Status == (byte)TaskStatusEnum.InProgress || e.Status == (byte)TaskStatusEnum.Done)) {
                     task.Status = (byte)TaskStatusEnum.InProgress;
                 } else {
                     task.Status = (byte)TaskStatusEnum.NotStarted;
                 }
-                task.Status = subtasks.Max(e => e.Status);
             }
             if (taskComments.Any()) {
                 // sets task.status from task.last_comment

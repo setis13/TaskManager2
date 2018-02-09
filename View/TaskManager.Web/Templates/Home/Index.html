@@ -86,6 +86,7 @@
         </thead>
         <tbody>
             <tr id="task-{{task.EntityId}}" class="top aligned"
+                ng-class="task.Status != 0 && task.Status != 1 ? 'disabled1' : ''"
                 ng-repeat-start="task in Model.FilteredTasks">
                 <td colspan="2">
                     <div class="content">
@@ -192,6 +193,7 @@
             </tr>
             <!-- subtasks -->
             <tr id="subtask-{{subtask.EntityId}}" class="top aligned"
+                ng-class="subtask.Status != 0 && subtask.Status != 1 ? 'disabled1' : ''"
                 ng-repeat-end ng-repeat="subtask in task.SubTasks">
                 <td class="header"></td>
                 <td>

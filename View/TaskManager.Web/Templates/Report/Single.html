@@ -52,6 +52,12 @@
                             <label>Show New Tasks</label>
                         </div>
                     </div>
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" ng-model="Model.ShowAllSubtasks">
+                            <label>Show All SubTasks</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,7 +98,7 @@
                                     </li>
                                 </ul>
                                 <ul style="list-style: circle; margin-left: 0em;">
-                                    <li ng-repeat="subtask in task.ReportSubTasks">
+                                    <li ng-repeat="subtask in task.ReportSubTasks" ng-show="Model.ShowAllSubtasks || subtask.ReportComments.length > 0">
                                         <div>
                                             <span>{{subtask.Title}}</span>&nbsp;
                                             <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[subtask.Status]}}&nbsp;</span>
