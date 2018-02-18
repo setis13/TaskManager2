@@ -39,7 +39,7 @@
             for (var i = 0; i < data.ReportProjects.length; i++) {
                 this.ReportProjects.push(new ReportProjectModel(data.ReportProjects[i]));
             }
-            this.SumActualWorkHours = moment.duration(data.SumActualWork).asHours().toFixed(0);
+            this.SumActualWorkHours = moment.duration(data.SumActualWork).asHours().toFixed(1);
         }
     }
 }

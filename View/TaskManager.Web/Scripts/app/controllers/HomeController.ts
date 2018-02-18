@@ -68,6 +68,7 @@ namespace Controllers {
             $scope.HistoryFilter_OnChange = this.HistoryFilter_OnChange;
             $scope.UserFilter_OnChange = this.UserFilter_OnChange;
             $scope.ProjectFilter_OnChange = this.ProjectFilter_OnChange;
+            $scope.CommentStatus_OnChange = this.CommentStatus_OnChange;
 
             $scope.ClearFilters_OnClick = this.ClearFilters_OnClick;
             $scope.SortByTaskId_OnClick = this.SortByTaskId_OnClick;
@@ -212,12 +213,20 @@ namespace Controllers {
         public AddTaskComment_OnClick = (task: Models.TaskModel) => {
             var comment = new Models.CommentModel(null);
             comment.TaskId = task.EntityId;
+            if (task.Comments.length > 0) {
+                comment.Progress = task.Progress;
+                comment.Status = task.Status;
+            }
             this.Model.EditComment = comment;
             this.InitCommentModal();
         }
         public AddSubTaskComment_OnClick = (subtask: Models.SubTaskModel) => {
             var comment = new Models.CommentModel(null);
             comment.SubTaskId = subtask.EntityId;
+            if (subtask.Comments.length > 0) {
+                comment.Progress = subtask.Progress;
+                comment.Status = subtask.Status;
+            }
             this.Model.EditComment = comment;
             this.InitCommentModal();
         }
@@ -495,6 +504,12 @@ namespace Controllers {
                     toastr.error(jqXhr.statusText);
                 }
             });
+        }
+
+        public CommentStatus_OnChange = () => {
+            if (this.Model.EditComment.Status == Enums.TaskStatusEnum.Done) {
+                this.Model.EditComment.Progress = 1;
+            }
         }
 
         public static MIN_COMMENTS = 3;
