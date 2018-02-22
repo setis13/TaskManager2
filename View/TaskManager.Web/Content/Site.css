@@ -119,9 +119,28 @@ td.word_wrap {
 }
 
 tr.disabled1 span, tr.disabled1 p, tr.disabled1 div.header {
-    color: gray!important;
+    color: gray !important;
 }
 
 tr.disabled1 {
     background: #f9fafb;
+}
+
+    tr.disabled1 .ui.progress.success .bar,
+    tr.disabled1 .button,
+    tr.disabled1 .ui.blue.label,
+    tr.disabled1 .ui.green.label,
+    tr.disabled1 .ui.grey.label {
+        background-color: #aaa !important;
+    }
+
+/* Modal */
+.ui.mini.modal {
+    width: 360px;
+    margin: 0em 0em 0em -180px;
+}
+
+.ui.tiny.modal {
+    width: 540px;
+    margin: 0em 0em 0em -270px;
 }

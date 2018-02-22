@@ -131,7 +131,9 @@
                             <span class="value">{{Model.UserNames(task.UserIds)}}</span>
                         </div>
                         <span class="ng-hide">{{task | set_progress_data_percent}}</span>
-                        <div class="ui progress green value" id="progress-{{task.EntityId}}">
+                        <div class="ui progress green value" 
+                             ng-hide="task.Progress == 0"
+                             id="progress-{{task.EntityId}}">
                             <div class="bar">
                                 <div class="progress"></div>
                             </div>
@@ -225,7 +227,9 @@
                             </span>
                         </div>
                         <span class="ng-hide">{{subtask | set_progress_data_percent}}</span>
-                        <div class="ui progress green value" id="progress-{{subtask.EntityId}}">
+                        <div class="ui progress green value"
+                             ng-hide="subtask.Progress == 0"
+                             id="progress-{{subtask.EntityId}}">
                             <div class="bar">
                                 <div class="progress"></div>
                             </div>
@@ -437,7 +441,6 @@
             <select id="status" class="ui dropdown"
                     ng-model="Model.EditComment.Status" convert-to-number
                     ng-options="id as name for (id, name) in TaskStatusNames">
-                <option ng-repeat="(id, name) in TaskStatusNames" value="{{id}}">{{name}}</option>
             </select>
         </div>
         <div class="field">
@@ -486,6 +489,24 @@
         </div>
     </div>
 </modal>
+<!-- confirm modal -->
+<div id="confirm-modal" class="ui mini modal">
+    <div class="ui icon header">
+        <i class="warning circle icon"></i>
+    </div>
+    <div class="content">
+        <p></p>
+    </div>
+    <div class="actions">
+        <div class="ui deny button">
+            No
+        </div>
+        <div class="ui green ok button">
+            <i class="checkmark icon"></i>
+            Yes
+        </div>
+    </div>
+</div>
 <script language="javascript">
     var form = function () {
         return $('#form-task')

@@ -13,7 +13,7 @@ namespace Controllers {
     export class HomeController extends BaseController {
 
         private taskPriorityClasses: { [index: number]: string } =
-            { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
+        { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
 
         public Model: Models.HomeModel;
 
@@ -330,9 +330,22 @@ namespace Controllers {
             this.Model.EditTask = null;
         }
 
-        public TaskDelete_OnClick = () => {
-            this.Model.EditTask.Error = null;
+        public TaskDelete_OnClick = (confirmed: boolean = false) => {
             var $this = this;
+            if (this.Model.EditTask.EntityId != null && confirmed == false) {
+                $('#confirm-modal>.content>p').html("Please to confirm to delete the task");
+                $('#confirm-modal')
+                    .modal({
+                        allowMultiple: true,
+                        closable: false,
+                        onApprove: function () {
+                            $this.TaskDelete_OnClick(true);
+                        }
+                    }).modal('show');
+                return;
+            }
+
+            this.Model.EditTask.Error = null;
             $.ajax({
                 url: '/api/Home/DeleteTask?id=' + this.Model.EditTask.EntityId,
                 type: 'POST',
@@ -399,9 +412,22 @@ namespace Controllers {
             this.Model.EditSubTask = null;
         }
 
-        public SubTaskDelete_OnClick = () => {
-            this.Model.EditSubTask.Error = null;
+        public SubTaskDelete_OnClick = (confirmed: boolean = false) => {
             var $this = this;
+            if (this.Model.EditSubTask.EntityId != null && confirmed == false) {
+                $('#confirm-modal>.content>p').html("Please to confirm to delete the task");
+                $('#confirm-modal')
+                    .modal({
+                        allowMultiple: true,
+                        closable: false,
+                        onApprove: function () {
+                            $this.SubTaskDelete_OnClick(true);
+                        }
+                    }).modal('show');
+                return;
+            }
+
+            this.Model.EditSubTask.Error = null;
             $.ajax({
                 url: '/api/Home/DeleteSubTask?id=' + this.Model.EditSubTask.EntityId,
                 type: 'POST',
@@ -428,14 +454,27 @@ namespace Controllers {
             });
         }
 
-        public CommentOk_OnClick = () => {
+        public CommentOk_OnClick = (confirmed: boolean = false) => {
+            var $this = this;
+            if (this.Model.EditComment.EntityId != null && confirmed == false) {
+                $('#confirm-modal>.content>p').html("Please to confirm to update the comment");
+                $('#confirm-modal')
+                    .modal({
+                        allowMultiple: true,
+                        closable: false,
+                        onApprove: function () {
+                            $this.CommentOk_OnClick(true);
+                        }
+                    }).modal('show');
+                return;
+            }
+
             this.Model.EditComment.Error = null;
             if (!super.ValidateForm(form3)) {
                 $("#edit-comment-modal").modal("refresh");
                 return;
             }
 
-            var $this = this;
             $.ajax({
                 url: '/api/Home/SaveComment',
                 type: 'POST',
@@ -468,7 +507,21 @@ namespace Controllers {
             this.Model.EditComment = null;
         }
 
-        public CommentDelete_OnClick = () => {
+        public CommentDelete_OnClick = (confirmed: boolean = false) => {
+            var $this = this;
+            if (this.Model.EditComment.EntityId != null && confirmed == false) {
+                $('#confirm-modal>.content>p').html("Please to confirm to delete the comment");
+                $('#confirm-modal')
+                    .modal({
+                        allowMultiple: true,
+                        closable: false,
+                        onApprove: function () {
+                            $this.CommentDelete_OnClick(true);
+                        }
+                    }).modal('show');
+                return;
+            }
+
             this.Model.EditComment.Error = null;
             var $this = this;
             $.ajax({
