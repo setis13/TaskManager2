@@ -440,7 +440,8 @@
             <label>Status</label>
             <select id="status" class="ui dropdown"
                     ng-model="Model.EditComment.Status" convert-to-number
-                    ng-options="id as name for (id, name) in TaskStatusNames">
+                    ng-options="id as name for (id, name) in TaskStatusNames"
+                    ng-change="CommentStatus_OnChange()">
             </select>
         </div>
         <div class="field">
