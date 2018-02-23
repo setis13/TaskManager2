@@ -99,9 +99,23 @@ namespace Controllers {
             this.Model.EditProject = null;
         }
 
-        public Delete_OnClick = () => {
-            this.Model.EditProject.Error = null;
+        public Delete_OnClick = (confirmed: boolean = false) => {
             var $this = this;
+            // a confirm modal
+            if (this.Model.EditProject.EntityId != null && confirmed == false) {
+                $('#confirm-modal>.content>p').html("Please to confirm to delete the project");
+                $('#confirm-modal')
+                    .modal({
+                        allowMultiple: true,
+                        closable: false,
+                        onApprove: function () {
+                            $this.Delete_OnClick(true);
+                        }
+                    }).modal('show');
+                return;
+            }
+
+            this.Model.EditProject.Error = null;
             $.ajax({
                 url: '/api/Projects/Delete?id=' + this.Model.EditProject.EntityId,
                 type: 'POST',

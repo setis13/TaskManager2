@@ -341,6 +341,7 @@ namespace Controllers {
 
         public TaskDelete_OnClick = (confirmed: boolean = false) => {
             var $this = this;
+            // a confirm modal
             if (this.Model.EditTask.EntityId != null && confirmed == false) {
                 $('#confirm-modal>.content>p').html("Please to confirm to delete the task");
                 $('#confirm-modal')
@@ -423,6 +424,7 @@ namespace Controllers {
 
         public SubTaskDelete_OnClick = (confirmed: boolean = false) => {
             var $this = this;
+            // a confirm modal
             if (this.Model.EditSubTask.EntityId != null && confirmed == false) {
                 $('#confirm-modal>.content>p').html("Please to confirm to delete the task");
                 $('#confirm-modal')
@@ -465,6 +467,12 @@ namespace Controllers {
 
         public CommentOk_OnClick = (confirmed: boolean = false) => {
             var $this = this;
+            this.Model.EditComment.Error = null;
+            if (!super.ValidateForm(form3)) {
+                $("#edit-comment-modal").modal("refresh");
+                return;
+            }
+            // a confirm modal
             if (this.Model.EditComment.EntityId != null && confirmed == false) {
                 $('#confirm-modal>.content>p').html("Please to confirm to update the comment");
                 $('#confirm-modal')
@@ -475,12 +483,6 @@ namespace Controllers {
                             $this.CommentOk_OnClick(true);
                         }
                     }).modal('show');
-                return;
-            }
-
-            this.Model.EditComment.Error = null;
-            if (!super.ValidateForm(form3)) {
-                $("#edit-comment-modal").modal("refresh");
                 return;
             }
 
@@ -518,6 +520,7 @@ namespace Controllers {
 
         public CommentDelete_OnClick = (confirmed: boolean = false) => {
             var $this = this;
+            // a confirm modal
             if (this.Model.EditComment.EntityId != null && confirmed == false) {
                 $('#confirm-modal>.content>p').html("Please to confirm to delete the comment");
                 $('#confirm-modal')
