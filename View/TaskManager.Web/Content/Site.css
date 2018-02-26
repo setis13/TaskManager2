@@ -28,9 +28,14 @@ html, body {
         color: blue;
     }
 
+
 .content .extra {
     color: grey;
     font-size: 0.9em;
+}
+
+.content .inline {
+    display: inline-block;
 }
 
 /*** Alignments ***/
