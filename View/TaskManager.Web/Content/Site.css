@@ -138,6 +138,15 @@ tr.disabled1 {
     tr.disabled1 .ui.grey.label {
         background-color: #aaa !important;
     }
+    tr.disabled1 .value.red {
+        color: red!important;
+    }
+    tr.disabled1 .value.green {
+        color: green!important;
+    }
+    tr.disabled1 .value.blue {
+        color: blue!important;
+    }
 
 /* Modal */
 .ui.mini.modal {

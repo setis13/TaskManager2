@@ -2,64 +2,66 @@
 @{
     ViewBag.Title = "Sign Up";
 }
-<div class="ui aligned center aligned grid" ng-controller="SignUpController">
-    <div class="column">
-        <div class="ui header blue">
-            <img class="ui small image" src="/Content/images/logo.png">
-        </div>
-        <div class="ui form large" ng-submit="SignUp()">
-            <h3 class="ui top attached header">
-                Create your Account
-            </h3>
-            <div class="ui attached segment left aligned">
-                <div class="ui red message ng-hide" ng-hide="Model.Error == null">
-                    <p ng-bind-html="Model.Error"></p>
-                </div>
-                <div class="field">
-                    <label>Email</label>
-                    <div class="ui left icon input">
-                        <i class="mail icon"></i>
-                        <input id="email" placeholder="E-mail address" type="email" ng-model="Model.Email">
+<body ng-app="TaskManagerApp">
+    <div class="ui aligned center aligned grid" ng-controller="SignUpController">
+        <div class="column">
+            <div class="ui header blue">
+                <img class="ui small image" src="/Content/images/logo.png" ng-click="GoToHome()">
+            </div>
+            <div class="ui form large" ng-submit="SignUp()">
+                <h3 class="ui top attached header">
+                    Create your Account
+                </h3>
+                <div class="ui attached segment left aligned">
+                    <div class="ui red message ng-hide" ng-hide="Model.Error == null">
+                        <p ng-bind-html="Model.Error"></p>
                     </div>
-                </div>
-                <div class="field">
-                    <label>UserName</label>
-                    <div class="ui left icon input">
-                        <i class="user icon"></i>
-                        <input id="userName" placeholder="UserName" type="text" ng-model="Model.UserName">
+                    <div class="field">
+                        <label>Email</label>
+                        <div class="ui left icon input">
+                            <i class="mail icon"></i>
+                            <input id="email" placeholder="E-mail address" type="email" ng-model="Model.Email">
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <label>Company Name</label>
-                    <div class="ui left icon input">
-                        <i class="users icon"></i>
-                        <input id="companyName" placeholder="Company Name" type="text" ng-model="Model.CompanyName">
+                    <div class="field">
+                        <label>UserName</label>
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input id="userName" placeholder="UserName" type="text" ng-model="Model.UserName">
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <label>Password</label>
-                    <div class="ui left icon input">
-                        <i class="lock icon"></i>
-                        <input id="password" placeholder="Password" type="password" ng-model="Model.Password">
+                    <div class="field">
+                        <label>Company Name</label>
+                        <div class="ui left icon input">
+                            <i class="users icon"></i>
+                            <input id="companyName" placeholder="Company Name" type="text" ng-model="Model.CompanyName">
+                        </div>
                     </div>
-                </div>
-                <div class="field">
-                    <div class="ui left icon input">
-                        <i class="lock icon"></i>
-                        <input id="confirmPassword" placeholder="Confirm Password" type="password" ng-model="Model.ConfirmPassword">
+                    <div class="field">
+                        <label>Password</label>
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input id="password" placeholder="Password" type="password" ng-model="Model.Password">
+                        </div>
                     </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input id="confirmPassword" placeholder="Confirm Password" type="password" ng-model="Model.ConfirmPassword">
+                        </div>
+                    </div>
+                    <div class="fluid ui primary button" lb-busy="Saving" type="submit" ng-click="SignUp()">
+                        Register
+                    </div>
+                    <div class="ui error message"></div>
                 </div>
-                <div class="fluid ui primary button" lb-busy="Saving" type="submit" ng-click="SignUp()">
-                    Register
-                </div>
-                <div class="ui error message"></div>
+            </div>
+            <div class="ui message">
+                Already have an account? <a target="_self" href="@Url.Action("Login")">Log In</a>
             </div>
         </div>
-        <div class="ui message">
-            Already have an account? <a target="_self" href="@Url.Action("Login")">Log In</a>
-        </div>
     </div>
-</div>
+</body>
 
 @section Content {
     <style type="text/css">
@@ -73,6 +75,7 @@
 
         .image {
             margin-top: -100px;
+            cursor: pointer;
         }
 
         .column {

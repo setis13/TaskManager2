@@ -2,19 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>@ViewBag.Title - Task Manager</title>
-    @*TODO <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />*@
+    <title ng-bind="$root.title != null ? $root.title + ' - Task Manager' : 'Task Manager'">Task Manager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/Content/images/logo_64.png">
 
     @Styles.Render("~/Content/Common")
     @Scripts.Render("~/Scripts/Common")
 </head>
-<body ng-app="TaskManagerApp">
 @RenderBody()
 @RenderSection("Content", required: false)
 @RenderSection("Scripts", required: false)
-</body>
 </html>
 <script type="text/javascript">
         var userId = null;

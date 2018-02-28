@@ -462,6 +462,7 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Templates\Account\Profile.html" />
+    <None Include="Views\Home\Empty.cshtml" />
     <Content Include="Templates\Projects\Index.html" />
     <Content Include="Templates\Company\Index.html" />
     <Content Include="Templates\Report\Period.html" />

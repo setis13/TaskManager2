@@ -79,12 +79,18 @@
         }
 
         public SetSubTasks(subTasks: any) {
+            var tmpComments: { [id: string]: Array<CommentModel>; } = {};
+
             // removes old subtasks
             for (var i = 0; i < subTasks.length; i++) {
                 var task = Enumerable.From(this.Tasks).First(e => e.EntityId === subTasks[i].TaskId);
                 for (var j = 0; j < task.SubTasks.length; j++) {
                     if (task.SubTasks[j].EntityId === subTasks[i].EntityId) {
-                        task.SubTasks.splice(j, 1);
+                        var removedSubTasks = task.SubTasks.splice(j, 1);
+                        // saves comments
+                        for (var k = 0; k < removedSubTasks.length; k++) {
+                            tmpComments[removedSubTasks[k].EntityId] = removedSubTasks[k].Comments;
+                        }
                         break;
                     }
                 }
@@ -98,7 +104,12 @@
                         break;
                     }
                 }
-                task.SubTasks.splice(j, 0, new SubTaskModel(subTasks[i]));
+                var newSubTask = new SubTaskModel(subTasks[i]);
+                if (tmpComments[newSubTask.EntityId] != undefined) {
+                    // restores comments
+                    newSubTask.Comments = tmpComments[newSubTask.EntityId];
+                }
+                task.SubTasks.splice(j, 0, newSubTask);
             }
         }
 

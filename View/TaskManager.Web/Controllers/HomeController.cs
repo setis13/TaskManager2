@@ -6,7 +6,7 @@ using TaskManager.Web.Attributes;
 using TaskManager.Web.Controllers.Base;
 
 namespace TaskManager.Web.Controllers {
-    [TaskManagerAuthorize]
+    [AllowAnonymous]
     public class HomeController : BaseController {
         public HomeController(IServicesHost servicesHost, IMapper mapper)
             : base(servicesHost, mapper) {
@@ -15,11 +15,15 @@ namespace TaskManager.Web.Controllers {
         /// <summary>
         ///     GET /Home </summary>
         public ActionResult Index() {
-            var arr = ((HttpRequestWrapper) this.Request).Path.Split('/');
+            var arr = ((HttpRequestWrapper)this.Request).Path.Split('/');
             if (arr.Length > 0 && arr[1].ToLower() == "home") {
                 return RedirectToAction("Index");
             }
-            return View();
+            if (Request.IsAuthenticated) {
+                return View("Empty");
+            } else {
+                return View();
+            }
         }
     }
 }

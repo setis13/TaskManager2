@@ -14,6 +14,7 @@
             this.Model = new Models.LoginModel();
 
             $scope.Login = this.Login;
+            $scope.GoToHome = () => window.location.href = "/";
             $scope.Model = this.Model;
         }
 

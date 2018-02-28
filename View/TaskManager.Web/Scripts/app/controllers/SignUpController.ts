@@ -13,6 +13,7 @@
             this.Model = new Models.SignUpModel();
 
             $scope.SignUp = this.SignUp;
+            $scope.GoToHome = () => window.location.href = "/";
             $scope.Model = this.Model;
         }
 
