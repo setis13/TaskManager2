@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
+using TaskManager.Common.Identity;
 using TaskManager.Logic.Contracts;
 using TaskManager.Logic.Contracts.Services.Base;
+using TaskManager.Logic.Identity;
 
 namespace TaskManager.Logic {
     /// <summary>
@@ -10,6 +13,18 @@ namespace TaskManager.Logic {
         /// <summary>
         ///     Holds registered services </summary>
         private readonly Dictionary<Type, IService> services = new Dictionary<Type, IService>();
+
+        /// <summary>
+        ///     Gets Role Manager </summary>
+        public RoleManager<TaskManagerRole, Guid> RoleManager { get; }
+        /// <summary>
+        ///     Gets User manager </summary>
+        public UserManager<TaskManagerUser, Guid> UserManager { get; }
+
+        public ServicesHost(TaskManagerRoleManager roleManager, TaskManagerUserManager userManager) {
+            this.RoleManager = roleManager;
+            this.UserManager = userManager;
+        }
 
         /// <summary>
         ///     Registers Service with type T </summary>
@@ -29,5 +44,5 @@ namespace TaskManager.Logic {
                 return (T)services[typeof(T)];
             return default(T);
         }
-    }
+}
 }

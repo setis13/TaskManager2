@@ -92,7 +92,12 @@
     <Compile Include="Services\ITaskService.cs" />
     <Compile Include="Services\ISessionService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\TaskManager.Common\TaskManager.Common.csproj">
+      <Project>{C5B94CF9-5C2B-45EB-B524-6BEBA0544FCE}</Project>
+      <Name>TaskManager.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

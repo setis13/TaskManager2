@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using TaskManager.Common;
+using TaskManager.Common.Identity;
 using TaskManager.Data.Contracts;
 using TaskManager.Data.Contracts.Context;
 using TaskManager.Data.Contracts.Entities.Base;
 using TaskManager.Data.Contracts.Repositories.Base;
+using TaskManager.Data.Identity;
 using TaskManager.Data.Repositories.Base;
 
 namespace TaskManager.Data {
@@ -24,11 +26,20 @@ namespace TaskManager.Data {
         public ITaskManagerDbContext Context { get; }
 
         /// <summary>
+        ///     Gets Role Store </summary>
+        public IRoleStore<TaskManagerRole, Guid> RoleStore { get; }
+        /// <summary>
+        ///     Gets User Store </summary>
+        public IUserStore<TaskManagerUser, Guid> UserStore { get; }
+
+        /// <summary>
         ///     Creates UOW instance </summary>
         /// <param name="context">Application db context</param>
-        public UnitOfWork(ITaskManagerDbContext context) {
+        public UnitOfWork(ITaskManagerDbContext context, TaskManagerRoleStore roleStore, TaskManagerUserStore userStore) {
             entityRepositories = new Dictionary<Type, IRepository>();
             Context = context;
+            RoleStore = roleStore;
+            UserStore = userStore;
         }
 
         /// <summary>

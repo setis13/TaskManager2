@@ -30,17 +30,5 @@ namespace TaskManager.Logic.Identity {
             this.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             this.MaxFailedAccessAttemptsBeforeLockout = 5;
         }
-
-        public static TaskManagerUserManager Create(IdentityFactoryOptions<TaskManagerUserManager> options, IOwinContext context) {
-            var manager = new TaskManagerUserManager(context.Get<IUserStore<TaskManagerUser, Guid>>());
-            var dataProtectionProvider = options.DataProtectionProvider;
-            if (dataProtectionProvider != null) {
-                manager.UserTokenProvider =
-                    new DataProtectorTokenProvider<TaskManagerUser, Guid>(dataProtectionProvider.Create("ASP.NET Identity")) {
-                        TokenLifespan = TimeSpan.FromDays(30 * 12)
-                    };
-            }
-            return manager;
-        }
     }
 }

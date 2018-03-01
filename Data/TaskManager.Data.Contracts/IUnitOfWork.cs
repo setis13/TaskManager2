@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
+using TaskManager.Common.Identity;
 using TaskManager.Data.Contracts.Context;
 using TaskManager.Data.Contracts.Entities.Base;
 using TaskManager.Data.Contracts.Repositories.Base;
@@ -10,6 +12,13 @@ namespace TaskManager.Data.Contracts {
         /// <summary>
         ///     Gets application context instance </summary>
         ITaskManagerDbContext Context { get; }
+        /// <summary>
+        ///     Gets Role Store </summary>
+        IRoleStore<TaskManagerRole, Guid> RoleStore { get; }
+        /// <summary>
+        ///     Gets User Store </summary>
+        IUserStore<TaskManagerUser, Guid> UserStore { get; }
+
         /// <summary>
         ///     Gets repository by entity type </summary>
         /// <typeparam name="T">Entity type</typeparam>

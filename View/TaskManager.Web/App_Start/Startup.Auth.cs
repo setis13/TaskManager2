@@ -7,9 +7,9 @@ using Microsoft.Owin.Security.Cookies;
 using Owin;
 using TaskManager.Common.Extensions;
 using TaskManager.Common.Identity;
-using TaskManager.Data.Contracts.Context;
-using TaskManager.Data.Identity;
 using TaskManager.Logic.Identity;
+using TaskManager.Data.Contracts;
+using TaskManager.Logic.Contracts;
 
 namespace TaskManager.Web {
     public partial class Startup {
@@ -20,14 +20,25 @@ namespace TaskManager.Web {
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app) {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(() => DependencyResolver.Current.GetService<ITaskManagerDbContext>());
+            app.CreatePerOwinContext(() => DependencyResolver.Current.GetService<IUnitOfWork>().Context);
 
             app.CreatePerOwinContext<IRoleStore<TaskManagerRole, Guid>>(
-                (options, context) => new TaskManagerRoleStore(context.Get<ITaskManagerDbContext>()));
+                (options, context) => DependencyResolver.Current.GetService<IUnitOfWork>().RoleStore);
             app.CreatePerOwinContext<IUserStore<TaskManagerUser, Guid>>(
-                (options, context) => new TaskManagerUserStore(context.Get<ITaskManagerDbContext>()));
+                (options, context) => DependencyResolver.Current.GetService<IUnitOfWork>().UserStore);
 
-            app.CreatePerOwinContext<TaskManagerUserManager>(TaskManagerUserManager.Create);
+            app.CreatePerOwinContext<TaskManagerUserManager>(
+                (IdentityFactoryOptions<TaskManagerUserManager> options, IOwinContext context) => {
+                    var manager = DependencyResolver.Current.GetService<IServicesHost>().UserManager;
+                    var dataProtectionProvider = options.DataProtectionProvider;
+                    if (dataProtectionProvider != null) {
+                        manager.UserTokenProvider =
+                            new DataProtectorTokenProvider<TaskManagerUser, Guid>(dataProtectionProvider.Create("ASP.NET Identity")) {
+                                TokenLifespan = TimeSpan.FromDays(30 * 12)
+                            };
+                    }
+                    return (TaskManagerUserManager)manager;
+                });
             app.CreatePerOwinContext<TaskManagerSignInManager>(TaskManagerSignInManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user

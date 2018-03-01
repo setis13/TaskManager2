@@ -15,6 +15,8 @@ using TaskManager.Logic.Contracts;
 using TaskManager.Logic.Contracts.Services;
 using TaskManager.Logic.Contracts.Services.Base;
 using TaskManager.Logic.Services;
+using TaskManager.Data.Identity;
+using TaskManager.Logic.Identity;
 
 namespace TaskManager.Web {
     /// <summary>
@@ -61,26 +63,29 @@ namespace TaskManager.Web {
 
             // register Unit of Work
             container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager(),
-                new InjectionFactory(c => new UnitOfWork(c.Resolve<ITaskManagerDbContext>())));
+                new InjectionFactory(c => {
+                    var context = c.Resolve<ITaskManagerDbContext>();
+                    return new UnitOfWork(context, new TaskManagerRoleStore(context), new TaskManagerUserStore(context));
+                }));
             // session
             container.RegisterType<IUserSession, UserSession>(new HierarchicalLifetimeManager());
 
             // register services host
             container.RegisterType<IServicesHost, ServicesHost>(new HierarchicalLifetimeManager(),
                 new InjectionFactory(c => {
-                    var host = new ServicesHost();
                     var uow = c.Resolve<IUnitOfWork>();
-                        c.Registrations.ToList().Where(
-                            item =>
-                                item.RegisteredType.GetInterfaces().Contains(typeof(IService)) &&
-                                !item.MappedToType.IsInterface && !item.MappedToType.IsGenericType &&
-                                !item.MappedToType.IsAbstract).ToList()
-                            .ForEach(item => c.Resolve(item.RegisteredType,
-                            new ResolverOverride[] {
+                    var host = new ServicesHost(new TaskManagerRoleManager(uow.RoleStore), new TaskManagerUserManager(uow.UserStore));
+                    c.Registrations.ToList().Where(
+                        item =>
+                            item.RegisteredType.GetInterfaces().Contains(typeof(IService)) &&
+                            !item.MappedToType.IsInterface && !item.MappedToType.IsGenericType &&
+                            !item.MappedToType.IsAbstract).ToList()
+                        .ForEach(item => c.Resolve(item.RegisteredType,
+                        new ResolverOverride[] {
                                 new ParameterOverride("servicesHost", host),
                                 new ParameterOverride("unitOfWork", uow),
                                 new ParameterOverride("mapper", mapper)
-                            }));
+                        }));
                     return host;
                 }));
 
