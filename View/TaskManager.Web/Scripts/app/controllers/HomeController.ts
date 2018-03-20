@@ -74,6 +74,10 @@ namespace Controllers {
             $scope.SortByTaskId_OnClick = this.SortByTaskId_OnClick;
             $scope.SortByUrgency_OnClick = this.SortByUrgency_OnClick;
 
+            $scope.TaskAttachFiles_OnClick = this.TaskAttachFiles_OnClick;
+            $scope.TaskRemoveFile_OnClick = this.TaskRemoveFile_OnClick;
+            $scope.SizeName = SizeName;
+
             this.Load();
         }
 
@@ -307,31 +311,33 @@ namespace Controllers {
             }
 
             var $this = this;
-            $.ajax({
-                url: '/api/Home/SaveTask',
-                type: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                data: JSON.stringify(this.Model.EditTask),
-                beforeSend(xhr) {
-                    $this.ShowBusySaving();
-                },
-                complete() {
-                    $this.HideBusySaving();
-                    $this.scope.$apply();
-                },
-                success: (result) => {
-                    if (result.Success) {
-                        $this.Model.EditTask = null;
-                        $this.Load();
-                    } else {
-                        $this.Model.EditTask.Error = result.Message;
+            this.Task_UploadFiles(() => {
+                $.ajax({
+                    url: '/api/Home/SaveTask',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify($this.Model.EditTask),
+                    beforeSend(xhr) {
+                        $this.ShowBusySaving();
+                    },
+                    complete() {
+                        $this.HideBusySaving();
+                        $this.scope.$apply();
+                    },
+                    success: (result) => {
+                        if (result.Success) {
+                            $this.Model.EditTask = null;
+                            $this.Load();
+                        } else {
+                            $this.Model.EditTask.Error = result.Message;
+                        }
+                    },
+                    error: (jqXhr) => {
+                        console.error(jqXhr.statusText);
+                        toastr.error(jqXhr.statusText);
                     }
-                },
-                error: (jqXhr) => {
-                    console.error(jqXhr.statusText);
-                    toastr.error(jqXhr.statusText);
-                }
+                });
             });
         }
 
@@ -535,7 +541,6 @@ namespace Controllers {
             }
 
             this.Model.EditComment.Error = null;
-            var $this = this;
             $.ajax({
                 url: '/api/Home/DeleteComment?id=' + this.Model.EditComment.EntityId,
                 type: 'POST',
@@ -583,6 +588,119 @@ namespace Controllers {
 
                 for (var i = 0; i < comments.length; i++) {
                     comments[i].Visible = true;
+                }
+            }
+        }
+
+        // ** FILES ** //
+
+        public Task_UploadFiles(actionCompleted: any) {
+            var $this = this;
+            // select new files
+            var upload = new Array();
+            var elem = $("#task-files-field");
+            var i = 0;
+            while (elem.has((<any>String).format("#task-file{0}", i)).length) {
+                var files = (<any>document.getElementById('task-file' + i)).files;
+                // by files
+                for (var j in files) {
+                    var file = files[j];
+                    if (file.constructor.name === 'File') {
+                        for (var k in this.Model.EditTask.Files) {
+                            var model = this.Model.EditTask.Files[k];
+                            if (model.FileName == file.name) {
+                                upload.push(file);
+                            }
+                        }
+                    }
+                }
+                i++;
+            }
+            // uploads new files
+            var data = new FormData();
+            for (var j in this.Model.EditTask.Files) {
+                var model = this.Model.EditTask.Files[j];
+                var flag: boolean = false;
+                for (var i = 0; i < upload.length; i++) {
+                    if (upload[i].name == model.FileName) {
+                        data.append(upload[i].name, upload[i]);
+                        flag = true;
+                        break;
+                    }
+                }
+                // a existing file
+                if (flag == false) {
+                    data.append(model.FileName, "");
+                }
+            }
+            $.ajax({
+                url: '/api/File/Attach',
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                data: data,
+                dataType: 'json',
+                beforeSend(xhr) {
+                    $this.ShowBusySaving();
+                    xhr.setRequestHeader("EntityId", $this.Model.EditTask.EntityId);
+                },
+                complete() {
+                    $this.HideBusySaving();
+                    $this.scope.$apply();
+                },
+                success: (result) => {
+                    if (result.Success) {
+                        actionCompleted();
+                    } else {
+                        $this.Model.EditTask.Error = result.Message;
+                    }
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    toastr.error(jqXhr.statusText);
+                }
+            });
+        }
+
+        public TaskAttachFiles_OnClick = () => {
+            // gets field
+            var elem = $("#task-files-field");
+            var i = 0;
+            // adds new a input files
+            while (elem.has((<any>String).format("#task-file{0}", i)).length) {
+                i++;
+            }
+
+            var action = (arg) => {
+                for (var i in arg.target.files) {
+                    var file = arg.target.files[i];
+                    if (file.constructor.name === 'File') {
+                        // cheks by exists
+                        var break1 = false;
+                        for (var j in this.Model.EditTask.Files) {
+                            if (this.Model.EditTask.Files[j].FileName == file.name) {
+                                toastr.warning((<any>String).format("file '{0}' already exists", file.name));
+                                break1 = true;
+                                break;
+                            }
+                        }
+                        if (break1) continue;
+                        var model = new Models.FileModel(null);
+                        model.FileName = file.name;
+                        model.Size = file.size;
+                        this.Model.EditTask.Files.push(model);
+                    }
+                }
+                this.scope.$apply();
+            }
+
+            elem.append($('<input multiple/>').attr('type', 'file').attr('id', 'task-file' + i).on("change", action).hide().click());
+        }
+
+        public TaskRemoveFile_OnClick = (file: Models.FileModel) => {
+            for (var i in this.Model.EditTask.Files) {
+                if (this.Model.EditTask.Files[i] == file) {
+                    this.Model.EditTask.Files.splice(<any>i, 1);
                 }
             }
         }

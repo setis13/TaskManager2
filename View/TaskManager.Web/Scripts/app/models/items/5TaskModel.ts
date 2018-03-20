@@ -13,6 +13,7 @@
         public SubTasks: Array<SubTaskModel> = new Array();
         public UserIds: Array<string> = new Array();
         public Comments: Array<CommentModel> = new Array();
+        public Files: Array<FileModel> = new Array();
 
         //extra
         private _totalWork: any; // uses string in modal or number in tempate
@@ -60,6 +61,9 @@
                 for (var i = 0; data.UserIds != null && i < data.UserIds.length; i++) {
                     this.UserIds.push(data.UserIds[i]);
                 }
+                for (var i = 0; data.Files != null && i < data.Files.length; i++) {
+                    this.Files.push(new FileModel(data.Files[i]));
+                }
             }
         }
 
@@ -86,6 +90,9 @@
             //}
             for (var i = 0; i < this.UserIds.length; i++) {
                 clone.UserIds.push(this.UserIds[i]);
+            }
+            for (var i = 0; i < this.Files.length; i++) {
+                clone.Files.push(this.Files[i]);
             }
 
             return clone;

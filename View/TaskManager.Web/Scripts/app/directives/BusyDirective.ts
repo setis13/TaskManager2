@@ -38,7 +38,6 @@ angular.module('BusyDirective', [])
                     // restores the color
                     if (buttonClass != null) {
                         element.addClass(buttonClass);
-                        buttonClass = null;
                     }
                     element.removeClass("loading");
                     element.removeClass("readonly");

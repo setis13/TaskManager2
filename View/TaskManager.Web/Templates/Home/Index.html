@@ -143,6 +143,7 @@
                 <td class="word_wrap">
                     <p><b>{{task.Title}}</b></p>
                     <p ng-bind-html="task.Description | nl2br"></p>
+                    <a ng-repeat="file in task.Files" class="ui blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
                 </td>
                 <!-- Task -> Comments -->
                 <td class="tasks-comments">
@@ -169,15 +170,15 @@
                                 </div>
                                 <div class="right floated">
                                     <div class="ui label"
-                                         ng-class="CheckNewValue('task_status', task.EntityId, comment.Status) ? 'blue' : ''">
+                                         ng-class="CheckNewValue('task_status', task.EntityId, comment.Status) ? 'basic blue' : 'basic gray'">
                                         {{TaskStatusNames[comment.Status]}}
                                     </div>
                                     <div class="ui label"
                                          ng-show="comment.ProgressPercent != null"
-                                         ng-class="CheckNewValue('task_progress', task.EntityId, comment.Progress) ? 'green' : ''">
+                                         ng-class="CheckNewValue('task_progress', task.EntityId, comment.Progress) ? 'basic green' : 'basic gray'">
                                         {{comment.ProgressPercent | number:0}}%
                                     </div>
-                                    <div class="ui grey label"
+                                    <div class="ui basic brown label"
                                          ng-show="comment.ActualWorkHours != null">
                                         {{comment.ActualWorkHours | number:1}}h
                                     </div>
@@ -267,15 +268,15 @@
                                 </div>
                                 <div class="right floated">
                                     <div class="ui label"
-                                         ng-class="CheckNewValue('subtask_status', subtask.EntityId, comment.Status) ? 'blue' : ''">
+                                         ng-class="CheckNewValue('subtask_status', subtask.EntityId, comment.Status) ? 'basic blue' : 'basic gray'">
                                         {{TaskStatusNames[comment.Status]}}
                                     </div>
                                     <div class="ui label"
                                          ng-show="comment.ProgressPercent != null"
-                                         ng-class="CheckNewValue('subtask_progress', subtask.EntityId, comment.Progress) ? 'green' : ''">
+                                         ng-class="CheckNewValue('subtask_progress', subtask.EntityId, comment.Progress) ? 'basic green' : 'basic gray'">
                                         {{comment.ProgressPercent | number:0}}%
                                     </div>
-                                    <div class="ui grey label"
+                                    <div class="ui basic brown label"
                                          ng-show="comment.ActualWorkHours != null">
                                         {{comment.ActualWorkHours | number:1}}h
                                     </div>
@@ -354,6 +355,12 @@
             <label>Description</label>
             <textarea placeholder="Description" rows="2"
                       ng-model="Model.EditTask.Description"></textarea>
+        </div>
+
+        <div class="field" id="task-files-field">
+            <label>Attachment</label>
+            <a ng-repeat1="file in Model.EditTask.Files" class="ui blue basic label"><span>{{file.DisplayName}}</span><i class="delete icon" ng-click="TaskRemoveFile_OnClick(file)"></i></a>
+            <div class="ui mini gray button" ng-click="TaskAttachFiles_OnClick()">Attach Files</div>
         </div>
         <div class="ui error message"></div>
     </div>

@@ -1,5 +1,8 @@
 ﻿var InnerHrmlDictionary: { [id: string]: string; } = {};
 
+var escapeTags: { [excape: string]: string; } = {};
+escapeTags['ng-repeat1'] = 'ng-repeat';
+
 angular.module('ModalDirective', [])
     .directive('modal', function ($compile) {
         return {
@@ -17,7 +20,11 @@ angular.module('ModalDirective', [])
                     return (<any>ngModel).$modelValue;
                 }, function (modelValue) {
                     if (InnerHrmlDictionary[(<any>attrs).id] == null) {
-                        InnerHrmlDictionary[(<any>attrs).id] = element.html();
+                         var html = element.html();
+                         for (var i in escapeTags) {
+                             html = html.replace(i, escapeTags[i]);
+                         }
+                        InnerHrmlDictionary[(<any>attrs).id] = html;
                     } else {
                         element.html('');
                     }
@@ -26,7 +33,7 @@ angular.module('ModalDirective', [])
                         var content = linkFn(scope);
                         element.append(content);
                     }
-                    (<any>element).modal({ closable: false });
+                    (<any>element).modal({ closable: false, autofocus: false });
                     (<any>element).modal(modelValue != null ? 'show' : 'hide');
                 });
                 scope.$on('$destroy', function () {

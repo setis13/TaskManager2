@@ -22,8 +22,10 @@
                 this.Users.push(new UserModel(data.Users[i]));
             }
             this.InvitedUsers = new Array();
-            for (var i = 0; i < data.InvitedUsers.length; i++) {
-                this.InvitedUsers.push(new UserModel(data.InvitedUsers[i]));
+            if (data.InvitedUsers != null) {
+                for (var i = 0; i < data.InvitedUsers.length; i++) {
+                    this.InvitedUsers.push(new UserModel(data.InvitedUsers[i]));
+                }
             }
         }
     }

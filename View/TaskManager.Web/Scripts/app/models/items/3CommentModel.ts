@@ -8,6 +8,7 @@
         public ActualWork: string;
         public Progress: number;
         public Description: string;
+        public Files: Array<FileModel> = new Array();
 
         // extra
         public Visible: boolean = true;
@@ -62,6 +63,9 @@
                 this.Description = data.Description !== null ? data.Description : '';
                 this.ActualWorkHours = data.ActualWork != null ? moment.duration(data.ActualWork).asHours().toFixed(1) : null;
                 this.Progress = data.Progress;
+                for (var i = 0; data.Files != null && i < data.Files.length; i++) {
+                    this.Files.push(new FileModel(data.Files[i]));
+                }
             } else {
                 this.CompanyId = null;
                 this.TaskId = null;
@@ -88,6 +92,9 @@
             clone.Description = this.Description;
             clone.ActualWorkHours = this.ActualWorkHours;
             clone.Progress = this.Progress;
+            for (var i = 0; i < this.Files.length; i++) {
+                clone.Files.push(this.Files[i]);
+            }
 
             return clone;
         }

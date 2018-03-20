@@ -135,8 +135,11 @@ tr.disabled1 {
     tr.disabled1 .button,
     tr.disabled1 .ui.blue.label,
     tr.disabled1 .ui.green.label,
-    tr.disabled1 .ui.grey.label {
-        background-color: #aaa !important;
+    tr.disabled1 .ui.red.label,
+    tr.disabled1 .ui.brown.label,
+    tr.disabled1 .ui.gray.label,
+    tr.disabled1 .ui.black.label {
+        background-color: #f9fafb !important;
     }
     tr.disabled1 .value.red {
         color: red!important;
@@ -148,13 +151,9 @@ tr.disabled1 {
         color: blue!important;
     }
 
-/* Modal */
-.ui.mini.modal {
-    width: 360px;
-    margin: 0em 0em 0em -180px;
+.basic.gray {
+    color: rgba(34, 36, 38, 0.35)!important;
 }
-
-.ui.tiny.modal {
-    width: 540px;
-    margin: 0em 0em 0em -270px;
+.file.label {
+    margin-top: 3px;
 }

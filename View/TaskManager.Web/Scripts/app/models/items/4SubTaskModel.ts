@@ -10,6 +10,7 @@
         public Progress: number;
         public Status: Enums.TaskStatusEnum;
         public Comments: Array<CommentModel> = new Array();
+        public Files: Array<FileModel> = new Array();
 
         //extra
         private _totalWork: any; // uses string in modal or number in tempate
@@ -50,6 +51,9 @@
                     comment.Visible = i > data.Comments.length - Controllers.HomeController.MIN_COMMENTS - 1;
                     this.Comments.push(comment);
                 }
+                for (var i = 0; data.Files != null && i < data.Files.length; i++) {
+                    this.Files.push(new FileModel(data.Files[i]));
+                }
             }
         }
 
@@ -68,6 +72,9 @@
             clone.TotalWorkHours = this.TotalWorkHours;
             clone.Progress = this.Progress;
             clone.Status = this.Status;
+            for (var i = 0; i < this.Files.length; i++) {
+                clone.Files.push(this.Files[i]);
+            }
 
             return clone;
         }
