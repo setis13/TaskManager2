@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /$
-Disallow: /
 
-Sitemap: http://tm.solfinity.org/sitemap.xml
+Sitemap: https://tm.solfinity.org/sitemap.xml
