@@ -131,29 +131,61 @@ tr.disabled1 {
     background: #f9fafb;
 }
 
-    tr.disabled1 .ui.progress.success .bar,
     tr.disabled1 .button,
     tr.disabled1 .ui.blue.label,
     tr.disabled1 .ui.green.label,
     tr.disabled1 .ui.red.label,
     tr.disabled1 .ui.brown.label,
+    tr.disabled1 .ui.black.label,
     tr.disabled1 .ui.gray.label,
-    tr.disabled1 .ui.black.label {
+    tr.disabled1 .ui.teal.label {
         background-color: #f9fafb !important;
     }
+
+    tr.disabled1 .button,
+    tr.disabled1 .ui.basic.blue.label,
+    tr.disabled1 .ui.basic.green.label,
+    tr.disabled1 .ui.basic.red.label,
+    tr.disabled1 .ui.basic.brown.label,
+    tr.disabled1 .ui.basic.black.label,
+    tr.disabled1 .ui.basic.teal.label {
+        border-color: #aaa !important;
+        color: #aaa !important;
+    }
+
+    tr.disabled1 .ui.basic.gray.label {
+        border-color: #ddd !important;
+        color: #ddd !important;
+    }
+
     tr.disabled1 .value.red {
-        color: red!important;
+        color: red !important;
     }
+
     tr.disabled1 .value.green {
-        color: green!important;
+        color: green !important;
     }
+
     tr.disabled1 .value.blue {
-        color: blue!important;
+        color: blue !important;
+    }
+
+    tr.disabled1 .ui.progress.green .bar {
+        background-color: #cecece !important;
     }
 
 .basic.gray {
-    color: rgba(34, 36, 38, 0.35)!important;
+    color: rgba(34, 36, 38, 0.35) !important;
 }
+
+.ui.basic.green.label {
+    border-color: green !important;
+    color: green !important;
+}
+
 .file.label {
     margin-top: 3px;
+}
+#confirm-modal {
+    position: absolute;
 }

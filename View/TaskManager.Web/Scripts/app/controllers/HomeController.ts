@@ -74,8 +74,8 @@ namespace Controllers {
             $scope.SortByTaskId_OnClick = this.SortByTaskId_OnClick;
             $scope.SortByUrgency_OnClick = this.SortByUrgency_OnClick;
 
-            $scope.TaskAttachFiles_OnClick = this.TaskAttachFiles_OnClick;
-            $scope.TaskRemoveFile_OnClick = this.TaskRemoveFile_OnClick;
+            $scope.AttachFiles_OnClick = this.AttachFiles_OnClick;
+            $scope.RemoveFile_OnClick = this.RemoveFile_OnClick;
             $scope.SizeName = SizeName;
 
             this.Load();
@@ -311,33 +311,36 @@ namespace Controllers {
             }
 
             var $this = this;
-            this.Task_UploadFiles(() => {
-                $.ajax({
-                    url: '/api/Home/SaveTask',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    dataType: 'json',
-                    data: JSON.stringify($this.Model.EditTask),
-                    beforeSend(xhr) {
-                        $this.ShowBusySaving();
-                    },
-                    complete() {
-                        $this.HideBusySaving();
-                        $this.scope.$apply();
-                    },
-                    success: (result) => {
-                        if (result.Success) {
-                            $this.Model.EditTask = null;
-                            $this.Load();
-                        } else {
-                            $this.Model.EditTask.Error = result.Message;
-                        }
-                    },
-                    error: (jqXhr) => {
-                        console.error(jqXhr.statusText);
-                        toastr.error(jqXhr.statusText);
+            $.ajax({
+                url: '/api/Home/SaveTask',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify($this.Model.EditTask),
+                beforeSend(xhr) {
+                    $this.ShowBusySaving();
+                },
+                complete() {
+                    $this.HideBusySaving();
+                    $this.scope.$apply();
+                },
+                success: (result) => {
+                    if (result.Success) {
+                        $this.Model.EditTask.EntityId = result.Data.EntityId;
+                        $this.Task_UploadFiles($this.Model.EditTask,
+                            () => {
+                                $this.Model.EditTask = null;
+                                $this.Load();
+                            }
+                        );
+                    } else {
+                        $this.Model.EditTask.Error = result.Message;
                     }
-                });
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    toastr.error(jqXhr.statusText);
+                }
             });
         }
 
@@ -411,8 +414,13 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.Success) {
-                        $this.Model.EditSubTask = null;
-                        $this.Load();
+                        $this.Model.EditSubTask.EntityId = result.Data.EntityId;
+                        $this.Task_UploadFiles($this.Model.EditSubTask,
+                            () => {
+                                $this.Model.EditSubTask = null;
+                                $this.Load();
+                            }
+                        );
                     } else {
                         $this.Model.EditSubTask.Error = result.Message;
                     }
@@ -491,7 +499,6 @@ namespace Controllers {
                     }).modal('show');
                 return;
             }
-
             $.ajax({
                 url: '/api/Home/SaveComment',
                 type: 'POST',
@@ -507,8 +514,14 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.Success) {
-                        $this.Model.EditComment = null;
-                        $this.Load();
+                        console.log(result);
+                        $this.Model.EditComment.EntityId = result.Data.EntityId;
+                        $this.Task_UploadFiles($this.Model.EditComment,
+                            () => {
+                                $this.Model.EditComment = null;
+                                $this.Load();
+                            }
+                        );
                     } else {
                         $this.Model.EditComment.Error = result.Message;
                     }
@@ -594,8 +607,9 @@ namespace Controllers {
 
         // ** FILES ** //
 
-        public Task_UploadFiles(actionCompleted: any) {
+        public Task_UploadFiles(model: Models.BaseModel, actionCompleted: any) {
             var $this = this;
+            var fileModels = <Array<Models.FileModel>>(<any>model).Files;
             // select new files
             var upload = new Array();
             var elem = $("#task-files-field");
@@ -606,9 +620,9 @@ namespace Controllers {
                 for (var j in files) {
                     var file = files[j];
                     if (file.constructor.name === 'File') {
-                        for (var k in this.Model.EditTask.Files) {
-                            var model = this.Model.EditTask.Files[k];
-                            if (model.FileName == file.name) {
+                        for (var k in fileModels) {
+                            var fileModel = fileModels[k];
+                            if (fileModel.FileName == file.name) {
                                 upload.push(file);
                             }
                         }
@@ -618,11 +632,11 @@ namespace Controllers {
             }
             // uploads new files
             var data = new FormData();
-            for (var j in this.Model.EditTask.Files) {
-                var model = this.Model.EditTask.Files[j];
+            for (var j in fileModels) {
+                var fileModel = fileModels[j];
                 var flag: boolean = false;
                 for (var i = 0; i < upload.length; i++) {
-                    if (upload[i].name == model.FileName) {
+                    if (upload[i].name == fileModel.FileName) {
                         data.append(upload[i].name, upload[i]);
                         flag = true;
                         break;
@@ -630,7 +644,7 @@ namespace Controllers {
                 }
                 // a existing file
                 if (flag == false) {
-                    data.append(model.FileName, "");
+                    data.append(fileModel.FileName, "");
                 }
             }
             $.ajax({
@@ -642,7 +656,7 @@ namespace Controllers {
                 dataType: 'json',
                 beforeSend(xhr) {
                     $this.ShowBusySaving();
-                    xhr.setRequestHeader("EntityId", $this.Model.EditTask.EntityId);
+                    xhr.setRequestHeader("EntityId", model.EntityId);
                 },
                 complete() {
                     $this.HideBusySaving();
@@ -652,7 +666,7 @@ namespace Controllers {
                     if (result.Success) {
                         actionCompleted();
                     } else {
-                        $this.Model.EditTask.Error = result.Message;
+                        model.Error = result.Message;
                     }
                 },
                 error: (jqXhr) => {
@@ -662,7 +676,7 @@ namespace Controllers {
             });
         }
 
-        public TaskAttachFiles_OnClick = () => {
+        public AttachFiles_OnClick = (files: Array<Models.FileModel>) => {
             // gets field
             var elem = $("#task-files-field");
             var i = 0;
@@ -677,8 +691,8 @@ namespace Controllers {
                     if (file.constructor.name === 'File') {
                         // cheks by exists
                         var break1 = false;
-                        for (var j in this.Model.EditTask.Files) {
-                            if (this.Model.EditTask.Files[j].FileName == file.name) {
+                        for (var j in files) {
+                            if (files[j].FileName == file.name) {
                                 toastr.warning((<any>String).format("file '{0}' already exists", file.name));
                                 break1 = true;
                                 break;
@@ -688,7 +702,7 @@ namespace Controllers {
                         var model = new Models.FileModel(null);
                         model.FileName = file.name;
                         model.Size = file.size;
-                        this.Model.EditTask.Files.push(model);
+                        files.push(model);
                     }
                 }
                 this.scope.$apply();
@@ -697,10 +711,10 @@ namespace Controllers {
             elem.append($('<input multiple/>').attr('type', 'file').attr('id', 'task-file' + i).on("change", action).hide().click());
         }
 
-        public TaskRemoveFile_OnClick = (file: Models.FileModel) => {
-            for (var i in this.Model.EditTask.Files) {
-                if (this.Model.EditTask.Files[i] == file) {
-                    this.Model.EditTask.Files.splice(<any>i, 1);
+        public RemoveFile_OnClick = (files: Array<Models.FileModel>, file: Models.FileModel) => {
+            for (var i in files) {
+                if (files[i] == file) {
+                    files.splice(<any>i, 1);
                 }
             }
         }

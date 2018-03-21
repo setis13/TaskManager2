@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using TaskManager.Logic.Contracts.Dtos;
 using TaskManager.Data.Contracts.Entities;
 using System.Linq;
-using TaskManager.Logic.Contracts.Exceptions;
 
 namespace TaskManager.Logic.Services {
     public class FileService : HostService<IFileService>, IFileService {

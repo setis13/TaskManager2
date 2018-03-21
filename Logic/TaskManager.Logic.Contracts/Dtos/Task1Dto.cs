@@ -17,5 +17,6 @@ namespace TaskManager.Logic.Contracts.Dtos {
         public List<Guid> UserIds { get; set; } = new List<Guid>();
         public List<CommentDto> Comments { get; set; } = new List<CommentDto>();
         public List<SubTaskDto> SubTasks { get; set; } = new List<SubTaskDto>();
+        public List<FileDto> Files { get; set; } = new List<FileDto>();
     }
 }

@@ -9,9 +9,12 @@ using TaskManager.Logic.Contracts.Dtos;
 using TaskManager.Logic.Contracts.Enums;
 using TaskManager.Logic.Contracts.Services;
 using TaskManager.Logic.Services.Base;
+using System.IO;
 
 namespace TaskManager.Logic.Services {
     public class TaskService : HostService<ITaskService>, ITaskService {
+
+        private IFileService _fileService => this.ServicesHost.GetService<IFileService>();
 
         #region [ .ctor ]
 
@@ -97,6 +100,10 @@ namespace TaskManager.Logic.Services {
             tasks1.ForEach(t => t.UserIds.AddRange(taskuserList.Where(c => c.TaskId == t.EntityId).Select(e => e.UserId)));
             tasks1.ForEach(t => t.Comments.AddRange(comments1.Where(c => c.TaskId == t.EntityId)));
             tasks1.ForEach(t => t.SubTasks.AddRange(subtasks1.Where(st => st.TaskId == t.EntityId)));
+
+            comments1.ForEach(e => e.Files = this._fileService.GetModels(e.EntityId));
+            subtasks1.ForEach(e => e.Files = this._fileService.GetModels(e.EntityId));
+            tasks1.ForEach(e => e.Files = this._fileService.GetModels(e.EntityId));
 
             projects = projects1;
             tasks = tasks1;

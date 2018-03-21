@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using TaskManager.Data.Contracts;
 using TaskManager.Data.Contracts.Entities;

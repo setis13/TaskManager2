@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TaskManager.Logic.Contracts.Dtos.Base;
 
 namespace TaskManager.Logic.Contracts.Dtos {
@@ -11,5 +12,6 @@ namespace TaskManager.Logic.Contracts.Dtos {
         public TimeSpan? ActualWork { get; set; }
         public float? Progress { get; set; }
         public string Description { get; set; }
+        public List<FileDto> Files { get; set; } = new List<FileDto>();
     }
 }

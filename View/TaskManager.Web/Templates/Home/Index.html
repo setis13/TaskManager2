@@ -143,7 +143,7 @@
                 <td class="word_wrap">
                     <p><b>{{task.Title}}</b></p>
                     <p ng-bind-html="task.Description | nl2br"></p>
-                    <a ng-repeat="file in task.Files" class="ui blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
+                    <a ng-repeat="file in task.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
                 </td>
                 <!-- Task -> Comments -->
                 <td class="tasks-comments">
@@ -165,8 +165,7 @@
                                 <div class="inline"
                                      ng-show="comment.CheckByAge()">
                                     &nbsp;|&nbsp;
-                                    <a href=""
-                                       ng-click="EditTaskComment_OnClick(task, comment)">edit</a>
+                                    <a href="" ng-click="EditTaskComment_OnClick(task, comment)">edit</a>
                                 </div>
                                 <div class="right floated">
                                     <div class="ui label"
@@ -186,6 +185,7 @@
                                 <div class="description">
                                     <p ng-bind-html="comment.Description | nl2br"></p>
                                 </div>
+                                <a ng-repeat="file in comment.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
                             </div>
                         </div>
                         <div class="item">
@@ -194,6 +194,9 @@
                                    ng-click="AddTaskComment_OnClick(task)">Add</a>
                             </div>
                         </div>
+                        <span ng-repeat="comment in task.Comments">
+                            <a ng-repeat="file in comment.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
+                        </span>
                     </div>
                 </td>
             </tr>
@@ -243,6 +246,7 @@
                 <td class="four wide">
                     <p><b>{{subtask.Title}}</b></p>
                     <p ng-bind-html="subtask.Description | nl2br"></p>
+                    <a ng-repeat="file in subtask.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
                 </td>
                 <!-- SubTask -> Comments -->
                 <td class="tasks-comments">
@@ -284,6 +288,7 @@
                                 <div class="description">
                                     <p ng-bind-html="comment.Description | nl2br"></p>
                                 </div>
+                                <a ng-repeat="file in comment.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
                             </div>
                         </div>
                         <div class="item">
@@ -292,10 +297,12 @@
                                    ng-click="AddSubTaskComment_OnClick(subtask)">Add</a>
                             </div>
                         </div>
+                        <span ng-repeat="comment in subtask.Comments">
+                            <a ng-repeat="file in comment.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
+                        </span>
                     </div>
                 </td>
             </tr>
-
         </tbody>
     </table>
     <hr />
@@ -356,11 +363,10 @@
             <textarea placeholder="Description" rows="2"
                       ng-model="Model.EditTask.Description"></textarea>
         </div>
-
         <div class="field" id="task-files-field">
             <label>Attachment</label>
-            <a ng-repeat1="file in Model.EditTask.Files" class="ui blue basic label"><span>{{file.DisplayName}}</span><i class="delete icon" ng-click="TaskRemoveFile_OnClick(file)"></i></a>
-            <div class="ui mini gray button" ng-click="TaskAttachFiles_OnClick()">Attach Files</div>
+            <a ng-repeat1="file in Model.EditTask.Files" class="ui file blue basic label"><span>{{file.DisplayName}}</span><i class="delete icon" ng-click="RemoveFile_OnClick(Model.EditTask.Files, file)"></i></a>
+            <div class="ui mini gray button" ng-click="AttachFiles_OnClick(Model.EditTask.Files)">Attach Files</div>
         </div>
         <div class="ui error message"></div>
     </div>
@@ -410,6 +416,11 @@
             <label>Description</label>
             <textarea placeholder="Description" rows="2"
                       ng-model="Model.EditSubTask.Description"></textarea>
+        </div>
+        <div class="field" id="task-files-field">
+            <label>Attachment</label>
+            <a ng-repeat1="file in Model.EditSubTask.Files" class="ui file blue basic label"><span>{{file.DisplayName}}</span><i class="delete icon" ng-click="RemoveFile_OnClick(Model.EditSubTask.Files, file)"></i></a>
+            <div class="ui mini gray button" ng-click="AttachFiles_OnClick(Model.EditSubTask.Files)">Attach Files</div>
         </div>
         <div class="ui error message"></div>
     </div>
@@ -480,6 +491,11 @@
             <label>Description</label>
             <textarea placeholder="Description" rows="2"
                       ng-model="Model.EditComment.Description"></textarea>
+        </div>
+        <div class="field" id="task-files-field">
+            <label>Attachment</label>
+            <a ng-repeat1="file in Model.EditComment.Files" class="ui file blue basic label"><span>{{file.DisplayName}}</span><i class="delete icon" ng-click="RemoveFile_OnClick(Model.EditComment.Files, file)"></i></a>
+            <div class="ui mini gray button" ng-click="AttachFiles_OnClick(Model.EditComment.Files)">Attach Files</div>
         </div>
         <div class="ui error message"></div>
     </div>

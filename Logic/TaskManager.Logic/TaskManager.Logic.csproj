@@ -87,7 +87,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +99,7 @@
     <Compile Include="Services\Base\CrudService.cs" />
     <Compile Include="Services\Base\HostService.cs" />
     <Compile Include="Services\CompanyService.cs" />
+    <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\ProjectsService.cs" />
     <Compile Include="Services\TaskService.cs" />

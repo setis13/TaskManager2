@@ -8,7 +8,7 @@
     return s;
 }
 
-function SizeName(bytes: number, si: boolean = false) {
+function SizeName(bytes: number, si: boolean = true) {
     var thresh = si ? 1000 : 1024;
     if (Math.abs(bytes) < thresh) {
         return bytes + ' B';

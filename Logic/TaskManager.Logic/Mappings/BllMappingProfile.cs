@@ -17,6 +17,7 @@ namespace TaskManager.Logic.Mappings {
             CreateMap<SubTaskDto, SubTask>().ReverseMap();
             CreateMap<TodoDto, Todo>().ReverseMap();
             CreateMap<CommentDto, Comment>().ReverseMap();
+            CreateMap<FileDto, File1>().ReverseMap();
 
             CreateMap<Project, ReportProjectDto>();
             CreateMap<Task1, ReportTaskDto>();

@@ -65,7 +65,7 @@ namespace TaskManager.Web.Controllers {
 #endif
                 return await Task.Factory.StartNew(() => {
                     this._service.SaveTask(task, GetUserDto());
-                    return WebApiResult.Succeed();
+                    return WebApiResult.Succeed(new { EntityId = task.EntityId });
                 });
             } catch (Exception e) {
                 Logger.e("SaveTask", e);
@@ -105,7 +105,7 @@ namespace TaskManager.Web.Controllers {
 #endif
                 return await Task.Factory.StartNew(() => {
                     this._service.SaveSubTask(subtask, GetUserDto());
-                    return WebApiResult.Succeed();
+                    return WebApiResult.Succeed(new { EntityId = subtask.EntityId });
                 });
             } catch (Exception e) {
                 Logger.e("SaveSubTask", e);
@@ -185,7 +185,7 @@ namespace TaskManager.Web.Controllers {
 #endif
                 return await Task.Factory.StartNew(() => {
                     this._service.SaveComment(comment, GetUserDto());
-                    return WebApiResult.Succeed();
+                    return WebApiResult.Succeed(new { EntityId = comment.EntityId });
                 });
             } catch (Exception e) {
                 Logger.e("SaveComment", e);

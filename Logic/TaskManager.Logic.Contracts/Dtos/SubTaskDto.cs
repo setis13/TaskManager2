@@ -14,5 +14,6 @@ namespace TaskManager.Logic.Contracts.Dtos {
         public float Progress { get; set; }
         public byte Status { get; set; }
         public List<CommentDto> Comments { get; set; } = new List<CommentDto>();
+        public List<FileDto> Files { get; set; } = new List<FileDto>();
     }
 }

@@ -40,6 +40,7 @@ namespace TaskManager.Data.Context {
             modelBuilder.Configurations.Add(new TodoMap());
             modelBuilder.Configurations.Add(new CommentMap());
             modelBuilder.Configurations.Add(new TaskUserMap());
+            modelBuilder.Configurations.Add(new FileMap());
 
             // Conventions
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
