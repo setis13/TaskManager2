@@ -327,7 +327,7 @@
             <label>Project</label>
             <select id="project" class="ui dropdown"
                     ng-model="Model.EditTask.ProjectId"
-                    ng-options="project.EntityId as project.Title for project in Model.Projects track by project.EntityId">
+                    ng-options="project.EntityId as project.Title for project in Model.Projects">
                 <option value="">Project</option>
             </select>
         </div>
@@ -354,8 +354,10 @@
             <label>Responsible</label>
             <select id="task-users" class="ui fluid dropdown" multiple
                     ng-model="Model.EditTask.UserIds"
-                    ng-options="user.Id as user.UserName for user in Model.Users track by user.Id">
+                    ng-options="user.Id as user.UserName for user in Model.Users">
                 <option value="">Responsible</option>
+                <!-- NOTES: don't use! ng-model="Model.EditTask.UserIds" is buggy! The modal doesn't closed!
+                    <option ng-repeat1="user in Model.Users" value="{user.Id}">{user.UserName}</option> -->
             </select>
         </div>
         <div class="field">
@@ -463,7 +465,7 @@
             <label>Status</label>
             <select id="status" class="ui dropdown"
                     ng-model="Model.EditComment.Status" convert-to-number
-                    ng-options="id as name for (id, name) in TaskStatusNames track by id"
+                    ng-options="id as name for (id, name) in TaskStatusNames"
                     ng-change="CommentStatus_OnChange()"></select>
         </div>
         <div class="field">

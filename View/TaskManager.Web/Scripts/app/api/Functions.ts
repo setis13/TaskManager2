@@ -23,3 +23,12 @@ function SizeName(bytes: number, si: boolean = true) {
     } while (Math.abs(bytes) >= thresh && u < units.length - 1);
     return bytes.toFixed(1) + ' ' + units[u];
 }
+
+(<any>String).prototype.replaceAll = function (searchStr, replaceStr) {
+    var str = this;
+
+    while (str.indexOf(searchStr) !== -1) {
+        str = str.replace(searchStr, replaceStr);
+    }
+    return str;
+}

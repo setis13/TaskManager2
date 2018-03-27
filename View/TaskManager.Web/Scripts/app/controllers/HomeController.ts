@@ -84,7 +84,8 @@ namespace Controllers {
         public InitTaskModal() {
             setTimeout(() => {
                 $('#project').dropdown("set selected", this.Model.EditTask.ProjectId);
-                $('#task-users').dropdown("set selected", this.Model.EditTask.UserIds);
+                // NOTE: костыль!
+                $('#task-users').val('').dropdown("set selected", Enumerable.From(this.Model.EditTask.UserIds).Select(e => "string:" + e).ToArray());
             });
         }
         public InitSubTaskModal() {
@@ -514,7 +515,6 @@ namespace Controllers {
                 },
                 success: (result) => {
                     if (result.Success) {
-                        console.log(result);
                         $this.Model.EditComment.EntityId = result.Data.EntityId;
                         $this.Task_UploadFiles($this.Model.EditComment,
                             () => {

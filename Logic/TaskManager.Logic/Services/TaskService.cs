@@ -50,7 +50,7 @@ namespace TaskManager.Logic.Services {
             var commentsQuery = commentRep.SearchFor(e => e.CompanyId == user.CompanyId);
 
             historyFilters = commentsQuery.Select(e => e.Date).ToList()
-                .Select(e => e.Date.AddDays(-e.Date.Day + 1)).Distinct().ToList();
+                .Select(e => e.Date.AddDays(-e.Date.Day + 1)).Distinct().OrderByDescending(e => e).ToList();
 
             if (historyDeep == null) {
                 var statuses = new List<TaskStatusEnum>() {

@@ -22,7 +22,7 @@ angular.module('ModalDirective', [])
                     if (InnerHrmlDictionary[(<any>attrs).id] == null) {
                          var html = element.html();
                          for (var i in escapeTags) {
-                             html = html.replace(i, escapeTags[i]);
+                             html = (<any>html).replaceAll(i, escapeTags[i]);
                          }
                         InnerHrmlDictionary[(<any>attrs).id] = html;
                     } else {
@@ -32,6 +32,8 @@ angular.module('ModalDirective', [])
                         var linkFn = $compile(InnerHrmlDictionary[(<any>attrs).id]);
                         var content = linkFn(scope);
                         element.append(content);
+                    } else {
+                        element.html('');
                     }
                     (<any>element).modal({ closable: false, autofocus: false });
                     (<any>element).modal(modelValue != null ? 'show' : 'hide');

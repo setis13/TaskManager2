@@ -12,7 +12,7 @@ namespace TaskManager.Data.Contracts.Entities {
         public int Index { get; set; }
         [DataType("VARCHAR"), MaxLength(64), Required]
         public string Title { get; set; }
-        [DataType("VARCHAR"), MaxLength(1024)]
+        [DataType("VARCHAR(MAX)")]
         public string Description { get; set; }
         public byte Priority { get; set; }
         // more then 24 hours

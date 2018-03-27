@@ -20,7 +20,7 @@ namespace TaskManager.Data.Contracts.Entities {
             set { ActualWorkTicks = value?.Ticks; }
         }
         public float? Progress { get; set; }
-        [DataType("VARCHAR"), MaxLength(2048)]
+        [DataType("VARCHAR(MAX)")]
         public string Description { get; set; }
 
         [ForeignKey("CompanyId")]
