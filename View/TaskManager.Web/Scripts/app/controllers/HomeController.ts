@@ -477,12 +477,13 @@ namespace Controllers {
         }
 
         public CommentOk_OnClick = (confirmed: boolean = false) => {
-            var $this = this;
             this.Model.EditComment.Error = null;
             if (!super.ValidateForm(form3)) {
                 $("#edit-comment-modal").modal("refresh");
                 return;
             }
+
+            var $this = this;
             // a confirm modal
             if (this.Model.EditComment.EntityId != null && confirmed == false) {
                 $('#confirm-modal>.content>p').html("Please to confirm to update the comment");
@@ -490,8 +491,9 @@ namespace Controllers {
                     .modal({
                         allowMultiple: true,
                         closable: false,
-                        onApprove: function () {
+                        onApprove: () => {
                             $this.CommentOk_OnClick(true);
+                            $this.scope.$apply();
                         }
                     }).modal('show');
                 return;
@@ -504,7 +506,6 @@ namespace Controllers {
                 data: JSON.stringify(this.Model.EditComment),
                 beforeSend(xhr) {
                     $this.ShowBusySaving();
-                    $this.scope.$apply();
                 },
                 success: (result) => {
                     if (result.Success) {
