@@ -321,10 +321,6 @@ namespace Controllers {
                 beforeSend(xhr) {
                     $this.ShowBusySaving();
                 },
-                complete() {
-                    $this.HideBusySaving();
-                    $this.scope.$apply();
-                },
                 success: (result) => {
                     if (result.Success) {
                         $this.Model.EditTask.EntityId = result.Data.EntityId;
@@ -335,7 +331,9 @@ namespace Controllers {
                             }
                         );
                     } else {
+                        $this.HideBusySaving();
                         $this.Model.EditTask.Error = result.Message;
+                        $this.scope.$apply();
                     }
                 },
                 error: (jqXhr) => {
@@ -409,10 +407,6 @@ namespace Controllers {
                 beforeSend(xhr) {
                     $this.ShowBusySaving();
                 },
-                complete() {
-                    $this.HideBusySaving();
-                    $this.scope.$apply();
-                },
                 success: (result) => {
                     if (result.Success) {
                         $this.Model.EditSubTask.EntityId = result.Data.EntityId;
@@ -423,7 +417,9 @@ namespace Controllers {
                             }
                         );
                     } else {
+                        $this.HideBusySaving();
                         $this.Model.EditSubTask.Error = result.Message;
+                        $this.scope.$apply();
                     }
                 },
                 error: (jqXhr) => {
@@ -508,9 +504,6 @@ namespace Controllers {
                 data: JSON.stringify(this.Model.EditComment),
                 beforeSend(xhr) {
                     $this.ShowBusySaving();
-                },
-                complete() {
-                    $this.HideBusySaving();
                     $this.scope.$apply();
                 },
                 success: (result) => {
@@ -523,7 +516,9 @@ namespace Controllers {
                             }
                         );
                     } else {
+                        $this.HideBusySaving();
                         $this.Model.EditComment.Error = result.Message;
+                        $this.scope.$apply();
                     }
                 },
                 error: (jqXhr) => {

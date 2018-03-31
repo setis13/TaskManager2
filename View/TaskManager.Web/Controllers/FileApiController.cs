@@ -33,6 +33,9 @@ namespace TaskManager.Web.Controllers {
         [HttpPost, Route("Attach")]
         [Authorize]
         public async Task<WebApiResult> Attach() {
+#if DEBUG
+            await Task.Delay(300);
+#endif
             try {
                 if (!Request.Content.IsMimeMultipartContent()) {
                     return WebApiResult.Failed("Bad Request");
