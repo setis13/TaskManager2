@@ -7,6 +7,19 @@ html, body {
         margin-bottom: 1em;
     }
 
+/* max size */
+@media only screen and (min-width: 1200px) {
+    div.ui.main.menu {
+        display: block;
+    }
+
+    .ui.container {
+        width: auto;
+        margin-left: 60px !important;
+        margin-right: 60px !important;
+    }
+}
+
 /*** Text colors ***/
 .content .label {
     color: grey;
@@ -123,6 +136,10 @@ td.word_wrap {
     word-wrap: break-word;
 }
 
+div.block, p.block {
+    display: block !important;
+}
+
 tr.disabled1 span, tr.disabled1 p, tr.disabled1 div.header {
     color: gray !important;
 }
@@ -186,6 +203,7 @@ tr.disabled1 {
 .file.label {
     margin-top: 3px;
 }
+
 #confirm-modal {
     position: absolute;
 }

@@ -146,7 +146,7 @@
                     <a ng-repeat="file in task.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
                 </td>
                 <!-- Task -> Comments -->
-                <td class="tasks-comments">
+                <td class="tasks-comments word_wrap">
                     <div class="item" ng-show="task.Comments.length > 3"
                          ng-class="ShowedAllComments.indexOf(task.EntityId) == -1 ? '' : 'border'">
                         <div class="content">
@@ -157,10 +157,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ui middle aligned divided items">
+                    <div class="ui middle aligned divided items block">
                         {{ResetCheckNewValue();""}}
-                        <div class="item" ng-repeat="comment in task.Comments" ng-show="comment.Visible">
-                            <div class="content">
+                        <div class="item block" ng-repeat="comment in task.Comments" ng-show="comment.Visible">
+                            <div class="content block">
                                 <div class="ui small header">{{comment.DateMoment.format("MM/DD")}} {{Model.UserName(comment.CreatedById)}}</div>
                                 <div class="inline"
                                      ng-show="comment.CheckByAge()">
@@ -182,7 +182,7 @@
                                         {{comment.ActualWorkHours | number:1}}h
                                     </div>
                                 </div>
-                                <div class="description">
+                                <div class="description block">
                                     <p ng-bind-html="comment.Description | nl2br"></p>
                                 </div>
                                 <a ng-repeat="file in comment.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
@@ -314,18 +314,18 @@
 <modal id="edit-task-modal" class="ui big modal" ng-model="Model.EditTask">
     <i class="close icon" ng-click="TaskCancel_OnClick()"></i>
     <div class="header">{{Model.EditTask.EntityId == null ? 'Create Task' : 'Edit Task #' + Model.EditTask.Index}}</div>
-    <div id="form-task" class="ui validate form content">
+    <div id="task-form" class="ui validate form content">
         <div class="ui red message ng-hide" ng-hide="Model.EditTask.Error == null">
             <p ng-bind-html="Model.EditTask.Error"></p>
         </div>
         <div class="field">
             <label>Title</label>
-            <input id="title" placeholder="Title" type="text"
+            <input id="task-title" placeholder="Title" type="text"
                    ng-model="Model.EditTask.Title">
         </div>
         <div class="field">
             <label>Project</label>
-            <select id="project" class="ui dropdown"
+            <select id="task-project" class="ui dropdown"
                     ng-model="Model.EditTask.ProjectId"
                     ng-options="project.EntityId as project.Title for project in Model.Projects">
                 <option value="">Project</option>
@@ -342,7 +342,7 @@
         <div class="field">
             <label>Total Hours</label>
             <div class="ui right labeled input">
-                <input id="total-hours" placeholder="Total Hours" type="text"
+                <input id="task-total-hours" placeholder="Total Hours" type="text"
                        ng-model="Model.EditTask.TotalWorkHours"
                        ng-model-options="{ updateOn: 'blur'}">
                 <div class="ui label">
@@ -362,7 +362,7 @@
         </div>
         <div class="field">
             <label>Description</label>
-            <textarea placeholder="Description" rows="2"
+            <textarea id="task-description" placeholder="Description" rows="2"
                       ng-model="Model.EditTask.Description"></textarea>
         </div>
         <div class="field" id="task-files-field">
@@ -394,19 +394,19 @@
 <modal id="edit-subtask-modal" class="ui big modal" ng-model="Model.EditSubTask">
     <i class="close icon" ng-click="SubTaskCancel_OnClick()"></i>
     <div class="header">{{Model.EditSubTask.EntityId == null ? 'Create SubTask' : 'Edit SubTask #' + Model.EditSubTask.Order}}</div>
-    <div id="form-subtask" class="ui validate form content">
+    <div id="subtask-form" class="ui validate form content">
         <div class="ui red message ng-hide" ng-hide="Model.EditSubTask.Error == null">
             <p ng-bind-html="Model.EditSubTask.Error"></p>
         </div>
         <div class="field">
             <label>Title</label>
-            <input id="title2" placeholder="Title" type="text"
+            <input id="subtask-title" placeholder="Title" type="text"
                    ng-model="Model.EditSubTask.Title">
         </div>
         <div class="field">
             <label>Total Hours</label>
             <div class="ui right labeled input">
-                <input id="total-hours2" placeholder="Total Hours" type="text"
+                <input id="subtask-total-hours" placeholder="Total Hours" type="text"
                        ng-model="Model.EditSubTask.TotalWorkHours"
                        ng-model-options="{ updateOn: 'blur'}">
                 <div class="ui label">
@@ -416,7 +416,7 @@
         </div>
         <div class="field">
             <label>Description</label>
-            <textarea placeholder="Description" rows="2"
+            <textarea id="subtask-description" placeholder="Description" rows="2"
                       ng-model="Model.EditSubTask.Description"></textarea>
         </div>
         <div class="field" id="task-files-field">
@@ -448,13 +448,13 @@
 <modal id="edit-comment-modal" class="ui big modal" ng-model="Model.EditComment">
     <i class="close icon" ng-click="CommentCancel_OnClick()"></i>
     <div class="header">{{(Model.EditComment.EntityId == null ? 'Create Comment on the Task #' : 'Edit Comment on the Task #') + Model.TaskIndexByComment(Model.EditComment)}}</div>
-    <div id="form-comment" class="ui validate form content">
+    <div id="comment-form" class="ui validate form content">
         <div class="ui red message ng-hide" ng-hide="Model.EditComment.Error == null">
             <p ng-bind-html="Model.EditComment.Error"></p>
         </div>
         <div class="field">
             <label>Date</label>
-            <div class="ui calendar" id="date">
+            <div class="ui calendar" id="comment-date">
                 <div class="ui input left icon">
                     <i class="calendar icon"></i>
                     <input type="text" placeholder="Date">
@@ -463,7 +463,7 @@
         </div>
         <div class="field">
             <label>Status</label>
-            <select id="status" class="ui dropdown"
+            <select id="comment-status" class="ui dropdown"
                     ng-model="Model.EditComment.Status" convert-to-number
                     ng-options="id as name for (id, name) in TaskStatusNames"
                     ng-change="CommentStatus_OnChange()"></select>
@@ -471,7 +471,7 @@
         <div class="field">
             <label>Actual Hours</label>
             <div class="ui right labeled input">
-                <input id="actual-hours" placeholder="Actual Hours" type="text"
+                <input id="comment-actual-hours" placeholder="Actual Hours" type="text"
                        ng-model="Model.EditComment.ActualWorkHours"
                        ng-model-options="{ updateOn: 'blur'}">
                 <div class="ui label">
@@ -482,7 +482,7 @@
         <div class="field">
             <label>Progress</label>
             <div class="ui right labeled input">
-                <input id="progress" placeholder="Progress" type="text"
+                <input id="comment-progress" placeholder="Progress" type="text"
                        ng-model="Model.EditComment.ProgressPercent">
                 <div class="ui label">
                     %
@@ -491,7 +491,7 @@
         </div>
         <div class="field">
             <label>Description</label>
-            <textarea placeholder="Description" rows="2"
+            <textarea id="comment-description" placeholder="Description" rows="2"
                       ng-model="Model.EditComment.Description"></textarea>
         </div>
         <div class="field" id="task-files-field">

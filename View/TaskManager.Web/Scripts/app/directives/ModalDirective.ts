@@ -1,4 +1,4 @@
-﻿var InnerHrmlDictionary: { [id: string]: string; } = {};
+﻿var InnerHtmlDictionary: { [id: string]: string; } = {};
 
 var escapeTags: { [excape: string]: string; } = {};
 escapeTags['ng-repeat1'] = 'ng-repeat';
@@ -19,17 +19,18 @@ angular.module('ModalDirective', [])
                 scope.$watch(function () {
                     return (<any>ngModel).$modelValue;
                 }, function (modelValue) {
-                    if (InnerHrmlDictionary[(<any>attrs).id] == null) {
+                    if (InnerHtmlDictionary[(<any>attrs).id] == null) {
                          var html = element.html();
                          for (var i in escapeTags) {
                              html = (<any>html).replaceAll(i, escapeTags[i]);
                          }
-                        InnerHrmlDictionary[(<any>attrs).id] = html;
+                         InnerHtmlDictionary[(<any>attrs).id] = html.toString();
                     } else {
                         element.html('');
                     }
                     if (modelValue != null) {
-                        var linkFn = $compile(InnerHrmlDictionary[(<any>attrs).id]);
+                        var html = InnerHtmlDictionary[(<any>attrs).id];
+                        var linkFn = $compile(html);
                         var content = linkFn(scope);
                         element.append(content);
                     } else {

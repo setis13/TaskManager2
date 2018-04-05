@@ -83,18 +83,25 @@ namespace Controllers {
 
         public InitTaskModal() {
             setTimeout(() => {
-                $('#project').dropdown("set selected", this.Model.EditTask.ProjectId);
+                $('#task-title').unbind('change'); // event was busy
+                $('#task-description').unbind('change'); // event was busy
+                $('#task-project').dropdown("set selected", this.Model.EditTask.ProjectId);
                 // NOTE: костыль!
                 $('#task-users').val('').dropdown("set selected", Enumerable.From(this.Model.EditTask.UserIds).Select(e => "string:" + e).ToArray());
             });
         }
         public InitSubTaskModal() {
+            setTimeout(() => {
+                $('#subtask-title').unbind('change'); // event was busy
+                $('#subtask-description').unbind('change'); // event was busy
+            });
         }
         public InitCommentModal() {
             var $this = this;
             setTimeout(() => {
-                $('#status').dropdown("set selected", this.Model.EditComment.Status);
-                $('#date').calendar({
+                $('#comment-description').unbind('change'); // event was busy
+                $('#comment-status').dropdown("set selected", this.Model.EditComment.Status);
+                $('#comment-date').calendar({
                     type: 'date',
                     onChange: function (date, text) {
                         $this.Model.EditComment.DateMoment = moment(date);

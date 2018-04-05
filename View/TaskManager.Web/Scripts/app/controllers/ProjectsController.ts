@@ -51,11 +51,11 @@ namespace Controllers {
         }
 
         public Create_OnClick = () => {
-            var Project = new Models.ProjectModel(null);
-            this.Model.EditProject = Project;
+            var project = new Models.ProjectModel(null);
+            this.Model.EditProject = project;
         }
-        public Edit_OnClick = (Project: Models.ProjectModel) => {
-            var clone = Project.Clone();
+        public Edit_OnClick = (project: Models.ProjectModel) => {
+            var clone = project.Clone();
             this.Model.EditProject = clone;
         }
 
