@@ -16,6 +16,8 @@
             $scope.Login = this.Login;
             $scope.GoToHome = () => window.location.href = "/";
             $scope.Model = this.Model;
+
+            form();
         }
 
         protected Login = () => {
