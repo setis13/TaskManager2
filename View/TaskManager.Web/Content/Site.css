@@ -9,11 +9,11 @@ html, body {
 
 /* max size */
 @media only screen and (min-width: 1200px) {
-    div.ui.main.menu {
+    div.ui.block.main.menu {
         display: block;
     }
 
-    .ui.container {
+    .ui.stretched.container {
         width: auto;
         margin-left: 60px !important;
         margin-right: 60px !important;

@@ -82,8 +82,9 @@ namespace TaskManager.Web.Controllers {
                 if (UserManager.Users.Any(e => e.UserName == model.UserName)) {
                     return WebApiResult.Failed($"User with this name '{model.UserName}' already exists");
                 }
-                var service = ServicesHost.GetService<ICompanyService>();
-                if (model.CompanyName != null && service.GetCompanyByName(model.CompanyName) != null) {
+                var companyService = ServicesHost.GetService<ICompanyService>();
+                var projectsService = ServicesHost.GetService<IProjectsService>();
+                if (model.CompanyName != null && companyService.GetCompanyByName(model.CompanyName) != null) {
                     return WebApiResult.Failed($"Company with this name '{model.CompanyName}' already exists");
                 }
 
@@ -100,10 +101,14 @@ namespace TaskManager.Web.Controllers {
                         // Creates company
                         companyDto = new CompanyDto();
                         companyDto.Name = model.CompanyName;
-                        service.CreateCompany(companyDto, userDto);
+                        companyService.CreateCompany(companyDto, userDto);
                         // Modifies user
                         user.CompanyId = userDto.CompanyId = companyDto.EntityId;
                         await UserManager.UpdateAsync(user);
+                        // Create Example project
+                        var project = new ProjectDto();
+                        project.Title = "My Project";
+                        projectsService.Save(project, userDto);
                     }
                     // Sign in
                     await SignInManager.SignInAsync(user, isPersistent: true, rememberBrowser: false);

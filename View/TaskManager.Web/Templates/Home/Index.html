@@ -201,7 +201,7 @@
                 </td>
             </tr>
             <!-- subtasks -->
-            <tr id="subtask-{{subtask.EntityId}}" class="top aligned"
+            <tr id="subtask-{{subtask.EntityId}}" class="top aligned word_wrap"
                 ng-class="subtask.Status != 0 && subtask.Status != 1 ? 'disabled1' : ''"
                 ng-repeat-end ng-repeat="subtask in task.SubTasks">
                 <td class="header"></td>
@@ -243,13 +243,13 @@
                         </div>
                     </div>
                 </td>
-                <td class="four wide">
+                <td class="four wide word_wrap">
                     <p><b>{{subtask.Title}}</b></p>
                     <p ng-bind-html="subtask.Description | nl2br"></p>
                     <a ng-repeat="file in subtask.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
                 </td>
                 <!-- SubTask -> Comments -->
-                <td class="tasks-comments">
+                <td class="tasks-comments word_wrap">
                     <div class="item" ng-show="subtask.Comments.length > 3"
                          ng-class="ShowedAllComments.indexOf(subtask.EntityId) == -1 ? '' : 'border'">
                         <div class="content">
@@ -260,10 +260,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ui middle aligned divided items">
+                    <div class="ui middle aligned divided items block">
                         {{ResetCheckNewValue();""}}
-                        <div class="item" ng-repeat="comment in subtask.Comments" ng-show="comment.Visible">
-                            <div class="content">
+                        <div class="item block" ng-repeat="comment in subtask.Comments" ng-show="comment.Visible">
+                            <div class="content block">
                                 <div class="ui small header">{{comment.DateMoment.format("MM/DD")}} {{Model.UserName(comment.CreatedById)}}</div>
                                 <div class="inline"
                                      ng-show="comment.CheckByAge()">
@@ -285,7 +285,7 @@
                                         {{comment.ActualWorkHours | number:1}}h
                                     </div>
                                 </div>
-                                <div class="description">
+                                <div class="description block">
                                     <p ng-bind-html="comment.Description | nl2br"></p>
                                 </div>
                                 <a ng-repeat="file in comment.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>

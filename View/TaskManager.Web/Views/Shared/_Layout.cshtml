@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title ng-bind="$root.title != null ? $root.title + ' - Task Manager' : 'Task Manager'">Task Manager</title>
+    <title ng-bind="$root.title != null ? $root.title + ' - Enote' : 'Enote'">Enote</title>
     <link rel="icon" type="image/x-icon" href="/Content/images/logo_64.png">
     @Styles.Render("~/Content/Common")
     @Scripts.Render("~/Scripts/Common")
@@ -29,8 +29,8 @@
 </head>
 <body>
     @if (Request.IsAuthenticated) {
-        <div class="ui stackable fixed inverted main menu">
-            <div class="ui container">
+        <div class="ui stackable fixed inverted block main menu">
+            <div class="ui stretched container">
                 <a ng-class="isActive('/')" href="/" class="header item">
                     <img class="logo mobile hidden" src="/content/images/logo_64.png">
                     Overview
@@ -55,7 +55,7 @@
         </div>
     }
 
-    <div class="ui main container" ng-view>
+    <div class="ui main stretched container" ng-view>
         @RenderBody()
     </div>
 </body>
