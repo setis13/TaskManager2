@@ -35,6 +35,12 @@ app.config([
                 templateUrl: '/Templates/Company/Index.html',
                 controller: 'CompanyController',
             })
+            .when('/alarms',
+            {
+                title: 'Alarms',
+                templateUrl: '/Templates/Alarms/Index.html',
+                controller: 'AlarmsController',
+            })
             .when('/report_single',
             {
                 title: 'Report, One Day',
@@ -67,5 +73,7 @@ app.controller('SignUpController', Controllers.SignUpController);
 app.controller('AccountController', Controllers.AccountController);
 app.controller('HomeController', Controllers.HomeController);
 app.controller('ProjectsController', Controllers.ProjectsController);
+app.controller('AlarmsController', Controllers.AlarmsController);
 app.controller('CompanyController', Controllers.CompanyController);
 app.controller('ReportController', Controllers.ReportController);
+app.controller('MenuController', Controllers.MenuController);

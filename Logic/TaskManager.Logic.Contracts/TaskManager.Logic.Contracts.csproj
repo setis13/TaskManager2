@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\FileDto.cs" />
+    <Compile Include="Dtos\AlarmDto.cs" />
     <Compile Include="Dtos\ReportCommentDto.cs" />
     <Compile Include="Dtos\ReportProjectDto.cs" />
     <Compile Include="Dtos\ProjectDto.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Dtos\TodoDto.cs" />
     <Compile Include="Dtos\Task1Dto.cs" />
     <Compile Include="Enums\TaskPriorityEnum.cs" />
+    <Compile Include="Enums\AlarmRepeatEnum.cs" />
     <Compile Include="Enums\TaskStatusEnum.cs" />
     <Compile Include="Exceptions\PermissionException.cs" />
     <Compile Include="IServicesHost.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="Services\Base\IService.cs" />
     <Compile Include="Services\ICompanyService.cs" />
     <Compile Include="Services\IFileService.cs" />
+    <Compile Include="Services\IAlarmsService.cs" />
     <Compile Include="Services\IReportService.cs" />
     <Compile Include="Services\IProjectsService.cs" />
     <Compile Include="Services\ITaskService.cs" />

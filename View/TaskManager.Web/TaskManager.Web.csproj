@@ -397,6 +397,7 @@
     <Content Include="Content\components\visibility.min.js" />
     <Content Include="Content\components\visit.js" />
     <Content Include="Content\components\visit.min.js" />
+    <Content Include="Content\images\calendar.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\logo_64.png" />
     <Content Include="Content\semantic-calendar.css" />
@@ -437,6 +438,7 @@
     <Content Include="Content\themes\default\assets\fonts\icons.ttf" />
     <Content Include="Content\themes\default\assets\fonts\icons.woff" />
     <Content Include="Content\themes\default\assets\fonts\icons.woff2" />
+    <None Include="Properties\PublishProfiles\localhost.pubxml" />
     <None Include="Properties\PublishProfiles\task_manager.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
@@ -459,6 +461,7 @@
     <Content Include="Scripts\jquery-3.2.1.min.map" />
     <Content Include="Templates\Account\Profile.html" />
     <None Include="Views\Home\Empty.cshtml" />
+    <Content Include="Templates\Alarms\Index.html" />
     <Content Include="Templates\Projects\Index.html" />
     <Content Include="Templates\Company\Index.html" />
     <Content Include="Templates\Report\Period.html" />
@@ -499,6 +502,7 @@
     <Compile Include="Attributes\TaskManagerAuthorizeAttribute.cs" />
     <Compile Include="Attributes\ValidateAntiForgeryTokenAttribute.cs" />
     <Compile Include="Controllers\FileApiController.cs" />
+    <Compile Include="Controllers\AlarmsApiController.cs" />
     <Compile Include="Controllers\ReportApiController.cs" />
     <Compile Include="Controllers\CompanyApiController.cs" />
     <Compile Include="Controllers\ProjectsApiController.cs" />
@@ -524,9 +528,11 @@
     <TypeScriptCompile Include="Scripts\app\api\AntiForgeryToken.ts" />
     <TypeScriptCompile Include="Scripts\app\api\Functions.ts" />
     <TypeScriptCompile Include="Scripts\app\app.ts" />
+    <TypeScriptCompile Include="Scripts\app\controllers\MenuController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\base\0BaseController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\AccountController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\CompanyController.ts" />
+    <TypeScriptCompile Include="Scripts\app\controllers\AlarmsController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\ReportController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\ProjectsController.ts" />
     <TypeScriptCompile Include="Scripts\app\controllers\LoginController.ts" />
@@ -538,14 +544,17 @@
     <TypeScriptCompile Include="Scripts\app\enums\RoleName.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\SortByEnum.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\TaskPriorityEnum.ts" />
+    <TypeScriptCompile Include="Scripts\app\enums\AlarmRepeatEnum.ts" />
     <TypeScriptCompile Include="Scripts\app\enums\TaskStatusEnum.ts" />
     <TypeScriptCompile Include="Scripts\app\filters\percent.ts" />
     <TypeScriptCompile Include="Scripts\app\filters\set_progress_data_percent.ts" />
     <TypeScriptCompile Include="Scripts\app\filters\nl2br.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\MenuModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\base\0ModelBase.ts" />
     <TypeScriptCompile Include="Scripts\app\models\base\1BaseModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\AccountModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\Company1Model.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\items\AlarmModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\FileModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\ReportCommentModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\2CompanyModel.ts" />
@@ -554,6 +563,7 @@
     <TypeScriptCompile Include="Scripts\app\models\items\3CommentModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\ReportSubTaskModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\ReportTaskModel.ts" />
+    <TypeScriptCompile Include="Scripts\app\models\AlarmsModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\ReportModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\ProjectsModel.ts" />
     <TypeScriptCompile Include="Scripts\app\models\items\1UserModel.ts" />

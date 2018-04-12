@@ -41,6 +41,7 @@ namespace TaskManager.Data.Context {
             modelBuilder.Configurations.Add(new CommentMap());
             modelBuilder.Configurations.Add(new TaskUserMap());
             modelBuilder.Configurations.Add(new FileMap());
+            modelBuilder.Configurations.Add(new AlarmMap());
 
             // Conventions
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();

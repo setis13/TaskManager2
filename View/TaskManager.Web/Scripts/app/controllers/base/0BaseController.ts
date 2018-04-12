@@ -69,6 +69,14 @@ namespace Controllers {
             $("#loader").remove();
         }
 
+        protected ShowBusyLoading() {
+            this.Loading(true);
+        }
+
+        protected HideBusyLoading() {
+            this.Loading(false);
+        }
+
         protected ShowBusySaving() {
             this.Saving(true);
         }

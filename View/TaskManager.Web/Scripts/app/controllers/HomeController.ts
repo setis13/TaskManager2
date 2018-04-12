@@ -12,8 +12,7 @@ namespace Controllers {
 
     export class HomeController extends BaseController {
 
-        private taskPriorityClasses: { [index: number]: string } =
-        { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
+        private taskPriorityClasses: { [index: number]: string } = { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
 
         public Model: Models.HomeModel;
 
@@ -365,6 +364,7 @@ namespace Controllers {
                         closable: false,
                         onApprove: function () {
                             $this.TaskDelete_OnClick(true);
+                            $this.scope.$apply();
                         }
                     }).modal('show');
                 return;
@@ -451,6 +451,7 @@ namespace Controllers {
                         closable: false,
                         onApprove: function () {
                             $this.SubTaskDelete_OnClick(true);
+                            $this.scope.$apply();
                         }
                     }).modal('show');
                 return;
@@ -551,6 +552,7 @@ namespace Controllers {
                         closable: false,
                         onApprove: function () {
                             $this.CommentDelete_OnClick(true);
+                            $this.scope.$apply();
                         }
                     }).modal('show');
                 return;

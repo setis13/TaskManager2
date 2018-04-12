@@ -25,11 +25,12 @@
         var UserName = '@User.Identity.GetUserName()';
         var TaskPriorityNames = @Html.Raw(JsonExtension.SerializeObject(EnumExtensions.EnumToDictionary<TaskPriorityEnum>()));
         var TaskStatusNames = @Html.Raw(JsonExtension.SerializeObject(EnumExtensions.EnumToDictionary<TaskStatusEnum>()));
+        var AlarmRepeatNames = @Html.Raw(JsonExtension.SerializeObject(EnumExtensions.EnumToDictionary<AlarmRepeatEnum>()));
     </script>
 </head>
 <body>
     @if (Request.IsAuthenticated) {
-        <div class="ui stackable fixed inverted block main menu">
+        <div class="ui stackable fixed inverted block main menu" ng-controller="MenuController">
             <div class="ui stretched container">
                 <a ng-class="isActive('/')" href="/" class="header item">
                     <img class="logo mobile hidden" src="/content/images/logo_64.png">
@@ -50,6 +51,23 @@
                         <a href="#" onclick="$('#logoutForm').submit();">Log off</a>
                     }
                     <a ng-class="isActive('/profile')" class="item" href="/profile">@User.Identity.GetUserName()</a>
+                    <a ng-class="isActive('/alarms')" href="/alarms" class="alarm item">
+                        <i class="icons">
+                            <img class="ui mini image" src="/content/images/calendar.png">
+                            <span class="alarm-label icon" id="alarm-label">{{Model.Title}}</span>
+                            <i class="spinner black loading icon"></i>
+                        </i>
+                    </a>
+                </div>
+            </div>
+            <div id="calendar-popup" class="ui fluid popup transition hidden">
+                <div class="ui divided items">
+                    <div ng-repeat="alarm in Model.Alarms" class="item">
+                        <div class="ui header">
+                            <span>{{alarm.DateMoment.format("MM/DD/YYYY")}} {{alarm.Title}}<i class="blue birthday icon" ng-show="alarm.Birthday"></i> </span>
+                            <div class="sub header">{{alarm.Description}}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -53,6 +53,7 @@ namespace TaskManager.Web {
             container.RegisterType<ISessionService, SessionService>(new HierarchicalLifetimeManager());
             container.RegisterType<ICompanyService, CompanyService>(new HierarchicalLifetimeManager());
             container.RegisterType<IProjectsService, ProjectsService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IAlarmsService, AlarmsService>(new HierarchicalLifetimeManager());
             container.RegisterType<ITaskService, TaskService>(new HierarchicalLifetimeManager());
             container.RegisterType<IReportService, ReportService>(new HierarchicalLifetimeManager());
             container.RegisterType<IFileService, FileService>(new HierarchicalLifetimeManager());

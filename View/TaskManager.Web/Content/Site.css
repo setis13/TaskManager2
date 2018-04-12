@@ -207,3 +207,54 @@ tr.disabled1 {
 #confirm-modal {
     position: absolute;
 }
+/** Alarms **/
+.ui.alarms.calendar .column {
+    width: auto;
+    flex-grow: initial !important;
+}
+
+    .ui.alarms.calendar .column td {
+        /*pointer-events: none;*/
+    }
+
+        .ui.alarms.calendar .column td.link.mark {
+            background-color: forestgreen;
+            color: white;
+            font-weight: bold;
+        }
+
+            .ui.alarms.calendar .column td.link.mark.focus {
+                background-color: forestgreen !important;
+                color: white;
+                font-weight: bold;
+            }
+
+        .ui.alarms.calendar .column td.link.today {
+            border: 2px solid #000000;
+        }
+
+        .ui.alarms.calendar .column td.link.tomorrow {
+            color: lightgray;
+        }
+
+        .ui.alarms.calendar .column td.link.disabled {
+            color: white;
+        }
+
+span.alarm-label {
+    color: black;
+    margin-top: 7px !important;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-family: Arial;
+}
+
+a.alarm.item {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+    a.alarm.item .loading.icon {
+        left: 11px;
+    }

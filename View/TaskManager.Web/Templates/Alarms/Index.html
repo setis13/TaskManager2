@@ -1,0 +1,173 @@
+﻿<!-- loader -->
+<div id="loader" class="ui dimmer transition active inverted">
+    <div class="ui loader"></div>
+</div>
+<!-- a error on the page -->
+<div class="ui error message ng-hide" ng-hide="Model.Error == null">
+    <i class="close icon" ng-click="Model.Error = null"></i>
+    <div class="header">
+        Error
+    </div>
+    <p>{{Model.Error}}</p>
+</div>
+<div class="ui grid" ng-show="Model.Loaded">
+    <!-- panel -->
+    <div class="row">
+        <div class="sixteen wide column">
+            <button class="ui primary button" ng-click="Create_OnClick()">Create&nbsp;Alarm</button>
+        </div>
+    </div>
+    <!-- Alarms -->
+    <div>
+        <div class="ui alarms calendar" id="calendar">
+        </div>
+        <br />
+    </div>
+    <div class="row">
+        <div class="sixteen wide column">
+            <hr />
+            <footer>
+                <p>&copy; 2017 - Enote</p>
+            </footer>
+        </div>
+    </div>
+</div>
+<!-- Edit Alarm Modal -->
+<modal id="edit-alarm-modal" class="ui mini modal" ng-model="Model.EditAlarm">
+    <i class="close icon" ng-click="Cancel_OnClick()"></i>
+    <div class="header">{{Model.EditAlarm.EntityId == null ? 'Create Alarm' : 'Edit Alarm ' + "'" + Model.EditAlarm.Title + "'"}}</div>
+    <div id="form-alarm" class="ui validate form content">
+        <div class="ui red message ng-hide" ng-hide="Model.EditAlarm.Error == null">
+            <p ng-bind-html="Model.EditAlarm.Error"></p>
+        </div>
+        <div class="field">
+            <label>Date</label>
+            <div class="ui calendar" id="alarm-date">
+                <div class="ui input left icon">
+                    <i class="calendar icon"></i>
+                    <input type="text" placeholder="Date">
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label>Title</label>
+            <input id="alarm-title" placeholder="Title" type="text"
+                   ng-model="Model.EditAlarm.Title">
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <textarea id="alarm-description" placeholder="Description" rows="2"
+                      ng-model="Model.EditAlarm.Description"></textarea>
+        </div>
+        <div class="field" ng-class="Model.EditAlarm.Birthday ? 'disabled' : ''">
+            <label>Repeat</label>
+            <div class="two fields">
+                <div class="six wide field">
+                    <input id="alarm-repeat-value" placeholder="Repeat" type="text"
+                           ng-model="Model.EditAlarm.RepeatValue">
+                </div>
+                <div class="ten wide field">
+                    <select id="alarm-repeat-type" class="ui dropdown"
+                            ng-model="Model.EditAlarm.RepeatType" convert-to-number
+                            ng-options="id as name for (id, name) in AlarmRepeatNames"></select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui checkbox">
+                <input id="alarm-birthday" type="checkbox"
+                       ng-model="Model.EditAlarm.Birthday"
+                       ng-change="AlarmBirthday_OnChange()" />
+                <label>Birthday</label>
+            </div>
+        </div>
+        <div class="ui error message"></div>
+    </div>
+    <div class="actions">
+        <div class="ui red button left floated"
+             ng-click="Delete_OnClick()"
+             ng-show="Model.EditAlarm.EntityId != null"
+             lb-busy="Deleting">
+            Delete
+        </div>
+        <div class="ui clear button"
+             ng-click="Cancel_OnClick()">
+            Cancel
+        </div>
+        <div class="ui primary button"
+             ng-click="Ok_OnClick()"
+             lb-busy="Saving">
+            {{Model.EditAlarm.EntityId == null ? 'Create' : 'Save'}}
+        </div>
+    </div>
+</modal>
+<!-- confirm modal -->
+<div id="confirm-modal" class="ui mini modal">
+    <div class="ui icon header">
+        <i class="warning circle icon"></i>
+    </div>
+    <div class="content">
+        <p></p>
+    </div>
+    <div class="actions">
+        <div class="ui deny button">
+            No
+        </div>
+        <div class="ui green ok button">
+            <i class="checkmark icon"></i>
+            Yes
+        </div>
+    </div>
+</div>
+<script language="javascript">
+    $.fn.form.settings.rules.nullableRepeatValue = function (value) {
+        return value == null || value === '' || (value >= 1 && value <= 10000);
+    }
+    $.fn.form.settings.rules.nullableRepeatType = function (value) {
+        return $('#alarm-repeat-value').val() == '' || (value != null && value !== '?');
+    }
+
+    var form = function () {
+        return $('#form-alarm')
+            .form({
+                fields: {
+                    title: {
+                        identifier: 'alarm-title',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Please enter a name'
+                            },
+                            {
+                                type: 'length[2]',
+                                prompt: 'Enter Alarm Name (minimum 2 characters)'
+                            },
+                            {
+                                type: 'maxLength[32]',
+                                prompt: 'Enter Alarm Name (maximum 32 characters)'
+                            }
+                        ]
+                    },
+                    value: {
+                        identifier: 'alarm-repeat-value',
+                        rules: [
+                            {
+                                type: 'nullableRepeatValue[value]',
+                                prompt: 'Please select time'
+                            }
+                        ]
+
+                    },
+                    type: {
+                        identifier: 'alarm-repeat-type',
+                        rules: [
+                            {
+                                type: 'nullableRepeatType[value]',
+                                prompt: 'Please enter valid value'
+                            }
+                        ]
+                    }
+                }
+            });
+    }
+</script>

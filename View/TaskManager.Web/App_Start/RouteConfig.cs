@@ -38,6 +38,11 @@ namespace TaskManager.Web {
                 defaults: new { controller = "Home", action = "Index" }
             );
             routes.MapRoute(
+               name: "Alarms",
+               url: "alarms",
+               defaults: new { controller = "Home", action = "Index" }
+           );
+            routes.MapRoute(
                 name: "ReportSingle",
                 url: "report_single",
                 defaults: new { controller = "Home", action = "Index" }
