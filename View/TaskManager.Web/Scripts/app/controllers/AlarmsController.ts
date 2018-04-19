@@ -66,7 +66,8 @@ namespace Controllers {
                         });
 
                         if (today.diff(date, 'days') > 0) {
-                            cell[0].classList.add('tomorrow');
+                            cell[0].classList.add('yesterday');
+                            return;
                         }
                         for (var i in models) {
                             var model = models[i];

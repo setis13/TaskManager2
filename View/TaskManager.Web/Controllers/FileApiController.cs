@@ -16,6 +16,7 @@ using TaskManager.Logic.Contracts.Exceptions;
 using TaskManager.Data.Contracts.Helpers;
 using System.Linq;
 using System.IO;
+using TaskManager.Web.Helpers;
 
 namespace TaskManager.Web.Controllers {
     [Authorize]
@@ -94,7 +95,7 @@ namespace TaskManager.Web.Controllers {
                     result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") {
                         FileName = fileDto.FileName
                     };
-                    result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                    result.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeTypeHelper.GetMimeType(Path.GetExtension(fileDto.FileName)));
                     return result;
                 } else {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);

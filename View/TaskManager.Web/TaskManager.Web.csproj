@@ -400,6 +400,102 @@
     <Content Include="Content\images\calendar.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\logo_64.png" />
+    <Content Include="Content\lightgallery\lg-animations.css">
+      <DependentUpon>lg-animations.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-animations.min.css">
+      <DependentUpon>lg-animations.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-autoplay.css">
+      <DependentUpon>lg-autoplay.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-autoplay.min.css">
+      <DependentUpon>lg-autoplay.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-core.css">
+      <DependentUpon>lg-core.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-core.min.css">
+      <DependentUpon>lg-core.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-fb-comment-box.css">
+      <DependentUpon>lg-fb-comment-box.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-fb-comment-box.min.css">
+      <DependentUpon>lg-fb-comment-box.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-fonts.css">
+      <DependentUpon>lg-fonts.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-fonts.min.css">
+      <DependentUpon>lg-fonts.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-fullscreen.css">
+      <DependentUpon>lg-fullscreen.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-fullscreen.min.css">
+      <DependentUpon>lg-fullscreen.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-mixins.css">
+      <DependentUpon>lg-mixins.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-mixins.min.css">
+      <DependentUpon>lg-mixins.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-pager.css">
+      <DependentUpon>lg-pager.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-pager.min.css">
+      <DependentUpon>lg-pager.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-share.css">
+      <DependentUpon>lg-share.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-share.min.css">
+      <DependentUpon>lg-share.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-theme-default.css">
+      <DependentUpon>lg-theme-default.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-theme-default.min.css">
+      <DependentUpon>lg-theme-default.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-thumbnail.css">
+      <DependentUpon>lg-thumbnail.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-thumbnail.min.css">
+      <DependentUpon>lg-thumbnail.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-transitions.css">
+      <DependentUpon>lg-transitions.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-transitions.min.css">
+      <DependentUpon>lg-transitions.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-variables.css">
+      <DependentUpon>lg-variables.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-variables.min.css">
+      <DependentUpon>lg-variables.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-video.css">
+      <DependentUpon>lg-video.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-video.min.css">
+      <DependentUpon>lg-video.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-zoom.css">
+      <DependentUpon>lg-zoom.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lg-zoom.min.css">
+      <DependentUpon>lg-zoom.css</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lightgallery.css">
+      <DependentUpon>0lightgallery.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\lightgallery\lightgallery.min.css">
+      <DependentUpon>lightgallery.css</DependentUpon>
+    </Content>
     <Content Include="Content\semantic-calendar.css" />
     <Content Include="Content\semantic-calendar.min.css" />
     <Content Include="Content\semantic-responsive.css" />
@@ -409,6 +505,7 @@
     <Content Include="Content\semantic.min.js" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\default\assets\fonts\icons.svg" />
+    <Content Include="Content\themes\default\assets\fonts\lg.svg" />
     <Content Include="Content\themes\default\assets\images\flags.png" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
@@ -438,6 +535,29 @@
     <Content Include="Content\themes\default\assets\fonts\icons.ttf" />
     <Content Include="Content\themes\default\assets\fonts\icons.woff" />
     <Content Include="Content\themes\default\assets\fonts\icons.woff2" />
+    <Content Include="Content\lightgallery\lg-animations.scss" />
+    <Content Include="Content\lightgallery\lg-autoplay.scss" />
+    <Content Include="Content\lightgallery\lg-core.scss" />
+    <Content Include="Content\lightgallery\lg-fb-comment-box.scss" />
+    <Content Include="Content\lightgallery\lg-fonts.scss" />
+    <Content Include="Content\lightgallery\lg-fullscreen.scss" />
+    <Content Include="Content\lightgallery\lg-mixins.scss" />
+    <Content Include="Content\lightgallery\lg-pager.scss" />
+    <Content Include="Content\lightgallery\lg-share.scss" />
+    <Content Include="Content\lightgallery\lg-theme-default.scss" />
+    <Content Include="Content\lightgallery\lg-thumbnail.scss" />
+    <Content Include="Content\lightgallery\lg-transitions.scss" />
+    <Content Include="Content\lightgallery\lg-variables.scss" />
+    <Content Include="Content\lightgallery\lg-video.scss" />
+    <Content Include="Content\lightgallery\lg-zoom.scss" />
+    <Content Include="Content\lightgallery\0lightgallery.scss" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="Content\themes\default\assets\fonts\lg.eot" />
+    <Content Include="Content\themes\default\assets\fonts\lg.ttf" />
+    <Content Include="Content\themes\default\assets\fonts\lg.woff" />
     <None Include="Properties\PublishProfiles\localhost.pubxml" />
     <None Include="Properties\PublishProfiles\task_manager.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
@@ -446,6 +566,16 @@
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
     <None Include="Scripts\linq-vsdoc.js" />
+    <Content Include="Scripts\jquery.mousewheel.min.js" />
+    <Content Include="Scripts\lightgallery\lg-autoplay.js" />
+    <Content Include="Scripts\lightgallery\lg-fullscreen.js" />
+    <Content Include="Scripts\lightgallery\lg-hash.js" />
+    <Content Include="Scripts\lightgallery\lg-pager.js" />
+    <Content Include="Scripts\lightgallery\lg-share.js" />
+    <Content Include="Scripts\lightgallery\lg-thumbnail.js" />
+    <Content Include="Scripts\lightgallery\lg-video.js" />
+    <Content Include="Scripts\lightgallery\lg-zoom.js" />
+    <Content Include="Scripts\lightgallery\0lightgallery.js" />
     <Content Include="Scripts\linq.js" />
     <Content Include="Scripts\linq.min.js" />
     <Content Include="Scripts\moment-duration-format.js" />
@@ -515,6 +645,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MimeTypeHelper.cs" />
     <Compile Include="Logger\Log4NetLogger.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ReportModel.cs" />

@@ -33,6 +33,22 @@
             this.ActualWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
         }
 
+        public GetSubTaskImageFiles(): Array<FileModel> {
+            return Enumerable.From(this.Files).Where(e => IsLightGallery(e.FileName)).ToArray();
+        }
+
+        public GetSubTaskOtherFiles(): Array<FileModel> {
+            return Enumerable.From(this.Files).Where(e => !IsLightGallery(e.FileName)).ToArray();
+        }
+
+        public GetCommentsImageFiles(): Array<FileModel> {
+            return Enumerable.From(this.Comments).SelectMany(e => e.Files).Where(e => IsLightGallery(e.FileName)).ToArray();
+        }
+
+        public GetCommentsOtherFiles(): Array<FileModel> {
+            return Enumerable.From(this.Comments).SelectMany(e => e.Files).Where(e => !IsLightGallery(e.FileName)).ToArray();
+        }
+
         constructor(data: any) {
             super(data);
 

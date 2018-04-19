@@ -1,0 +1,66 @@
+﻿[
+  {
+    "outputFile": "Content/lightgallery/lg-animations.css",
+    "inputFile": "Content/lightgallery/lg-animations.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-mixins.css",
+    "inputFile": "Content/lightgallery/lg-mixins.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-autoplay.css",
+    "inputFile": "Content/lightgallery/lg-autoplay.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lightgallery.css",
+    "inputFile": "Content/lightgallery/lightgallery.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-fb-comment-box.css",
+    "inputFile": "Content/lightgallery/lg-fb-comment-box.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-fonts.css",
+    "inputFile": "Content/lightgallery/lg-fonts.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-fullscreen.css",
+    "inputFile": "Content/lightgallery/lg-fullscreen.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-pager.css",
+    "inputFile": "Content/lightgallery/lg-pager.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-share.css",
+    "inputFile": "Content/lightgallery/lg-share.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-theme-default.css",
+    "inputFile": "Content/lightgallery/lg-theme-default.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-thumbnail.css",
+    "inputFile": "Content/lightgallery/lg-thumbnail.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-transitions.css",
+    "inputFile": "Content/lightgallery/lg-transitions.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-variables.css",
+    "inputFile": "Content/lightgallery/lg-variables.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-video.css",
+    "inputFile": "Content/lightgallery/lg-video.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-zoom.css",
+    "inputFile": "Content/lightgallery/lg-zoom.scss"
+  },
+  {
+    "outputFile": "Content/lightgallery/lg-core.css",
+    "inputFile": "Content/lightgallery/lg-core.scss"
+  }
+]

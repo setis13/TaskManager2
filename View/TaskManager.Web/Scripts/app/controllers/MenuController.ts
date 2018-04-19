@@ -30,14 +30,16 @@
                 success: (result) => {
                     if (result.Success) {
                         $this.Model.SetData(result.Data);
-                        setTimeout(()=>
-                            (<any>$('.alarm.item'))
-                                .popup({
-                                    html: $('#calendar-popup').html(),
-                                    position: 'bottom center',
-                                    hoverable: true,
-                                    show: 100
-                                }));
+                        if ($this.Model.Alarms.length > 0) {
+                            setTimeout(() =>
+                                (<any>$('.alarm.item'))
+                                    .popup({
+                                        html: $('#calendar-popup').html(),
+                                        position: 'bottom center',
+                                        hoverable: true,
+                                        show: 100
+                                    }));
+                        }
                     } else {
                         $this.Error(result.Message);
                     }

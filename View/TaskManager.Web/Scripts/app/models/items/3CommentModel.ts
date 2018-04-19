@@ -51,6 +51,14 @@
             }
         }
 
+        public GetCommentImageFiles(): Array<FileModel> {
+            return Enumerable.From(this.Files).Where(e => IsLightGallery(e.FileName)).ToArray();
+        }
+
+        public GetCommentOtherFiles(): Array<FileModel> {
+            return Enumerable.From(this.Files).Where(e => !IsLightGallery(e.FileName)).ToArray();
+        }
+
         constructor(data: any) {
             super(data);
 

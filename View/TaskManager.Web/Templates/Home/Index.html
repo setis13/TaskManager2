@@ -143,7 +143,17 @@
                 <td class="word_wrap">
                     <p><b>{{task.Title}}</b></p>
                     <p ng-bind-html="task.Description | nl2br"></p>
-                    <a ng-repeat="file in task.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
+                    <span class="lightgallery">
+                        <a ng-repeat="file in task.GetTaskImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                            {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
+                            <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
+                        </a>
+                    </span>
+                    <span>
+                        <a ng-repeat="file in task.GetTaskOtherFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                            {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
+                        </a>
+                    </span>
                 </td>
                 <!-- Task -> Comments -->
                 <td class="tasks-comments word_wrap">
@@ -185,7 +195,17 @@
                                 <div class="description block">
                                     <p ng-bind-html="comment.Description | nl2br"></p>
                                 </div>
-                                <a ng-repeat="file in comment.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
+                                <span class="lightgallery">
+                                    <a ng-repeat="file in task.GetCommentImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                                        {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
+                                        <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
+                                    </a>
+                                </span>
+                                <span>
+                                    <a ng-repeat="file in task.GetCommentOtherFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                                        {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
+                                    </a>
+                                </span>
                             </div>
                         </div>
                         <div class="item">
@@ -194,8 +214,16 @@
                                    ng-click="AddTaskComment_OnClick(task)">Add</a>
                             </div>
                         </div>
-                        <span ng-repeat="comment in task.Comments">
-                            <a ng-repeat="file in comment.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
+                        <span class="lightgallery">
+                            <a ng-repeat="file in task.GetCommentsImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                                {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
+                                <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
+                            </a>
+                        </span>
+                        <span>
+                            <a ng-repeat="file in task.GetCommentsOtherFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                                {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
+                            </a>
                         </span>
                     </div>
                 </td>
@@ -246,7 +274,17 @@
                 <td class="four wide word_wrap">
                     <p><b>{{subtask.Title}}</b></p>
                     <p ng-bind-html="subtask.Description | nl2br"></p>
-                    <a ng-repeat="file in subtask.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
+                    <span class="lightgallery">
+                        <a ng-repeat="file in subtask.GetSubTaskImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                            {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
+                            <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
+                        </a>
+                    </span>
+                    <span>
+                        <a ng-repeat="file in subtask.GetSubTaskOtherFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                            {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
+                        </a>
+                    </span>
                 </td>
                 <!-- SubTask -> Comments -->
                 <td class="tasks-comments word_wrap">
@@ -297,8 +335,16 @@
                                    ng-click="AddSubTaskComment_OnClick(subtask)">Add</a>
                             </div>
                         </div>
-                        <span ng-repeat="comment in subtask.Comments">
-                            <a ng-repeat="file in comment.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
+                        <span class="lightgallery">
+                            <a ng-repeat="file in subtask.GetCommentsImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                                {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
+                                <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
+                            </a>
+                        </span>
+                        <span>
+                            <a ng-repeat="file in subtask.GetCommentsOtherFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                                {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
+                            </a>
                         </span>
                     </div>
                 </td>

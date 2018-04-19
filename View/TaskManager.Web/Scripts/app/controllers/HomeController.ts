@@ -125,6 +125,9 @@ namespace Controllers {
                 success: (result) => {
                     if (result.Success) {
                         $this.Model.SetData(result.Data);
+                        setTimeout(() => {
+                            (<any>$(".lightgallery")).lightGallery(); 
+                        });
                     } else {
                         $this.Error(result.Message);
                     }

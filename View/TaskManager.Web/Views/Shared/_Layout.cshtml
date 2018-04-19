@@ -1,6 +1,7 @@
 ﻿@using System.Web.Mvc.Html
 @using Microsoft.AspNet.Identity
 @using TaskManager.Common.Extensions
+@using TaskManager.Web.Helpers
 @using TaskManager.Logic.Contracts.Enums
 <!DOCTYPE html>
 <html ng-app="TaskManagerApp">
@@ -15,7 +16,6 @@
         .main.menu .item img.logo {
             margin-right: 1.5em;
         }
-
         .main.container {
             margin-top: 1em;
         }
@@ -26,6 +26,7 @@
         var TaskPriorityNames = @Html.Raw(JsonExtension.SerializeObject(EnumExtensions.EnumToDictionary<TaskPriorityEnum>()));
         var TaskStatusNames = @Html.Raw(JsonExtension.SerializeObject(EnumExtensions.EnumToDictionary<TaskStatusEnum>()));
         var AlarmRepeatNames = @Html.Raw(JsonExtension.SerializeObject(EnumExtensions.EnumToDictionary<AlarmRepeatEnum>()));
+        var ImageExtensions = @Html.Raw(JsonExtension.SerializeObject(MimeTypeHelper.GetLightGalleryExtensions()));
     </script>
 </head>
 <body>
@@ -55,7 +56,7 @@
                         <i class="icons">
                             <img class="ui mini image" src="/content/images/calendar.png">
                             <span class="alarm-label icon" id="alarm-label">{{Model.Title}}</span>
-                            <i class="spinner black loading icon"></i>
+                            <i class="spinner black loading icon" ng-show="Loading"></i>
                         </i>
                     </a>
                 </div>
@@ -64,7 +65,7 @@
                 <div class="ui divided items">
                     <div ng-repeat="alarm in Model.Alarms" class="item">
                         <div class="ui header">
-                            <span>{{alarm.DateMoment.format("MM/DD/YYYY")}} {{alarm.Title}}<i class="blue birthday icon" ng-show="alarm.Birthday"></i> </span>
+                            <span>{{alarm.DateMoment.format("MM/DD/YYYY")}} {{alarm.Title}}<i class="blue birthday icon" ng-show="alarm.Birthday"></i></span>
                             <div class="sub header">{{alarm.Description}}</div>
                         </div>
                     </div>

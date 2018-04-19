@@ -15,7 +15,7 @@
                 var model = new AlarmModel(data.Alarms[i]);
                 this.Alarms.push(model);
                 if (this.Title == null) {
-                    this.Title = model.DateMoment.diff(moment(), 'days') + 1;
+                    this.Title = model.DateMoment.diff(moment(moment().format('YYYY-MM-DD') + "T00:00:00"), 'days');
                 }
             }
         }

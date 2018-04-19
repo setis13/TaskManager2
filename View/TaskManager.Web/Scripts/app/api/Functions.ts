@@ -32,3 +32,13 @@ function SizeName(bytes: number, si: boolean = true) {
     }
     return str;
 }
+
+function IsLightGallery(fileName: string) {
+    var ext = fileName.substr(fileName.lastIndexOf('.'));
+    for (var i in ImageExtensions) {
+        if (ImageExtensions[i] == ext) {
+            return true;
+        }
+    }
+    return false;
+}

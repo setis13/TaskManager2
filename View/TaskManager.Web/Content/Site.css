@@ -233,7 +233,7 @@ tr.disabled1 {
             border: 2px solid #000000;
         }
 
-        .ui.alarms.calendar .column td.link.tomorrow {
+        .ui.alarms.calendar .column td.link.yesterday {
             color: lightgray;
         }
 

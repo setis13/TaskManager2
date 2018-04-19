@@ -77,7 +77,10 @@ namespace TaskManager.Web {
                     "~/Content/components/*.js",
                     "~/Scripts/angular.js",
                     "~/Scripts/angular-route.js",
-                    "~/Scripts/angular-sanitize.js")
+                    "~/Scripts/angular-sanitize.js",
+                    "~/Scripts/jquery.mousewheel.min.js",
+                    "~/Scripts/lightgallery/*.js"
+                    )
                 .IncludeDirectory(
                     "~/Scripts/app/api", "*.js", false)
                 .IncludeDirectory(
@@ -101,6 +104,7 @@ namespace TaskManager.Web {
                     "~/Content/semantic-calendar.css",
                     "~/Content/semantic-responsive.css",
                     "~/Content/components/*.css",
+                    "~/Content/lightgallery/*.css",
                     "~/Content/Site.css"
                     ));
 
