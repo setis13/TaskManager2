@@ -4,6 +4,8 @@
         TaskId = 1,
         TaskIdDesc = 2,
         Urgency = 3,
-        UrgencyDesc = 4
+        UrgencyDesc = 4,
+        Comment = 5,
+        CommentDesc = 6,
     }
 }

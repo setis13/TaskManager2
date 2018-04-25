@@ -51,25 +51,16 @@
                     Clear
                 </div>
             </div>
-            <div class="one wide column computer">
+            <div class="two wide column computer">
             </div>
             <!-- sorting -->
-            <div class="two wide column computer">
+            <div class="three wide column computer">
                 <div class="ui right labeled icon button streach"
-                     ng-class="Model.SortBy == 3 || Model.SortBy == 4 ? 'primary' : ''"
-                     ng-click="SortByUrgency_OnClick()">
+                     ng-class="Model.SortBy != 0 ? 'primary' : ''"
+                     ng-click="SortBy_OnClick()">
                     <i class="long arrow icon"
-                       ng-class="Model.SortBy == 3 ? 'up' : 'down'"></i>
-                    Urgency
-                </div>
-            </div>
-            <div class="two wide column computer">
-                <div class="ui right labeled icon button streach"
-                     ng-class="Model.SortBy == 1 || Model.SortBy == 2 ? 'primary' : ''"
-                     ng-click="SortByTaskId_OnClick()">
-                    <i class="long arrow icon"
-                       ng-class="Model.SortBy == 1 ? 'up' : 'down'"></i>
-                    Task#
+                       ng-class="Model.SortBy == 1 || Model.SortBy == 3 || Model.SortBy == 5 ? 'down' : 'up'"></i>
+                    {{SortByNames[Model.SortBy]}}
                 </div>
             </div>
         </div>

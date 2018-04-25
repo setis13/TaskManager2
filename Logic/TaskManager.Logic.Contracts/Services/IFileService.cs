@@ -9,6 +9,7 @@ namespace TaskManager.Logic.Contracts.Services {
         byte[] GetFile(FileDto fileDto);
         List<string> GetFileNames(Guid entityId);
         FileDto GetFileById(Guid fileId, UserDto userDto);
+        List<FileDto> GetModels(List<Guid> entityIds);
         List<FileDto> GetModels(Guid entityId);
         Task<FileDto> SaveFile(Guid entityId, string fileName, byte[] data);
         void SaveModel(FileDto fileDto, UserDto userDto);

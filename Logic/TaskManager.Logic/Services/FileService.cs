@@ -20,6 +20,11 @@ namespace TaskManager.Logic.Services {
             : base(servicesHost, unitOfWork, mapper) {
         }
 
+        public List<FileDto> GetModels(List<Guid> entityIds) {
+            var models = UnitOfWork.GetRepository<File1>().SearchFor(e => entityIds.Contains(e.ParentId));
+            return Mapper.Map<List<FileDto>>(models);
+        }
+
         public List<FileDto> GetModels(Guid entityId) {
             var models = UnitOfWork.GetRepository<File1>().SearchFor(e => e.ParentId == entityId);
             return Mapper.Map<List<FileDto>>(models);

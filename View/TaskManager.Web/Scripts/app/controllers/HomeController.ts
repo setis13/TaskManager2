@@ -13,6 +13,7 @@ namespace Controllers {
     export class HomeController extends BaseController {
 
         private taskPriorityClasses: { [index: number]: string } = { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
+        private sortByNames: { [index: number]: string } = { 0: 'none', 1: 'Task#', 2: 'Task#', 3: 'Urgency', 4: 'Urgency', 5: 'Comments', 6: 'Comments' };
 
         public Model: Models.HomeModel;
 
@@ -34,6 +35,7 @@ namespace Controllers {
             $scope.TaskStatusNames = TaskStatusNames;
             $scope.TaskPriorityNames = TaskPriorityNames;
             $scope.TaskPriorityClasses = this.taskPriorityClasses;
+            $scope.SortByNames = this.sortByNames;
 
             $scope.TaskPriority_OnClick = this.TaskPriority_OnClick;
 
@@ -70,8 +72,7 @@ namespace Controllers {
             $scope.CommentStatus_OnChange = this.CommentStatus_OnChange;
 
             $scope.ClearFilters_OnClick = this.ClearFilters_OnClick;
-            $scope.SortByTaskId_OnClick = this.SortByTaskId_OnClick;
-            $scope.SortByUrgency_OnClick = this.SortByUrgency_OnClick;
+            $scope.SortBy_OnClick = this.SortBy_OnClick;
 
             $scope.AttachFiles_OnClick = this.AttachFiles_OnClick;
             $scope.RemoveFile_OnClick = this.RemoveFile_OnClick;
@@ -162,16 +163,21 @@ namespace Controllers {
             });
         }
 
-        public SortByTaskId_OnClick = () => {
-            this.Model.SortBy = this.Model.SortBy != Enums.SortByEnum.TaskIdDesc ?
-                Enums.SortByEnum.TaskIdDesc : Enums.SortByEnum.TaskId;
-            this.Model.ApplyClientFilter();
-            this.SaveSorting();
-
-        }
-        public SortByUrgency_OnClick = () => {
-            this.Model.SortBy = this.Model.SortBy != Enums.SortByEnum.UrgencyDesc ?
-                Enums.SortByEnum.UrgencyDesc : Enums.SortByEnum.Urgency;
+        public SortBy_OnClick = () => {
+            switch (this.Model.SortBy) {
+                case Enums.SortByEnum.UrgencyDesc:
+                    this.Model.SortBy = Enums.SortByEnum.TaskIdDesc;
+                    break;
+                case Enums.SortByEnum.TaskIdDesc:
+                    this.Model.SortBy = Enums.SortByEnum.CommentDesc;
+                    break;
+                case Enums.SortByEnum.CommentDesc:
+                    this.Model.SortBy = Enums.SortByEnum.UrgencyDesc;
+                    break;
+                default:
+                    this.Model.SortBy = Enums.SortByEnum.UrgencyDesc;
+                    break;
+            }
             this.Model.ApplyClientFilter();
             this.SaveSorting();
         }
