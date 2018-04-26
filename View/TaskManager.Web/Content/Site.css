@@ -70,7 +70,7 @@ html, body {
 }
 
 td.header {
-    background: #f9fafb;
+    background: #f5f5f5;
 }
 
 /*** The fix of readonly button. lb-busy ***/
@@ -145,7 +145,7 @@ tr.disabled1 span, tr.disabled1 p, tr.disabled1 div.header {
 }
 
 tr.disabled1 {
-    background: #f9fafb;
+    background: #f5f5f5;
 }
 
     tr.disabled1 .button,
@@ -156,7 +156,7 @@ tr.disabled1 {
     tr.disabled1 .ui.black.label,
     tr.disabled1 .ui.gray.label,
     tr.disabled1 .ui.teal.label {
-        background-color: #f9fafb !important;
+        background-color: #f5f5f5 !important;
     }
 
     tr.disabled1 .button,

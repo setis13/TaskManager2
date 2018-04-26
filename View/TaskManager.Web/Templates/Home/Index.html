@@ -103,18 +103,18 @@
                             <span class="label">Project</span>&nbsp;
                             <span class="value">{{Model.ProjectName(task.ProjectId)}}</span>
                         </div>
-                        <div>
+                        <!--<div> not yet used
                             <span class="label">Owner</span>&nbsp;
-                            <span class="value">{{Model.UserName(task.CreatedById)}}</span>
-                        </div>
+                            <span class="value">{Model.UserName(task.CreatedById)}</span>
+                        </div>-->
                         <div>
                             <span class="label">Date</span>&nbsp;
                             <span class="value">{{task.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
                         </div>
-                        <div>
+                        <!--<div> not yet used
                             <span class="label">Status</span>&nbsp;
-                            <span class="value">{{TaskStatusNames[task.Status]}}</span>
-                        </div>
+                            <span class="value">{TaskStatusNames[task.Status]}</span>
+                        </div>-->
                         <div>
                             <span class="label">Urgency</span>&nbsp;
                             <span class="ui tiny label" ng-class="TaskPriorityClasses[task.Priority]">{{TaskPriorityNames[task.Priority]}}</span>
@@ -126,10 +126,10 @@
                                 {{task.ActualWorkHours | number:1}}h / {{task.TotalWorkHours | number:1}}h
                             </span>
                         </div>
-                        <div>
+                        <!--<div> not yet used
                             <span class="label">Responsible</span>&nbsp;
-                            <span class="value">{{Model.UserNames(task.UserIds)}}</span>
-                        </div>
+                            <span class="value">{Model.UserNames(task.UserIds)}</span>
+                        </div>-->
                         <span class="ng-hide">{{task | set_progress_data_percent}}</span>
                         <div class="ui progress green value"
                              ng-hide="task.Progress == 0"
@@ -171,7 +171,9 @@
                         {{ResetCheckNewValue();""}}
                         <div class="item block" ng-repeat="comment in task.Comments" ng-show="comment.Visible">
                             <div class="content block">
-                                <div class="ui small header">{{comment.DateMoment.format("MM/DD")}} {{Model.UserName(comment.CreatedById)}}</div>
+                                <div class="ui small header">{{Model.UserName(comment.CreatedById)}}</div>&nbsp;
+                                <span class="label">{{comment.DateMoment.format('MM/DD')}}</span>,&nbsp;
+                                <time class="timeago label" datetime="{{comment.CreatedDate.format()}}"></time>
                                 <div class="inline"
                                      ng-show="comment.CheckByAge()">
                                     &nbsp;|&nbsp;
@@ -196,13 +198,13 @@
                                     <p ng-bind-html="comment.Description | nl2br"></p>
                                 </div>
                                 <span class="lightgallery">
-                                    <a ng-repeat="file in task.GetCommentImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                                    <a ng-repeat="file in comment.GetCommentImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
                                         {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
                                         <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
                                     </a>
                                 </span>
                                 <span>
-                                    <a ng-repeat="file in task.GetCommentOtherFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                                    <a ng-repeat="file in comment.GetCommentOtherFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
                                         {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
                                     </a>
                                 </span>
@@ -250,10 +252,10 @@
                             <span class="label">Date</span>&nbsp;
                             <span class="value">{{subtask.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
                         </div>
-                        <div>
+                        <!--<div> not yet used
                             <span class="label">Status</span>&nbsp;
-                            <span class="value">{{TaskStatusNames[subtask.Status]}}</span>
-                        </div>
+                            <span class="value">{TaskStatusNames[subtask.Status]}</span>
+                        </div>-->
                         <div>
                             <span class="label">Hours</span>&nbsp;
                             <span class="value"
@@ -302,7 +304,11 @@
                         {{ResetCheckNewValue();""}}
                         <div class="item block" ng-repeat="comment in subtask.Comments" ng-show="comment.Visible">
                             <div class="content block">
-                                <div class="ui small header">{{comment.DateMoment.format("MM/DD")}} {{Model.UserName(comment.CreatedById)}}</div>
+                                <div class="ui small header">
+                                    {{Model.UserName(comment.CreatedById)}}
+                                </div>&nbsp;
+                                <span class="label">{{comment.DateMoment.format('MM/DD')}}</span>,&nbsp;
+                                <time class="timeago label" datetime="{{comment.CreatedDate.format()}}"></time>
                                 <div class="inline"
                                      ng-show="comment.CheckByAge()">
                                     &nbsp;|&nbsp;
@@ -326,7 +332,17 @@
                                 <div class="description block">
                                     <p ng-bind-html="comment.Description | nl2br"></p>
                                 </div>
-                                <a ng-repeat="file in comment.Files" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">{{file.DisplayName}}<div class="detail">{{SizeName(file.Size)}}</div></a>
+                                <span class="lightgallery">
+                                    <a ng-repeat="file in comment.GetCommentImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                                        {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
+                                        <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
+                                    </a>
+                                </span>
+                                <span>
+                                    <a ng-repeat="file in comment.GetCommentOtherFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
+                                        {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
+                                    </a>
+                                </span>
                             </div>
                         </div>
                         <div class="item">

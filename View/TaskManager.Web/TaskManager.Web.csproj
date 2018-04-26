@@ -567,6 +567,7 @@
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
     <None Include="Scripts\linq-vsdoc.js" />
     <Content Include="Scripts\jquery.mousewheel.min.js" />
+    <Content Include="Scripts\jquery.timeago.js" />
     <Content Include="Scripts\lightgallery\lg-autoplay.js" />
     <Content Include="Scripts\lightgallery\lg-fullscreen.js" />
     <Content Include="Scripts\lightgallery\lg-hash.js" />

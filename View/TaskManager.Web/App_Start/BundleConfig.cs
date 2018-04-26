@@ -68,6 +68,7 @@ namespace TaskManager.Web {
             bundles.Add(new TaskManagerScriptsBundle("~/Scripts/Common")
                 .Include(
                     "~/Scripts/jquery-{version}.js",
+                    "~/Scripts/jquery.timeago.js",
                     "~/Scripts/moment.js",
                     "~/Scripts/moment-duration-format.js",
                     "~/Scripts/linq.js",

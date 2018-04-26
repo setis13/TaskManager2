@@ -127,6 +127,7 @@ namespace Controllers {
                         $this.Model.SetData(result.Data);
                         setTimeout(() => {
                             (<any>$(".lightgallery")).lightGallery(); 
+                            (<any>$(".timeago")).timeago(); 
                         });
                     } else {
                         $this.Error(result.Message);

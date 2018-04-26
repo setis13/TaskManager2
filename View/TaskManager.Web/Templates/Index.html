@@ -1,0 +1,242 @@
+﻿<!-- loader -->
+<div id="loader" class="ui dimmer transition active inverted">
+    <div class="ui loader"></div>
+</div>
+<!-- a error on the page -->
+<div class="ui error message ng-hide" ng-hide="Model.Error == null">
+    <i class="close icon" ng-click="Model.Error = null"></i>
+    <div class="header">
+        Error
+    </div>
+    <p>{{Model.Error}}</p>
+</div>
+<div ng-show="Model.Loaded">
+    <!-- company name -->
+    <div class="ui message ng-hide" ng-show="Model != null && Model.Company != null">
+        <span class="label">
+            company:
+        </span>
+        <b class="value">
+            {{Model.Company.Name}}
+        </b>
+    </div>
+    <!-- company is null -->
+    <div ng-show="Model != null && Model.Company == null">
+        <div class="ui negative message">
+            <div class="header">
+                I don't have a company
+            </div>
+        </div>
+        <button class="ui primary button"
+                ng-show="Model != null && Model.Company == null && Model.InvitationCompany == null"
+                ng-click="CreateCompany_OnClick()">
+            Create New Company
+        </button>
+    </div>
+    <!-- Invitation message -->
+    <div class="ui container center aligned">
+        <div class="ui compact segments" ng-show="Model.InvitationCompany != null">
+            <div class="ui segment">
+                You are invited by the {{Model.InvitationCompany.Name}}
+            </div>
+            <div class="ui secondary right aligned segment">
+                <button class="ui red button"
+                        ng-show="Model.InvitationCompany != null"
+                        ng-click="Reject_OnClick()"
+                        lb-busy="Rejecting"
+                        title="Decline invitation">
+                    Reject
+                </button>
+                <button class="ui green button"
+                        ng-click="Accept_OnClick()"
+                        lb-busy="Accepting"
+                        title="Decline invitation">
+                    Accept
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- grid -->
+    <div class="ui grid">
+        <div class="row">
+            <div class="sixteen column" ng-show="Model.Company != null">
+                <button class="ui button"
+                        ng-click="Leave_OnClick()"
+                        lb-busy="Leaving"
+                        title="Leave from {{Model.Company.Name}}">
+                    Leave
+                </button>
+                <button class="ui primary button"
+                        ng-show="UserId == Model.Company.CreatedById"
+                        ng-click="FindUser_OnClick()"
+                        title="Find and Invite a user">
+                    Find User
+                </button>
+            </div>
+        </div>
+        <!-- Users -->
+        <div class="row" ng-show="Model.Company != null">
+            <div class="sixteen wide mobile eight wide tablet six wide computer column">
+                <table class="ui celled table">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>UserName</th>
+                            <th ng-show="UserId == Model.Company.CreatedById"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-show="Model.Users.length == 0">
+                            <td class="disabled">
+                                <span>empty</span>
+                            </td>
+                        </tr>
+                        <!-- Invited Users -->
+                        <tr class="top aligned warning"
+                            ng-repeat="user in Model.InvitedUsers"
+                            id="user-{{user.Id}}">
+                            <td>
+                                <div class="content">
+                                    <b>{{user.Email}}</b>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="content">
+                                    <b>{{user.UserName}}</b>
+                                </div>
+                            </td>
+                            <td ng-show="UserId == Model.Company.CreatedById">
+                                <a href="" ng-click="Cancel_OnClick(user)"
+                                   title="Cancel Invitation">cancel</a>
+                            </td>
+                        </tr>
+                        <!-- Users -->
+                        <tr class="top aligned"
+                            ng-repeat="user in Model.Users"
+                            id="user-{{user.Id}}">
+                            <td>
+                                <div class="content">
+                                    <b>{{user.Email}}</b>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="content">
+                                    <b>{{user.UserName}}</b>
+                                </div>
+                            </td>
+                            <td ng-show="UserId == Model.Company.CreatedById">
+                                <a href="" ng-show="UserId != user.Id"
+                                   ng-click="Remove_OnClick(user)">remove</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="sixteen wide column">
+                <hr />
+                <footer>
+                    <p>&copy; 2017 - Enote</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Find User Modal -->
+<modal id="find-user-modal" class="ui small modal" ng-model="Model.FindUser">
+    <i class="close icon" ng-click="UserCancel_OnClick()"></i>
+    <div class="header">Find and Invite User</div>
+    <div id="form-find-user" class="ui validate form content">
+        <div class="ui red message ng-hide" ng-hide="Model.FindUser.Error == null">
+            <p ng-bind-html="Model.FindUser.Error"></p>
+        </div>
+        <div class="field" ng-show="Model.FindUser.Id == null">
+            <label>UserName or Email</label>
+            <input id="username" placeholder="UserName or Email" type="text"
+                   ng-model="Model.FindUser.UserName">
+        </div>
+        <div class="field" ng-show="Model.FindUser.Id != null">
+            <label>UserName</label>
+            <span>{{Model.FindUser.UserName}}</span>
+        </div>
+        <div class="field" ng-show="Model.FindUser.Id != null">
+            <label>Email</label>
+            <span>{{Model.FindUser.Email}}</span>
+        </div>
+        <div class="ui error message"></div>
+    </div>
+    <div class="actions">
+        <div class="ui clear button"
+             ng-click="UserCancel_OnClick()">
+            Cancel
+        </div>
+        <div class="ui button"
+             ng-click="UserOk_OnClick()"
+             ng-class="Model.FindUser.Id != null ? 'primary' : ''"
+             lb-busy="Saving">
+            {{Model.FindUser.Id == null ? 'Find' : 'Invite'}}
+        </div>
+    </div>
+</modal>
+<!-- Create Company Modal -->
+<modal id="create-company-modal" class="ui small modal" ng-model="Model.EditCompany">
+    <i class="close icon" ng-click="CompanyCancel_OnClick()"></i>
+    <div class="header">{{Model.EditCompamy.EntityId == null ? 'Create New Compamy' : 'Edit My Company'}}</div>
+    <div id="form-create-company" class="ui validate form content">
+        <div class="ui red message ng-hide" ng-hide="Model.EditCompany.Error == null">
+            <p ng-bind-html="Model.EditCompany.Error"></p>
+        </div>
+        <div class="field">
+            <label>Title</label>
+            <input id="title" placeholder="Title" type="text"
+                   ng-model="Model.EditCompany.Name">
+        </div>
+        <div class="ui error message"></div>
+    </div>
+    <div class="actions">
+        <div class="ui clear button"
+             ng-click="CompanyCancel_OnClick()">
+            Cancel
+        </div>
+        <div class="ui primary button"
+             ng-click="CompanyOk_OnClick()"
+             lb-busy="Saving">
+            {{Model.EditCompany.EntityId == null ? 'Create' : 'Save'}}
+        </div>
+    </div>
+</modal>
+<script language="javascript">
+    var form1 = function () {
+        return $('#find-user-modal')
+            .form({
+                fields: {
+                    username_or_email: {
+                        identifier: 'username-or-email',
+                        rules: [
+                             {
+                                 type: 'empty',
+                                 prompt: 'Please enter a UserName or Email'
+                             }
+                        ]
+                    },
+                }
+            });
+    }
+    var form2 = function () {
+        return $('#create-company-modal')
+            .form({
+                fields: {
+                    title: {
+                        identifier: 'title',
+                        rules: [
+                             {
+                                 type: 'empty',
+                                 prompt: 'Please enter a Title'
+                             }
+                        ]
+                    },
+                }
+            });
+    }
+</script>
