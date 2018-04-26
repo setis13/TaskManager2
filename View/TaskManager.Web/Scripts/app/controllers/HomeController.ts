@@ -110,6 +110,12 @@ namespace Controllers {
             });
         }
 
+        public InitTimeAgo() {
+            setTimeout(() => {
+                (<any>$(".timeago")).timeago();
+            });
+        }
+
         public Load = () => {
             var $this = this;
             $.ajax({
@@ -127,8 +133,8 @@ namespace Controllers {
                     if (result.Success) {
                         $this.Model.SetData(result.Data);
                         setTimeout(() => {
-                            (<any>$(".lightgallery")).lightGallery(); 
-                            (<any>$(".timeago")).timeago(); 
+                            (<any>$(".lightgallery")).lightGallery();
+                            $this.InitTimeAgo();
                         });
                     } else {
                         $this.Error(result.Message);
@@ -147,10 +153,12 @@ namespace Controllers {
 
         public UserFilter_OnChange = () => {
             this.Model.ApplyClientFilter();
+            this.InitTimeAgo();
         }
 
         public ProjectFilter_OnChange = () => {
             this.Model.ApplyClientFilter();
+            this.InitTimeAgo();
         }
 
         public ClearFilters_OnClick = () => {
@@ -280,6 +288,7 @@ namespace Controllers {
                 success: (result) => {
                     if (result.Success) {
                         $this.Model.SetSubTasks(result.Data.SubTasks);
+                        $this.InitTimeAgo();
                     } else {
                         $this.Error(result.Message);
                     }
@@ -309,6 +318,7 @@ namespace Controllers {
                 success: (result) => {
                     if (result.Success) {
                         $this.Model.SetSubTasks(result.Data.SubTasks);
+                        $this.InitTimeAgo();
                     } else {
                         $this.Error(result.Message);
                     }
