@@ -45,7 +45,7 @@
                     <option ng-repeat="user in Model.Users" value="{{user.Id}}">{{user.UserName}}</option>
                 </select>
             </div>
-            <div class="two wide column computer">
+            <div class="three wide column computer">
                 <div class="ui button streach"
                      ng-click="ClearFilters_OnClick()">
                     Clear
@@ -54,7 +54,7 @@
             <div class="two wide column computer">
             </div>
             <!-- sorting -->
-            <div class="three wide column computer">
+            <div class="two wide column computer">
                 <div class="ui right labeled icon button streach"
                      ng-class="Model.SortBy != 0 ? 'primary' : ''"
                      ng-click="SortBy_OnClick()">

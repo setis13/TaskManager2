@@ -13,7 +13,7 @@ namespace Controllers {
     export class HomeController extends BaseController {
 
         private taskPriorityClasses: { [index: number]: string } = { 0: 'gray', 1: 'blue', 2: 'yellow', 3: 'orange', 4: 'red' };
-        private sortByNames: { [index: number]: string } = { 0: 'none', 1: 'Task#', 2: 'Task#', 3: 'Urgency', 4: 'Urgency', 5: 'Comments', 6: 'Comments' };
+        private sortByNames: { [index: number]: string } = { 0: 'none', 1: 'Task#', 2: 'Task#', 3: 'Urgency', 4: 'Urgency', 5: 'News', 6: 'News' };
 
         public Model: Models.HomeModel;
 
@@ -170,9 +170,9 @@ namespace Controllers {
                     this.Model.SortBy = Enums.SortByEnum.TaskIdDesc;
                     break;
                 case Enums.SortByEnum.TaskIdDesc:
-                    this.Model.SortBy = Enums.SortByEnum.CommentDesc;
+                    this.Model.SortBy = Enums.SortByEnum.NewsDesc;
                     break;
-                case Enums.SortByEnum.CommentDesc:
+                case Enums.SortByEnum.NewsDesc:
                     this.Model.SortBy = Enums.SortByEnum.UrgencyDesc;
                     break;
                 default:

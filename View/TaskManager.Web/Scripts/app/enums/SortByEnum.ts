@@ -5,7 +5,7 @@
         TaskIdDesc = 2,
         Urgency = 3,
         UrgencyDesc = 4,
-        Comment = 5,
-        CommentDesc = 6,
+        News = 5,
+        NewsDesc = 6,
     }
 }

@@ -40,20 +40,22 @@
                 case Enums.SortByEnum.UrgencyDesc:
                     tasks = tasks.OrderByDescending(e => e.Priority);
                     break;
-                case Enums.SortByEnum.Comment:
+                case Enums.SortByEnum.News:
                     tasks = tasks.OrderBy(
                         t => Enumerable.From(t.SubTasks)
                             .SelectMany(st => st.Comments)
                             .Union(t.Comments)
                             .Select(c => c.CreatedDate.unix())
+                            .Union([t.LastModifiedDate.unix()])
                             .DefaultIfEmpty(0).Max(unix => unix));
                     break;
-                case Enums.SortByEnum.CommentDesc:
+                case Enums.SortByEnum.NewsDesc:
                     tasks = tasks.OrderByDescending(
                         t => Enumerable.From(t.SubTasks)
                             .SelectMany(st => st.Comments)
                             .Union(t.Comments)
                             .Select(c => c.CreatedDate.unix())
+                            .Union([t.LastModifiedDate.unix()])
                             .DefaultIfEmpty(0).Max(unix => unix));
                     break;
                 default:
