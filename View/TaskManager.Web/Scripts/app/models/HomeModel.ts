@@ -40,6 +40,22 @@
                 case Enums.SortByEnum.UrgencyDesc:
                     tasks = tasks.OrderByDescending(e => e.Priority);
                     break;
+                case Enums.SortByEnum.Comment:
+                    tasks = tasks.OrderBy(
+                        t => Enumerable.From(t.SubTasks)
+                            .SelectMany(st => st.Comments)
+                            .Union(t.Comments)
+                            .Select(c => c.CreatedDate.unix())
+                            .DefaultIfEmpty(0).Max(unix => unix));
+                    break;
+                case Enums.SortByEnum.CommentDesc:
+                    tasks = tasks.OrderByDescending(
+                        t => Enumerable.From(t.SubTasks)
+                            .SelectMany(st => st.Comments)
+                            .Union(t.Comments)
+                            .Select(c => c.CreatedDate.unix())
+                            .DefaultIfEmpty(0).Max(unix => unix));
+                    break;
                 default:
                     break;
             }

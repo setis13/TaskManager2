@@ -101,9 +101,16 @@ namespace TaskManager.Logic.Services {
             tasks1.ForEach(t => t.Comments.AddRange(comments1.Where(c => c.TaskId == t.EntityId)));
             tasks1.ForEach(t => t.SubTasks.AddRange(subtasks1.Where(st => st.TaskId == t.EntityId)));
 
-            comments1.ForEach(e => e.Files = this._fileService.GetModels(e.EntityId));
-            subtasks1.ForEach(e => e.Files = this._fileService.GetModels(e.EntityId));
-            tasks1.ForEach(e => e.Files = this._fileService.GetModels(e.EntityId));
+            var files = this._fileService.GetModels(
+                Enumerable.Union(
+                    Enumerable.Union(
+                        comments1.Select(e => e.EntityId),
+                        subtasks1.Select(e => e.EntityId)),
+                    tasks1.Select(e => e.EntityId)
+                ).ToList());
+            comments1.ForEach(e => e.Files = files.Where(f => f.ParentId == e.EntityId).ToList());
+            subtasks1.ForEach(e => e.Files = files.Where(f => f.ParentId == e.EntityId).ToList());
+            tasks1.ForEach(e => e.Files = files.Where(f => f.ParentId == e.EntityId).ToList());
 
             projects = projects1;
             tasks = tasks1;
@@ -393,7 +400,7 @@ namespace TaskManager.Logic.Services {
                 }
                 // sets task.status from max of subtasks
                 if (subtasks
-                    .Where(e => e.Status != (byte)TaskStatusEnum.Failed && 
+                    .Where(e => e.Status != (byte)TaskStatusEnum.Failed &&
                                 e.Status != (byte)TaskStatusEnum.Rejected)
                     .All(e => e.Status == (byte)TaskStatusEnum.Done)) {
                     task.Status = (byte)TaskStatusEnum.Done;
