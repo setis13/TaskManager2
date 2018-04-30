@@ -110,9 +110,10 @@ namespace Controllers {
             });
         }
 
-        public InitTimeAgo() {
+        public InitComment() {
             setTimeout(() => {
                 (<any>$(".timeago")).timeago();
+                (<any>$(".lightgallery")).lightGallery();
             });
         }
 
@@ -132,10 +133,7 @@ namespace Controllers {
                 success: (result) => {
                     if (result.Success) {
                         $this.Model.SetData(result.Data);
-                        setTimeout(() => {
-                            (<any>$(".lightgallery")).lightGallery();
-                            $this.InitTimeAgo();
-                        });
+                        $this.InitComment();
                     } else {
                         $this.Error(result.Message);
                     }
@@ -153,12 +151,12 @@ namespace Controllers {
 
         public UserFilter_OnChange = () => {
             this.Model.ApplyClientFilter();
-            this.InitTimeAgo();
+            this.InitComment();
         }
 
         public ProjectFilter_OnChange = () => {
             this.Model.ApplyClientFilter();
-            this.InitTimeAgo();
+            this.InitComment();
         }
 
         public ClearFilters_OnClick = () => {
@@ -288,7 +286,7 @@ namespace Controllers {
                 success: (result) => {
                     if (result.Success) {
                         $this.Model.SetSubTasks(result.Data.SubTasks);
-                        $this.InitTimeAgo();
+                        $this.InitComment();
                     } else {
                         $this.Error(result.Message);
                     }
@@ -318,7 +316,7 @@ namespace Controllers {
                 success: (result) => {
                     if (result.Success) {
                         $this.Model.SetSubTasks(result.Data.SubTasks);
-                        $this.InitTimeAgo();
+                        $this.InitComment();
                     } else {
                         $this.Error(result.Message);
                     }
@@ -713,21 +711,25 @@ namespace Controllers {
             var action = (arg) => {
                 for (var i in arg.target.files) {
                     var file = arg.target.files[i];
-                    if (file.constructor.name === 'File') {
-                        // cheks by exists
-                        var break1 = false;
-                        for (var j in files) {
-                            if (files[j].FileName == file.name) {
-                                toastr.warning((<any>String).format("file '{0}' already exists", file.name));
-                                break1 = true;
-                                break;
+                    if (file.size != 0) {
+                        if (file.constructor.name === 'File') {
+                            // cheks by exists
+                            var break1 = false;
+                            for (var j in files) {
+                                if (files[j].FileName == file.name) {
+                                    toastr.warning((<any>String).format("file '{0}' already exists", file.name));
+                                    break1 = true;
+                                    break;
+                                }
                             }
+                            if (break1) continue;
+                            var model = new Models.FileModel(null);
+                            model.FileName = file.name;
+                            model.Size = file.size;
+                            files.push(model);
                         }
-                        if (break1) continue;
-                        var model = new Models.FileModel(null);
-                        model.FileName = file.name;
-                        model.Size = file.size;
-                        files.push(model);
+                    } else {
+                        toastr.error("can not upload an empty file");
                     }
                 }
                 this.scope.$apply();

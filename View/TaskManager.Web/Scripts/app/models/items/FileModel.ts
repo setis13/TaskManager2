@@ -4,17 +4,24 @@
         public FileName: string;
         public Size: number;
 
+        private NAME_LEN_LIMIT: number = 24;
+
         public get DisplayName(): string {
-            if (this.FileName.length > 16) {
-                var index = this.FileName.lastIndexOf('.');
-                if (index != -1) {
-                    return this.FileName.substring(0, index < 16 ? index : 16) + '~' + this.FileName.substring(index, this.FileName.length);
+            var index = this.FileName.lastIndexOf('.');
+            if (index != -1) {
+                if (index > this.NAME_LEN_LIMIT) {
+                    return this.FileName.substring(0, index < this.NAME_LEN_LIMIT ? index : this.NAME_LEN_LIMIT) + '~' + this.FileName.substring(index, this.FileName.length);
                 } else {
-                    return this.FileName.substring(0, 16) + '~';
+                    return this.FileName;
                 }
             } else {
-                return this.FileName;
+                if (this.FileName.length > this.NAME_LEN_LIMIT) {
+                    return this.FileName.substring(0, this.NAME_LEN_LIMIT) + '~';
+                } else {
+                    return this.FileName;
+                }
             }
+
         }
 
         constructor(data: any) {

@@ -15,11 +15,9 @@
     <div class="ui three column stackable grid">
         <div class="row">
             <!-- create task -->
-            <div class="three wide column">
+            <div class="two wide column">
                 <button class="ui primary button" ng-click="CreateTask_OnClick()">Create&nbsp;Task</button>
             </div>
-        </div>
-        <div class="row">
             <!-- filter -->
             <div class="three wide column computer">
                 <select id="history-filter" class="ui dropdown streach"
@@ -45,17 +43,15 @@
                     <option ng-repeat="user in Model.Users" value="{{user.Id}}">{{user.UserName}}</option>
                 </select>
             </div>
-            <div class="three wide column computer">
+            <div class="two wide column computer">
                 <div class="ui button streach"
                      ng-click="ClearFilters_OnClick()">
                     Clear
                 </div>
             </div>
-            <div class="two wide column computer">
-            </div>
             <!-- sorting -->
-            <div class="two wide column computer">
-                <div class="ui right labeled icon button streach"
+            <div class="three wide column computer right aligned">
+                <div class="ui right labeled icon button"
                      ng-class="Model.SortBy != 0 ? 'primary' : ''"
                      ng-click="SortBy_OnClick()">
                     <i class="long arrow icon"
@@ -100,7 +96,8 @@
                         </div>-->
                         <div>
                             <span class="label">Date</span>&nbsp;
-                            <span class="value">{{task.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
+                            <span class="value">{{task.LastModifiedDate.format("MM/DD/YYYY")}}</span>,
+                            <time class="timeago label" datetime="{{task.LastModifiedDate.format()}}"></time>
                         </div>
                         <!--<div> not yet used
                             <span class="label">Status</span>&nbsp;
@@ -110,11 +107,17 @@
                             <span class="label">Urgency</span>&nbsp;
                             <span class="ui tiny label" ng-class="TaskPriorityClasses[task.Priority]">{{TaskPriorityNames[task.Priority]}}</span>
                         </div>
-                        <div>
+                        <div ng-show="task.TotalWorkHours > 0">
                             <span class="label">Hours (actual / total)</span>&nbsp;
                             <span class="value"
                                   ng-class="task.ActualWorkHours > task.TotalWorkHours ? 'red' : ''">
                                 {{task.ActualWorkHours | number:1}}h / {{task.TotalWorkHours | number:1}}h
+                            </span>
+                        </div>
+                        <div ng-show="task.TotalWorkHours == 0">
+                            <span class="label">Hours (actual)</span>&nbsp;
+                            <span class="value">
+                                {{task.ActualWorkHours | number:1}}h
                             </span>
                         </div>
                         <!--<div> not yet used
@@ -164,7 +167,7 @@
                             <div class="content block">
                                 <div class="ui small header">{{Model.UserName(comment.CreatedById)}}</div>&nbsp;
                                 <span class="label">{{comment.DateMoment.format('MM/DD')}}</span>,&nbsp;
-                                <time class="timeago label" datetime="{{comment.CreatedDate.format()}}"></time>
+                                <time class="timeago label" datetime="{{comment.LastModifiedDate.format()}}"></time>
                                 <div class="inline"
                                      ng-show="comment.CheckByAge()">
                                     &nbsp;|&nbsp;
@@ -241,17 +244,28 @@
                         </div>
                         <div>
                             <span class="label">Date</span>&nbsp;
-                            <span class="value">{{subtask.CreatedDate.format("MM/DD/YYYY h:mm A")}}</span>
+                            <span class="value">{{subtask.LastModifiedDate.format("MM/DD/YYYY")}}</span>,
+                            <time class="timeago label" datetime="{{subtask.LastModifiedDate.format()}}"></time>
                         </div>
                         <!--<div> not yet used
                             <span class="label">Status</span>&nbsp;
                             <span class="value">{TaskStatusNames[subtask.Status]}</span>
                         </div>-->
                         <div>
-                            <span class="label">Hours</span>&nbsp;
+                            <span class="label">Urgency</span>&nbsp;
+                            <span class="ui tiny label" ng-class="TaskPriorityClasses[task.Priority]">{{TaskPriorityNames[task.Priority]}}</span>
+                        </div>
+                        <div ng-show="subtask.TotalWorkHours > 0">
+                            <span class="label">Hours (actual / total)</span>&nbsp;
                             <span class="value"
                                   ng-class="subtask.ActualWorkHours > subtask.TotalWorkHours ? 'red' : ''">
                                 {{subtask.ActualWorkHours | number:1}}h / {{subtask.TotalWorkHours | number:1}}h
+                            </span>
+                        </div>
+                        <div ng-show="subtask.TotalWorkHours == 0">
+                            <span class="label">Hours (actual)</span>&nbsp;
+                            <span class="value">
+                                {{subtask.ActualWorkHours | number:1}}h
                             </span>
                         </div>
                         <span class="ng-hide">{{subtask | set_progress_data_percent}}</span>
@@ -299,7 +313,7 @@
                                     {{Model.UserName(comment.CreatedById)}}
                                 </div>&nbsp;
                                 <span class="label">{{comment.DateMoment.format('MM/DD')}}</span>,&nbsp;
-                                <time class="timeago label" datetime="{{comment.CreatedDate.format()}}"></time>
+                                <time class="timeago label" datetime="{{comment.LastModifiedDate.format()}}"></time>
                                 <div class="inline"
                                      ng-show="comment.CheckByAge()">
                                     &nbsp;|&nbsp;
