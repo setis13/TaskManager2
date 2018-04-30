@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using TaskManager.Common.Identity;
+using TaskManager.Data.Contracts.Identity;
 using TaskManager.Logic.Contracts;
 using TaskManager.Logic.Contracts.Services.Base;
 using TaskManager.Logic.Identity;

@@ -5,8 +5,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using TaskManager.Common.Extensions;
-using TaskManager.Common.Identity;
+using TaskManager.Data.Contracts.Extensions;
+using TaskManager.Data.Contracts.Identity;
 using TaskManager.Logic.Identity;
 
 namespace TaskManager.Web {

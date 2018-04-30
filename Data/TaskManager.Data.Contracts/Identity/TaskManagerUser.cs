@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace TaskManager.Common.Identity {
+namespace TaskManager.Data.Contracts.Identity {
     public class TaskManagerUser : IdentityUser<Guid, TaskManagerUserLogin, TaskManagerUserRole, TaskManagerUserClaim> {
 
         #region [ .ctor ]

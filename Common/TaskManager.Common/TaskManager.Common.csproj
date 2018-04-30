@@ -77,13 +77,7 @@
     <Compile Include="Enums\RoleName.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\HtmlHelper.cs" />
-    <Compile Include="Extensions\IdentityExtensions1.cs" />
     <Compile Include="Extensions\JsonExtension.cs" />
-    <Compile Include="Identity\TaskManagerRole.cs" />
-    <Compile Include="Identity\TaskManagerUser.cs" />
-    <Compile Include="Identity\TaskManagerUserClaim.cs" />
-    <Compile Include="Identity\TaskManagerUserLogin.cs" />
-    <Compile Include="Identity\TaskManagerUserRole.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

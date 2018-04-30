@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using TaskManager.Common.Identity;
 using TaskManager.Data.Contracts.Entities.Base;
+using TaskManager.Data.Contracts.Identity;
 
 namespace TaskManager.Data.Contracts.Entities {
     /// <summary>

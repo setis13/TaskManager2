@@ -5,7 +5,7 @@ using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using TaskManager.Common;
-using TaskManager.Common.Extensions;
+using TaskManager.Data.Contracts.Extensions;
 using TaskManager.Logic.Contracts;
 using TaskManager.Logic.Contracts.Dtos;
 using TaskManager.Logic.Contracts.Services;

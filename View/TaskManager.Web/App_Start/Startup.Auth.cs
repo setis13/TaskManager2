@@ -5,10 +5,10 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-using TaskManager.Common.Extensions;
-using TaskManager.Common.Identity;
 using TaskManager.Logic.Identity;
 using TaskManager.Data.Contracts;
+using TaskManager.Data.Contracts.Extensions;
+using TaskManager.Data.Contracts.Identity;
 using TaskManager.Logic.Contracts;
 
 namespace TaskManager.Web {

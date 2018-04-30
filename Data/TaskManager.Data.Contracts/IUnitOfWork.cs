@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
-using TaskManager.Common.Identity;
 using TaskManager.Data.Contracts.Context;
 using TaskManager.Data.Contracts.Entities.Base;
+using TaskManager.Data.Contracts.Identity;
 using TaskManager.Data.Contracts.Repositories.Base;
 
 namespace TaskManager.Data.Contracts {

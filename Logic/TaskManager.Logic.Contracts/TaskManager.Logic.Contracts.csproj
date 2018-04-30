@@ -103,6 +103,10 @@
       <Project>{C5B94CF9-5C2B-45EB-B524-6BEBA0544FCE}</Project>
       <Name>TaskManager.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Data\TaskManager.Data.Contracts\TaskManager.Data.Contracts.csproj">
+      <Project>{20F08872-7764-4EE2-A383-FB062CE73EAE}</Project>
+      <Name>TaskManager.Data.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace TaskManager.Common.Identity {
+namespace TaskManager.Data.Contracts.Identity {
     public class TaskManagerRole : IdentityRole<Guid, TaskManagerUserRole> {
         /// <summary>
         ///     Constructor </summary>

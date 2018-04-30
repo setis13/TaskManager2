@@ -1,8 +1,6 @@
 ﻿using System;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
-using TaskManager.Common.Identity;
+using TaskManager.Data.Contracts.Identity;
 
 namespace TaskManager.Logic.Identity {
     public class TaskManagerUserManager : UserManager<TaskManagerUser, Guid> {

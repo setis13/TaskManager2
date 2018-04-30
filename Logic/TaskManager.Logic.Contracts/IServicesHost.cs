@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
-using TaskManager.Common.Identity;
+using TaskManager.Data.Contracts.Identity;
 using TaskManager.Logic.Contracts.Services.Base;
 
 namespace TaskManager.Logic.Contracts {

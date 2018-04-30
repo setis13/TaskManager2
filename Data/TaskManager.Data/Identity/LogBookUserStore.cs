@@ -1,7 +1,7 @@
 ﻿using System;
-using TaskManager.Common.Identity;
 using TaskManager.Data.Contracts.Context;
 using Microsoft.AspNet.Identity.EntityFramework;
+using TaskManager.Data.Contracts.Identity;
 
 namespace TaskManager.Data.Identity {
     public class TaskManagerUserStore :

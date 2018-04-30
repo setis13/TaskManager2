@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TaskManager.Common.Extensions;
+using TaskManager.Data.Contracts.Extensions;
 using TaskManager.Logic.Contracts;
 using TaskManager.Logic.Contracts.Dtos;
 using TaskManager.Logic.Identity;

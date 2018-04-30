@@ -78,7 +78,13 @@
     <Compile Include="Entities\SubTask.cs" />
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Session.cs" />
+    <Compile Include="Extensions\IdentityExtensions1.cs" />
     <Compile Include="Helpers\HttpHeadersHelper.cs" />
+    <Compile Include="Identity\TaskManagerRole.cs" />
+    <Compile Include="Identity\TaskManagerUser.cs" />
+    <Compile Include="Identity\TaskManagerUserClaim.cs" />
+    <Compile Include="Identity\TaskManagerUserLogin.cs" />
+    <Compile Include="Identity\TaskManagerUserRole.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="IUserSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
