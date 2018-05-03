@@ -11,7 +11,7 @@ namespace TaskManager.Logic.Contracts.Dtos {
         public string Description { get; set; }
         public byte Priority { get; set; }
         public TimeSpan ActualWork { get; set; }
-        public TimeSpan TotalWork { get; set; }
+        public TimeSpan? TotalWork { get; set; }
         public float Progress { get; set; } 
         public byte Status { get; set; }
         public List<Guid> UserIds { get; set; } = new List<Guid>();

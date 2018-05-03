@@ -9,6 +9,7 @@
         public EditSubTask: SubTaskModel;
         public EditComment: CommentModel;
         public HistoryFilters: { [id: string]: string; };
+        public LastResponsibleIds: Array<string>;
         public SelectedHistoryFilter: string = '';
         public SelectedUserFilter: string = '';
         public SelectedProjectFilter: string = '';
@@ -43,8 +44,6 @@
                 case Enums.SortByEnum.News:
                     tasks = tasks.OrderBy(
                         t => Enumerable.From(t.SubTasks)
-                            .SelectMany(st => st.Comments)
-                            .Union(t.Comments)
                             .Select(c => c.CreatedDate.unix())
                             .Union([t.LastModifiedDate.unix()])
                             .DefaultIfEmpty(0).Max(unix => unix));
@@ -52,8 +51,6 @@
                 case Enums.SortByEnum.NewsDesc:
                     tasks = tasks.OrderByDescending(
                         t => Enumerable.From(t.SubTasks)
-                            .SelectMany(st => st.Comments)
-                            .Union(t.Comments)
                             .Select(c => c.CreatedDate.unix())
                             .Union([t.LastModifiedDate.unix()])
                             .DefaultIfEmpty(0).Max(unix => unix));
@@ -80,6 +77,7 @@
             this.Projects = new Array();
             this.Tasks = new Array();
             this.HistoryFilters = {};
+            this.LastResponsibleIds = new Array();
             for (var i = 0; i < data.Users.length; i++) {
                 this.Users.push(new UserModel(data.Users[i]));
             }
@@ -93,6 +91,7 @@
                 this.HistoryFilters[moment(data.HistoryFilters[i]).format('MM/DD/YYYY')] =
                     moment(data.HistoryFilters[i]).format('MMM YYYY');
             }
+            this.LastResponsibleIds = data.LastResponsibleIds;
             this.ApplyClientFilter();
         }
 

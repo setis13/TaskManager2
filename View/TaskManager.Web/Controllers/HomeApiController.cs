@@ -39,13 +39,21 @@ namespace TaskManager.Web.Controllers {
                     List<ProjectDto> projects;
                     List<Task1Dto> tasks;
                     List<DateTime> historyFilters;
+                    List<Guid> lastResponsibleIds;
 
                     var user = GetUserDto();
                     users = Mapper.Map<List<UserDto>>(
                         this.UserManager.Users.Where(e => e.CompanyId == user.CompanyId));
 
-                    this._service.GetData(user, historyFilter, out projects, out tasks, out historyFilters);
-                    return WebApiResult.Succeed(new { Projects = projects, Users = users, Tasks = tasks, HistoryFilters = historyFilters, SortBy = user.SortBy });
+                    this._service.GetData(user, historyFilter, out projects, out tasks, out historyFilters, out lastResponsibleIds);
+                    return WebApiResult.Succeed(new {
+                        Projects = projects,
+                        Users = users,
+                        Tasks = tasks,
+                        HistoryFilters = historyFilters,
+                        SortBy = user.SortBy,
+                        LastResponsibleIds = lastResponsibleIds
+                    });
                 });
             } catch (Exception e) {
                 Logger.e("GetData", e);

@@ -95,7 +95,12 @@
                             <span class="value">{Model.UserName(task.CreatedById)}</span>
                         </div>-->
                         <div>
-                            <span class="label">Date</span>&nbsp;
+                            <span class="label">Created</span>&nbsp;
+                            <span class="value">{{task.CreatedDate.format("MM/DD/YYYY")}}</span>,
+                            <time class="timeago label" datetime="{{task.CreatedDate.format()}}"></time>
+                        </div>
+                        <div>
+                            <span class="label">Modified</span>&nbsp;
                             <span class="value">{{task.LastModifiedDate.format("MM/DD/YYYY")}}</span>,
                             <time class="timeago label" datetime="{{task.LastModifiedDate.format()}}"></time>
                         </div>
@@ -114,7 +119,7 @@
                                 {{task.ActualWorkHours | number:1}}h / {{task.TotalWorkHours | number:1}}h
                             </span>
                         </div>
-                        <div ng-show="task.TotalWorkHours == 0">
+                        <div ng-show="task.TotalWorkHours == undefined && task.ActualWorkHours != 0">
                             <span class="label">Hours (actual)</span>&nbsp;
                             <span class="value">
                                 {{task.ActualWorkHours | number:1}}h
@@ -243,8 +248,13 @@
                             </div>
                         </div>
                         <div>
-                            <span class="label">Date</span>&nbsp;
-                            <span class="value">{{subtask.LastModifiedDate.format("MM/DD/YYYY")}}</span>,
+                            <span class="label">Created</span>&nbsp;
+                            <span class="value">{{subtask.CreatedDate.format("MM/DD")}}</span>,
+                            <time class="timeago label" datetime="{{subtask.CreatedDate.format()}}"></time>
+                        </div>
+                        <div>
+                            <span class="label">Modified</span>&nbsp;
+                            <span class="value">{{subtask.LastModifiedDate.format("MM/DD")}}</span>,
                             <time class="timeago label" datetime="{{subtask.LastModifiedDate.format()}}"></time>
                         </div>
                         <!--<div> not yet used
@@ -262,7 +272,7 @@
                                 {{subtask.ActualWorkHours | number:1}}h / {{subtask.TotalWorkHours | number:1}}h
                             </span>
                         </div>
-                        <div ng-show="subtask.TotalWorkHours == 0">
+                        <div ng-show="subtask.TotalWorkHours == undefined && subtask.ActualWorkHours != 0">
                             <span class="label">Hours (actual)</span>&nbsp;
                             <span class="value">
                                 {{subtask.ActualWorkHours | number:1}}h
@@ -606,11 +616,11 @@
 </div>
 <script language="javascript">
     var form = function () {
-        return $('#form-task')
+        return $('#task-form')
             .form({
                 fields: {
                     title: {
-                        identifier: 'title',
+                        identifier: 'task-title',
                         rules: [
                             {
                                 type: 'empty',
@@ -619,7 +629,7 @@
                         ]
                     },
                     project: {
-                        identifier: 'project',
+                        identifier: 'task-project',
                         rules: [
                             {
                                 type: 'empty',
@@ -637,14 +647,10 @@
                         ]
                     },
                     total_hours: {
-                        identifier: 'total-hours',
+                        identifier: 'task-total-hours',
                         rules: [
                             {
-                                type: 'empty',
-                                prompt: 'Please enter total hours'
-                            },
-                            {
-                                type: 'regExp[/^[0-9.]{1,10}$/]',
+                                type: 'regExp[/^[0-9.]{0,10}$/]',
                                 prompt: 'Please enter valid total hours'
                             }
                             /* implement regex: Please enter other than zero */
@@ -654,11 +660,11 @@
             });
     }
     var form2 = function () {
-        return $('#form-subtask')
+        return $('#subtask-form')
             .form({
                 fields: {
                     title: {
-                        identifier: 'title2',
+                        identifier: 'subtask-title',
                         rules: [
                             {
                                 type: 'empty',
@@ -667,14 +673,10 @@
                         ]
                     },
                     total_hours: {
-                        identifier: 'total-hours2',
+                        identifier: 'subtask-total-hours',
                         rules: [
                             {
-                                type: 'empty',
-                                prompt: 'Please enter total hours'
-                            },
-                            {
-                                type: 'regExp[/^[0-9.]{1,10}$/]',
+                                type: 'regExp[/^[0-9.]{0,10}$/]',
                                 prompt: 'Please enter valid total hours'
                             }
                         ]
@@ -688,11 +690,11 @@
     }
 
     var form3 = function () {
-        return $('#form-comment')
+        return $('#comment-form')
             .form({
                 fields: {
                     actual_hours: {
-                        identifier: 'actual-hours',
+                        identifier: 'comment-actual-hours',
                         rules: [
                             {
                                 type: 'regExp[/^[0-9.]{0,10}$/]',
@@ -702,7 +704,7 @@
                         ]
                     },
                     date: {
-                        identifier: 'date',
+                        identifier: 'comment-date',
                         rules: [
                             {
                                 type: 'empty',
@@ -711,7 +713,7 @@
                         ]
                     },
                     status: {
-                        identifier: 'status',
+                        identifier: 'comment-status',
                         rules: [
                             {
                                 type: 'empty',
@@ -720,7 +722,7 @@
                         ]
                     },
                     progress: {
-                        identifier: 'progress',
+                        identifier: 'comment-progress',
                         rules: [
                             {
                                 type: 'nullablePercent[value]',

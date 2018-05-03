@@ -23,11 +23,15 @@ namespace TaskManager.Data.Contracts.Entities {
             get { return TimeSpan.FromTicks(ActualWorkTicks); }
             set { ActualWorkTicks = value.Ticks; }
         }
-        public Int64 TotalWorkTicks { get; set; }
+        public Int64? TotalWorkTicks { get; set; }
         [NotMapped]
-        public TimeSpan TotalWork {
-            get { return TimeSpan.FromTicks(TotalWorkTicks); }
-            set { TotalWorkTicks = value.Ticks; }
+        public TimeSpan? TotalWork {
+            get {
+                return TotalWorkTicks != null ?
+                   TimeSpan.FromTicks(TotalWorkTicks.Value) :
+                   (TimeSpan?)null;
+            }
+            set { TotalWorkTicks = value?.Ticks; }
         }
         public float Progress { get; set; }
         public byte Status { get; set; }

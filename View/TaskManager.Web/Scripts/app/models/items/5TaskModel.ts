@@ -17,13 +17,17 @@
 
         //extra
         private _totalWork: any; // uses string in modal or number in tempate
-        public get TotalWorkHours(): any {
+        public get TotalWorkHours(): string {
             return this._totalWork;
         }
-        public set TotalWorkHours(str: any) {
+        public set TotalWorkHours(str: string) {
             this._totalWork = str;
-            var value = parseFloat(str);
-            this.TotalWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
+            if (str != null && str !== '') {
+                var value = parseFloat(str);
+                this.TotalWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
+            } else {
+                this.TotalWork = null;
+            }
         }
         //extra
         private _actualWork: any; // uses string in modal or number in tempate
@@ -63,7 +67,7 @@
                 this.Description = data.Description !== null ? data.Description : '';
                 this.Priority = data.Priority;
                 this.ActualWorkHours = moment.duration(data.ActualWork).asHours();
-                this.TotalWorkHours = moment.duration(data.TotalWork).asHours();
+                this.TotalWorkHours = data.TotalWork != null ? moment.duration(data.TotalWork).asHours().toFixed(1) : null;
                 this.Progress = data.Progress;
                 this.Status = data.Status;
                 for (var i = 0; data.SubTasks != null &&i < data.SubTasks.length; i++) {

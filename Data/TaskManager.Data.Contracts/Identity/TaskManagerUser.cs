@@ -33,6 +33,9 @@ namespace TaskManager.Data.Contracts.Identity {
         /// <summary>
         ///     See Scripts/app/enums/SortByEnum.ts </summary>
         public byte SortBy { get; set; }
+        /// <summary>
+        ///     The last modified task ID. Using for a saving responsible </summary>
+        public Guid? LastModifiedTaskId { get; set; }
 
         [NotMapped]
         public object Company { get; set; }

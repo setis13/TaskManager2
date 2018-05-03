@@ -129,6 +129,14 @@
     <Compile Include="Migrations\201804101051561_alarms.Designer.cs">
       <DependentUpon>201804101051561_alarms.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805031526136_last_task_id.cs" />
+    <Compile Include="Migrations\201805031526136_last_task_id.Designer.cs">
+      <DependentUpon>201805031526136_last_task_id.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805031705012_nullable_total_work.cs" />
+    <Compile Include="Migrations\201805031705012_nullable_total_work.Designer.cs">
+      <DependentUpon>201805031705012_nullable_total_work.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\Repository.cs" />
     <Compile Include="UnitOfWork.cs" />
@@ -143,6 +151,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804101051561_alarms.resx">
       <DependentUpon>201804101051561_alarms.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805031526136_last_task_id.resx">
+      <DependentUpon>201805031526136_last_task_id.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805031705012_nullable_total_work.resx">
+      <DependentUpon>201805031705012_nullable_total_work.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="script.sql" />
   </ItemGroup>

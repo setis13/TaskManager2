@@ -9,7 +9,8 @@ using TaskManager.Logic.Contracts.Dtos;
 using TaskManager.Logic.Contracts.Enums;
 using TaskManager.Logic.Contracts.Services;
 using TaskManager.Logic.Services.Base;
-using System.IO;
+using Microsoft.AspNet.Identity;
+using TaskManager.Data.Contracts.Identity;
 
 namespace TaskManager.Logic.Services {
     public class TaskService : HostService<ITaskService>, ITaskService {
@@ -33,10 +34,12 @@ namespace TaskManager.Logic.Services {
         /// <param name="projects">out parameter</param>
         /// <param name="tasks">out parameter</param>
         /// <param name="historyFilters">out parameter</param>
+        /// <param name="lastResponsibleIds">out last responsible ids</param>
         public void GetData(UserDto user, DateTime? historyDeep,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks,
-            out List<DateTime> historyFilters) {
+            out List<DateTime> historyFilters,
+            out List<Guid> lastResponsibleIds) {
 
             var projectRep = UnitOfWork.GetRepository<Project>();
             var taskRep = UnitOfWork.GetRepository<Task1>();
@@ -51,6 +54,8 @@ namespace TaskManager.Logic.Services {
 
             historyFilters = commentsQuery.Select(e => e.Date).ToList()
                 .Select(e => e.Date.AddDays(-e.Date.Day + 1)).Distinct().OrderByDescending(e => e).ToList();
+
+            lastResponsibleIds = this.GetLastResponsibleIds(user);
 
             if (historyDeep == null) {
                 var statuses = new List<TaskStatusEnum>() {
@@ -142,6 +147,8 @@ namespace TaskManager.Logic.Services {
             this.SaveTaskUsers(taskDto, userDto);
 
             this.CalculateTaskValues(model.EntityId, userDto);
+
+            this.SaveLastModifiedTaskId(taskDto.EntityId, userDto);
         }
 
         /// <summary>
@@ -391,12 +398,17 @@ namespace TaskManager.Logic.Services {
                     taskComments.Where(e => e.ActualWorkTicks != null).Select(e => e.ActualWorkTicks.Value).DefaultIfEmpty(0).Sum() +
                     subtasksComments.Where(e => e.ActualWorkTicks != null).Select(e => e.ActualWorkTicks.Value).DefaultIfEmpty(0).Sum());
                 // sets task.totalwork from subtasks
-                task.TotalWork = new TimeSpan(subtasks.Sum(e => e.TotalWorkTicks));
-                if (task.TotalWork != TimeSpan.Zero) {
-                    // sets task.progress from tasks[progress] and subtasks[progress * subtask.totalwork / task.totalwork] 
-                    task.Progress = subtasks.Sum(e => e.Progress * e.TotalWorkTicks / task.TotalWorkTicks) + /* CODE#1 */ task.Progress;
+                if(subtasks.Any(e => e.TotalWorkTicks != null)) {
+                    task.TotalWork = new TimeSpan(subtasks.Where(e => e.TotalWorkTicks != null).Sum(e => e.TotalWorkTicks.Value));
+                    if (task.TotalWork != TimeSpan.Zero) {
+                        // sets task.progress from tasks[progress] and subtasks[progress * subtask.totalwork / task.totalwork] 
+                        task.Progress = subtasks.Where(e => e.TotalWorkTicks != null).Sum(e => e.Progress * e.TotalWorkTicks.Value / task.TotalWorkTicks.Value) + /* CODE#1 */ task.Progress;
+                    } else {
+                        task.Progress = 0;
+                    }
                 } else {
-                    task.Progress = 0;
+                    task.TotalWork = null;
+                    task.Progress = (float)subtasks.Where(e => e.Status == (byte)TaskStatusEnum.Done).Count() / subtasks.Count;
                 }
                 // sets task.status from max of subtasks
                 if (subtasks
@@ -453,5 +465,33 @@ namespace TaskManager.Logic.Services {
         }
 
         #endregion [ calculation ]
+
+        #region [ last responsible ]
+
+        /// <summary>
+        ///     Sets last task id </summary>
+        private void SaveLastModifiedTaskId(Guid taskId, UserDto userDto) {
+            if (userDto.LastModifiedTaskId != taskId) {
+                TaskManagerUser user = base.ServicesHost.UserManager.FindById(userDto.Id);
+                user.LastModifiedTaskId = taskId;
+                base.ServicesHost.UserManager.Update(user);
+            }
+        }
+
+        /// <summary>
+        ///     Gets last responsible </summary>
+        public List<Guid> GetLastResponsibleIds(UserDto userDto) {
+            if (userDto.LastModifiedTaskId != null) {
+                var userTaskRep = UnitOfWork.GetRepository<TaskUser>();
+                var userIds = userTaskRep
+                    .SearchFor(e => (e.CreatedById == userDto.Id || e.LastModifiedById == userDto.Id) &&
+                                    e.TaskId == userDto.LastModifiedTaskId.Value)
+                    .Select(e => e.UserId).ToList();
+                return userIds;
+            }
+            return null;
+        }
+
+        #endregion [ last responsible ]
     }
 }

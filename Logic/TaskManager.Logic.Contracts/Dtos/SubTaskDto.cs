@@ -10,7 +10,7 @@ namespace TaskManager.Logic.Contracts.Dtos {
         public string Title { get; set; }
         public string Description { get; set; }
         public TimeSpan ActualWork { get; set; }
-        public TimeSpan TotalWork { get; set; }
+        public TimeSpan? TotalWork { get; set; }
         public float Progress { get; set; }
         public byte Status { get; set; }
         public List<CommentDto> Comments { get; set; } = new List<CommentDto>();

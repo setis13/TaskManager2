@@ -16,10 +16,12 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="projects">out parameter</param>
         /// <param name="tasks">out parameter</param>
         /// <param name="historyFilters">out parameter</param>
+        /// <param name="lastResponsibleIds">out last responsible ids</param>
         void GetData(UserDto user, DateTime? historyDeep,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks,
-            out List<DateTime> historyFilters);
+            out List<DateTime> historyFilters,
+            out List<Guid> lastResponsibleIds);
 
         /// <summary>
         ///     Creates or Updates task </summary>
@@ -70,5 +72,9 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="commentId">comment id</param>
         /// <param name="userDto">user who deletes the comment</param>
         void DeleteComment(Guid commentId, UserDto userDto);
+
+        /// <summary>
+        ///     Gets last responsible </summary>
+        List<Guid> GetLastResponsibleIds(UserDto userDto);
     }
 }

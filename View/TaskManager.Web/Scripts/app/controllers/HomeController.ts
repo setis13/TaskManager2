@@ -83,8 +83,9 @@ namespace Controllers {
 
         public InitTaskModal() {
             setTimeout(() => {
-                $('#task-title').unbind('change'); // event was busy
-                $('#task-description').unbind('change'); // event was busy
+                $('#task-title').unbind('input'); // event was busy
+                $('#task-description').unbind('input'); // event was busy
+                $('#task-total-hours').unbind('input'); // event was busy
                 $('#task-project').dropdown("set selected", this.Model.EditTask.ProjectId);
                 // NOTE: костыль!
                 $('#task-users').val('').dropdown("set selected", Enumerable.From(this.Model.EditTask.UserIds).Select(e => "string:" + e).ToArray());
@@ -92,14 +93,15 @@ namespace Controllers {
         }
         public InitSubTaskModal() {
             setTimeout(() => {
-                $('#subtask-title').unbind('change'); // event was busy
-                $('#subtask-description').unbind('change'); // event was busy
+                $('#subtask-title').unbind('input'); // event was busy
+                $('#subtask-description').unbind('input'); // event was busy
+                $('#subtask-total-hours').unbind('input'); // event was busy
             });
         }
         public InitCommentModal() {
             var $this = this;
             setTimeout(() => {
-                $('#comment-description').unbind('change'); // event was busy
+                $('#comment-description').unbind('input'); // event was busy
                 $('#comment-status').dropdown("set selected", this.Model.EditComment.Status);
                 $('#comment-date').calendar({
                     type: 'date',
@@ -216,6 +218,8 @@ namespace Controllers {
 
         public CreateTask_OnClick = () => {
             var task = new Models.TaskModel(null);
+            // sets default responsible
+            task.UserIds = this.Model.LastResponsibleIds;
             this.Model.EditTask = task;
             this.InitTaskModal();
         }
@@ -350,6 +354,7 @@ namespace Controllers {
                         $this.Model.EditTask.EntityId = result.Data.EntityId;
                         $this.Task_UploadFiles($this.Model.EditTask,
                             () => {
+                                $this.Model.LastResponsibleIds = this.Model.EditTask.UserIds;
                                 $this.Model.EditTask = null;
                                 $this.Load();
                             }
