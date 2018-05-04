@@ -9,7 +9,9 @@
         public EditSubTask: SubTaskModel;
         public EditComment: CommentModel;
         public HistoryFilters: { [id: string]: string; };
+        public FavoriteFilter: boolean;
         public LastResponsibleIds: Array<string>;
+        public LastFavorite: boolean;
         public SelectedHistoryFilter: string = '';
         public SelectedUserFilter: string = '';
         public SelectedProjectFilter: string = '';
@@ -59,13 +61,14 @@
                     break;
             }
 
-            if (this.SelectedUserFilter !== '') {
-                tasks = tasks.Where(e => e.UserIds.indexOf(this.SelectedUserFilter) !== -1);
-            }
+            // NOTE: moved a filter to html template
+            //if (this.SelectedUserFilter !== '') {
+            //    tasks = tasks.Where(e => e.UserIds.indexOf(this.SelectedUserFilter) !== -1);
+            //}
 
-            if (this.SelectedProjectFilter !== '') {
-                tasks = tasks.Where(e => e.ProjectId == this.SelectedProjectFilter);
-            }
+            //if (this.SelectedProjectFilter !== '') {
+            //    tasks = tasks.Where(e => e.ProjectId == this.SelectedProjectFilter);
+            //}
 
             this.FilteredTasks = tasks.ToArray();
         }
@@ -76,6 +79,7 @@
             this.Users = new Array();
             this.Projects = new Array();
             this.Tasks = new Array();
+            this.FavoriteFilter = data.FavoriteFilter;
             this.HistoryFilters = {};
             this.LastResponsibleIds = new Array();
             for (var i = 0; i < data.Users.length; i++) {
@@ -92,6 +96,7 @@
                     moment(data.HistoryFilters[i]).format('MMM YYYY');
             }
             this.LastResponsibleIds = data.LastResponsibleIds;
+            this.LastFavorite = data.LastFavorite;
             this.ApplyClientFilter();
         }
 

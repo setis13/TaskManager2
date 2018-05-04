@@ -17,11 +17,13 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="tasks">out parameter</param>
         /// <param name="historyFilters">out parameter</param>
         /// <param name="lastResponsibleIds">out last responsible ids</param>
+        /// <param name="lastFavorite">out last last favorite value</param>
         void GetData(UserDto user, DateTime? historyDeep,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks,
             out List<DateTime> historyFilters,
-            out List<Guid> lastResponsibleIds);
+            out List<Guid> lastResponsibleIds,
+            out bool lastFavorite);
 
         /// <summary>
         ///     Creates or Updates task </summary>
@@ -76,5 +78,20 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <summary>
         ///     Gets last responsible </summary>
         List<Guid> GetLastResponsibleIds(UserDto userDto);
+
+        /// <summary>
+        ///     Creates/Deletes entity of favorite for a task </summary>
+        /// <param name="taskId">Task ID</param>
+        /// <param name="userDto">user DTO</param>
+        /// <returns>Value of flag</returns>
+        bool InvertTaskFavorite(Guid taskId, UserDto userDto);
+
+        /// <summary>
+        ///     Creates/Deletes entity of favorite for a subtask </summary>
+        /// <param name="subtaskId">Task ID</param>
+        /// <param name="subtaskId">SubTask ID</param>
+        /// <param name="userDto">user DTO</param>
+        /// <returns>Value of flag</returns>
+        bool InvertSubTaskFavorite(Guid taskId, Guid subtaskId, UserDto userDto);
     }
 }

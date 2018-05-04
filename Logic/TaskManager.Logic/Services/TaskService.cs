@@ -35,17 +35,20 @@ namespace TaskManager.Logic.Services {
         /// <param name="tasks">out parameter</param>
         /// <param name="historyFilters">out parameter</param>
         /// <param name="lastResponsibleIds">out last responsible ids</param>
+        /// <param name="lastFavorite">out last last favorite value</param>
         public void GetData(UserDto user, DateTime? historyDeep,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks,
             out List<DateTime> historyFilters,
-            out List<Guid> lastResponsibleIds) {
+            out List<Guid> lastResponsibleIds,
+            out bool lastFavorite) {
 
             var projectRep = UnitOfWork.GetRepository<Project>();
             var taskRep = UnitOfWork.GetRepository<Task1>();
             var taskuserRep = UnitOfWork.GetRepository<TaskUser>();
             var subtaskRep = UnitOfWork.GetRepository<SubTask>();
             var commentRep = UnitOfWork.GetRepository<Comment>();
+            var favoriteRep = UnitOfWork.GetRepository<UserFavorite>();
 
             var projectsQuery = projectRep.SearchFor(e => e.CompanyId == user.CompanyId);
             var tasksQuery = taskRep.SearchFor(e => e.CompanyId == user.CompanyId);
@@ -56,6 +59,7 @@ namespace TaskManager.Logic.Services {
                 .Select(e => e.Date.AddDays(-e.Date.Day + 1)).Distinct().OrderByDescending(e => e).ToList();
 
             lastResponsibleIds = this.GetLastResponsibleIds(user);
+            lastFavorite = this.GetLastFavorite(user);
 
             if (historyDeep == null) {
                 var statuses = new List<TaskStatusEnum>() {
@@ -117,6 +121,12 @@ namespace TaskManager.Logic.Services {
             subtasks1.ForEach(e => e.Files = files.Where(f => f.ParentId == e.EntityId).ToList());
             tasks1.ForEach(e => e.Files = files.Where(f => f.ParentId == e.EntityId).ToList());
 
+            // favorites
+            var taskIdsFavorites = favoriteRep.SearchFor(e => e.UserId == user.Id && e.TaskId != null && e.SubTaskId == null && taskIds.Contains(e.TaskId.Value)).Select(e => e.TaskId).ToList();
+            var subtaskIdsFavorites = favoriteRep.SearchFor(e => e.UserId == user.Id && e.TaskId != null && e.SubTaskId != null && subtaskIds.Contains(e.SubTaskId.Value)).Select(e => e.SubTaskId).ToList();
+            tasks1.Where(e => taskIdsFavorites.Contains(e.EntityId)).ToList().ForEach(t => t.Favorite = true);
+            subtasks1.Where(e => subtaskIdsFavorites.Contains(e.EntityId)).ToList().ForEach(t => t.Favorite = true);
+
             projects = projects1;
             tasks = tasks1;
         }
@@ -148,7 +158,7 @@ namespace TaskManager.Logic.Services {
 
             this.CalculateTaskValues(model.EntityId, userDto);
 
-            this.SaveLastModifiedTaskId(taskDto.EntityId, userDto);
+            this.SetLastModifiedTaskId(taskDto.EntityId, userDto);
         }
 
         /// <summary>
@@ -169,6 +179,8 @@ namespace TaskManager.Logic.Services {
                 }
             }
             this.UnitOfWork.SaveChanges();
+
+            this.SetTaskFavorite(taskDto.Favorite, taskDto.EntityId, userDto);
         }
 
         /// <summary>
@@ -220,6 +232,8 @@ namespace TaskManager.Logic.Services {
                 rep.Update(model, userDto.Id);
             }
             this.UnitOfWork.SaveChanges();
+
+            this.SetSubTaskFavorite(subtaskDto.Favorite, subtaskDto.TaskId, subtaskDto.EntityId, userDto);
 
             this.CalculateTaskValues(model.TaskId, userDto);
         }
@@ -398,7 +412,7 @@ namespace TaskManager.Logic.Services {
                     taskComments.Where(e => e.ActualWorkTicks != null).Select(e => e.ActualWorkTicks.Value).DefaultIfEmpty(0).Sum() +
                     subtasksComments.Where(e => e.ActualWorkTicks != null).Select(e => e.ActualWorkTicks.Value).DefaultIfEmpty(0).Sum());
                 // sets task.totalwork from subtasks
-                if(subtasks.Any(e => e.TotalWorkTicks != null)) {
+                if (subtasks.Any(e => e.TotalWorkTicks != null)) {
                     task.TotalWork = new TimeSpan(subtasks.Where(e => e.TotalWorkTicks != null).Sum(e => e.TotalWorkTicks.Value));
                     if (task.TotalWork != TimeSpan.Zero) {
                         // sets task.progress from tasks[progress] and subtasks[progress * subtask.totalwork / task.totalwork] 
@@ -466,16 +480,27 @@ namespace TaskManager.Logic.Services {
 
         #endregion [ calculation ]
 
-        #region [ last responsible ]
+        #region [ last task ]
 
         /// <summary>
         ///     Sets last task id </summary>
-        private void SaveLastModifiedTaskId(Guid taskId, UserDto userDto) {
+        private void SetLastModifiedTaskId(Guid taskId, UserDto userDto) {
             if (userDto.LastModifiedTaskId != taskId) {
                 TaskManagerUser user = base.ServicesHost.UserManager.FindById(userDto.Id);
                 user.LastModifiedTaskId = taskId;
                 base.ServicesHost.UserManager.Update(user);
             }
+        }
+
+        /// <summary>
+        ///     Gets last favorite </summary>
+        public bool GetLastFavorite(UserDto userDto) {
+            if (userDto.LastModifiedTaskId != null) {
+                var taskRep = UnitOfWork.GetRepository<UserFavorite>();
+                var any = taskRep.SearchFor(e => e.UserId == userDto.Id && e.TaskId == userDto.LastModifiedTaskId.Value).Any();
+                return any;
+            }
+            return false;
         }
 
         /// <summary>
@@ -492,6 +517,100 @@ namespace TaskManager.Logic.Services {
             return null;
         }
 
-        #endregion [ last responsible ]
+        #endregion [ last task ]
+
+        #region [ Favorites ]
+
+        /// <summary>
+        ///     Creates/Deletes entity of favorite for a task </summary>
+        /// <param name="taskId">Task ID</param>
+        /// <param name="userDto">user DTO</param>
+        /// <returns>Value of flag</returns>
+        private void SetTaskFavorite(bool favorite, Guid taskId, UserDto userDto) {
+            var rep = UnitOfWork.GetRepository<UserFavorite>();
+            var modelIds = rep.SearchFor(e => e.UserId == userDto.Id && e.TaskId == taskId).Select(e => e.EntityId).ToList();
+            if (modelIds.Any() && favorite == false) {
+                rep.DeleteByIds(modelIds);
+                this.UnitOfWork.SaveChanges();
+            } else if (modelIds.Any() == false && favorite == true) {
+                var model = new UserFavorite();
+                model.UserId = userDto.Id;
+                model.TaskId = taskId;
+                rep.Insert(model, userDto.Id);
+                this.UnitOfWork.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        ///     Creates/Deletes entity of favorite for a subtask </summary>
+        /// <param name="taskId">Task ID</param>
+        /// <param name="subtaskId">SubTask ID</param>
+        /// <param name="userDto">user DTO</param>
+        /// <returns>Value of flag</returns>
+        private void SetSubTaskFavorite(bool favorite, Guid taskId, Guid subtaskId, UserDto userDto) {
+            var rep = UnitOfWork.GetRepository<UserFavorite>();
+            var model = rep.SearchFor(e => e.UserId == userDto.Id && e.SubTaskId == subtaskId).FirstOrDefault();
+            if (model != null && favorite == false) {
+                rep.DeleteById(model.EntityId);
+                this.UnitOfWork.SaveChanges();
+            } else if (model == null && favorite == true) {
+                this.SetTaskFavorite(true, taskId, userDto);
+                model = new UserFavorite();
+                model.UserId = userDto.Id;
+                model.TaskId = taskId;
+                model.SubTaskId = subtaskId;
+                rep.Insert(model, userDto.Id);
+                this.UnitOfWork.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        ///     Creates/Deletes entity of favorite for a task </summary>
+        /// <param name="taskId">Task ID</param>
+        /// <param name="userDto">user DTO</param>
+        /// <returns>Value of flag</returns>
+        public bool InvertTaskFavorite(Guid taskId, UserDto userDto) {
+            var rep = UnitOfWork.GetRepository<UserFavorite>();
+            var modelIds = rep.SearchFor(e => e.UserId == userDto.Id && e.TaskId == taskId).Select(e => e.EntityId).ToList();
+            if (modelIds.Any()) {
+                rep.DeleteByIds(modelIds);
+                this.UnitOfWork.SaveChanges();
+                return false;
+            } else {
+                var model = new UserFavorite();
+                model.UserId = userDto.Id;
+                model.TaskId = taskId;
+                rep.Insert(model, userDto.Id);
+                this.UnitOfWork.SaveChanges();
+                return true;
+            }
+        }
+
+        /// <summary>
+        ///     Creates/Deletes entity of favorite for a subtask </summary>
+        /// <param name="taskId">Task ID</param>
+        /// <param name="subtaskId">SubTask ID</param>
+        /// <param name="userDto">user DTO</param>
+        /// <returns>Value of flag</returns>
+        public bool InvertSubTaskFavorite(Guid taskId, Guid subtaskId, UserDto userDto) {
+            var rep = UnitOfWork.GetRepository<UserFavorite>();
+            var model = rep.SearchFor(e => e.UserId == userDto.Id && e.SubTaskId == subtaskId).FirstOrDefault();
+            if (model != null) {
+                rep.DeleteById(model.EntityId);
+                this.UnitOfWork.SaveChanges();
+                return false;
+            } else {
+                this.SetTaskFavorite(true, taskId, userDto);
+                model = new UserFavorite();
+                model.UserId = userDto.Id;
+                model.TaskId = taskId;
+                model.SubTaskId = subtaskId;
+                rep.Insert(model, userDto.Id);
+                this.UnitOfWork.SaveChanges();
+                return true;
+            }
+        }
+
+        #endregion [ Favorites ]
     }
 }

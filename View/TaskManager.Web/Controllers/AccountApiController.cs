@@ -37,7 +37,7 @@ namespace TaskManager.Web.Controllers {
                 Logger.i($"ReturnUrl: {model.ReturnUrl}");
 
                 // gets user by email
-                var user = await UserManager.FindByEmailAsync(model.Login);
+                TaskManagerUser user = await UserManager.FindByEmailAsync(model.Login);
 
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -88,7 +88,7 @@ namespace TaskManager.Web.Controllers {
                 }
 
                 // Creates user
-                var user = new TaskManagerUser {
+                TaskManagerUser user = new TaskManagerUser {
                     UserName = model.UserName,
                     Email = model.Email
                 };
@@ -138,7 +138,7 @@ namespace TaskManager.Web.Controllers {
                     return WebApiResult.Failed("Invalid model state");
                 }
                 Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
-                var user = base.UserManager.FindById(userId);
+                TaskManagerUser user = base.UserManager.FindById(userId);
                 var result = UserManager.ChangePassword(user.Id, model.OldPassword, model.NewPassword);
                 if (result.Succeeded) {
                     SignInManager.SignIn(user, true, true);
@@ -161,10 +161,33 @@ namespace TaskManager.Web.Controllers {
 #endif
                 return await Task.Factory.StartNew(() => {
                     Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
-                    var user = base.UserManager.FindById(userId);
+                    TaskManagerUser user = base.UserManager.FindById(userId);
                     user.SortBy = sortby;
                     base.UserManager.Update(user);
                     return WebApiResult.Succeed();
+                });
+            } catch (Exception e) {
+                Logger.e("SaveSorting", e);
+                return WebApiResult.Failed(e.Message);
+            }
+        }
+
+        /// <summary>
+        ///     POST: /api/Account/InvertFavoriteFilter </summary>
+        [HttpPost, Route("InvertFavoriteFilter")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<WebApiResult> InvertFavoriteFilter() {
+            try {
+#if DEBUG
+                await Task.Delay(100);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    Guid userId = IdentityExtensions1.GetUserId(this.User.Identity);
+                    TaskManagerUser user = base.UserManager.FindById(userId);
+                    user.FavoriteFilter = !user.FavoriteFilter;
+                    base.UserManager.Update(user);
+                    return WebApiResult.Succeed(new { FavoriteFilter = user.FavoriteFilter });
                 });
             } catch (Exception e) {
                 Logger.e("SaveSorting", e);

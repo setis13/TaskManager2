@@ -49,8 +49,14 @@
                     Clear
                 </div>
             </div>
-            <!-- sorting -->
             <div class="three wide column computer right aligned">
+                <!-- favorite -->
+                <i id="favorite-filter"
+                   class="favorite big icon"
+                   ng-class="Model.FavoriteFilter ? 'yellow' : 'inverted grey'"
+                   ng-click="FavoriteFilter_OnClick()"
+                   title="Filter by favorites"></i>
+                <!-- sorting -->
                 <div class="ui right labeled icon button"
                      ng-class="Model.SortBy != 0 ? 'primary' : ''"
                      ng-click="SortBy_OnClick()">
@@ -74,12 +80,20 @@
         <tbody>
             <tr id="task-{{task.EntityId}}" class="top aligned"
                 ng-class="task.Status != 0 && task.Status != 1 ? 'disabled1' : ''"
+                ng-show="(Model.FavoriteFilter == false || task.Favorite == Model.FavoriteFilter) &&
+                         (Model.SelectedProjectFilter == '' || task.ProjectId == Model.SelectedProjectFilter) &&
+                         (Model.SelectedUserFilter == '' || task.UserIds.indexOf(Model.SelectedUserFilter) !== -1)"
                 ng-repeat-start="task in Model.FilteredTasks">
                 <td colspan="2">
                     <div class="content">
                         <div>
                             <span class="label">Task#</span>&nbsp;
                             <span class="value"><b>{{task.Index}}</b></span>&nbsp;
+                            <i id="favorite-{{task.EntityId}}"
+                               class="favorite icon"
+                               ng-class="task.Favorite ? 'yellow' : 'inverted grey'"
+                               ng-click="TaskFavorite_OnClick(task)"
+                               title="add to favorite"></i>
                             <div class="pull-right">
                                 <a href="" ng-click="CreateSubTask_OnClick(task)">add subtask</a>
                                 &nbsp;|&nbsp;
@@ -232,6 +246,9 @@
             <!-- subtasks -->
             <tr id="subtask-{{subtask.EntityId}}" class="top aligned word_wrap"
                 ng-class="subtask.Status != 0 && subtask.Status != 1 ? 'disabled1' : ''"
+                ng-show="(Model.FavoriteFilter == false || subtask.Favorite == Model.FavoriteFilter) &&
+                         (Model.SelectedProjectFilter == '' || task.ProjectId == Model.SelectedProjectFilter) &&
+                         (Model.SelectedUserFilter == '' || task.UserIds.indexOf(Model.SelectedUserFilter) !== -1)"
                 ng-repeat-end ng-repeat="subtask in task.SubTasks">
                 <td class="header"></td>
                 <td>
@@ -239,6 +256,11 @@
                         <div>
                             <span class="label">Index</span>&nbsp;
                             <span class="value"><b>{{task.Index}}</b>/<b>{{subtask.Order}}</b></span>
+                            <i id="favorite-{{subtask.EntityId}}"
+                               class="favorite icon"
+                               ng-class="subtask.Favorite ? 'yellow' : 'inverted grey'"
+                               ng-click="SubTaskFavorite_OnClick(task, subtask)"
+                               title="add to favorite"></i>
                             <div class="pull-right">
                                 <a href="" ng-click="UpSubTask_OnClick(subtask)">up</a>
                                 &nbsp;|&nbsp;
@@ -261,10 +283,6 @@
                             <span class="label">Status</span>&nbsp;
                             <span class="value">{TaskStatusNames[subtask.Status]}</span>
                         </div>-->
-                        <div>
-                            <span class="label">Urgency</span>&nbsp;
-                            <span class="ui tiny label" ng-class="TaskPriorityClasses[task.Priority]">{{TaskPriorityNames[task.Priority]}}</span>
-                        </div>
                         <div ng-show="subtask.TotalWorkHours > 0">
                             <span class="label">Hours (actual / total)</span>&nbsp;
                             <span class="value"
@@ -390,7 +408,13 @@
 <!-- Edit Task Modal -->
 <modal id="edit-task-modal" class="ui big modal" ng-model="Model.EditTask">
     <i class="close icon" ng-click="TaskCancel_OnClick()"></i>
-    <div class="header">{{Model.EditTask.EntityId == null ? 'Create Task' : 'Edit Task #' + Model.EditTask.Index}}</div>
+    <div class="header">
+        {{Model.EditTask.EntityId == null ? 'Create Task' : 'Edit Task# ' + Model.EditTask.Index}}
+        <i class="favorite icon"
+           ng-class="Model.EditTask.Favorite ? 'yellow' : 'inverted grey'"
+           ng-click="Model.EditTask.Favorite = !Model.EditTask.Favorite"
+           title="add to favorite"></i>
+    </div>
     <div id="task-form" class="ui validate form content">
         <div class="ui red message ng-hide" ng-hide="Model.EditTask.Error == null">
             <p ng-bind-html="Model.EditTask.Error"></p>
@@ -470,7 +494,13 @@
 <!-- Edit SubTask Modal -->
 <modal id="edit-subtask-modal" class="ui big modal" ng-model="Model.EditSubTask">
     <i class="close icon" ng-click="SubTaskCancel_OnClick()"></i>
-    <div class="header">{{Model.EditSubTask.EntityId == null ? 'Create SubTask' : 'Edit SubTask #' + Model.EditSubTask.Order}}</div>
+    <div class="header">
+        {{Model.EditSubTask.EntityId == null ? 'Create SubTask' : 'Edit SubTask# ' + Model.EditSubTask.Order}}
+        <i class="favorite icon"
+           ng-class="Model.EditSubTask.Favorite ? 'yellow' : 'inverted grey'"
+           ng-click="Model.EditSubTask.Favorite = !Model.EditSubTask.Favorite"
+           title="add to favorite"></i>
+    </div>
     <div id="subtask-form" class="ui validate form content">
         <div class="ui red message ng-hide" ng-hide="Model.EditSubTask.Error == null">
             <p ng-bind-html="Model.EditSubTask.Error"></p>

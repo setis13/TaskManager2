@@ -70,6 +70,7 @@
     <Compile Include="Entities\Base\BaseEntity.cs" />
     <Compile Include="Entities\File1.cs" />
     <Compile Include="Entities\Alarm.cs" />
+    <Compile Include="Entities\UserFavorite.cs" />
     <Compile Include="Entities\Task1.cs" />
     <Compile Include="Entities\Company.cs" />
     <Compile Include="Entities\TaskUser.cs" />

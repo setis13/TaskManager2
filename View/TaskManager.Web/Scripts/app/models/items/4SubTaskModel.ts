@@ -9,6 +9,7 @@
         public TotalWork: string;
         public Progress: number;
         public Status: Enums.TaskStatusEnum;
+        public Favorite: boolean;
         public Comments: Array<CommentModel> = new Array();
         public Files: Array<FileModel> = new Array();
 
@@ -66,7 +67,8 @@
                 this.TotalWorkHours = data.TotalWork != null ? moment.duration(data.TotalWork).asHours().toFixed(1) : null;
                 this.Progress = data.Progress;
                 this.Status = data.Status;
-                for (var i = 0; data.Comments != null &&i < data.Comments.length; i++) {
+                this.Favorite = data.Favorite;
+                for (var i = 0; data.Comments != null && i < data.Comments.length; i++) {
                     var comment = new CommentModel(data.Comments[i]);
                     comment.Visible = i > data.Comments.length - Controllers.HomeController.MIN_COMMENTS - 1;
                     this.Comments.push(comment);
@@ -92,6 +94,7 @@
             clone.TotalWorkHours = this.TotalWorkHours;
             clone.Progress = this.Progress;
             clone.Status = this.Status;
+            clone.Favorite = this.Favorite;
             for (var i = 0; i < this.Files.length; i++) {
                 clone.Files.push(this.Files[i]);
             }

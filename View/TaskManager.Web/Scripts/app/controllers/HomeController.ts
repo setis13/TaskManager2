@@ -74,6 +74,10 @@ namespace Controllers {
             $scope.ClearFilters_OnClick = this.ClearFilters_OnClick;
             $scope.SortBy_OnClick = this.SortBy_OnClick;
 
+            $scope.TaskFavorite_OnClick = this.TaskFavorite_OnClick;
+            $scope.SubTaskFavorite_OnClick = this.SubTaskFavorite_OnClick;
+            $scope.FavoriteFilter_OnClick = this.FavoriteFilter_OnClick;
+
             $scope.AttachFiles_OnClick = this.AttachFiles_OnClick;
             $scope.RemoveFile_OnClick = this.RemoveFile_OnClick;
             $scope.SizeName = SizeName;
@@ -172,6 +176,116 @@ namespace Controllers {
             });
         }
 
+        public FavoriteFilter_OnClick = () => {
+            var $this = this;
+            $.ajax({
+                url: '/api/Account/InvertFavoriteFilter',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: {},
+                beforeSend(xhr) {
+                    $("#favorite-filter").removeClass("favorite");
+                    $("#favorite-filter").addClass("spinner loading");
+                },
+                complete() {
+                    $("#favorite-filter").addClass("favorite");
+                    $("#favorite-filter").removeClass("spinner loading");
+                },
+                success: (result) => {
+                    if (result.Success === true) {
+                        this.Model.FavoriteFilter = result.Data.FavoriteFilter;
+                        this.Model.ApplyClientFilter();
+                        this.InitComment();
+                    } else {
+                        $this.Model.Error = result.Message;
+                    }
+                    $this.scope.$apply();
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    toastr.error(jqXhr.statusText);
+                }
+            });
+        }
+
+        public TaskFavorite_OnClick = (task: Models.TaskModel) => {
+            var $this = this;
+            $.ajax({
+                url: '/api/Home/InvertTaskFavorite?id=' + task.EntityId,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: {},
+                beforeSend(xhr) {
+                    $("#favorite-" + task.EntityId).removeClass("favorite");
+                    $("#favorite-" + task.EntityId).addClass("spinner loading");
+                },
+                complete() {
+                    $("#favorite-" + task.EntityId).addClass("favorite");
+                    $("#favorite-" + task.EntityId).removeClass("spinner loading");
+                },
+                success: (result) => {
+                    if (result.Success === true) {
+                        task.Favorite = result.Data.Favorite;
+                        if (result.Data.Favorite == false) {
+                            // unfavorite subtasks
+                            for (var i in task.SubTasks) {
+                                var subtask = task.SubTasks[i];
+                                task.SubTasks[i].Favorite = false;
+                            }
+                        }
+                        this.Model.ApplyClientFilter();
+                        this.InitComment();
+                    } else {
+                        $this.Model.Error = result.Message;
+                    }
+                    $this.scope.$apply();
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    toastr.error(jqXhr.statusText);
+                }
+            });
+        }
+
+        public SubTaskFavorite_OnClick = (task: Models.TaskModel, subtask: Models.SubTaskModel) => {
+            var $this = this;
+            $.ajax({
+                url: '/api/Home/InvertSubTaskFavorite?taskId=' + subtask.TaskId + "&subtaskId=" + subtask.EntityId,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: {},
+                beforeSend(xhr) {
+                    $("#favorite-" + subtask.EntityId).removeClass("favorite");
+                    $("#favorite-" + subtask.EntityId).addClass("spinner loading");
+                },
+                complete() {
+                    $("#favorite-" + subtask.EntityId).addClass("favorite");
+                    $("#favorite-" + subtask.EntityId).removeClass("spinner loading");
+                },
+                success: (result) => {
+                    if (result.Success === true) {
+                        subtask.Favorite = result.Data.Favorite;
+                        if (result.Data.Favorite == true) {
+                            // favorite task
+                            task.Favorite = true;
+                        }
+                        this.Model.ApplyClientFilter();
+                        this.InitComment();
+                    } else {
+                        $this.Model.Error = result.Message;
+                    }
+                    $this.scope.$apply();
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    toastr.error(jqXhr.statusText);
+                }
+            });
+        }
+
         public SortBy_OnClick = () => {
             switch (this.Model.SortBy) {
                 case Enums.SortByEnum.UrgencyDesc:
@@ -220,6 +334,8 @@ namespace Controllers {
             var task = new Models.TaskModel(null);
             // sets default responsible
             task.UserIds = this.Model.LastResponsibleIds;
+            // sets default favorite
+            task.Favorite = this.Model.LastFavorite;
             this.Model.EditTask = task;
             this.InitTaskModal();
         }
@@ -231,6 +347,8 @@ namespace Controllers {
 
         public CreateSubTask_OnClick = (task: Models.TaskModel) => {
             var subtask = new Models.SubTaskModel(null);
+            // sets default favorite
+            task.Favorite = this.Model.LastFavorite;
             subtask.TaskId = task.EntityId;
             this.Model.EditSubTask = subtask;
             this.InitSubTaskModal();
@@ -355,6 +473,7 @@ namespace Controllers {
                         $this.Task_UploadFiles($this.Model.EditTask,
                             () => {
                                 $this.Model.LastResponsibleIds = this.Model.EditTask.UserIds;
+                                $this.Model.LastFavorite = this.Model.EditTask.Favorite;
                                 $this.Model.EditTask = null;
                                 $this.Load();
                             }
@@ -442,6 +561,7 @@ namespace Controllers {
                         $this.Model.EditSubTask.EntityId = result.Data.EntityId;
                         $this.Task_UploadFiles($this.Model.EditSubTask,
                             () => {
+                                $this.Model.LastFavorite = this.Model.EditSubTask.Favorite;
                                 $this.Model.EditSubTask = null;
                                 $this.Load();
                             }

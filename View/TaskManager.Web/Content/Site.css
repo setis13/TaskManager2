@@ -258,3 +258,8 @@ a.alarm.item {
     a.alarm.item .loading.icon {
         left: 11px;
     }
+
+/** Favorite **/
+i.favorite.icon {
+    cursor: pointer;
+}

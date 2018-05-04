@@ -10,6 +10,7 @@
         public TotalWork: string;
         public Progress: number;
         public Status: Enums.TaskStatusEnum;
+        public Favorite: boolean;
         public SubTasks: Array<SubTaskModel> = new Array();
         public UserIds: Array<string> = new Array();
         public Comments: Array<CommentModel> = new Array();
@@ -70,6 +71,7 @@
                 this.TotalWorkHours = data.TotalWork != null ? moment.duration(data.TotalWork).asHours().toFixed(1) : null;
                 this.Progress = data.Progress;
                 this.Status = data.Status;
+                this.Favorite = data.Favorite;
                 for (var i = 0; data.SubTasks != null &&i < data.SubTasks.length; i++) {
                     this.SubTasks.push(new SubTaskModel(data.SubTasks[i]));
                 }
@@ -103,6 +105,7 @@
             clone.TotalWorkHours = this.TotalWorkHours;
             clone.Progress = this.Progress;
             clone.Status = this.Status;
+            clone.Favorite = this.Favorite;
 
             // skips subtasks for saving only the task
             //for (var i = 0; i < this.SubTasks.length; i++) {

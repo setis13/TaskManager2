@@ -40,19 +40,22 @@ namespace TaskManager.Web.Controllers {
                     List<Task1Dto> tasks;
                     List<DateTime> historyFilters;
                     List<Guid> lastResponsibleIds;
+                    bool lastFavorite;
 
                     var user = GetUserDto();
                     users = Mapper.Map<List<UserDto>>(
                         this.UserManager.Users.Where(e => e.CompanyId == user.CompanyId));
 
-                    this._service.GetData(user, historyFilter, out projects, out tasks, out historyFilters, out lastResponsibleIds);
+                    this._service.GetData(user, historyFilter, out projects, out tasks, out historyFilters, out lastResponsibleIds, out lastFavorite);
                     return WebApiResult.Succeed(new {
                         Projects = projects,
                         Users = users,
                         Tasks = tasks,
                         HistoryFilters = historyFilters,
                         SortBy = user.SortBy,
-                        LastResponsibleIds = lastResponsibleIds
+                        FavoriteFilter = user.FavoriteFilter,
+                        LastResponsibleIds = lastResponsibleIds,
+                        LastFavorite = lastFavorite
                     });
                 });
             } catch (Exception e) {
@@ -217,6 +220,46 @@ namespace TaskManager.Web.Controllers {
                 });
             } catch (Exception e) {
                 Logger.e("DeleteComment", e);
+                return WebApiResult.Failed(e.Message);
+            }
+        }
+
+        /// <summary>
+        ///     POST: /api/Home/InvertTaskFavorite </summary>
+        [HttpPost, Route("InvertTaskFavorite")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<WebApiResult> InvertTaskFavorite(Guid id) {
+            try {
+#if DEBUG
+                await Task.Delay(300);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    var result = this._service.InvertTaskFavorite(id, GetUserDto());
+                    return WebApiResult.Succeed(new { Favorite = result });
+                });
+            } catch (Exception e) {
+                Logger.e("InvertTaskFavorite", e);
+                return WebApiResult.Failed(e.Message);
+            }
+        }
+
+        /// <summary>
+        ///     POST: /api/Home/InvertSubTaskFavorite </summary>
+        [HttpPost, Route("InvertSubTaskFavorite")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<WebApiResult> InvertSubTaskFavorite(Guid taskId, Guid subtaskId) {
+            try {
+#if DEBUG
+                await Task.Delay(300);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    var result = this._service.InvertSubTaskFavorite(taskId, subtaskId, GetUserDto());
+                    return WebApiResult.Succeed(new { Favorite = result });
+                });
+            } catch (Exception e) {
+                Logger.e("InvertSubTaskFavorite", e);
                 return WebApiResult.Failed(e.Message);
             }
         }

@@ -73,6 +73,7 @@
     <Compile Include="Identity\LogBookUserStore.cs" />
     <Compile Include="Mappings\ProjectMap.cs" />
     <Compile Include="Mappings\FileMap.cs" />
+    <Compile Include="Mappings\UserFavoriteMap.cs" />
     <Compile Include="Mappings\TaskUserMap.cs" />
     <Compile Include="Mappings\AlarmMap.cs" />
     <Compile Include="Mappings\TodoMap.cs" />
@@ -137,6 +138,10 @@
     <Compile Include="Migrations\201805031705012_nullable_total_work.Designer.cs">
       <DependentUpon>201805031705012_nullable_total_work.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805040636584_favorites.cs" />
+    <Compile Include="Migrations\201805040636584_favorites.Designer.cs">
+      <DependentUpon>201805040636584_favorites.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\Repository.cs" />
     <Compile Include="UnitOfWork.cs" />
@@ -157,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805031705012_nullable_total_work.resx">
       <DependentUpon>201805031705012_nullable_total_work.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805040636584_favorites.resx">
+      <DependentUpon>201805040636584_favorites.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="script.sql" />
   </ItemGroup>
