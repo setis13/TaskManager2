@@ -12,6 +12,7 @@
         public FavoriteFilter: boolean;
         public LastResponsibleIds: Array<string>;
         public LastFavorite: boolean;
+        public ReportFilter: boolean = false;
         public SelectedHistoryFilter: string = '';
         public SelectedUserFilter: string = '';
         public SelectedProjectFilter: string = '';
@@ -44,24 +45,20 @@
                     tasks = tasks.OrderByDescending(e => e.Priority);
                     break;
                 case Enums.SortByEnum.News:
-                    tasks = tasks.OrderBy(
-                        t => Enumerable.From(t.SubTasks)
-                            .Select(c => c.CreatedDate.unix())
-                            .Union([t.LastModifiedDate.unix()])
-                            .DefaultIfEmpty(0).Max(unix => unix));
+                    tasks = tasks.OrderBy(t => t.LastModifiedDate.unix());
                     break;
                 case Enums.SortByEnum.NewsDesc:
-                    tasks = tasks.OrderByDescending(
-                        t => Enumerable.From(t.SubTasks)
-                            .Select(c => c.CreatedDate.unix())
-                            .Union([t.LastModifiedDate.unix()])
-                            .DefaultIfEmpty(0).Max(unix => unix));
+                    tasks = tasks.OrderByDescending(t => t.LastModifiedDate.unix());
                     break;
                 default:
                     break;
             }
 
             // NOTE: moved a filter to html template
+            //if (this.SelectedUserFilter !== '') {
+            //    tasks = tasks.Where(e => this.FavoriteFilter == false || this.SelectedHistoryFilter != '0' || e.Favorite == this.FavoriteFilter);
+            //}
+
             //if (this.SelectedUserFilter !== '') {
             //    tasks = tasks.Where(e => e.UserIds.indexOf(this.SelectedUserFilter) !== -1);
             //}

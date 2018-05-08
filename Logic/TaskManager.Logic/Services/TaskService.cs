@@ -31,12 +31,13 @@ namespace TaskManager.Logic.Services {
         /// <param name="user">user who requests the data</param>
         /// <remarks> if <see cref="historyDeep"/> is null then returns actual tasks else actual + history </remarks>
         /// <param name="historyDeep">minimum date of tasks</param>
+        /// <param name="reportFilter">tasks for reporting</param>
         /// <param name="projects">out parameter</param>
         /// <param name="tasks">out parameter</param>
         /// <param name="historyFilters">out parameter</param>
         /// <param name="lastResponsibleIds">out last responsible ids</param>
         /// <param name="lastFavorite">out last last favorite value</param>
-        public void GetData(UserDto user, DateTime? historyDeep,
+        public void GetData(UserDto user, DateTime? historyDeep, bool reportFilter,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks,
             out List<DateTime> historyFilters,
@@ -61,7 +62,11 @@ namespace TaskManager.Logic.Services {
             lastResponsibleIds = this.GetLastResponsibleIds(user);
             lastFavorite = this.GetLastFavorite(user);
 
-            if (historyDeep == null) {
+            if (reportFilter == true) {
+                var todayStarted = DateTime.Now.AddDays(-1);
+                tasksQuery = tasksQuery.Where(e => e.LastModifiedDate >= todayStarted);
+                subtasksQuery = subtasksQuery.Where(e => e.LastModifiedDate >= todayStarted);
+            } else if (historyDeep == null) {
                 var statuses = new List<TaskStatusEnum>() {
                     TaskStatusEnum.NotStarted,
                     TaskStatusEnum.InProgress
@@ -73,19 +78,8 @@ namespace TaskManager.Logic.Services {
                     TaskStatusEnum.Failed,
                     TaskStatusEnum.Rejected,
                 }.Cast<int>().ToList();
-                // filtering by a task comments
-                var tasksQuery1 = tasksQuery.Where(e => statuses.Contains(e.Status))
-                     .Join(commentsQuery.Where(c => c.TaskId != null), t => t.EntityId, c => c.TaskId, (t, c) => new { t, c }).DefaultIfEmpty()
-                     .Where(e => e.t != null && (e.c == null || e.c.Date >= historyDeep))
-                     .Select(e => e.t).Distinct();
-                // filtering by a subtask comments
-                var tasksQuery2 = tasksQuery.Where(e => statuses.Contains(e.Status))
-                       .Join(subtasksQuery, t => t.EntityId, s => s.TaskId, (t, s) => new { t, s }).DefaultIfEmpty()
-                       .Join(commentsQuery.Where(c => c.SubTaskId != null), t => t.s.EntityId, c => c.SubTaskId, (e, c) => new { e.t, c }).DefaultIfEmpty()
-                       .Where(e => e.t != null && (e.c == null || e.c.Date >= historyDeep))
-                       .Select(e => e.t).Distinct();
-                // union
-                tasksQuery = tasksQuery1.Union(tasksQuery2).Distinct();
+                // filtering by a task
+                tasksQuery = tasksQuery.Where(e => statuses.Contains(e.Status) && e.LastModifiedDate >= historyDeep);
             }
 
             var projects1 = Mapper.Map<List<ProjectDto>>(projectsQuery);
@@ -413,16 +407,16 @@ namespace TaskManager.Logic.Services {
                     subtasksComments.Where(e => e.ActualWorkTicks != null).Select(e => e.ActualWorkTicks.Value).DefaultIfEmpty(0).Sum());
                 // sets task.totalwork from subtasks
                 if (subtasks.Any(e => e.TotalWorkTicks != null)) {
-                    task.TotalWork = new TimeSpan(subtasks.Where(e => e.TotalWorkTicks != null).Sum(e => e.TotalWorkTicks.Value));
+                    task.TotalWork = new TimeSpan(subtasks.Where(e => e.TotalWorkTicks != null && e.Status != (byte)TaskStatusEnum.Rejected).Sum(e => e.TotalWorkTicks.Value));
                     if (task.TotalWork != TimeSpan.Zero) {
                         // sets task.progress from tasks[progress] and subtasks[progress * subtask.totalwork / task.totalwork] 
-                        task.Progress = subtasks.Where(e => e.TotalWorkTicks != null).Sum(e => e.Progress * e.TotalWorkTicks.Value / task.TotalWorkTicks.Value) + /* CODE#1 */ task.Progress;
+                        task.Progress = subtasks.Where(e => e.TotalWorkTicks != null && e.Status != (byte)TaskStatusEnum.Rejected).Sum(e => e.Progress * e.TotalWorkTicks.Value / task.TotalWorkTicks.Value) + /* CODE#1 */ task.Progress;
                     } else {
                         task.Progress = 0;
                     }
                 } else {
                     task.TotalWork = null;
-                    task.Progress = (float)subtasks.Where(e => e.Status == (byte)TaskStatusEnum.Done).Count() / subtasks.Count;
+                    task.Progress = (float)subtasks.Where(e => e.Status == (byte)TaskStatusEnum.Done).Count() / subtasks.Count(e => e.Status != (byte)TaskStatusEnum.Rejected);
                 }
                 // sets task.status from max of subtasks
                 if (subtasks

@@ -149,13 +149,13 @@ tr.disabled1 {
 }
 
     tr.disabled1 .button,
-    tr.disabled1 .ui.blue.label,
-    tr.disabled1 .ui.green.label,
-    tr.disabled1 .ui.red.label,
-    tr.disabled1 .ui.brown.label,
-    tr.disabled1 .ui.black.label,
-    tr.disabled1 .ui.gray.label,
-    tr.disabled1 .ui.teal.label {
+    tr.disabled1 .ui.basic.blue.label,
+    tr.disabled1 .ui.basic.green.label,
+    tr.disabled1 .ui.basic.red.label,
+    tr.disabled1 .ui.basic.brown.label,
+    tr.disabled1 .ui.basic.black.label,
+    tr.disabled1 .ui.basic.gray.label,
+    tr.disabled1 .ui.basic.teal.label {
         background-color: #f5f5f5 !important;
     }
 
@@ -260,6 +260,6 @@ a.alarm.item {
     }
 
 /** Favorite **/
-i.favorite.icon {
+i.favorite.icon, i.calendar.check {
     cursor: pointer;
 }

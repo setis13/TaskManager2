@@ -13,12 +13,13 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="user">user who requests the data</param>
         /// <remarks> if <see cref="historyDeep"/> is null then returns actual tasks else actual + history </remarks>
         /// <param name="historyDeep">minimum date of tasks</param>
+        /// <param name="reportFilter">tasks for reporting</param>
         /// <param name="projects">out parameter</param>
         /// <param name="tasks">out parameter</param>
         /// <param name="historyFilters">out parameter</param>
         /// <param name="lastResponsibleIds">out last responsible ids</param>
         /// <param name="lastFavorite">out last last favorite value</param>
-        void GetData(UserDto user, DateTime? historyDeep,
+        void GetData(UserDto user, DateTime? historyDeep, bool reportFilter,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks,
             out List<DateTime> historyFilters,

@@ -28,7 +28,7 @@ namespace TaskManager.Web.Controllers {
         [HttpPost, Route("GetData")]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<WebApiResult> GetData(DateTime? historyFilter = null) {
+        public async Task<WebApiResult> GetData(DateTime? historyFilter = null, bool reportFilter = false) {
             try {
 #if DEBUG
                 await Task.Delay(300);
@@ -46,7 +46,7 @@ namespace TaskManager.Web.Controllers {
                     users = Mapper.Map<List<UserDto>>(
                         this.UserManager.Users.Where(e => e.CompanyId == user.CompanyId));
 
-                    this._service.GetData(user, historyFilter, out projects, out tasks, out historyFilters, out lastResponsibleIds, out lastFavorite);
+                    this._service.GetData(user, historyFilter, reportFilter, out projects, out tasks, out historyFilters, out lastResponsibleIds, out lastFavorite);
                     return WebApiResult.Succeed(new {
                         Projects = projects,
                         Users = users,

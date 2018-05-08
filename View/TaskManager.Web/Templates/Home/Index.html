@@ -50,6 +50,12 @@
                 </div>
             </div>
             <div class="three wide column computer right aligned">
+                <!-- report -->
+                <i id="report-filter"
+                   class="calendar check big icon"
+                   ng-class="Model.ReportFilter ? 'blue' : 'inverted grey'"
+                   ng-click="DayReport_OnClick()"
+                   title="Reporting tasts"></i>
                 <!-- favorite -->
                 <i id="favorite-filter"
                    class="favorite big icon"
@@ -80,7 +86,7 @@
         <tbody>
             <tr id="task-{{task.EntityId}}" class="top aligned"
                 ng-class="task.Status != 0 && task.Status != 1 ? 'disabled1' : ''"
-                ng-show="(Model.FavoriteFilter == false || task.Favorite == Model.FavoriteFilter) &&
+                ng-show="(Model.FavoriteFilter == false || Model.SelectedHistoryFilter != 0 || task.Favorite == Model.FavoriteFilter) &&
                          (Model.SelectedProjectFilter == '' || task.ProjectId == Model.SelectedProjectFilter) &&
                          (Model.SelectedUserFilter == '' || task.UserIds.indexOf(Model.SelectedUserFilter) !== -1)"
                 ng-repeat-start="task in Model.FilteredTasks">
@@ -113,7 +119,7 @@
                             <span class="value">{{task.CreatedDate.format("MM/DD/YYYY")}}</span>,
                             <time class="timeago label" datetime="{{task.CreatedDate.format()}}"></time>
                         </div>
-                        <div>
+                        <div ng-show="task.CreatedDate.unix() != task.LastModifiedDate.unix()">
                             <span class="label">Modified</span>&nbsp;
                             <span class="value">{{task.LastModifiedDate.format("MM/DD/YYYY")}}</span>,
                             <time class="timeago label" datetime="{{task.LastModifiedDate.format()}}"></time>
@@ -246,7 +252,7 @@
             <!-- subtasks -->
             <tr id="subtask-{{subtask.EntityId}}" class="top aligned word_wrap"
                 ng-class="subtask.Status != 0 && subtask.Status != 1 ? 'disabled1' : ''"
-                ng-show="(Model.FavoriteFilter == false || subtask.Favorite == Model.FavoriteFilter) &&
+                ng-show="(Model.FavoriteFilter == false || Model.SelectedHistoryFilter != 0 || subtask.Favorite == Model.FavoriteFilter) &&
                          (Model.SelectedProjectFilter == '' || task.ProjectId == Model.SelectedProjectFilter) &&
                          (Model.SelectedUserFilter == '' || task.UserIds.indexOf(Model.SelectedUserFilter) !== -1)"
                 ng-repeat-end ng-repeat="subtask in task.SubTasks">
@@ -274,7 +280,7 @@
                             <span class="value">{{subtask.CreatedDate.format("MM/DD")}}</span>,
                             <time class="timeago label" datetime="{{subtask.CreatedDate.format()}}"></time>
                         </div>
-                        <div>
+                        <div ng-show="subtask.CreatedDate.unix() != subtask.LastModifiedDate.unix()">
                             <span class="label">Modified</span>&nbsp;
                             <span class="value">{{subtask.LastModifiedDate.format("MM/DD")}}</span>,
                             <time class="timeago label" datetime="{{subtask.LastModifiedDate.format()}}"></time>

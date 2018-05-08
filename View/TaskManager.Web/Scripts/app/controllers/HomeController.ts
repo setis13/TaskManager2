@@ -74,6 +74,7 @@ namespace Controllers {
             $scope.ClearFilters_OnClick = this.ClearFilters_OnClick;
             $scope.SortBy_OnClick = this.SortBy_OnClick;
 
+            $scope.DayReport_OnClick = this.DayReport_OnClick;
             $scope.TaskFavorite_OnClick = this.TaskFavorite_OnClick;
             $scope.SubTaskFavorite_OnClick = this.SubTaskFavorite_OnClick;
             $scope.FavoriteFilter_OnClick = this.FavoriteFilter_OnClick;
@@ -125,8 +126,15 @@ namespace Controllers {
 
         public Load = () => {
             var $this = this;
+            var params: Array<string> = new Array();
+            if (this.Model.SelectedHistoryFilter !== '0') {
+                params.push('historyFilter=' + this.Model.SelectedHistoryFilter);
+            }
+            if (this.Model.ReportFilter == true) {
+                params.push('reportFilter=' + this.Model.ReportFilter);
+            }
             $.ajax({
-                url: '/api/Home/GetData/' + (this.Model.SelectedHistoryFilter !== '0' ? '?historyFilter=' + this.Model.SelectedHistoryFilter : ''),
+                url: '/api/Home/GetData/?' + params.join('&'),
                 type: 'POST',
                 data: {},
                 beforeSend(xhr) {
@@ -174,6 +182,11 @@ namespace Controllers {
                 $('#user-filter').parent().find('.text.default').html($('#user-filter > option[value=""]').html());
                 $('#project-filter').parent().find('.text.default').html($('#project-filter > option[value=""]').html());
             });
+        }
+
+        public DayReport_OnClick = () => {
+            this.Model.ReportFilter = !this.Model.ReportFilter;
+            this.Load();
         }
 
         public FavoriteFilter_OnClick = () => {
@@ -363,8 +376,9 @@ namespace Controllers {
             var comment = new Models.CommentModel(null);
             comment.TaskId = task.EntityId;
             if (task.Comments.length > 0) {
-                comment.Progress = task.Progress;
-                comment.Status = task.Status;
+                var last = Enumerable.From(task.Comments).Last();
+                comment.Progress = last.Progress;
+                comment.Status = last.Status;
             }
             this.Model.EditComment = comment;
             this.InitCommentModal();
@@ -373,8 +387,9 @@ namespace Controllers {
             var comment = new Models.CommentModel(null);
             comment.SubTaskId = subtask.EntityId;
             if (subtask.Comments.length > 0) {
-                comment.Progress = subtask.Progress;
-                comment.Status = subtask.Status;
+                var last = Enumerable.From(subtask.Comments).Last();
+                comment.Progress = last.Progress;
+                comment.Status = last.Status;
             }
             this.Model.EditComment = comment;
             this.InitCommentModal();
