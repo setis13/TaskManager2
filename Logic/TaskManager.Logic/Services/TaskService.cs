@@ -66,6 +66,7 @@ namespace TaskManager.Logic.Services {
                 var todayStarted = DateTime.Now.AddDays(-1);
                 tasksQuery = tasksQuery.Where(e => e.LastModifiedDate >= todayStarted);
                 subtasksQuery = subtasksQuery.Where(e => e.LastModifiedDate >= todayStarted);
+                commentsQuery = commentsQuery.Where(e => e.LastModifiedDate >= todayStarted);
             } else if (historyDeep == null) {
                 var statuses = new List<TaskStatusEnum>() {
                     TaskStatusEnum.NotStarted,

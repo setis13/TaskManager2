@@ -52,13 +52,13 @@
             <div class="three wide column computer right aligned">
                 <!-- report -->
                 <i id="report-filter"
-                   class="calendar check big icon"
+                   class="calendar check large icon"
                    ng-class="Model.ReportFilter ? 'blue' : 'inverted grey'"
                    ng-click="DayReport_OnClick()"
                    title="Reporting tasts"></i>
                 <!-- favorite -->
                 <i id="favorite-filter"
-                   class="favorite big icon"
+                   class="favorite large icon"
                    ng-class="Model.FavoriteFilter ? 'yellow' : 'inverted grey'"
                    ng-click="FavoriteFilter_OnClick()"
                    title="Filter by favorites"></i>
@@ -165,7 +165,6 @@
                     <span class="lightgallery">
                         <a ng-repeat="file in task.GetTaskImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
                             {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
-                            <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
                         </a>
                     </span>
                     <span>
@@ -219,7 +218,6 @@
                                 <span class="lightgallery">
                                     <a ng-repeat="file in comment.GetCommentImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
                                         {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
-                                        <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
                                     </a>
                                 </span>
                                 <span>
@@ -238,7 +236,6 @@
                         <span class="lightgallery">
                             <a ng-repeat="file in task.GetCommentsImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
                                 {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
-                                <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
                             </a>
                         </span>
                         <span>
@@ -318,7 +315,6 @@
                     <span class="lightgallery">
                         <a ng-repeat="file in subtask.GetSubTaskImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
                             {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
-                            <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
                         </a>
                     </span>
                     <span>
@@ -374,7 +370,6 @@
                                 <span class="lightgallery">
                                     <a ng-repeat="file in comment.GetCommentImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
                                         {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
-                                        <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
                                     </a>
                                 </span>
                                 <span>
@@ -393,7 +388,6 @@
                         <span class="lightgallery">
                             <a ng-repeat="file in subtask.GetCommentsImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{file.EntityId}}">
                                 {{file.DisplayName}}<span class="detail">{{SizeName(file.Size)}}</span>
-                                <img src="/api/file/download?id={{file.EntityId}}" class="ng-hide" />
                             </a>
                         </span>
                         <span>
