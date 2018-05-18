@@ -573,7 +573,6 @@
     <Content Include="Scripts\lightgallery\lg-hash.js" />
     <Content Include="Scripts\lightgallery\lg-pager.js" />
     <Content Include="Scripts\lightgallery\lg-share.js" />
-    <Content Include="Scripts\lightgallery\lg-thumbnail.js" />
     <Content Include="Scripts\lightgallery\lg-video.js" />
     <Content Include="Scripts\lightgallery\lg-zoom.js" />
     <Content Include="Scripts\lightgallery\0lightgallery.js" />

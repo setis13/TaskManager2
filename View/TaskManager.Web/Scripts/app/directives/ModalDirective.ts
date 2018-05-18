@@ -37,7 +37,10 @@ angular.module('ModalDirective', [])
                         element.html('');
                     }
                     (<any>element).modal({ closable: false, autofocus: false });
-                    (<any>element).modal(modelValue != null ? 'show' : 'hide');
+                    // NOTE: shows classic a multiple selector wittout "Timeout"
+                    setTimeout(() => {
+                        (<any>element).modal(modelValue != null ? 'show' : 'hide');
+                    });
                 });
                 scope.$on('$destroy', function () {
                     element.remove();

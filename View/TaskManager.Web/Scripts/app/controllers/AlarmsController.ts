@@ -21,6 +21,7 @@ namespace Controllers {
             $scope.Cancel_OnClick = this.Cancel_OnClick;
             $scope.Delete_OnClick = this.Delete_OnClick;
             $scope.AlarmBirthday_OnChange = this.AlarmBirthday_OnChange;
+            $scope.AlarmHoliday_OnChange = this.AlarmHoliday_OnChange;
 
             this.Load();
         }
@@ -129,6 +130,12 @@ namespace Controllers {
         private Mark = (elem: any, model: Models.AlarmModel) => {
             // marks cell
             elem.classList.add('mark');
+            if (model.Holiday == true) {
+                elem.classList.add('holiday');
+            }
+            if (model.Birthday == true) {
+                elem.classList.add('birthday');
+            }
             // sets popup
             (<any>$(elem)).popup({ position: 'bottom center', title: model.Title, content: model.Description });
             // adds id attr
@@ -290,6 +297,13 @@ namespace Controllers {
                 setTimeout(() =>
                     $("#alarm-repeat-type").dropdown('restore defaults')
                 );
+            }
+        }
+
+        private AlarmHoliday_OnChange = () => {
+            if (this.Model.EditAlarm.Holiday) {
+                this.Model.EditAlarm.Birthday = false;
+                this.AlarmBirthday_OnChange();
             }
         }
     }

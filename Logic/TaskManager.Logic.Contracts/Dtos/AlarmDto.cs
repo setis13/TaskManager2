@@ -9,6 +9,7 @@ namespace TaskManager.Logic.Contracts.Dtos {
         public byte? RepeatType { get; set; }
         public byte? RepeatValue { get; set; }
         public bool Birthday { get; set; }
+        public bool Holiday { get; set; }
 
         public object Clone() {
             return new AlarmDto() {
@@ -25,6 +26,7 @@ namespace TaskManager.Logic.Contracts.Dtos {
                 RepeatType = this.RepeatType,
                 RepeatValue = this.RepeatValue,
                 Birthday = this.Birthday,
+                Holiday = this.Holiday
             };
         }
     }

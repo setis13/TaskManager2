@@ -16,5 +16,6 @@ namespace TaskManager.Data.Contracts.Entities {
         public byte? RepeatType { get; set; }
         public byte? RepeatValue { get; set; }
         public bool Birthday { get; set; }
+        public bool Holiday { get; set; }
     }
 }

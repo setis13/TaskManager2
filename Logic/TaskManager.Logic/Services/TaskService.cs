@@ -36,13 +36,15 @@ namespace TaskManager.Logic.Services {
         /// <param name="tasks">out parameter</param>
         /// <param name="historyFilters">out parameter</param>
         /// <param name="lastResponsibleIds">out last responsible ids</param>
-        /// <param name="lastFavorite">out last last favorite value</param>
+        /// <param name="lastFavorite">out last favorite value</param>
+        /// <param name="lastPriority">out last priority value</param>
         public void GetData(UserDto user, DateTime? historyDeep, bool reportFilter,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks,
             out List<DateTime> historyFilters,
             out List<Guid> lastResponsibleIds,
-            out bool lastFavorite) {
+            out bool lastFavorite,
+            out byte lastPriority) {
 
             var projectRep = UnitOfWork.GetRepository<Project>();
             var taskRep = UnitOfWork.GetRepository<Task1>();
@@ -61,6 +63,7 @@ namespace TaskManager.Logic.Services {
 
             lastResponsibleIds = this.GetLastResponsibleIds(user);
             lastFavorite = this.GetLastFavorite(user);
+            lastPriority = this.GetLastPriority(user);
 
             if (reportFilter == true) {
                 var todayStarted = DateTime.Now.AddDays(-1);
@@ -489,7 +492,7 @@ namespace TaskManager.Logic.Services {
 
         /// <summary>
         ///     Gets last favorite </summary>
-        public bool GetLastFavorite(UserDto userDto) {
+        private bool GetLastFavorite(UserDto userDto) {
             if (userDto.LastModifiedTaskId != null) {
                 var taskRep = UnitOfWork.GetRepository<UserFavorite>();
                 var any = taskRep.SearchFor(e => e.UserId == userDto.Id && e.TaskId == userDto.LastModifiedTaskId.Value).Any();
@@ -499,8 +502,20 @@ namespace TaskManager.Logic.Services {
         }
 
         /// <summary>
+        ///     Gets last priority </summary>
+        private byte GetLastPriority(UserDto userDto) {
+            if (userDto.LastModifiedTaskId != null) {
+                var taskRep = UnitOfWork.GetRepository<Task1>();
+                var priority = taskRep.SearchFor(e => e.CreatedById == userDto.Id && e.EntityId == userDto.LastModifiedTaskId.Value)
+                    .Select(e => e.Priority).DefaultIfEmpty((byte)0).FirstOrDefault();
+                return priority;
+            }
+            return 0;
+        }
+
+        /// <summary>
         ///     Gets last responsible </summary>
-        public List<Guid> GetLastResponsibleIds(UserDto userDto) {
+        private List<Guid> GetLastResponsibleIds(UserDto userDto) {
             if (userDto.LastModifiedTaskId != null) {
                 var userTaskRep = UnitOfWork.GetRepository<TaskUser>();
                 var userIds = userTaskRep

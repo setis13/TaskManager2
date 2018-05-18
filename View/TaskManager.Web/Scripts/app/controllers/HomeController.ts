@@ -349,6 +349,7 @@ namespace Controllers {
             task.UserIds = this.Model.LastResponsibleIds;
             // sets default favorite
             task.Favorite = this.Model.LastFavorite;
+            task.Priority = this.Model.LastPriority;
             this.Model.EditTask = task;
             this.InitTaskModal();
         }
@@ -489,6 +490,7 @@ namespace Controllers {
                             () => {
                                 $this.Model.LastResponsibleIds = this.Model.EditTask.UserIds;
                                 $this.Model.LastFavorite = this.Model.EditTask.Favorite;
+                                $this.Model.LastPriority = this.Model.EditTask.Priority;
                                 $this.Model.EditTask = null;
                                 $this.Load();
                             }

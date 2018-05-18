@@ -12,6 +12,7 @@
         public FavoriteFilter: boolean;
         public LastResponsibleIds: Array<string>;
         public LastFavorite: boolean;
+        public LastPriority: number;
         public ReportFilter: boolean = false;
         public SelectedHistoryFilter: string = '';
         public SelectedUserFilter: string = '';
@@ -94,6 +95,7 @@
             }
             this.LastResponsibleIds = data.LastResponsibleIds;
             this.LastFavorite = data.LastFavorite;
+            this.LastPriority = data.LastPriority;
             this.ApplyClientFilter();
         }
 

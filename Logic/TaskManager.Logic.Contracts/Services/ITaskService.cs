@@ -18,13 +18,15 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="tasks">out parameter</param>
         /// <param name="historyFilters">out parameter</param>
         /// <param name="lastResponsibleIds">out last responsible ids</param>
-        /// <param name="lastFavorite">out last last favorite value</param>
+        /// <param name="lastFavorite">out last favorite value</param>
+        /// <param name="lastPriority">out last priority value</param>
         void GetData(UserDto user, DateTime? historyDeep, bool reportFilter,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks,
             out List<DateTime> historyFilters,
             out List<Guid> lastResponsibleIds,
-            out bool lastFavorite);
+            out bool lastFavorite,
+            out byte lastPriority);
 
         /// <summary>
         ///     Creates or Updates task </summary>
@@ -75,10 +77,6 @@ namespace TaskManager.Logic.Contracts.Services {
         /// <param name="commentId">comment id</param>
         /// <param name="userDto">user who deletes the comment</param>
         void DeleteComment(Guid commentId, UserDto userDto);
-
-        /// <summary>
-        ///     Gets last responsible </summary>
-        List<Guid> GetLastResponsibleIds(UserDto userDto);
 
         /// <summary>
         ///     Creates/Deletes entity of favorite for a task </summary>

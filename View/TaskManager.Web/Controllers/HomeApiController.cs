@@ -41,12 +41,14 @@ namespace TaskManager.Web.Controllers {
                     List<DateTime> historyFilters;
                     List<Guid> lastResponsibleIds;
                     bool lastFavorite;
+                    byte lastPriority;
 
                     var user = GetUserDto();
                     users = Mapper.Map<List<UserDto>>(
                         this.UserManager.Users.Where(e => e.CompanyId == user.CompanyId));
 
-                    this._service.GetData(user, historyFilter, reportFilter, out projects, out tasks, out historyFilters, out lastResponsibleIds, out lastFavorite);
+                    this._service.GetData(user, historyFilter, reportFilter, out projects, out tasks, out historyFilters, 
+                        out lastResponsibleIds, out lastFavorite, out lastPriority);
                     return WebApiResult.Succeed(new {
                         Projects = projects,
                         Users = users,
@@ -55,7 +57,8 @@ namespace TaskManager.Web.Controllers {
                         SortBy = user.SortBy,
                         FavoriteFilter = user.FavoriteFilter,
                         LastResponsibleIds = lastResponsibleIds,
-                        LastFavorite = lastFavorite
+                        LastFavorite = lastFavorite,
+                        LastPriority = lastPriority
                     });
                 });
             } catch (Exception e) {

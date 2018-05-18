@@ -59,7 +59,7 @@
             <textarea id="alarm-description" placeholder="Description" rows="2"
                       ng-model="Model.EditAlarm.Description"></textarea>
         </div>
-        <div class="field" ng-class="Model.EditAlarm.Birthday ? 'disabled' : ''">
+        <div class="field" ng-class="Model.EditAlarm.Birthday || Model.EditAlarm.Holiday ? 'disabled' : ''">
             <label>Repeat</label>
             <div class="two fields">
                 <div class="six wide field">
@@ -73,12 +73,20 @@
                 </div>
             </div>
         </div>
-        <div class="field">
+        <div class="field" ng-class="Model.EditAlarm.Holiday ? 'disabled' : ''">
             <div class="ui checkbox">
                 <input id="alarm-birthday" type="checkbox"
                        ng-model="Model.EditAlarm.Birthday"
                        ng-change="AlarmBirthday_OnChange()" />
                 <label>Birthday</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui checkbox">
+                <input id="alarm-holiday" type="checkbox"
+                       ng-model="Model.EditAlarm.Holiday"
+                       ng-change="AlarmHoliday_OnChange()" />
+                <label>Holiday</label>
             </div>
         </div>
         <div class="ui error message"></div>

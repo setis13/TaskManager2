@@ -229,6 +229,22 @@ tr.disabled1 {
                 font-weight: bold;
             }
 
+            .ui.alarms.calendar .column td.link.mark.holiday {
+                background-color: red;
+            }
+
+                .ui.alarms.calendar .column td.link.mark.holiday.focus {
+                    background-color: red !important;
+                }
+
+            .ui.alarms.calendar .column td.link.mark.birthday {
+                background-color: dodgerblue;
+            }
+
+                .ui.alarms.calendar .column td.link.mark.birthday.focus {
+                    background-color: dodgerblue !important;
+                }
+
         .ui.alarms.calendar .column td.link.today {
             border: 2px solid #000000;
         }

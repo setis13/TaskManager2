@@ -7,6 +7,7 @@
         public RepeatType: Enums.AlarmRepeatEnum;
         public RepeatValue: number;
         public Birthday: boolean;
+        public Holiday: boolean;
 
         // extra
         private _dateMoment: moment.Moment;
@@ -27,6 +28,7 @@
                 this.RepeatType = data.RepeatType;
                 this.RepeatValue = data.RepeatValue;
                 this.Birthday = data.Birthday;
+                this.Holiday = data.Holiday;
                 this.DateMoment = moment(data.Date);
             } else {
                 this.Title = '';
@@ -34,6 +36,7 @@
                 this.RepeatType = null;
                 this.RepeatValue = null;
                 this.Birthday = false;
+                this.Holiday = false;
                 this.DateMoment = moment();
             }
         }
@@ -49,6 +52,7 @@
             clone.RepeatType = this.RepeatType;
             clone.RepeatValue = this.RepeatValue;
             clone.Birthday = this.Birthday;
+            clone.Holiday = this.Holiday;
             clone.DateMoment = this.DateMoment.clone();
 
             return clone;

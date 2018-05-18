@@ -86,7 +86,7 @@
         <tbody>
             <tr id="task-{{task.EntityId}}" class="top aligned"
                 ng-class="task.Status != 0 && task.Status != 1 ? 'disabled1' : ''"
-                ng-show="(Model.FavoriteFilter == false || Model.SelectedHistoryFilter != 0 || task.Favorite == Model.FavoriteFilter) &&
+                ng-show="(Model.ReportFilter == true || Model.FavoriteFilter == false || Model.SelectedHistoryFilter != 0 || task.Favorite == Model.FavoriteFilter) &&
                          (Model.SelectedProjectFilter == '' || task.ProjectId == Model.SelectedProjectFilter) &&
                          (Model.SelectedUserFilter == '' || task.UserIds.indexOf(Model.SelectedUserFilter) !== -1)"
                 ng-repeat-start="task in Model.FilteredTasks">
@@ -249,7 +249,7 @@
             <!-- subtasks -->
             <tr id="subtask-{{subtask.EntityId}}" class="top aligned word_wrap"
                 ng-class="subtask.Status != 0 && subtask.Status != 1 ? 'disabled1' : ''"
-                ng-show="(Model.FavoriteFilter == false || Model.SelectedHistoryFilter != 0 || subtask.Favorite == Model.FavoriteFilter) &&
+                ng-show="(Model.ReportFilter == true || Model.FavoriteFilter == false || Model.SelectedHistoryFilter != 0 || subtask.Favorite == Model.FavoriteFilter) &&
                          (Model.SelectedProjectFilter == '' || task.ProjectId == Model.SelectedProjectFilter) &&
                          (Model.SelectedUserFilter == '' || task.UserIds.indexOf(Model.SelectedUserFilter) !== -1)"
                 ng-repeat-end ng-repeat="subtask in task.SubTasks">
