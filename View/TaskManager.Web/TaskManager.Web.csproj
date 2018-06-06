@@ -25,8 +25,9 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
     <WebGreaseLibPath>..\..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -503,7 +504,13 @@
     <Content Include="Content\semantic.js" />
     <Content Include="Content\semantic.min.css" />
     <Content Include="Content\semantic.min.js" />
-    <Content Include="Content\Site.css" />
+    <None Include="Content\Site.less" />
+    <Content Include="Content\Site.css">
+      <DependentUpon>Site.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.min.css">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\default\assets\fonts\icons.svg" />
     <Content Include="Content\themes\default\assets\fonts\lg.svg" />
     <Content Include="Content\themes\default\assets\images\flags.png" />
@@ -647,6 +654,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HttpHeadersHelper.cs" />
     <Compile Include="Helpers\MimeTypeHelper.cs" />
     <Compile Include="Logger\Log4NetLogger.cs" />
     <Compile Include="Models\AccountViewModels.cs" />

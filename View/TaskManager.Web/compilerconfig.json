@@ -62,5 +62,9 @@
   {
     "outputFile": "Content/lightgallery/lg-core.css",
     "inputFile": "Content/lightgallery/lg-core.scss"
+  },
+  {
+    "outputFile": "Content/Site.css",
+    "inputFile": "Content/Site.less"
   }
 ]

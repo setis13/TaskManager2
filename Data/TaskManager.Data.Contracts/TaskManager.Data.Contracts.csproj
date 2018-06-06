@@ -80,7 +80,6 @@
     <Compile Include="Entities\Project.cs" />
     <Compile Include="Entities\Session.cs" />
     <Compile Include="Extensions\IdentityExtensions1.cs" />
-    <Compile Include="Helpers\HttpHeadersHelper.cs" />
     <Compile Include="Identity\TaskManagerRole.cs" />
     <Compile Include="Identity\TaskManagerUser.cs" />
     <Compile Include="Identity\TaskManagerUserClaim.cs" />

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Net.Http.Headers;
 
-namespace TaskManager.Data.Contracts.Helpers {
+namespace TaskManager.Web.Helpers {
     public static class HttpHeadersHelper {
         public static string GetHeader(HttpRequestHeaders headers, string key) {
             if (headers.Contains(key)) {

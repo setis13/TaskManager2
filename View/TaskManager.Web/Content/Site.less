@@ -1,0 +1,512 @@
+﻿/*** html & footer ***/
+html, body {
+    height: auto;
+}
+
+body footer {
+    margin-bottom: 1em;
+}
+
+/* max size */
+@media only screen and (min-width: 1200px) {
+    div.ui.block.main.menu {
+        display: block;
+    }
+
+    .ui.stretched.container {
+        width: auto;
+        margin-left: 60px !important;
+        margin-right: 60px !important;
+    }
+}
+
+/*** Text colors ***/
+.content .label {
+    color: grey;
+}
+
+.content .value {
+    color: black;
+}
+
+.content .value.red {
+    color: red;
+}
+
+.content .value.green {
+    color: green;
+}
+
+.content .value.brue {
+    color: blue;
+}
+
+
+.content .extra {
+    color: grey;
+    font-size: 0.9em;
+}
+
+.content .inline {
+    display: inline-block;
+}
+
+/*** Alignments ***/
+.content .pull-right {
+    float: right;
+}
+
+.content .pull-left {
+    float: left;
+}
+
+/*** Fixes for progress bar in first column ***/
+.content .ui.progress.green.value {
+    margin: 0.3em 0em 0em;
+}
+
+.ui.table tr th.left-merge {
+    border-left: none;
+}
+
+td.header {
+    background: #f5f5f5;
+}
+
+/*** The fix of readonly button. lb-busy ***/
+.button.readonly {
+    pointer-events: none !important;
+}
+
+/*** Loading ***/
+/* loading background */
+.ui.main.container > .ui.dimmer {
+    z-index: 1;
+}
+/* the size of main container when loading */
+.ui.main.container.dimmable.dimmed {
+    min-height: 20em;
+}
+
+/*** table row dimmer ***/
+tr td div.ui.dimmer {
+    border-top: 1px solid rgba(34, 36, 38, 0.1);
+    z-index: 1;
+}
+
+/*** fixed items ***/
+td.tasks-comments > .item {
+    margin-bottom: 0.5em;
+}
+
+td.tasks-comments > .item.border {
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+}
+
+td.tasks-comments > .ui.items {
+    margin-top: 0;
+}
+
+td.tasks-comments > .ui.divided.items > .item {
+    padding: 0.5em 0em;
+}
+/*** menu ***/
+.ui.menu.fixed {
+    position: inherit;
+}
+
+.wide.column > .streach {
+    width: 100%;
+    min-width: 100%;
+    white-space: nowrap;
+}
+/*** login/logout to right ***/
+.ui.right.block.menu {
+    display: flex !important;
+    flex-flow: row-reverse;
+    width: 100%;
+}
+/*** word wrap ***/
+table.ui.table.flexed {
+    table-layout: fixed;
+}
+
+td.word_wrap {
+    word-wrap: break-word;
+}
+
+div.block, p.block {
+    display: block !important;
+}
+
+tr.disabled1 span, tr.disabled1 p, tr.disabled1 div.header {
+    color: gray !important;
+}
+
+tr.disabled1 {
+    background: #f5f5f5;
+}
+
+tr.disabled1 .button,
+tr.disabled1 .ui.basic.blue.label,
+tr.disabled1 .ui.basic.green.label,
+tr.disabled1 .ui.basic.red.label,
+tr.disabled1 .ui.basic.brown.label,
+tr.disabled1 .ui.basic.black.label,
+tr.disabled1 .ui.basic.gray.label,
+tr.disabled1 .ui.basic.teal.label {
+    background-color: #f5f5f5 !important;
+}
+
+tr.disabled1 .button,
+tr.disabled1 .ui.basic.blue.label,
+tr.disabled1 .ui.basic.green.label,
+tr.disabled1 .ui.basic.red.label,
+tr.disabled1 .ui.basic.brown.label,
+tr.disabled1 .ui.basic.black.label,
+tr.disabled1 .ui.basic.teal.label {
+    border-color: #aaa !important;
+    color: #aaa !important;
+}
+
+tr.disabled1 .ui.basic.gray.label {
+    border-color: #ddd !important;
+    color: #ddd !important;
+}
+
+tr.disabled1 .value.red {
+    color: red !important;
+}
+
+tr.disabled1 .value.green {
+    color: green !important;
+}
+
+tr.disabled1 .value.blue {
+    color: blue !important;
+}
+
+tr.disabled1 .ui.progress.green .bar {
+    background-color: #cecece !important;
+}
+
+.basic.gray {
+    color: rgba(34, 36, 38, 0.35) !important;
+}
+
+.ui.basic.green.label {
+    border-color: green !important;
+    color: green !important;
+}
+
+.file.label {
+    margin-top: 3px;
+}
+
+#confirm-modal {
+    position: absolute;
+}
+/** Alarms **/
+.ui.alarms.calendar .column {
+    width: auto;
+    flex-grow: initial !important;
+}
+
+.ui.alarms.calendar .column td {
+    /*pointer-events: none;*/
+}
+
+.ui.alarms.calendar .column td.link.mark {
+    background-color: forestgreen;
+    color: white;
+    font-weight: bold;
+}
+
+.ui.alarms.calendar .column td.link.mark.focus {
+    background-color: forestgreen !important;
+    color: white;
+    font-weight: bold;
+}
+
+.ui.alarms.calendar .column td.link.mark.holiday {
+    background-color: red;
+}
+
+.ui.alarms.calendar .column td.link.mark.holiday.focus {
+    background-color: red !important;
+}
+
+.ui.alarms.calendar .column td.link.mark.birthday {
+    background-color: dodgerblue;
+}
+
+.ui.alarms.calendar .column td.link.mark.birthday.focus {
+    background-color: dodgerblue !important;
+}
+
+.ui.alarms.calendar .column td.link.today {
+    border: 2px solid #000000;
+}
+
+.ui.alarms.calendar .column td.link.yesterday {
+    color: lightgray;
+}
+
+.ui.alarms.calendar .column td.link.disabled {
+    color: white;
+}
+
+span.alarm-label {
+    color: black;
+    margin-top: 7px !important;
+    font-size: 14px;
+    font-weight: bold;
+    font-style: normal;
+    font-family: Arial;
+}
+
+a.alarm.item {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+a.alarm.item .loading.icon {
+    left: 11px;
+}
+
+/** Favorite **/
+i.favorite.icon, i.calendar.check {
+    cursor: pointer;
+}
+
+/** Night Mode **/
+
+/* variables */
+@border-night: #4A4A4A;
+@background: #2D2D30;
+@background-header: #252526;
+@background-body: #1E1E1E;
+@background-control: #444;
+@background-label: #383838;
+@font-color: #CCC;
+
+body.night-mode {
+    background-color: @background;
+
+    hr {
+        border-top: 1px solid @border-night;
+        border-bottom: 0;
+    }
+
+    .ui.inverted.dimmer {
+        background-color: rgba(48, 48, 48, 0.85);
+    }
+
+    table.ui.table {
+        background: @border-night;
+        color: @font-color;
+
+        thead th {
+            background: @background-header;
+            border-bottom: 1px solid @border-night;
+            color: @font-color;
+        }
+
+        tbody {
+            background-color: @background-body;
+
+            td.header {
+                background-color: @background-header;
+            }
+        }
+
+        tr {
+            th, td {
+                border-left: 1px solid @border-night;
+            }
+
+            td {
+                border-top: 1px solid @border-night;
+            }
+
+            th:first-child, td:first-child {
+                border-left: none;
+            }
+
+            th.left-merge {
+                border-left: none;
+            }
+
+            .ui.divided.items > .item {
+                border-top: 1px solid @border-night;
+            }
+
+            .ui.divided.items > .item:first-child {
+                border-top: none;
+            }
+        }
+        /* disabled */
+        tr.disabled1 {
+            background: @background-header;
+
+            .ui.progress .bar {
+                background-color: @background-control !important;
+            }
+
+            .ui.basic.label {
+                background: transparent !important;
+            }
+        }
+
+        .content .value {
+            color: @font-color;
+        }
+
+        .ui.items > .item > .content > .description, .ui.items > .item > .content > .header {
+            color: @font-color;
+        }
+
+        .ui.progress {
+            background-color: @background-control;
+        }
+
+        .ui.progress.success .bar, .ui.green.progress .bar {
+            background-color: #16772D !important;
+        }
+    }
+    /* controls */
+    .ui.selection.dropdown {
+        background: @background-control;
+        color: @font-color;
+    }
+
+    .ui.selection.active.dropdown .menu {
+        border-color: @border-night;
+    }
+
+    .ui.selection.dropdown .menu > .item {
+        border-color: @border-night;
+    }
+
+    .ui.selection.active.dropdown {
+        border-color: @border-night;
+    }
+
+    .ui.dropdown .menu {
+        background: @background-control;
+
+        > .item {
+            color: @font-color;
+        }
+    }
+
+    .ui.multiple.dropdown > .label {
+        box-shadow: 0px 0px 0px 2px @border-night inset;
+    }
+
+    .ui.menu {
+
+        .dropdown.item .menu {
+            background: @border-night;
+        }
+
+        .ui.dropdown .menu > .item {
+            background: @background !important;
+            color: @font-color !important;
+        }
+
+        .menu {
+            .dropdown.item {
+                background: @background;
+            }
+
+            .ui.dropdown > .item {
+                color: @font-color !important;
+            }
+        }
+    }
+
+    .ui.form input, .ui.form textarea, .ui.form input:focus, .ui.form textarea:focus {
+        background: @background-control;
+        color: @font-color;
+    }
+
+    .ui.checkbox label {
+        color: @font-color;
+    }
+
+    .clear.ui.button {
+        background: @background-control;
+        color: @font-color;
+    }
+
+    .readonly.button {
+        background: @background-control;
+    }
+    /* footer */
+    footer {
+        color: @font-color;
+    }
+    /* popup */
+    .ui.popup {
+        background: @background;
+
+        .header, .content {
+            color: @font-color;
+        }
+    }
+
+    .ui.header {
+        color: @font-color;
+    }
+
+    .ui.bottom.popup {
+        background: @background;
+    }
+
+    .ui.popup::before {
+        background: @background;
+    }
+
+    .ui.bottom.popup::before {
+        background: @background;
+    }
+    /* modal */
+    .ui.modal {
+        > .actions {
+            background: @background;
+        }
+
+        .ui.label {
+            background: @background-label;
+        }
+
+        > .content, > .header {
+            background: @background;
+            color: @font-color;
+        }
+    }
+
+    .ui.form .field > label {
+        color: @font-color;
+    }
+    /* label */
+    .ui.basic.label {
+        background-color: transparent !important;
+        border: 1px solid @border-night;
+    }
+
+    .basic.gray {
+        color: @border-night !important;
+    }
+
+    .ui.basic.label:hover {
+        background-color: transparent !important;
+    }
+    /* message */
+    .ui.message {
+        color: @font-color;
+        background: @background;
+    }
+}

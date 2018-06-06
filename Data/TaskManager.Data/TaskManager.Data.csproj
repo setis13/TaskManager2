@@ -69,8 +69,8 @@
     <Compile Include="Context\TaskManagerDbContext.cs" />
     <Compile Include="Context\TaskManagerDbContextConfiguration.cs" />
     <Compile Include="Context\TaskManagerDbContextInitializer.cs" />
-    <Compile Include="Identity\LogBookRoleStore.cs" />
-    <Compile Include="Identity\LogBookUserStore.cs" />
+    <Compile Include="Identity\TaskManagerRoleStore.cs" />
+    <Compile Include="Identity\TaskManagerUserStore.cs" />
     <Compile Include="Mappings\ProjectMap.cs" />
     <Compile Include="Mappings\FileMap.cs" />
     <Compile Include="Mappings\UserFavoriteMap.cs" />

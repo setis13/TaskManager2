@@ -44,7 +44,7 @@
                 </select>
             </div>
             <div class="two wide column computer">
-                <div class="ui button streach"
+                <div class="ui button streach clear"
                      ng-click="ClearFilters_OnClick()">
                     Clear
                 </div>
@@ -469,7 +469,7 @@
         <div class="field" id="task-files-field">
             <label>Attachment</label>
             <a ng-repeat1="file in Model.EditTask.Files" class="ui file blue basic label"><span>{{file.DisplayName}}</span><i class="delete icon" ng-click="RemoveFile_OnClick(Model.EditTask.Files, file)"></i></a>
-            <div class="ui mini gray button" ng-click="AttachFiles_OnClick(Model.EditTask.Files)">Attach Files</div>
+            <div class="ui mini gray clear button" ng-click="AttachFiles_OnClick(Model.EditTask.Files)">Attach Files</div>
         </div>
         <div class="ui error message"></div>
     </div>
@@ -529,7 +529,7 @@
         <div class="field" id="task-files-field">
             <label>Attachment</label>
             <a ng-repeat1="file in Model.EditSubTask.Files" class="ui file blue basic label"><span>{{file.DisplayName}}</span><i class="delete icon" ng-click="RemoveFile_OnClick(Model.EditSubTask.Files, file)"></i></a>
-            <div class="ui mini gray button" ng-click="AttachFiles_OnClick(Model.EditSubTask.Files)">Attach Files</div>
+            <div class="ui mini gray clear button" ng-click="AttachFiles_OnClick(Model.EditSubTask.Files)">Attach Files</div>
         </div>
         <div class="ui error message"></div>
     </div>
@@ -540,7 +540,7 @@
              lb-busy="Deleting">
             Delete
         </div>
-        <div class="ui button"
+        <div class="ui clear button"
              ng-click="SubTaskCancel_OnClick()">
             Cancel
         </div>
@@ -604,7 +604,7 @@
         <div class="field" id="task-files-field">
             <label>Attachment</label>
             <a ng-repeat1="file in Model.EditComment.Files" class="ui file blue basic label"><span>{{file.DisplayName}}</span><i class="delete icon" ng-click="RemoveFile_OnClick(Model.EditComment.Files, file)"></i></a>
-            <div class="ui mini gray button" ng-click="AttachFiles_OnClick(Model.EditComment.Files)">Attach Files</div>
+            <div class="ui mini gray clear button" ng-click="AttachFiles_OnClick(Model.EditComment.Files)">Attach Files</div>
         </div>
         <div class="ui error message"></div>
     </div>

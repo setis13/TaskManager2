@@ -30,7 +30,7 @@
         var ImageExtensions = @Html.Raw(JsonExtension.SerializeObject(MimeTypeHelper.GetLightGalleryExtensions()));
     </script>
 </head>
-<body>
+<body class="night-mode">
     @if (Request.IsAuthenticated) {
         <div class="ui stackable fixed inverted block main menu" ng-controller="MenuController">
             <div class="ui stretched container">
@@ -67,7 +67,7 @@
                     <div ng-repeat="alarm in Model.Alarms" class="item">
                         <div class="ui header">
                             <span>{{alarm.DateMoment.format("MM/DD/YYYY")}} {{alarm.Title}}<i class="blue birthday icon" ng-show="alarm.Birthday"></i></span>
-                            <div class="sub header">{{alarm.Description}}</div>
+                            <div class="ui sub header">{{alarm.Description}}</div>
                         </div>
                     </div>
                 </div>

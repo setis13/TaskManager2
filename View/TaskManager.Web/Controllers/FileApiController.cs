@@ -13,7 +13,6 @@ using TaskManager.Logic.Contracts.Dtos;
 using System.Net.Http.Headers;
 using System.Net;
 using TaskManager.Logic.Contracts.Exceptions;
-using TaskManager.Data.Contracts.Helpers;
 using System.Linq;
 using System.IO;
 using TaskManager.Web.Helpers;
