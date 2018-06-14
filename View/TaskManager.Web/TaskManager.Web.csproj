@@ -498,13 +498,23 @@
       <DependentUpon>lightgallery.css</DependentUpon>
     </Content>
     <Content Include="Content\semantic-calendar.css" />
-    <Content Include="Content\semantic-calendar.min.css" />
+    <Content Include="Content\semantic-calendar.min.css">
+      <DependentUpon>semantic-calendar.css</DependentUpon>
+    </Content>
     <Content Include="Content\semantic-responsive.css" />
+    <Content Include="Content\semantic-responsive.min.css">
+      <DependentUpon>semantic-responsive.css</DependentUpon>
+    </Content>
     <Content Include="Content\semantic.css" />
     <Content Include="Content\semantic.js" />
-    <Content Include="Content\semantic.min.css" />
-    <Content Include="Content\semantic.min.js" />
+    <None Include="bundleconfig.json" />
     <None Include="Content\Site.less" />
+    <Content Include="Content\semantic.min.css">
+      <DependentUpon>semantic.css</DependentUpon>
+    </Content>
+    <Content Include="Content\semantic.min.js">
+      <DependentUpon>semantic.js</DependentUpon>
+    </Content>
     <Content Include="Content\Site.css">
       <DependentUpon>Site.less</DependentUpon>
     </Content>
@@ -514,29 +524,38 @@
     <Content Include="Content\themes\default\assets\fonts\icons.svg" />
     <Content Include="Content\themes\default\assets\fonts\lg.svg" />
     <Content Include="Content\themes\default\assets\images\flags.png" />
-    <Content Include="Content\toastr.css" />
-    <Content Include="Content\toastr.min.css" />
+    <Content Include="Content\toastr.css">
+      <DependentUpon>toastr.less</DependentUpon>
+    </Content>
+    <Content Include="Content\toastr.min.css">
+      <DependentUpon>toastr.css</DependentUpon>
+    </Content>
     <Content Include="description.txt" />
     <Content Include="Global.asax" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Scripts\ai.0.22.9-build00167.min.js">
+      <DependentUpon>ai.0.22.9-build00167.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-mocks.min.js">
+      <DependentUpon>angular-mocks.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\angular-route.js" />
-    <Content Include="Scripts\angular-route.min.js" />
+    <Content Include="Scripts\angular-route.min.js">
+      <DependentUpon>angular-route.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\angular-sanitize.js" />
-    <Content Include="Scripts\angular-sanitize.min.js" />
+    <Content Include="Scripts\angular-sanitize.min.js">
+      <DependentUpon>angular-sanitize.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\angular.js" />
-    <Content Include="Scripts\angular.min.js" />
-    <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Scripts\angular-route.min.js.map" />
-    <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
     <Content Include="Database.config" />
     <Content Include="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\angular-sanitize.min.js.map" />
     <Content Include="Content\themes\default\assets\fonts\icons.eot" />
     <Content Include="Content\themes\default\assets\fonts\icons.otf" />
     <Content Include="Content\themes\default\assets\fonts\icons.ttf" />
@@ -568,34 +587,372 @@
     <None Include="Properties\PublishProfiles\localhost.pubxml" />
     <None Include="Properties\PublishProfiles\task_manager.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Scripts\angular.min.js">
+      <DependentUpon>angular.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\api\AntiForgeryToken.js">
+      <DependentUpon>AntiForgeryToken.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\api\AntiForgeryToken.min.js">
+      <DependentUpon>AntiForgeryToken.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\api\Functions.js">
+      <DependentUpon>Functions.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\api\Functions.min.js">
+      <DependentUpon>Functions.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\app.js">
+      <DependentUpon>app.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\app.min.js">
+      <DependentUpon>app.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\AccountController.js">
+      <DependentUpon>AccountController.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\AccountController.min.js">
+      <DependentUpon>AccountController.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\AlarmsController.js">
+      <DependentUpon>AlarmsController.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\AlarmsController.min.js">
+      <DependentUpon>AlarmsController.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\base\0BaseController.js">
+      <DependentUpon>0BaseController.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\base\0BaseController.min.js">
+      <DependentUpon>0BaseController.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\CompanyController.js">
+      <DependentUpon>CompanyController.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\CompanyController.min.js">
+      <DependentUpon>CompanyController.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\HomeController.js">
+      <DependentUpon>HomeController.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\HomeController.min.js">
+      <DependentUpon>HomeController.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\LoginController.js">
+      <DependentUpon>LoginController.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\LoginController.min.js">
+      <DependentUpon>LoginController.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\MenuController.js">
+      <DependentUpon>MenuController.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\MenuController.min.js">
+      <DependentUpon>MenuController.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\ProjectsController.js">
+      <DependentUpon>ProjectsController.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\ProjectsController.min.js">
+      <DependentUpon>ProjectsController.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\ReportController.js">
+      <DependentUpon>ReportController.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\ReportController.min.js">
+      <DependentUpon>ReportController.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\SignUpController.js">
+      <DependentUpon>SignUpController.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\controllers\SignUpController.min.js">
+      <DependentUpon>SignUpController.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\directives\BusyDirective.js">
+      <DependentUpon>BusyDirective.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\directives\BusyDirective.min.js">
+      <DependentUpon>BusyDirective.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\directives\convertToNumber.js">
+      <DependentUpon>convertToNumber.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\directives\convertToNumber.min.js">
+      <DependentUpon>convertToNumber.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\directives\ModalDirective.js">
+      <DependentUpon>ModalDirective.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\directives\ModalDirective.min.js">
+      <DependentUpon>ModalDirective.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\enums\AlarmRepeatEnum.js">
+      <DependentUpon>AlarmRepeatEnum.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\enums\AlarmRepeatEnum.min.js">
+      <DependentUpon>AlarmRepeatEnum.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\enums\RoleName.js">
+      <DependentUpon>RoleName.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\enums\RoleName.min.js">
+      <DependentUpon>RoleName.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\enums\SortByEnum.js">
+      <DependentUpon>SortByEnum.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\enums\SortByEnum.min.js">
+      <DependentUpon>SortByEnum.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\enums\TaskPriorityEnum.js">
+      <DependentUpon>TaskPriorityEnum.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\enums\TaskPriorityEnum.min.js">
+      <DependentUpon>TaskPriorityEnum.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\enums\TaskStatusEnum.js">
+      <DependentUpon>TaskStatusEnum.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\enums\TaskStatusEnum.min.js">
+      <DependentUpon>TaskStatusEnum.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\filters\nl2br.js">
+      <DependentUpon>nl2br.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\filters\nl2br.min.js">
+      <DependentUpon>nl2br.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\filters\percent.js">
+      <DependentUpon>percent.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\filters\percent.min.js">
+      <DependentUpon>percent.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\filters\set_progress_data_percent.js">
+      <DependentUpon>set_progress_data_percent.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\filters\set_progress_data_percent.min.js">
+      <DependentUpon>set_progress_data_percent.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\AccountModel.js">
+      <DependentUpon>AccountModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\AccountModel.min.js">
+      <DependentUpon>AccountModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\AlarmsModel.js">
+      <DependentUpon>AlarmsModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\AlarmsModel.min.js">
+      <DependentUpon>AlarmsModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\base\0ModelBase.js">
+      <DependentUpon>0ModelBase.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\base\0ModelBase.min.js">
+      <DependentUpon>0ModelBase.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\base\1BaseModel.js">
+      <DependentUpon>1BaseModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\base\1BaseModel.min.js">
+      <DependentUpon>1BaseModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\Company1Model.js">
+      <DependentUpon>Company1Model.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\Company1Model.min.js">
+      <DependentUpon>Company1Model.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\HomeModel.js">
+      <DependentUpon>HomeModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\HomeModel.min.js">
+      <DependentUpon>HomeModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\1UserModel.js">
+      <DependentUpon>1UserModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\1UserModel.min.js">
+      <DependentUpon>1UserModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\2CompanyModel.js">
+      <DependentUpon>2CompanyModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\2CompanyModel.min.js">
+      <DependentUpon>2CompanyModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\3CommentModel.js">
+      <DependentUpon>3CommentModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\3CommentModel.min.js">
+      <DependentUpon>3CommentModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\4SubTaskModel.js">
+      <DependentUpon>4SubTaskModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\4SubTaskModel.min.js">
+      <DependentUpon>4SubTaskModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\5TaskModel.js">
+      <DependentUpon>5TaskModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\5TaskModel.min.js">
+      <DependentUpon>5TaskModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\6ProjectModel.js">
+      <DependentUpon>6ProjectModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\6ProjectModel.min.js">
+      <DependentUpon>6ProjectModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\AlarmModel.js">
+      <DependentUpon>AlarmModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\AlarmModel.min.js">
+      <DependentUpon>AlarmModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\FileModel.js">
+      <DependentUpon>FileModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\FileModel.min.js">
+      <DependentUpon>FileModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\ReportCommentModel.js">
+      <DependentUpon>ReportCommentModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\ReportCommentModel.min.js">
+      <DependentUpon>ReportCommentModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\ReportProjectModel.js">
+      <DependentUpon>ReportProjectModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\ReportProjectModel.min.js">
+      <DependentUpon>ReportProjectModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\ReportSubTaskModel.js">
+      <DependentUpon>ReportSubTaskModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\ReportSubTaskModel.min.js">
+      <DependentUpon>ReportSubTaskModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\ReportTaskModel.js">
+      <DependentUpon>ReportTaskModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\items\ReportTaskModel.min.js">
+      <DependentUpon>ReportTaskModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\LoginModel.js">
+      <DependentUpon>LoginModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\LoginModel.min.js">
+      <DependentUpon>LoginModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\MenuModel.js">
+      <DependentUpon>MenuModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\MenuModel.min.js">
+      <DependentUpon>MenuModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\ProjectsModel.js">
+      <DependentUpon>ProjectsModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\ProjectsModel.min.js">
+      <DependentUpon>ProjectsModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\ReportModel.js">
+      <DependentUpon>ReportModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\ReportModel.min.js">
+      <DependentUpon>ReportModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\SignUpModel.js">
+      <DependentUpon>SignUpModel.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\models\SignUpModel.min.js">
+      <DependentUpon>SignUpModel.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-3.2.1.intellisense.min.js">
+      <DependentUpon>jquery-3.2.1.intellisense.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery-3.2.1.js" />
-    <Content Include="Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\jquery-3.2.1.min.js">
+      <DependentUpon>jquery-3.2.1.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
-    <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
     <None Include="Scripts\linq-vsdoc.js" />
-    <Content Include="Scripts\jquery.mousewheel.min.js" />
+    <Content Include="Scripts\jquery-3.2.1.slim.min.js">
+      <DependentUpon>jquery-3.2.1.slim.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery.timeago.js" />
+    <Content Include="Scripts\jquery.timeago.min.js">
+      <DependentUpon>jquery.timeago.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\lightgallery\0lightgallery.min.js">
+      <DependentUpon>0lightgallery.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\lightgallery\lg-autoplay.js" />
+    <Content Include="Scripts\lightgallery\lg-autoplay.min.js">
+      <DependentUpon>lg-autoplay.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\lightgallery\lg-fullscreen.js" />
+    <Content Include="Scripts\lightgallery\lg-fullscreen.min.js">
+      <DependentUpon>lg-fullscreen.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\lightgallery\lg-hash.js" />
+    <Content Include="Scripts\lightgallery\lg-hash.min.js">
+      <DependentUpon>lg-hash.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\lightgallery\lg-pager.js" />
+    <Content Include="Scripts\lightgallery\lg-pager.min.js">
+      <DependentUpon>lg-pager.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\lightgallery\lg-share.js" />
+    <Content Include="Scripts\lightgallery\lg-share.min.js">
+      <DependentUpon>lg-share.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\lightgallery\lg-video.js" />
+    <Content Include="Scripts\lightgallery\lg-video.min.js">
+      <DependentUpon>lg-video.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\lightgallery\lg-zoom.js" />
     <Content Include="Scripts\lightgallery\0lightgallery.js" />
+    <Content Include="Scripts\lightgallery\lg-zoom.min.js">
+      <DependentUpon>lg-zoom.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\linq-vsdoc.min.js">
+      <DependentUpon>linq-vsdoc.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\linq.js" />
-    <Content Include="Scripts\linq.min.js" />
+    <Content Include="Scripts\linq.min.js">
+      <DependentUpon>linq.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\moment-duration-format.js" />
+    <Content Include="Scripts\moment-duration-format.min.js">
+      <DependentUpon>moment-duration-format.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\moment-with-locales.js" />
-    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment-with-locales.min.js">
+      <DependentUpon>moment-with-locales.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\moment.js" />
-    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\moment.min.js">
+      <DependentUpon>moment.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\References.js">
+      <DependentUpon>References.ts</DependentUpon>
+    </Content>
+    <Content Include="Scripts\References.min.js">
+      <DependentUpon>References.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\semantic-calendar.js" />
-    <Content Include="Scripts\semantic-calendar.min.js" />
+    <Content Include="Scripts\semantic-calendar.min.js">
+      <DependentUpon>semantic-calendar.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\toastr.js" />
-    <Content Include="Scripts\toastr.min.js" />
-    <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.2.1.min.map" />
+    <Content Include="Scripts\toastr.min.js">
+      <DependentUpon>toastr.js</DependentUpon>
+    </Content>
     <Content Include="Templates\Account\Profile.html" />
     <None Include="Views\Home\Empty.cshtml" />
     <Content Include="Templates\Alarms\Index.html" />
@@ -622,13 +979,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
-    <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppBootstrapper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -654,6 +1009,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HtmlHelper.cs" />
     <Compile Include="Helpers\HttpHeadersHelper.cs" />
     <Compile Include="Helpers\MimeTypeHelper.cs" />
     <Compile Include="Logger\Log4NetLogger.cs" />
@@ -786,7 +1142,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\..\packages\BuildBundlerMinifier.2.8.391\build\BuildBundlerMinifier.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\BuildBundlerMinifier.2.8.391\build\BuildBundlerMinifier.targets'))" />
   </Target>
+  <Import Project="..\..\packages\BuildBundlerMinifier.2.8.391\build\BuildBundlerMinifier.targets" Condition="Exists('..\..\packages\BuildBundlerMinifier.2.8.391\build\BuildBundlerMinifier.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

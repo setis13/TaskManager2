@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Web.Optimization;
 using BundleTransformer.Core.Builders;
 using BundleTransformer.Core.Orderers;
 using BundleTransformer.Core.Transformers;
-using TaskManager.Common;
 
 namespace TaskManager.Web {
     public class BundleConfig {
@@ -79,7 +77,7 @@ namespace TaskManager.Web {
                     "~/Scripts/angular.js",
                     "~/Scripts/angular-route.js",
                     "~/Scripts/angular-sanitize.js",
-                    "~/Scripts/jquery.mousewheel.min.js",
+                    "~/Scripts/jquery.mousewheel.js",
                     "~/Scripts/lightgallery/*.js"
                     )
                 .IncludeDirectory(

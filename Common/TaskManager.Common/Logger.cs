@@ -48,9 +48,9 @@ namespace TaskManager.Common {
             }
         }
 
-#endregion [ .ctor ]
+        #endregion [ .ctor ]
 
-#region [ private ]
+        #region [ private ]
 
         private static void Log(LogLevel level, string message, params object[] args) {
             var _commonLogger = GetLoggerInstance();
@@ -104,9 +104,9 @@ namespace TaskManager.Common {
 #endif
         }
 
-#endregion [ private ]
+        #endregion [ private ]
 
-#region [ Public ]
+        #region [ Public ]
 
         /// <summary>
         ///     Write log from clients </summary>
@@ -146,6 +146,6 @@ namespace TaskManager.Common {
             Log(LogLevel.Debug, message, ex, args);
         }
 
-#endregion [ Public ]
+        #endregion [ Public ]
     }
 }

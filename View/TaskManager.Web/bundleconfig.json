@@ -1,0 +1,476 @@
+[
+  {
+    "outputFileName": "Scripts/jquery.timeago.min.js",
+    "inputFiles": [
+      "Scripts/jquery.timeago.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/moment-duration-format.min.js",
+    "inputFiles": [
+      "Scripts/moment-duration-format.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/semantic-responsive.min.css",
+    "inputFiles": [
+      "Content/semantic-responsive.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/semantic-calendar.min.css",
+    "inputFiles": [
+      "Content/semantic-calendar.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/semantic.min.css",
+    "inputFiles": [
+      "Content/semantic.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/semantic.min.js",
+    "inputFiles": [
+      "Content/semantic.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/Site.min.css",
+    "inputFiles": [
+      "Content/Site.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/angular-mocks.min.js",
+    "inputFiles": [
+      "Scripts/angular-mocks.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/angular-route.min.js",
+    "inputFiles": [
+      "Scripts/angular-route.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/toastr.min.js",
+    "inputFiles": [
+      "Scripts/toastr.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/semantic-calendar.min.js",
+    "inputFiles": [
+      "Scripts/semantic-calendar.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/moment.min.js",
+    "inputFiles": [
+      "Scripts/moment.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/moment-with-locales.min.js",
+    "inputFiles": [
+      "Scripts/moment-with-locales.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/linq.min.js",
+    "inputFiles": [
+      "Scripts/linq.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/linq-vsdoc.min.js",
+    "inputFiles": [
+      "Scripts/linq-vsdoc.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery-3.2.1.slim.min.js",
+    "inputFiles": [
+      "Scripts/jquery-3.2.1.slim.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery-3.2.1.min.js",
+    "inputFiles": [
+      "Scripts/jquery-3.2.1.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/jquery-3.2.1.intellisense.min.js",
+    "inputFiles": [
+      "Scripts/jquery-3.2.1.intellisense.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/angular.min.js",
+    "inputFiles": [
+      "Scripts/angular.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/angular-sanitize.min.js",
+    "inputFiles": [
+      "Scripts/angular-sanitize.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/ai.0.22.9-build00167.min.js",
+    "inputFiles": [
+      "Scripts/ai.0.22.9-build00167.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/lightgallery/0lightgallery.min.js",
+    "inputFiles": [
+      "Scripts/lightgallery/0lightgallery.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/lightgallery/lg-zoom.min.js",
+    "inputFiles": [
+      "Scripts/lightgallery/lg-zoom.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/lightgallery/lg-video.min.js",
+    "inputFiles": [
+      "Scripts/lightgallery/lg-video.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/lightgallery/lg-share.min.js",
+    "inputFiles": [
+      "Scripts/lightgallery/lg-share.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/lightgallery/lg-pager.min.js",
+    "inputFiles": [
+      "Scripts/lightgallery/lg-pager.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/lightgallery/lg-hash.min.js",
+    "inputFiles": [
+      "Scripts/lightgallery/lg-hash.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/lightgallery/lg-fullscreen.min.js",
+    "inputFiles": [
+      "Scripts/lightgallery/lg-fullscreen.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/lightgallery/lg-autoplay.min.js",
+    "inputFiles": [
+      "Scripts/lightgallery/lg-autoplay.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/api/AntiForgeryToken.min.js",
+    "inputFiles": [
+      "Scripts/app/api/AntiForgeryToken.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/api/Functions.min.js",
+    "inputFiles": [
+      "Scripts/app/api/Functions.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/controllers/base/0BaseController.min.js",
+    "inputFiles": [
+      "Scripts/app/controllers/base/0BaseController.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/controllers/AccountController.min.js",
+    "inputFiles": [
+      "Scripts/app/controllers/AccountController.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/controllers/AlarmsController.min.js",
+    "inputFiles": [
+      "Scripts/app/controllers/AlarmsController.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/controllers/CompanyController.min.js",
+    "inputFiles": [
+      "Scripts/app/controllers/CompanyController.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/controllers/HomeController.min.js",
+    "inputFiles": [
+      "Scripts/app/controllers/HomeController.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/controllers/LoginController.min.js",
+    "inputFiles": [
+      "Scripts/app/controllers/LoginController.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/controllers/MenuController.min.js",
+    "inputFiles": [
+      "Scripts/app/controllers/MenuController.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/controllers/ProjectsController.min.js",
+    "inputFiles": [
+      "Scripts/app/controllers/ProjectsController.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/controllers/ReportController.min.js",
+    "inputFiles": [
+      "Scripts/app/controllers/ReportController.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/controllers/SignUpController.min.js",
+    "inputFiles": [
+      "Scripts/app/controllers/SignUpController.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/directives/ModalDirective.min.js",
+    "inputFiles": [
+      "Scripts/app/directives/ModalDirective.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
+  {
+    "outputFileName": "Scripts/app/directives/convertToNumber.min.js",
+    "inputFiles": [
+      "Scripts/app/directives/convertToNumber.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/directives/BusyDirective.min.js",
+    "inputFiles": [
+      "Scripts/app/directives/BusyDirective.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/enums/TaskStatusEnum.min.js",
+    "inputFiles": [
+      "Scripts/app/enums/TaskStatusEnum.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/enums/TaskPriorityEnum.min.js",
+    "inputFiles": [
+      "Scripts/app/enums/TaskPriorityEnum.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/enums/SortByEnum.min.js",
+    "inputFiles": [
+      "Scripts/app/enums/SortByEnum.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/enums/RoleName.min.js",
+    "inputFiles": [
+      "Scripts/app/enums/RoleName.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/enums/AlarmRepeatEnum.min.js",
+    "inputFiles": [
+      "Scripts/app/enums/AlarmRepeatEnum.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/filters/set_progress_data_percent.min.js",
+    "inputFiles": [
+      "Scripts/app/filters/set_progress_data_percent.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/filters/percent.min.js",
+    "inputFiles": [
+      "Scripts/app/filters/percent.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/filters/nl2br.min.js",
+    "inputFiles": [
+      "Scripts/app/filters/nl2br.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
+  {
+    "outputFileName": "Scripts/app/models/base/1BaseModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/base/1BaseModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/base/0ModelBase.min.js",
+    "inputFiles": [
+      "Scripts/app/models/base/0ModelBase.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/items/ReportTaskModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/items/ReportTaskModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/items/ReportSubTaskModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/items/ReportSubTaskModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/items/ReportProjectModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/items/ReportProjectModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/items/ReportCommentModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/items/ReportCommentModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/items/FileModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/items/FileModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/items/AlarmModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/items/AlarmModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/items/6ProjectModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/items/6ProjectModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/items/5TaskModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/items/5TaskModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/items/4SubTaskModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/items/4SubTaskModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/items/3CommentModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/items/3CommentModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/items/2CompanyModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/items/2CompanyModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/items/1UserModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/items/1UserModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/SignUpModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/SignUpModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/ReportModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/ReportModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/ProjectsModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/ProjectsModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/MenuModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/MenuModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/LoginModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/LoginModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/HomeModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/HomeModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/Company1Model.min.js",
+    "inputFiles": [
+      "Scripts/app/models/Company1Model.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/AlarmsModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/AlarmsModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/models/AccountModel.min.js",
+    "inputFiles": [
+      "Scripts/app/models/AccountModel.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/app.min.js",
+    "inputFiles": [
+      "Scripts/app/app.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": false
+    }
+  },
+  {
+    "outputFileName": "Scripts/References.min.js",
+    "inputFiles": [
+      "Scripts/References.js"
+    ]
+  }
+]

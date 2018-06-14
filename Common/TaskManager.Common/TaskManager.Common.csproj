@@ -76,7 +76,6 @@
   <ItemGroup>
     <Compile Include="Enums\RoleName.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="Extensions\HtmlHelper.cs" />
     <Compile Include="Extensions\JsonExtension.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

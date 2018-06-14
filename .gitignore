@@ -1,10 +1,12 @@
+*.map
+*.min.js
+*.min.css
 /.vs/TaskManager.Web/v14/*.suo
 /packages
 bin
 obj
 /.vs
 /View/TaskManager.Web/logs
-/View/TaskManager.Web/Scripts/References.js
 /View/TaskManager.Web/Database.config
 /View/TaskManager.Web/Properties/PublishProfiles
 /View/TaskManager.Web/App_Data/Files
