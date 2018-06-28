@@ -393,6 +393,11 @@ body.night-mode .ui.modal > .header {
   background: #2D2D30;
   color: #CCC;
 }
+body.night-mode .ui.modal > :first-child:not(.icon),
+body.night-mode .ui.modal > .icon:first-child + * {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 body.night-mode .ui.form .field > label {
   color: #CCC;
 }

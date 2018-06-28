@@ -486,6 +486,11 @@ body.night-mode {
             background: @background;
             color: @font-color;
         }
+
+        > :first-child:not(.icon), > .icon:first-child + * {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
     }
 
     .ui.form .field > label {

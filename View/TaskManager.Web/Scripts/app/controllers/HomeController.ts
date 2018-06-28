@@ -362,7 +362,7 @@ namespace Controllers {
         public CreateSubTask_OnClick = (task: Models.TaskModel) => {
             var subtask = new Models.SubTaskModel(null);
             // sets default favorite
-            task.Favorite = this.Model.LastFavorite;
+            subtask.Favorite = this.Model.LastFavorite;
             subtask.TaskId = task.EntityId;
             this.Model.EditSubTask = subtask;
             this.InitSubTaskModal();
