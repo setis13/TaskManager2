@@ -76,6 +76,7 @@ namespace TaskManager.Data.Repositories.Base {
             entity.LastModifiedDate = DateTime.UtcNow;
             entity.LastModifiedById = userId;
             DbEntityEntry<T> entityEntry = Context.Entry(entity);
+            // работает потому что Update делается через Save и GetById
             entityEntry.CurrentValues[nameof(entity.CreatedDate)] = entityEntry.OriginalValues[nameof(entity.CreatedDate)];
             entityEntry.CurrentValues[nameof(entity.CreatedById)] = entityEntry.OriginalValues[nameof(entity.CreatedById)];
             if (entityEntry.State == EntityState.Detached) {

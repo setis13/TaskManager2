@@ -12,7 +12,8 @@ namespace TaskManager.Logic.Contracts.Dtos {
         ///     The last modified task ID. Using for a saving responsible </summary>
         public Guid? LastModifiedTaskId { get; set; }
         public byte SortBy { get; set; }
-        public bool FavoriteFilter{ get; set; }
+        public bool FavoriteFilter { get; set; }
+        public Guid ProjectFilter { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
     }

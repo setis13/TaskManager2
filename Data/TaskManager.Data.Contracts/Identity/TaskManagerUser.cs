@@ -37,6 +37,9 @@ namespace TaskManager.Data.Contracts.Identity {
         ///     A Favorite filter </summary>
         public bool FavoriteFilter { get; set; }
         /// <summary>
+        ///     A Project filter </summary>
+        public bool ProjectFilter { get; set; }
+        /// <summary>
         ///     The last modified task ID. Using for a saving responsible </summary>
         public Guid? LastModifiedTaskId { get; set; }
 

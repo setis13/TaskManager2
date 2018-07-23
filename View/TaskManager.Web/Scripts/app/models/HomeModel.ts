@@ -78,6 +78,7 @@
             this.Projects = new Array();
             this.Tasks = new Array();
             this.FavoriteFilter = data.FavoriteFilter;
+            this.ProjectFilter = data.ProjectFilter;
             this.HistoryFilters = {};
             this.LastResponsibleIds = new Array();
             for (var i = 0; i < data.Users.length; i++) {

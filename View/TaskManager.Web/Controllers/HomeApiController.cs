@@ -56,6 +56,7 @@ namespace TaskManager.Web.Controllers {
                         HistoryFilters = historyFilters,
                         SortBy = user.SortBy,
                         FavoriteFilter = user.FavoriteFilter,
+                        ProjectFilter = user.ProjectFilter,
                         LastResponsibleIds = lastResponsibleIds,
                         LastFavorite = lastFavorite,
                         LastPriority = lastPriority
