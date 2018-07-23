@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using TaskManager.Data.Contracts;
 using TaskManager.Data.Contracts.Entities;
+using TaskManager.Data.Contracts.Repositories.Base;
 using TaskManager.Logic.Contracts;
 using TaskManager.Logic.Contracts.Dtos;
 using TaskManager.Logic.Contracts.Services;
@@ -10,8 +12,12 @@ using TaskManager.Logic.Services.Base;
 
 namespace TaskManager.Logic.Services {
     public class ProjectsService : HostService<IProjectsService>, IProjectsService {
+
+        private IRepository<Project> _rep;
+
         public ProjectsService(IServicesHost servicesHost, IUnitOfWork unitOfWork, IMapper mapper)
             : base(servicesHost, unitOfWork, mapper) {
+            _rep = UnitOfWork.GetRepository<Project>();
         }
 
         /// <summary>
@@ -19,8 +25,18 @@ namespace TaskManager.Logic.Services {
         /// <param name="userDto">user who requests the projects</param>
         /// <returns>List of projects</returns>
         public List<ProjectDto> GetData(UserDto userDto) {
-            var models = UnitOfWork.GetRepository<Project>().SearchFor(e => e.CompanyId == userDto.CompanyId);
-            return Mapper.Map<List<ProjectDto>>(models);
+            var counts = UnitOfWork.GetRepository<Task1>()
+                .SearchFor(e => e.CompanyId == userDto.CompanyId)
+                .GroupBy(e => e.ProjectId)
+                .ToDictionary(group => group.Key, group => group.Count());
+            var models = _rep.SearchFor(e => e.CompanyId == userDto.CompanyId).ToList();
+            foreach (Project model in models) {
+                if (model.Count != counts[model.EntityId]) {
+                    model.Count = counts[model.EntityId];
+                    _rep.Update(model, userDto.Id);
+                }
+            }
+            return Mapper.Map<List<ProjectDto>>(models.OrderByDescending(e => e.Count));
         }
 
         /// <summary>
@@ -28,16 +44,15 @@ namespace TaskManager.Logic.Services {
         /// <param name="projectDto">project DTO</param>
         /// <param name="userDto">user who updates the project</param>
         public void Save(ProjectDto projectDto, UserDto userDto) {
-            var rep = UnitOfWork.GetRepository<Project>();
-            var model = rep.GetById(projectDto.EntityId);
+            var model = _rep.GetById(projectDto.EntityId);
             if (model == null) {
                 projectDto.CompanyId = userDto.CompanyId;
                 model = this.Mapper.Map<Project>(projectDto);
-                this.UnitOfWork.GetRepository<Project>().Insert(model, userDto.Id);
+                _rep.Insert(model, userDto.Id);
             } else {
                 projectDto.CompanyId = userDto.CompanyId;
                 this.Mapper.Map(projectDto, model);
-                this.UnitOfWork.GetRepository<Project>().Update(model, userDto.Id);
+                _rep.Update(model, userDto.Id);
             }
             this.UnitOfWork.SaveChanges();
         }
@@ -50,10 +65,9 @@ namespace TaskManager.Logic.Services {
             if (userDto.CompanyId == Guid.Empty) {
                 throw new Exception("Please create a company");
             }
-            var rep = UnitOfWork.GetRepository<Project>();
-            var model = rep.GetById(projectId);
+            var model = _rep.GetById(projectId);
             if (model != null && model.CompanyId == userDto.CompanyId) {
-                this.UnitOfWork.GetRepository<Project>().MarkAsDelete(model, userDto.Id);
+                _rep.MarkAsDelete(model, userDto.Id);
                 this.UnitOfWork.SaveChanges();
             }
         }

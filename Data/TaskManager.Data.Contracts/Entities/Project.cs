@@ -12,5 +12,7 @@ namespace TaskManager.Data.Contracts.Entities {
 
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }
+
+        public int Count { get; set; }
     }
 }
