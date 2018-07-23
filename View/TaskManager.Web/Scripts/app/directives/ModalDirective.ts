@@ -37,7 +37,7 @@ angular.module('ModalDirective', [])
                         element.html('');
                     }
                     (<any>element).modal({ closable: false, autofocus: false });
-                    // NOTE: shows classic a multiple selector wittout "Timeout"
+                    // NOTE: shows classic a multiple selector without "Timeout"
                     setTimeout(() => {
                         (<any>element).modal(modelValue != null ? 'show' : 'hide');
                     });

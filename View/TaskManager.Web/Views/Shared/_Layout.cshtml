@@ -66,8 +66,8 @@
                 <div class="ui divided items">
                     <div ng-repeat="alarm in Model.Alarms" class="item">
                         <div class="ui header">
-                            <span>{{alarm.DateMoment.format("MM/DD/YYYY")}} {{alarm.Title}}<i class="blue birthday icon" ng-show="alarm.Birthday"></i></span>
-                            <div class="ui sub header">{{alarm.Description}}</div>
+                            <span>{{::alarm.DateMoment.format("MM/DD/YYYY")}} {{::alarm.Title}}<i class="blue birthday icon" ng-show="::alarm.Birthday"></i></span>
+                            <div class="ui sub header">{{::alarm.Description}}</div>
                         </div>
                     </div>
                 </div>

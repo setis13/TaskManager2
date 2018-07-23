@@ -86,7 +86,7 @@ namespace TaskManager.Logic.Services {
                 tasksQuery = tasksQuery.Where(e => statuses.Contains(e.Status) && e.LastModifiedDate >= historyDeep);
             }
 
-            var projects1 = Mapper.Map<List<ProjectDto>>(projectsQuery);
+            var projects1 = Mapper.Map<List<ProjectDto>>(projectsQuery.OrderByDescending(e => e.Count));
 
             var tasks1 = Mapper.Map<List<Task1Dto>>(tasksQuery.OrderBy(e => e.Index));
             var taskIds = tasks1.Select(e => e.EntityId).ToList();

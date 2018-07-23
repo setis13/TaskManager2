@@ -30,11 +30,16 @@ namespace TaskManager.Logic.Services {
                 .GroupBy(e => e.ProjectId)
                 .ToDictionary(group => group.Key, group => group.Count());
             var models = _rep.SearchFor(e => e.CompanyId == userDto.CompanyId).ToList();
+            var changed = false;
             foreach (Project model in models) {
-                if (model.Count != counts[model.EntityId]) {
+                if (counts.ContainsKey(model.EntityId) && model.Count != counts[model.EntityId]) {
                     model.Count = counts[model.EntityId];
                     _rep.Update(model, userDto.Id);
+                    changed = true;
                 }
+            }
+            if (changed) {
+                UnitOfWork.SaveChanges();
             }
             return Mapper.Map<List<ProjectDto>>(models.OrderByDescending(e => e.Count));
         }
