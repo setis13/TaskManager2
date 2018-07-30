@@ -193,6 +193,42 @@ namespace TaskManager.Logic.Services {
         }
 
         /// <summary>
+        ///     Creates a subtask and moves comments </summary>
+        /// <param name="id">Task ID</param>
+        /// <param name="userDto">user DTO</param>
+        public void ConvertToMultiTasks(Guid taskId, UserDto userDto) {
+            var commentRep = UnitOfWork.GetRepository<Comment>();
+            var taskRep = UnitOfWork.GetRepository<Task1>();
+            var favoriteRep = UnitOfWork.GetRepository<UserFavorite>();
+
+            Task1 taskModel = taskRep.GetById(taskId);
+            var task = Mapper.Map<Task1Dto>(taskModel);
+            var favorite = favoriteRep.SearchFor(e => e.TaskId == taskId).Any();
+            var subTask = new SubTaskDto() {
+                CompanyId = userDto.CompanyId,
+                TaskId = task.EntityId,
+                Favorite = favorite,
+                Title = "Base Task",
+                ActualWork = task.ActualWork,
+                TotalWork = task.TotalWork,
+                Progress = task.Progress,
+                Status = (byte)TaskStatusEnum.InProgress
+            };
+            var commentModels = commentRep.SearchFor(e => e.CompanyId == userDto.CompanyId && e.TaskId == taskId);
+            var comments = Mapper.Map<List<CommentDto>>(commentModels);
+            // saves subtask
+            this.SaveSubTask(subTask, userDto);
+            foreach (var comment in comments) {
+                comment.TaskId = null;
+                comment.SubTaskId = subTask.EntityId;
+            // saves comments
+                this.SaveComment(comment, userDto);
+            }
+            // saves task
+            this.CalculateTaskValues(task.EntityId, userDto);
+        }
+
+        /// <summary>
         ///     Deletes responsibles by id </summary>
         /// <param name="taskId">task id</param>
         /// <param name="userDto">user who deletes responsibles</param>
@@ -269,11 +305,18 @@ namespace TaskManager.Logic.Services {
                         break;
                     }
                 }
+                // sets favorite flag
+                var favoriteRep = UnitOfWork.GetRepository<UserFavorite>();
+                var subtaskIds = models.Select(e => e.EntityId).ToList();
+                var subtaskIdsFavorites = favoriteRep.SearchFor(e => e.UserId == userDto.Id && e.TaskId != null && e.SubTaskId != null && subtaskIds.Contains(e.SubTaskId.Value)).Select(e => e.SubTaskId).ToList();
+
                 // sets order
                 for (int i = 0; i < models.Count; i++) {
                     if (models[i].Order != i + 1) {
                         models[i].Order = i + 1;
-                        yield return Mapper.Map<SubTaskDto>(models[i]);
+                        var dto = Mapper.Map<SubTaskDto>(models[i]);
+                        dto.Favorite = subtaskIdsFavorites.Contains(dto.EntityId);
+                        yield return dto;
                     }
                 }
                 this.UnitOfWork.SaveChanges();
@@ -301,11 +344,19 @@ namespace TaskManager.Logic.Services {
                         break;
                     }
                 }
+
+                // sets favorite flag
+                var favoriteRep = UnitOfWork.GetRepository<UserFavorite>();
+                var subtaskIds = models.Select(e => e.EntityId).ToList();
+                var subtaskIdsFavorites = favoriteRep.SearchFor(e => e.UserId == userDto.Id && e.TaskId != null && e.SubTaskId != null && subtaskIds.Contains(e.SubTaskId.Value)).Select(e => e.SubTaskId).ToList();
+
                 // sets order
                 for (int i = 0; i < models.Count; i++) {
                     if (models[i].Order != i + 1) {
                         models[i].Order = i + 1;
-                        yield return Mapper.Map<SubTaskDto>(models[i]);
+                        var dto = Mapper.Map<SubTaskDto>(models[i]);
+                        dto.Favorite = subtaskIdsFavorites.Contains(dto.EntityId);
+                        yield return dto;
                     }
                 }
                 this.UnitOfWork.SaveChanges();

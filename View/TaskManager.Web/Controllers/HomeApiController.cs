@@ -107,6 +107,26 @@ namespace TaskManager.Web.Controllers {
         }
 
         /// <summary>
+        ///     POST: /api/Home/ConvertToMultiTasks </summary>
+        [HttpPost, Route("ConvertToMultiTasks")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<WebApiResult> ConvertToMultiTasks(Guid id) {
+            try {
+#if DEBUG
+                await Task.Delay(300);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    this._service.ConvertToMultiTasks(id, GetUserDto());
+                    return WebApiResult.Succeed();
+                });
+            } catch (Exception e) {
+                Logger.e("ConvertToMultiTasks", e);
+                return WebApiResult.Failed(e.Message);
+            }
+        }
+
+        /// <summary>
         ///     POST: /api/Home/SaveSubTask </summary>
         [HttpPost, Route("SaveSubTask")]
         [Authorize]

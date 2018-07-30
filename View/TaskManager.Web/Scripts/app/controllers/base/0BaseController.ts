@@ -34,6 +34,10 @@ namespace Controllers {
             this.scope.Deleting = val;
         }
 
+        private Converting(val: boolean): void {
+            this.scope.Converting = val;
+        }
+
         protected ValidateForm(form2?: any): boolean {
             var result = (form2 != null ? form2() : form()).form('validate form');
             return result;
@@ -91,6 +95,14 @@ namespace Controllers {
 
         protected HideBusyDeleting() {
             this.Deleting(false);
+        }
+
+        protected ShowBusyConverting() {
+            this.Converting(true);
+        }
+
+        protected HideBusyConverting() {
+            this.Converting(false);
         }
 
         protected Error(message: string) {

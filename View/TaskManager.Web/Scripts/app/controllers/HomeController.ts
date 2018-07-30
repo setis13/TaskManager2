@@ -44,6 +44,7 @@ namespace Controllers {
             $scope.TaskOk_OnClick = this.TaskOk_OnClick;
             $scope.TaskCancel_OnClick = this.TaskCancel_OnClick;
             $scope.TaskDelete_OnClick = this.TaskDelete_OnClick;
+            $scope.TaskConvertToMultiTasks_OnClick = this.TaskConvertToMultiTasks_OnClick;
 
             $scope.CreateSubTask_OnClick = this.CreateSubTask_OnClick;
             $scope.EditSubTask_OnClick = this.EditSubTask_OnClick;
@@ -539,6 +540,50 @@ namespace Controllers {
                 },
                 complete() {
                     $this.HideBusyDeleting();
+                    $this.scope.$apply();
+                },
+                success: (result) => {
+                    if (result.Success) {
+                        $this.Model.EditTask = null;
+                        $this.Load();
+                    } else {
+                        $this.Model.EditTask.Error = result.Message;
+                    }
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    toastr.error(jqXhr.statusText);
+                }
+            });
+        }
+
+        public TaskConvertToMultiTasks_OnClick = (confirmed: boolean = false) => {
+            var $this = this;
+            // a confirm modal
+            if (this.Model.EditTask.EntityId != null && confirmed == false) {
+                $('#confirm-modal>.content>p').html("Creates a subtask and moves comments<br>Please to confirm the operation");
+                $('#confirm-modal')
+                    .modal({
+                        allowMultiple: true,
+                        closable: false,
+                        onApprove: function () {
+                            $this.TaskConvertToMultiTasks_OnClick(true);
+                            $this.scope.$apply();
+                        }
+                    }).modal('show');
+                return;
+            }
+
+            this.Model.EditTask.Error = null;
+            $.ajax({
+                url: '/api/Home/ConvertToMultiTasks?id=' + this.Model.EditTask.EntityId,
+                type: 'POST',
+                data: {},
+                beforeSend(xhr) {
+                    $this.ShowBusyConverting();
+                },
+                complete() {
+                    $this.HideBusyConverting();
                     $this.scope.$apply();
                 },
                 success: (result) => {

@@ -474,20 +474,31 @@
         <div class="ui error message"></div>
     </div>
     <div class="actions">
-        <div class="ui red button left floated"
-             ng-click="TaskDelete_OnClick()"
-             ng-show="Model.EditTask.EntityId != null"
-             lb-busy="Deleting">
-            Delete
-        </div>
-        <div class="ui clear button"
-             ng-click="TaskCancel_OnClick()">
-            Cancel
-        </div>
-        <div class="ui primary button"
-             ng-click="TaskOk_OnClick()"
-             lb-busy="Saving">
-            {{::Model.EditTask.EntityId == null ? 'Create' : 'Save'}}
+        <div class="content">
+            <div class="pull-left">
+                <div class="ui red button"
+                     ng-click="TaskDelete_OnClick()"
+                     ng-show="Model.EditTask.EntityId != null"
+                     lb-busy="Deleting">
+                    Delete
+                </div>
+                &nbsp;
+                <a class="ui link" href="#"
+                   ng-click="TaskConvertToMultiTasks_OnClick()"
+                   ng-show="Model.EditTask.EntityId != null"
+                   lb-busy="Converting">
+                    Convert to Multi-Tasks
+                </a>
+            </div>
+            <div class="ui clear button"
+                 ng-click="TaskCancel_OnClick()">
+                Cancel
+            </div>
+            <div class="ui primary button"
+                 ng-click="TaskOk_OnClick()"
+                 lb-busy="Saving">
+                {{::Model.EditTask.EntityId == null ? 'Create' : 'Save'}}
+            </div>
         </div>
     </div>
 </modal>

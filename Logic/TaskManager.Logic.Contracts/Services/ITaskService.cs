@@ -40,6 +40,12 @@ namespace TaskManager.Logic.Services {
         void DeleteTask(Guid taskId, UserDto userDto);
 
         /// <summary>
+        ///     Creates a subtask and moves comments </summary>
+        /// <param name="id">Task ID</param>
+        /// <param name="userDto">user DTO</param>
+        void ConvertToMultiTasks(Guid taskId, UserDto userDto);
+
+        /// <summary>
         ///     Creates or Updates subtask </summary>
         /// <param name="subtaskDto">subtask DTO</param>
         /// <param name="userDto">user who updates the subtask</param>
