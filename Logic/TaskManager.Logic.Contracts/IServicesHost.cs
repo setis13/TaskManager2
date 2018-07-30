@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
-using TaskManager.Data.Contracts.Identity;
-using TaskManager.Logic.Contracts.Services.Base;
+using TaskManager.Data.Identity;
+using TaskManager.Logic.Services;
 
-namespace TaskManager.Logic.Contracts {
+namespace TaskManager.Logic {
     /// <summary>
     ///     Service Host contract </summary>
     public interface IServicesHost {

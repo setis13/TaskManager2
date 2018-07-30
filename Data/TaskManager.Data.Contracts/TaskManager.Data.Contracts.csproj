@@ -7,7 +7,7 @@
     <ProjectGuid>{20F08872-7764-4EE2-A383-FB062CE73EAE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TaskManager.Data.Contracts</RootNamespace>
+    <RootNamespace>TaskManager.Data</RootNamespace>
     <AssemblyName>TaskManager.Data.Contracts</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Microsoft.Practices.Unity;
-using TaskManager.Logic.Contracts;
 
 namespace TaskManager.Web.Attributes {
     public class TaskManagerAuthorizeAttribute : AuthorizeAttribute {

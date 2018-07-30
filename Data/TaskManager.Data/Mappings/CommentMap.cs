@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity.ModelConfiguration;
-using TaskManager.Data.Contracts.Entities;
+using TaskManager.Data.Entities;
 
 namespace TaskManager.Data.Mappings {
     /// <summary>

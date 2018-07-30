@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TaskManager.Logic.Contracts.Dtos.Base {
+namespace TaskManager.Logic.Dtos {
 
     public class BaseDto {
         /// <summary>

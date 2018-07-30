@@ -5,9 +5,8 @@ using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using TaskManager.Common;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Services;
-using TaskManager.Web.Controllers.Base;
+using TaskManager.Logic;
+using TaskManager.Logic.Services;
 using TaskManager.Web.Models;
 
 namespace TaskManager.Web.Controllers {

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using TaskManager.Data.Contracts.Entities.Base;
 
-namespace TaskManager.Data.Contracts.Entities {
+namespace TaskManager.Data.Entities {
     public class SubTask : BaseEntity {
         public Guid CompanyId { get; set; }
         public Guid TaskId { get; set; }

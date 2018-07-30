@@ -3,9 +3,9 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
-using TaskManager.Data.Contracts.Identity;
+using TaskManager.Data.Identity;
 
-namespace TaskManager.Data.Contracts.Extensions {
+namespace TaskManager.Data.Extensions {
 
     public static class IdentityExtensions1 {
 

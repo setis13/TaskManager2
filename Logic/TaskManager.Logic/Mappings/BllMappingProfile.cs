@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using TaskManager.Data.Contracts.Entities;
-using TaskManager.Data.Contracts.Identity;
-using TaskManager.Logic.Contracts.Dtos;
+using TaskManager.Data.Entities;
+using TaskManager.Data.Identity;
+using TaskManager.Logic.Dtos;
 
 namespace TaskManager.Logic.Mappings {
     /// <summary>

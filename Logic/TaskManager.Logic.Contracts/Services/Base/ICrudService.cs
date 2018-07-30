@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using TaskManager.Logic.Contracts.Dtos.Base;
+using TaskManager.Logic.Dtos;
 
-namespace TaskManager.Logic.Contracts.Services.Base {
+namespace TaskManager.Logic.Services {
     /// <summary>
     ///     Generic CRUD service contract </summary>
     /// <typeparam name="TDto">DTO type</typeparam>

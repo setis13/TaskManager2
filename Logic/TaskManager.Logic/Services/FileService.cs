@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using System.IO;
 using System.Threading.Tasks;
-using TaskManager.Data.Contracts;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Services;
-using TaskManager.Logic.Services.Base;
+using TaskManager.Data;
 using System;
 using System.Collections.Generic;
-using TaskManager.Logic.Contracts.Dtos;
-using TaskManager.Data.Contracts.Entities;
+using TaskManager.Logic.Dtos;
+using TaskManager.Data.Entities;
 using System.Linq;
 
 namespace TaskManager.Logic.Services {

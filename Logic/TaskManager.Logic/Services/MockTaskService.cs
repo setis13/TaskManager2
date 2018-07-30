@@ -2,11 +2,11 @@
 //using System.Collections.Generic;
 //using System.Linq;
 //using AutoMapper;
-//using TaskManager.Data.Contracts;
-//using TaskManager.Logic.Contracts;
-//using TaskManager.Logic.Contracts.Dtos;
-//using TaskManager.Logic.Contracts.Enums;
-//using TaskManager.Logic.Contracts.Services;
+//using TaskManager.Data;
+//using TaskManager.Logic;
+//using TaskManager.Logic.Dtos;
+//using TaskManager.Logic.Enums;
+//using TaskManager.Logic.Services;
 //using TaskManager.Logic.Services.Base;
 
 //namespace TaskManager.Logic.Services {

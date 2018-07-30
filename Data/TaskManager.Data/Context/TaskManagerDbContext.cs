@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using TaskManager.Data.Contracts.Context;
 using Microsoft.AspNet.Identity.EntityFramework;
-using TaskManager.Data.Contracts.Identity;
+using TaskManager.Data.Identity;
 using TaskManager.Data.Mappings;
 
 namespace TaskManager.Data.Context {

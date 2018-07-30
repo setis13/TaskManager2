@@ -5,15 +5,11 @@ using System.Text;
 using System.Web;
 using AutoMapper;
 using TaskManager.Common;
-using TaskManager.Data.Contracts;
-using TaskManager.Data.Contracts.Entities;
-using TaskManager.Data.Contracts.Entities.Base;
-using TaskManager.Data.Contracts.Extensions;
-using TaskManager.Data.Contracts.Identity;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Dtos;
-using TaskManager.Logic.Contracts.Services;
-using TaskManager.Logic.Services.Base;
+using TaskManager.Data;
+using TaskManager.Data.Entities;
+using TaskManager.Data.Extensions;
+using TaskManager.Data.Identity;
+using TaskManager.Logic.Dtos;
 
 namespace TaskManager.Logic.Services {
     /// <summary>

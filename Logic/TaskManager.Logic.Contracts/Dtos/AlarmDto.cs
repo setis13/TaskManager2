@@ -1,7 +1,6 @@
 ﻿using System;
-using TaskManager.Logic.Contracts.Dtos.Base;
 
-namespace TaskManager.Logic.Contracts.Dtos {
+namespace TaskManager.Logic.Dtos {
     public class AlarmDto : BaseDto, ICloneable {
         public string Title { get; set; }
         public string Description { get; set; }

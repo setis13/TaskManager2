@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using TaskManager.Data.Contracts;
-using TaskManager.Data.Contracts.Entities;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Dtos;
-using TaskManager.Logic.Contracts.Enums;
-using TaskManager.Logic.Contracts.Services;
-using TaskManager.Logic.Services.Base;
+using TaskManager.Data;
+using TaskManager.Data.Entities;
+using TaskManager.Logic.Dtos;
+using TaskManager.Logic.Enums;
 using Microsoft.AspNet.Identity;
-using TaskManager.Data.Contracts.Identity;
+using TaskManager.Data.Identity;
 
 namespace TaskManager.Logic.Services {
     public class TaskService : HostService<ITaskService>, ITaskService {

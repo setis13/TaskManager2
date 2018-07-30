@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using TaskManager.Common;
-using TaskManager.Data.Contracts;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Services.Base;
+using TaskManager.Data;
 
-namespace TaskManager.Logic.Services.Base {
+namespace TaskManager.Logic.Services {
     /// <summary>
     ///     Base services abstract class </summary>
     public abstract class HostService<T> : IService where T : IService {

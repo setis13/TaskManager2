@@ -5,13 +5,10 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
-using TaskManager.Data.Contracts;
-using TaskManager.Data.Contracts.Context;
-using TaskManager.Data.Contracts.Entities.Base;
-using TaskManager.Data.Contracts.Identity;
-using TaskManager.Data.Contracts.Repositories.Base;
+using TaskManager.Data.Context;
+using TaskManager.Data.Entities;
 using TaskManager.Data.Identity;
-using TaskManager.Data.Repositories.Base;
+using TaskManager.Data.Repositories;
 
 namespace TaskManager.Data {
     /// <summary>

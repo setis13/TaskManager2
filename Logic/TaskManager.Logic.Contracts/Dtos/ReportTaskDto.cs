@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TaskManager.Logic.Contracts.Dtos {
+namespace TaskManager.Logic.Dtos {
     public class ReportTaskDto : Task1Dto {
         public List<ReportCommentDto> ReportComments { get; set; } = new List<ReportCommentDto>();
         public List<ReportSubTaskDto> ReportSubTasks { get; set; } = new List<ReportSubTaskDto>();

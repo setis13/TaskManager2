@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaskManager.Logic.Contracts.Dtos;
-using TaskManager.Logic.Contracts.Services.Base;
+using TaskManager.Logic.Dtos;
 
-namespace TaskManager.Logic.Contracts.Services {
+namespace TaskManager.Logic.Services {
     public interface IFileService : IService {
         byte[] GetFile(FileDto fileDto);
         List<string> GetFileNames(Guid entityId);

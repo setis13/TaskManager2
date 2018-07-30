@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TaskManager.Logic.Contracts.Dtos {
+namespace TaskManager.Logic.Dtos {
     public class ReportProjectDto : ProjectDto {
         public List<ReportTaskDto> ReportTasks { get; set; } = new List<ReportTaskDto>();
 

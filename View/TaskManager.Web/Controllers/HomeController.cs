@@ -1,8 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
-using TaskManager.Logic.Contracts;
-using TaskManager.Web.Controllers.Base;
+using TaskManager.Logic;
 
 namespace TaskManager.Web.Controllers {
     [AllowAnonymous]

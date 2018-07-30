@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using TaskManager.Logic.Contracts.Dtos.Base;
 
-namespace TaskManager.Logic.Contracts.Dtos {
+namespace TaskManager.Logic.Dtos {
     public class SubTaskDto : BaseDto {
         public Guid CompanyId { get; set; }
         public Guid TaskId { get; set; }

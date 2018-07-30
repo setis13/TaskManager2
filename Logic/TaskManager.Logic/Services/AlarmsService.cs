@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
-using TaskManager.Data.Contracts;
-using TaskManager.Data.Contracts.Entities;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Dtos;
-using TaskManager.Logic.Contracts.Services;
-using TaskManager.Logic.Services.Base;
+using TaskManager.Data;
+using TaskManager.Data.Entities;
+using TaskManager.Logic.Dtos;
 using System.Linq;
-using TaskManager.Logic.Contracts.Enums;
+using TaskManager.Logic.Enums;
 
 namespace TaskManager.Logic.Services {
     public class AlarmsService : HostService<IAlarmsService>, IAlarmsService {

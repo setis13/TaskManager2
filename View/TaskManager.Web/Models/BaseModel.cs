@@ -1,4 +1,4 @@
-﻿using TaskManager.Logic.Contracts.Dtos;
+﻿using TaskManager.Logic.Dtos;
 
 namespace TaskManager.Web.Models {
     public class BaseModel {

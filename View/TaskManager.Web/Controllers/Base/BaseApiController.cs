@@ -6,13 +6,13 @@ using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using TaskManager.Data.Contracts.Extensions;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Dtos;
+using TaskManager.Data.Extensions;
+using TaskManager.Logic;
+using TaskManager.Logic.Dtos;
 using TaskManager.Logic.Identity;
 using TaskManager.Web.Extensions;
 
-namespace TaskManager.Web.Controllers.Base {
+namespace TaskManager.Web.Controllers {
     public class BaseApiController : ApiController {
         /// <summary>
         ///     The session service. </summary>

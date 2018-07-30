@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
-using TaskManager.Data.Contracts;
-using TaskManager.Data.Contracts.Entities.Base;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Dtos.Base;
-using TaskManager.Logic.Contracts.Services.Base;
+using TaskManager.Data;
+using TaskManager.Data.Entities;
+using TaskManager.Logic.Dtos;
 
-namespace TaskManager.Logic.Services.Base {
+namespace TaskManager.Logic.Services {
     /// <summary>
     ///     Base service for Read queries </summary>
     /// <typeparam name="TDto">DTO</typeparam>

@@ -7,7 +7,7 @@
     <ProjectGuid>{1887BD28-72B4-4265-A00D-8E04DA1E90F1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TaskManager.Logic.Contracts</RootNamespace>
+    <RootNamespace>TaskManager.Logic</RootNamespace>
     <AssemblyName>TaskManager.Logic.Contracts</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

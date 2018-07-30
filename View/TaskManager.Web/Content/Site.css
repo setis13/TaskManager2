@@ -17,6 +17,10 @@ body footer {
     margin-right: 60px !important;
   }
 }
+/* Mobile */
+.ui.table > tbody > tr.ng-hide {
+  display: none !important;
+}
 /*** Text colors ***/
 .content .label {
   color: grey;
@@ -270,7 +274,7 @@ body.night-mode table.ui.table tr td {
   border-left: 1px solid #4A4A4A;
 }
 body.night-mode table.ui.table tr td {
-  border-top: 1px solid #4A4A4A;
+  border-top: 1px solid #4A4A4A !important;
 }
 body.night-mode table.ui.table tr th:first-child,
 body.night-mode table.ui.table tr td:first-child {

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using TaskManager.Data.Contracts.Entities.Base;
-using TaskManager.Data.Contracts.Identity;
+using TaskManager.Data.Identity;
 
-namespace TaskManager.Data.Contracts.Entities {
+namespace TaskManager.Data.Entities {
     /// <summary>
     ///     Responsible </summary>
     public class TaskUser : BaseEntity {

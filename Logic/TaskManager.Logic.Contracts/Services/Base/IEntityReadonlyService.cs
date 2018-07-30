@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using TaskManager.Logic.Contracts.Dtos.Base;
+using TaskManager.Logic.Dtos;
 
-namespace TaskManager.Logic.Contracts.Services.Base {
+namespace TaskManager.Logic.Services {
     /// <summary>
     ///     Readonly service contract </summary>
     public interface IEntityReadonlyService<T> : IService where T : BaseDto {

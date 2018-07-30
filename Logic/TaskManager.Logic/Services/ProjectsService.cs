@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using TaskManager.Data.Contracts;
-using TaskManager.Data.Contracts.Entities;
-using TaskManager.Data.Contracts.Repositories.Base;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Dtos;
-using TaskManager.Logic.Contracts.Services;
-using TaskManager.Logic.Services.Base;
+using TaskManager.Data;
+using TaskManager.Data.Entities;
+using TaskManager.Data.Repositories;
+using TaskManager.Logic.Dtos;
 
 namespace TaskManager.Logic.Services {
     public class ProjectsService : HostService<IProjectsService>, IProjectsService {

@@ -1,5 +1,4 @@
 ﻿using System;
-using TaskManager.Data.Contracts;
 
 namespace TaskManager.Data {
     /// <summary>

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using TaskManager.Data.Contracts.Entities.Base;
 
-namespace TaskManager.Data.Contracts.Entities {
+namespace TaskManager.Data.Entities {
     public class Todo : BaseEntity {
         public Guid CompanyId { get; set; }
         public Guid ProjectId { get; set; }

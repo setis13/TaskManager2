@@ -7,7 +7,6 @@ using TaskManager.Common.Enums;
 using TaskManager.Common.Extensions;
 using TaskManager.Data.Identity;
 using Microsoft.AspNet.Identity;
-using TaskManager.Data.Contracts.Identity;
 
 namespace TaskManager.Data.Context {
     public class TaskManagerDbContextConfiguration : DbMigrationsConfiguration<TaskManagerDbContext> {

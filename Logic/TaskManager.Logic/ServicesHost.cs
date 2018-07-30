@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using TaskManager.Data.Contracts.Identity;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Services.Base;
+using TaskManager.Data.Identity;
+using TaskManager.Logic;
 using TaskManager.Logic.Identity;
+using TaskManager.Logic.Services;
 
 namespace TaskManager.Logic {
     /// <summary>

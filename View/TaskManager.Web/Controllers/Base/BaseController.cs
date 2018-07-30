@@ -6,13 +6,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using TaskManager.Common;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Dtos;
-using TaskManager.Logic.Contracts.Services;
+using TaskManager.Logic;
+using TaskManager.Logic.Dtos;
+using TaskManager.Logic.Services;
 using TaskManager.Logic.Identity;
 using TaskManager.Web.Models;
 
-namespace TaskManager.Web.Controllers.Base {
+namespace TaskManager.Web.Controllers {
 
     public class BaseController : Controller {
         /// <summary>

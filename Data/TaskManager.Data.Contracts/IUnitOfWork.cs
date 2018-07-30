@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
-using TaskManager.Data.Contracts.Context;
-using TaskManager.Data.Contracts.Entities.Base;
-using TaskManager.Data.Contracts.Identity;
-using TaskManager.Data.Contracts.Repositories.Base;
+using TaskManager.Data.Context;
+using TaskManager.Data.Entities;
+using TaskManager.Data.Identity;
+using TaskManager.Data.Repositories;
 
-namespace TaskManager.Data.Contracts {
+namespace TaskManager.Data {
     /// <summary>
     ///     UOW contract </summary>
     public interface IUnitOfWork {

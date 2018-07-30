@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using TaskManager.Data.Contracts.Entities.Base;
+using TaskManager.Data.Entities;
 
-namespace TaskManager.Data.Contracts.Repositories.Base {
+namespace TaskManager.Data.Repositories {
 
     /// <summary>
     /// Base repository interface

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TaskManager.Logic.Contracts.Exceptions {
+namespace TaskManager.Logic.Exceptions {
     public class PermissionException : Exception {
     }
 }

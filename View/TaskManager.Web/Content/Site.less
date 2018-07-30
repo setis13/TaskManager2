@@ -20,6 +20,11 @@ body footer {
     }
 }
 
+/* Mobile */
+.ui.table > tbody > tr.ng-hide {
+    display: none !important;
+}
+
 /*** Text colors ***/
 .content .label {
     color: grey;
@@ -327,7 +332,7 @@ body.night-mode {
             }
 
             td {
-                border-top: 1px solid @border-night;
+                border-top: 1px solid @border-night!important;
             }
 
             th:first-child, td:first-child {

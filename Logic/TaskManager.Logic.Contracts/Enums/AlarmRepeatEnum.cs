@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TaskManager.Logic.Contracts.Enums {
+namespace TaskManager.Logic.Enums {
     public enum AlarmRepeatEnum {
         [Description("Days")]
         Days,

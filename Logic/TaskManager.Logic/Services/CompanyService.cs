@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using TaskManager.Data.Contracts;
-using TaskManager.Data.Contracts.Entities;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Dtos;
-using TaskManager.Logic.Contracts.Services;
-using TaskManager.Logic.Services.Base;
+using TaskManager.Data;
+using TaskManager.Data.Entities;
+using TaskManager.Logic.Dtos;
 using Microsoft.AspNet.Identity;
 
 namespace TaskManager.Logic.Services {

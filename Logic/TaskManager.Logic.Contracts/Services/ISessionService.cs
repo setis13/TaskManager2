@@ -1,7 +1,6 @@
-﻿using TaskManager.Logic.Contracts.Dtos;
-using TaskManager.Logic.Contracts.Services.Base;
+﻿using TaskManager.Logic.Dtos;
 
-namespace TaskManager.Logic.Contracts.Services {
+namespace TaskManager.Logic.Services {
     /// <summary>
     ///     The Session Service interface. </summary>
     public interface ISessionService : IEntityReadonlyService<SessionDto> {

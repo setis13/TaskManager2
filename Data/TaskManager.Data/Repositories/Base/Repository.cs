@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using TaskManager.Data.Contracts.Context;
-using TaskManager.Data.Contracts.Entities.Base;
-using TaskManager.Data.Contracts.Repositories.Base;
+using TaskManager.Data.Context;
+using TaskManager.Data.Entities;
 
-namespace TaskManager.Data.Repositories.Base {
+namespace TaskManager.Data.Repositories {
 
     /// <summary>
     ///     Base entity repository implementation </summary>

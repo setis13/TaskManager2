@@ -1,5 +1,5 @@
 ﻿using System;
-namespace TaskManager.Data.Contracts {
+namespace TaskManager.Data {
     /// <summary>
     ///     User Session Interface. Registered unity type </summary>
     public interface IUserSession {

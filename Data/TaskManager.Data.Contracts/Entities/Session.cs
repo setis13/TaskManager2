@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TaskManager.Data.Contracts.Entities.Base;
 
-namespace TaskManager.Data.Contracts.Entities {
+namespace TaskManager.Data.Entities {
     /// <summary>
     ///     Session entity </summary>
     /// <remarks> Represent Entity of database </remarks>

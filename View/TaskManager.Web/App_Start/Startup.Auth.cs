@@ -6,10 +6,10 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using TaskManager.Logic.Identity;
-using TaskManager.Data.Contracts;
-using TaskManager.Data.Contracts.Extensions;
-using TaskManager.Data.Contracts.Identity;
-using TaskManager.Logic.Contracts;
+using TaskManager.Data;
+using TaskManager.Data.Extensions;
+using TaskManager.Data.Identity;
+using TaskManager.Logic;
 
 namespace TaskManager.Web {
     public partial class Startup {

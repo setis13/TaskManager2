@@ -5,11 +5,10 @@ using System.Web.Http;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using TaskManager.Common;
-using TaskManager.Data.Contracts.Extensions;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Dtos;
-using TaskManager.Logic.Contracts.Services;
-using TaskManager.Web.Controllers.Base;
+using TaskManager.Data.Extensions;
+using TaskManager.Logic;
+using TaskManager.Logic.Dtos;
+using TaskManager.Logic.Services;
 using TaskManager.Web.Models;
 
 namespace TaskManager.Web.Controllers {

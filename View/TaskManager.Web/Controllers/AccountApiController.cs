@@ -6,13 +6,12 @@ using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using TaskManager.Common;
-using TaskManager.Logic.Contracts;
-using TaskManager.Logic.Contracts.Dtos;
-using TaskManager.Logic.Contracts.Services;
-using TaskManager.Web.Controllers.Base;
+using TaskManager.Logic;
+using TaskManager.Logic.Dtos;
+using TaskManager.Logic.Services;
 using TaskManager.Web.Models;
-using TaskManager.Data.Contracts.Extensions;
-using TaskManager.Data.Contracts.Identity;
+using TaskManager.Data.Extensions;
+using TaskManager.Data.Identity;
 
 namespace TaskManager.Web.Controllers {
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TaskManager.Logic.Contracts.Dtos {
+namespace TaskManager.Logic.Dtos {
     public class UserDto {
         public Guid Id { get; set; }
         /// <summary>

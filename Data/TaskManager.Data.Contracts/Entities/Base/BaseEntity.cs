@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using TaskManager.Data.Contracts.Identity;
+using TaskManager.Data.Identity;
 
-namespace TaskManager.Data.Contracts.Entities.Base {
+namespace TaskManager.Data.Entities {
     /// <summary>
     ///     Base entity implementation </summary>
     public class BaseEntity {
