@@ -15,6 +15,7 @@
         public LastPriority: number;
         public ReportFilter: boolean = false;
         public ShowFilter: boolean = false;
+        public AllSubtasksFilter: boolean = false;
         public SelectedHistoryFilter: string = '';
         public SelectedUserFilter: string = '';
         public SelectedProjectFilter: string = '';

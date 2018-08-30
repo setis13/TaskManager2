@@ -231,6 +231,7 @@ a.alarm.item .loading.icon {
   left: 11px;
 }
 /** Favorite **/
+i.tasks.icon,
 i.eye.icon,
 i.favorite.icon,
 i.calendar.check {

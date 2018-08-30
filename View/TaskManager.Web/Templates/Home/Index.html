@@ -52,6 +52,12 @@
             <div class="three wide column computer right aligned">
                 <div class="content">
                     <div class="label">
+                        <!-- show all subtasks -->
+                        <i id="show-all-subtasks-filter"
+                           class="tasks large icon"
+                           ng-class="Model.AllSubtasksFilter ? 'blue' : 'disabled'"
+                           ng-click="AllSubtasksFilter_OnClick()"
+                           title="Show all subtasks"></i>
                         <!-- report -->
                         <i id="report-filter"
                            class="calendar check large icon"

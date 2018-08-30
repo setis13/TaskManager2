@@ -14,13 +14,14 @@ namespace TaskManager.Logic.Services {
         /// <param name="historyDeep">minimum date of tasks</param>
         /// <param name="reportFilter">tasks for reporting</param>
         /// <param name="showFilter">comments for demonstration</param>
+        /// <param name="allSubtasksFilter">show completed subtasks</param>
         /// <param name="projects">out parameter</param>
         /// <param name="tasks">out parameter</param>
         /// <param name="historyFilters">out parameter</param>
         /// <param name="lastResponsibleIds">out last responsible ids</param>
         /// <param name="lastFavorite">out last favorite value</param>
         /// <param name="lastPriority">out last priority value</param>
-        void GetData(UserDto user, DateTime? historyDeep, bool reportFilter, bool showFilter,
+        void GetData(UserDto user, DateTime? historyDeep, bool reportFilter, bool showFilter, bool allSubtasksFilter,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks,
             out List<DateTime> historyFilters,

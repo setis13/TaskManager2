@@ -10,3 +10,4 @@ obj
 /View/TaskManager.Web/Database.config
 /View/TaskManager.Web/Properties/PublishProfiles
 /View/TaskManager.Web/App_Data/Files
+/Libraries/Microsoft.Practices.Unity.dll

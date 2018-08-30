@@ -83,6 +83,8 @@ namespace Controllers {
             $scope.ShowFilter_OnClick = this.ShowFilter_OnClick;
             $scope.CommentShow_OnClick = this.CommentShow_OnClick;
 
+            $scope.AllSubtasksFilter_OnClick = this.AllSubtasksFilter_OnClick;
+
             $scope.AttachFiles_OnClick = this.AttachFiles_OnClick;
             $scope.RemoveFile_OnClick = this.RemoveFile_OnClick;
             $scope.SizeName = SizeName;
@@ -139,6 +141,9 @@ namespace Controllers {
             }
             if (this.Model.ShowFilter == true) {
                 params.push('showFilter=' + this.Model.ShowFilter);
+            }
+            if (this.Model.AllSubtasksFilter == true) {
+                params.push('allSubtasksFilter=' + this.Model.AllSubtasksFilter);
             }
             $.ajax({
                 url: '/api/Home/GetData/?' + params.join('&'),
@@ -198,6 +203,11 @@ namespace Controllers {
 
         public ShowFilter_OnClick = () => {
             this.Model.ShowFilter = !this.Model.ShowFilter;
+            this.Load();
+        }
+
+        public AllSubtasksFilter_OnClick = () => {
+            this.Model.AllSubtasksFilter = !this.Model.AllSubtasksFilter;
             this.Load();
         }
 
