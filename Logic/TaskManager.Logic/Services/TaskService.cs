@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity;
 using TaskManager.Data.Identity;
 
 namespace TaskManager.Logic.Services {
-    public class TaskService : HostService<ITaskService>, ITaskService {
+    public class TaskService : HostService, ITaskService {
 
         private IFileService _fileService => this.ServicesHost.GetService<IFileService>();
 
@@ -29,19 +29,20 @@ namespace TaskManager.Logic.Services {
         /// <remarks> if <see cref="historyDeep"/> is null then returns actual tasks else actual + history </remarks>
         /// <param name="historyDeep">minimum date of tasks</param>
         /// <param name="reportFilter">tasks for reporting</param>
+        /// <param name="showFilter">comments for demonstration</param>
         /// <param name="projects">out parameter</param>
         /// <param name="tasks">out parameter</param>
         /// <param name="historyFilters">out parameter</param>
         /// <param name="lastResponsibleIds">out last responsible ids</param>
         /// <param name="lastFavorite">out last favorite value</param>
         /// <param name="lastPriority">out last priority value</param>
-        public void GetData(UserDto user, DateTime? historyDeep, bool reportFilter,
-            out List<ProjectDto> projects,
-            out List<Task1Dto> tasks,
-            out List<DateTime> historyFilters,
-            out List<Guid> lastResponsibleIds,
-            out bool lastFavorite,
-            out byte lastPriority) {
+        public void GetData(UserDto user, DateTime? historyDeep, bool reportFilter, bool showFilter,
+             out List<ProjectDto> projects,
+             out List<Task1Dto> tasks,
+             out List<DateTime> historyFilters,
+             out List<Guid> lastResponsibleIds,
+             out bool lastFavorite,
+             out byte lastPriority) {
 
             var projectRep = UnitOfWork.GetRepository<Project>();
             var taskRep = UnitOfWork.GetRepository<Task1>();
@@ -49,6 +50,7 @@ namespace TaskManager.Logic.Services {
             var subtaskRep = UnitOfWork.GetRepository<SubTask>();
             var commentRep = UnitOfWork.GetRepository<Comment>();
             var favoriteRep = UnitOfWork.GetRepository<UserFavorite>();
+            var showRep = UnitOfWork.GetRepository<UserShow>();
 
             var projectsQuery = projectRep.SearchFor(e => e.CompanyId == user.CompanyId);
             var tasksQuery = taskRep.SearchFor(e => e.CompanyId == user.CompanyId);
@@ -62,11 +64,21 @@ namespace TaskManager.Logic.Services {
             lastFavorite = this.GetLastFavorite(user);
             lastPriority = this.GetLastPriority(user);
 
+            var userShowCommentIds = showRep.SearchFor(e => e.UserId == user.Id).Select(e => e.CommentId).ToList();
+
             if (reportFilter == true) {
                 var todayStarted = DateTime.Now.AddDays(-1);
                 tasksQuery = tasksQuery.Where(e => e.LastModifiedDate >= todayStarted);
                 subtasksQuery = subtasksQuery.Where(e => e.LastModifiedDate >= todayStarted);
                 commentsQuery = commentsQuery.Where(e => e.LastModifiedDate >= todayStarted);
+            } else
+            if (showFilter == true) {
+                commentsQuery = commentsQuery.Where(e => userShowCommentIds.Contains(e.EntityId));
+                var taskCommentsIds = commentsQuery.Where(e => e.TaskId != null).Select(e => e.TaskId).ToList();
+                var subtaskCommentsIds = commentsQuery.Where(e => e.SubTaskId != null).Select(e => e.SubTaskId).ToList();
+                subtasksQuery = subtasksQuery.Where(e => subtaskCommentsIds.Contains(e.EntityId));
+                var subtaskTaskIds = subtasksQuery.Select(e => e.TaskId).ToList();
+                tasksQuery = tasksQuery.Where(e => taskCommentsIds.Contains(e.EntityId) || subtaskTaskIds.Contains(e.EntityId));
             } else if (historyDeep == null) {
                 var statuses = new List<TaskStatusEnum>() {
                     TaskStatusEnum.NotStarted,
@@ -121,6 +133,9 @@ namespace TaskManager.Logic.Services {
             var subtaskIdsFavorites = favoriteRep.SearchFor(e => e.UserId == user.Id && e.TaskId != null && e.SubTaskId != null && subtaskIds.Contains(e.SubTaskId.Value)).Select(e => e.SubTaskId).ToList();
             tasks1.Where(e => taskIdsFavorites.Contains(e.EntityId)).ToList().ForEach(t => t.Favorite = true);
             subtasks1.Where(e => subtaskIdsFavorites.Contains(e.EntityId)).ToList().ForEach(t => t.Favorite = true);
+
+            // show
+            comments1.Where(e => userShowCommentIds.Contains(e.EntityId)).ToList().ForEach(c => c.Show = true);
 
             projects = projects1;
             tasks = tasks1;
@@ -221,7 +236,7 @@ namespace TaskManager.Logic.Services {
             foreach (var comment in comments) {
                 comment.TaskId = null;
                 comment.SubTaskId = subTask.EntityId;
-            // saves comments
+                // saves comments
                 this.SaveComment(comment, userDto);
             }
             // saves task
@@ -670,5 +685,31 @@ namespace TaskManager.Logic.Services {
         }
 
         #endregion [ Favorites ]
+
+        #region [ Show ]
+
+        /// <summary>
+        ///     Show/Hide comment in demostration </summary>
+        /// <param name="subtaskId">Comment ID</param>
+        /// <param name="userDto">user DTO</param>
+        /// <returns>Value of flag</returns>
+        public bool InvertCommentShow(Guid commentId, UserDto userDto) {
+            var rep = UnitOfWork.GetRepository<UserShow>();
+            var model = rep.SearchFor(e => e.UserId == userDto.Id && e.CommentId == commentId).FirstOrDefault();
+            if (model != null) {
+                rep.DeleteById(model.EntityId);
+                this.UnitOfWork.SaveChanges();
+                return false;
+            } else {
+                model = new UserShow();
+                model.UserId = userDto.Id;
+                model.CommentId = commentId;
+                rep.Insert(model, userDto.Id);
+                this.UnitOfWork.SaveChanges();
+                return true;
+            }
+        }
+
+        #endregion [ Show ]
     }
 }

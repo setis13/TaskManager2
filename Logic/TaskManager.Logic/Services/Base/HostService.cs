@@ -4,7 +4,7 @@ using TaskManager.Data;
 namespace TaskManager.Logic.Services {
     /// <summary>
     ///     Base services abstract class </summary>
-    public abstract class HostService<T> : IService where T : IService {
+    public abstract class HostService : IService {
 
         /// <summary>
         ///     The unit of work </summary>
@@ -22,7 +22,6 @@ namespace TaskManager.Logic.Services {
             this.UnitOfWork = unitOfWork;
             this.Mapper = mapper;
             this.ServicesHost = servicesHost;
-            servicesHost.Register((T)(this as IService));
         }
     }
 }

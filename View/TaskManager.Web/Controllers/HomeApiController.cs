@@ -27,7 +27,7 @@ namespace TaskManager.Web.Controllers {
         [HttpPost, Route("GetData")]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<WebApiResult> GetData(DateTime? historyFilter = null, bool reportFilter = false) {
+        public async Task<WebApiResult> GetData(DateTime? historyFilter = null, bool reportFilter = false, bool showFilter = false) {
             try {
 #if DEBUG
                 await Task.Delay(300);
@@ -46,7 +46,7 @@ namespace TaskManager.Web.Controllers {
                     users = Mapper.Map<List<UserDto>>(
                         this.UserManager.Users.Where(e => e.CompanyId == user.CompanyId));
 
-                    this._service.GetData(user, historyFilter, reportFilter, out projects, out tasks, out historyFilters, 
+                    this._service.GetData(user, historyFilter, reportFilter, showFilter, out projects, out tasks, out historyFilters, 
                         out lastResponsibleIds, out lastFavorite, out lastPriority);
                     return WebApiResult.Succeed(new {
                         Projects = projects,
@@ -279,6 +279,26 @@ namespace TaskManager.Web.Controllers {
                 return await Task.Factory.StartNew(() => {
                     var result = this._service.InvertSubTaskFavorite(taskId, subtaskId, GetUserDto());
                     return WebApiResult.Succeed(new { Favorite = result });
+                });
+            } catch (Exception e) {
+                Logger.e("InvertSubTaskFavorite", e);
+                return WebApiResult.Failed(e.Message);
+            }
+        }
+
+        /// <summary>
+        ///     POST: /api/Home/InvertCommentShow </summary>
+        [HttpPost, Route("InvertCommentShow")]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<WebApiResult> InvertCommentShow(Guid commentId) {
+            try {
+#if DEBUG
+                await Task.Delay(300);
+#endif
+                return await Task.Factory.StartNew(() => {
+                    var result = this._service.InvertCommentShow(commentId, GetUserDto());
+                    return WebApiResult.Succeed(new { Show = result });
                 });
             } catch (Exception e) {
                 Logger.e("InvertSubTaskFavorite", e);

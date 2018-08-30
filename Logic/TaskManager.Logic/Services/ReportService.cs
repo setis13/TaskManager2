@@ -7,7 +7,7 @@ using TaskManager.Data.Entities;
 using TaskManager.Logic.Dtos;
 
 namespace TaskManager.Logic.Services {
-    public class ReportService : HostService<IReportService>, IReportService {
+    public class ReportService : HostService, IReportService {
         public ReportService(IServicesHost servicesHost, IUnitOfWork unitOfWork, IMapper mapper)
             : base(servicesHost, unitOfWork, mapper) {
         }

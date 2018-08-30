@@ -8,6 +8,7 @@
         public ActualWork: string;
         public Progress: number;
         public Description: string;
+        public Show: boolean;
         public Files: Array<FileModel> = new Array();
 
         // extra
@@ -71,6 +72,7 @@
                 this.Description = data.Description !== null ? data.Description : '';
                 this.ActualWorkHours = data.ActualWork != null ? moment.duration(data.ActualWork).asHours().toFixed(1) : null;
                 this.Progress = data.Progress;
+                this.Show = data.Show;
                 for (var i = 0; data.Files != null && i < data.Files.length; i++) {
                     this.Files.push(new FileModel(data.Files[i]));
                 }
@@ -100,6 +102,7 @@
             clone.Description = this.Description;
             clone.ActualWorkHours = this.ActualWorkHours;
             clone.Progress = this.Progress;
+            clone.Show = this.Show;
             for (var i = 0; i < this.Files.length; i++) {
                 clone.Files.push(this.Files[i]);
             }

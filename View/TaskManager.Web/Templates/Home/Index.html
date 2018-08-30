@@ -50,25 +50,35 @@
                 </div>
             </div>
             <div class="three wide column computer right aligned">
-                <!-- report -->
-                <i id="report-filter"
-                   class="calendar check large icon"
-                   ng-class="Model.ReportFilter ? 'blue' : 'inverted grey'"
-                   ng-click="DayReport_OnClick()"
-                   title="Reporting tasts"></i>
-                <!-- favorite -->
-                <i id="favorite-filter"
-                   class="favorite large icon"
-                   ng-class="Model.FavoriteFilter ? 'yellow' : 'inverted grey'"
-                   ng-click="FavoriteFilter_OnClick()"
-                   title="Filter by favorites"></i>
-                <!-- sorting -->
-                <div class="ui right labeled icon button"
-                     ng-class="Model.SortBy != 0 ? 'primary' : ''"
-                     ng-click="SortBy_OnClick()">
-                    <i class="long arrow icon"
-                       ng-class="Model.SortBy == 1 || Model.SortBy == 3 || Model.SortBy == 5 ? 'down' : 'up'"></i>
-                    {{SortByNames[Model.SortBy]}}
+                <div class="content">
+                    <div class="label">
+                        <!-- report -->
+                        <i id="report-filter"
+                           class="calendar check large icon"
+                           ng-class="Model.ReportFilter ? 'blue' : 'disabled'"
+                           ng-click="DayReport_OnClick()"
+                           title="Reporting tasts"></i>
+                        <!-- favorite -->
+                        <i id="favorite-filter"
+                           class="favorite large icon"
+                           ng-class="Model.FavoriteFilter ? 'yellow' : 'disabled'"
+                           ng-click="FavoriteFilter_OnClick()"
+                           title="Filter by favorites"></i>
+                        <!-- show -->
+                        <i id="show-filter"
+                           class="calendar eye large icon"
+                           ng-class="Model.ShowFilter ? 'lightblue' : 'disabled'"
+                           ng-click="ShowFilter_OnClick()"
+                           title="Show demontration"></i>
+                        <!-- sorting -->
+                        <div class="ui right labeled icon button"
+                             ng-class="Model.SortBy != 0 ? 'primary' : ''"
+                             ng-click="SortBy_OnClick()">
+                            <i class="long arrow icon"
+                               ng-class="Model.SortBy == 1 || Model.SortBy == 3 || Model.SortBy == 5 ? 'down' : 'up'"></i>
+                            {{SortByNames[Model.SortBy]}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,7 +107,7 @@
                             <span class="value"><b>{{task.Index}}</b></span>&nbsp;
                             <i id="favorite-{{task.EntityId}}"
                                class="favorite icon"
-                               ng-class="task.Favorite ? 'yellow' : 'inverted grey'"
+                               ng-class="task.Favorite ? 'yellow' : 'disabled'"
                                ng-click="TaskFavorite_OnClick(task)"
                                title="add to favorite"></i>
                             <div class="pull-right">
@@ -191,6 +201,11 @@
                             <div class="content block">
                                 <div class="ui small header">{{::Model.UserName(comment.CreatedById)}}</div>&nbsp;
                                 <span class="label">{{::comment.DateMoment.format('MM/DD')}}</span>,&nbsp;
+                                <i id="show-{{comment.EntityId}}"
+                                   class="eye show icon"
+                                   ng-class="comment.Show ? 'lightblue' : 'disabled'"
+                                   ng-click="CommentShow_OnClick(comment)"
+                                   title="add to show"></i>,&nbsp;
                                 <time class="timeago label" datetime="{{::comment.LastModifiedDate.format()}}"></time>
                                 <div class="inline"
                                      ng-show="comment.CheckByAge()">
@@ -261,7 +276,7 @@
                             <span class="value"><b>{{::task.Index}}</b>/<b>{{::subtask.Order}}</b></span>
                             <i id="favorite-{{::subtask.EntityId}}"
                                class="favorite icon"
-                               ng-class="subtask.Favorite ? 'yellow' : 'inverted grey'"
+                               ng-class="subtask.Favorite ? 'yellow' : 'disabled'"
                                ng-click="SubTaskFavorite_OnClick(task, subtask)"
                                title="add to favorite"></i>
                             <div class="pull-right">
@@ -342,7 +357,12 @@
                                 <div class="ui small header">
                                     {{::Model.UserName(comment.CreatedById)}}
                                 </div>&nbsp;
-                                <span class="label">{{comment.DateMoment.format('MM/DD')}}</span>,&nbsp;
+                                <span class="label">{{comment.DateMoment.format('MM/DD')}}</span>
+                                <i id="show-{{comment.EntityId}}"
+                                   class="eye show icon"
+                                   ng-class="comment.Show ? 'lightblue' : 'disabled'"
+                                   ng-click="CommentShow_OnClick(comment)"
+                                   title="add to show"></i>,&nbsp;
                                 <time class="timeago label" datetime="{{comment.LastModifiedDate.format()}}"></time>
                                 <div class="inline"
                                      ng-show="comment.CheckByAge()">
@@ -411,7 +431,7 @@
     <div class="header">
         {{Model.EditTask.EntityId == null ? 'Create Task' : 'Edit Task# ' + Model.EditTask.Index}}
         <i class="favorite icon"
-           ng-class="Model.EditTask.Favorite ? 'yellow' : 'inverted grey'"
+           ng-class="Model.EditTask.Favorite ? 'yellow' : 'disabled'"
            ng-click="Model.EditTask.Favorite = !Model.EditTask.Favorite"
            title="add to favorite"></i>
     </div>
@@ -508,7 +528,7 @@
     <div class="header">
         {{Model.EditSubTask.EntityId == null ? 'Create SubTask' : 'Edit SubTask# ' + Model.EditSubTask.Order}}
         <i class="favorite icon"
-           ng-class="Model.EditSubTask.Favorite ? 'yellow' : 'inverted grey'"
+           ng-class="Model.EditSubTask.Favorite ? 'yellow' : 'disabled'"
            ng-click="Model.EditSubTask.Favorite = !Model.EditSubTask.Favorite"
            title="add to favorite"></i>
     </div>

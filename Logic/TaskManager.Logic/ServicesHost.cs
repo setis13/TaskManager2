@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using AutoMapper;
+using CommonServiceLocator;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using TaskManager.Data;
 using TaskManager.Data.Identity;
-using TaskManager.Logic;
 using TaskManager.Logic.Identity;
 using TaskManager.Logic.Services;
+using Unity;
+using Unity.Resolution;
 
 namespace TaskManager.Logic {
     /// <summary>
@@ -16,23 +20,20 @@ namespace TaskManager.Logic {
 
         /// <summary>
         ///     Gets Role Manager </summary>
-        public RoleManager<TaskManagerRole, Guid> RoleManager { get; }
+        public RoleManager<TaskManagerRole, Guid> RoleManager => new TaskManagerRoleManager(UnitOfWork.RoleStore);
         /// <summary>
         ///     Gets User manager </summary>
-        public UserManager<TaskManagerUser, Guid> UserManager { get; }
-
-        public ServicesHost(TaskManagerRoleManager roleManager, TaskManagerUserManager userManager) {
-            this.RoleManager = roleManager;
-            this.UserManager = userManager;
-        }
-
+        public UserManager<TaskManagerUser, Guid> UserManager => new TaskManagerUserManager(UnitOfWork.UserStore);
         /// <summary>
-        ///     Registers Service with type T </summary>
-        /// <typeparam name="T">Service Type</typeparam>
-        /// <param name="service">Service instance</param>
-        public void Register<T>(T service) where T : IService {
-            if (!services.ContainsKey(typeof(T)))
-                services.Add(typeof(T), service);
+        ///     Gets Unit Of Work </summary>
+        public IUnitOfWork UnitOfWork { get; }
+        /// <summary>
+        ///     Gets Mapper </summary>
+        public IMapper Mapper { get; }
+
+        public ServicesHost(IUnitOfWork unitOfWork, IMapper mapper) {
+            UnitOfWork = unitOfWork;
+            Mapper = mapper;
         }
 
         /// <summary>
@@ -40,9 +41,14 @@ namespace TaskManager.Logic {
         /// <typeparam name="T">Service type</typeparam>
         /// <returns>Service instance</returns>
         public T GetService<T>() where T : IService {
-            if (services.ContainsKey(typeof(T)))
-                return (T)services[typeof(T)];
-            return default(T);
+            if (services.ContainsKey(typeof(T)) == false)
+                services[typeof(T)] = ServiceLocator.Current.GetInstance<IUnityContainer>().Resolve<T>(
+                    new ResolverOverride[] {
+                        new ParameterOverride("host", this),
+                        new ParameterOverride("unitOfWork", UnitOfWork),
+                        new ParameterOverride("mapper", Mapper)
+                    });
+            return (T)services[typeof(T)];
         }
-}
+    }
 }

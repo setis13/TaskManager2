@@ -8,7 +8,7 @@ using TaskManager.Data.Repositories;
 using TaskManager.Logic.Dtos;
 
 namespace TaskManager.Logic.Services {
-    public class ProjectsService : HostService<IProjectsService>, IProjectsService {
+    public class ProjectsService : HostService, IProjectsService {
 
         private IRepository<Project> _rep;
 

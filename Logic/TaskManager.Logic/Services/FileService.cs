@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using TaskManager.Logic.Dtos;
 using TaskManager.Data.Entities;
 using System.Linq;
+using System.Web;
 
 namespace TaskManager.Logic.Services {
-    public class FileService : HostService<IFileService>, IFileService {
+    public class FileService : HostService, IFileService {
 
-        private readonly string root = System.Web.HttpContext.Current.Server.MapPath("~/App_Data/Files/");
+        private readonly string root = Path.Combine(HttpRuntime.AppDomainAppPath, "\\App_Data\\Files\\");
 
         public FileService(IServicesHost servicesHost, IUnitOfWork unitOfWork, IMapper mapper)
             : base(servicesHost, unitOfWork, mapper) {

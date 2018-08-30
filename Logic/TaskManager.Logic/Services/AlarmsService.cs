@@ -8,7 +8,7 @@ using System.Linq;
 using TaskManager.Logic.Enums;
 
 namespace TaskManager.Logic.Services {
-    public class AlarmsService : HostService<IAlarmsService>, IAlarmsService {
+    public class AlarmsService : HostService, IAlarmsService {
 
         public readonly TimeSpan SHOW_EVENTS = TimeSpan.FromDays(30);
 

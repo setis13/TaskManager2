@@ -231,9 +231,14 @@ a.alarm.item .loading.icon {
   left: 11px;
 }
 /** Favorite **/
+i.eye.icon,
 i.favorite.icon,
 i.calendar.check {
   cursor: pointer;
+}
+/** Icon Color **/
+i.icon.lightblue {
+  color: #6cd6ff !important;
 }
 /* link loading */
 a.ui.link.readonly {

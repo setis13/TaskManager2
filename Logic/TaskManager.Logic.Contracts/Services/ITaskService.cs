@@ -13,13 +13,14 @@ namespace TaskManager.Logic.Services {
         /// <remarks> if <see cref="historyDeep"/> is null then returns actual tasks else actual + history </remarks>
         /// <param name="historyDeep">minimum date of tasks</param>
         /// <param name="reportFilter">tasks for reporting</param>
+        /// <param name="showFilter">comments for demonstration</param>
         /// <param name="projects">out parameter</param>
         /// <param name="tasks">out parameter</param>
         /// <param name="historyFilters">out parameter</param>
         /// <param name="lastResponsibleIds">out last responsible ids</param>
         /// <param name="lastFavorite">out last favorite value</param>
         /// <param name="lastPriority">out last priority value</param>
-        void GetData(UserDto user, DateTime? historyDeep, bool reportFilter,
+        void GetData(UserDto user, DateTime? historyDeep, bool reportFilter, bool showFilter,
             out List<ProjectDto> projects,
             out List<Task1Dto> tasks,
             out List<DateTime> historyFilters,
@@ -97,5 +98,12 @@ namespace TaskManager.Logic.Services {
         /// <param name="userDto">user DTO</param>
         /// <returns>Value of flag</returns>
         bool InvertSubTaskFavorite(Guid taskId, Guid subtaskId, UserDto userDto);
+
+        /// <summary>
+        ///     Show/Hide comment in demostration </summary>
+        /// <param name="subtaskId">Comment ID</param>
+        /// <param name="userDto">user DTO</param>
+        /// <returns>Value of flag</returns>
+        bool InvertCommentShow(Guid commentId, UserDto userDto);
     }
 }

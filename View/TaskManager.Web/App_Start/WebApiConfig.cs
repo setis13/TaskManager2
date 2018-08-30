@@ -1,12 +1,12 @@
 ﻿using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
-using Microsoft.Practices.Unity.WebApi;
 using Newtonsoft.Json.Serialization;
+using Unity.AspNet.WebApi;
 
 namespace TaskManager.Web {
     public static class WebApiConfig {
         public static void Register(HttpConfiguration config) {
-            var resolver = new UnityHierarchicalDependencyResolver(UnityConfig.GetConfiguredContainer());
+            var resolver = new UnityDependencyResolver(UnityConfig.Container);
             config.DependencyResolver = resolver;
 
             // Web API configuration and services

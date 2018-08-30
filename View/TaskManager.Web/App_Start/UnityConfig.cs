@@ -1,16 +1,17 @@
 using System;
-using System.Linq;
 using AutoMapper;
 using AutoMapper.Unity;
 using TaskManager.Data;
 using TaskManager.Data.Context;
 using TaskManager.Logic.Mappings;
-using Microsoft.Practices.ServiceLocation;
-using Microsoft.Practices.Unity;
 using TaskManager.Logic;
 using TaskManager.Logic.Services;
 using TaskManager.Data.Identity;
-using TaskManager.Logic.Identity;
+using Unity.Lifetime;
+using Unity;
+using Unity.Injection;
+using CommonServiceLocator;
+using Unity.ServiceLocation;
 
 namespace TaskManager.Web {
     /// <summary>
@@ -26,9 +27,7 @@ namespace TaskManager.Web {
 
         /// <summary>
         ///     Gets the configured Unity container. </summary>
-        public static IUnityContainer GetConfiguredContainer() {
-            return _container.Value;
-        }
+        public static IUnityContainer Container => _container.Value;
         #endregion
 
         /// <summary>
@@ -42,48 +41,37 @@ namespace TaskManager.Web {
         /// </remarks>
         public static void RegisterTypes(IUnityContainer container) {
             // register Db context
-            container.RegisterType<ITaskManagerDbContext, TaskManagerDbContext>(new HierarchicalLifetimeManager());
+            container.RegisterType<ITaskManagerDbContext, TaskManagerDbContext>(new PerResolveLifetimeManager());
             // Register Services
-            container.RegisterType<ISessionService, SessionService>(new HierarchicalLifetimeManager());
-            container.RegisterType<ICompanyService, CompanyService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IProjectsService, ProjectsService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IAlarmsService, AlarmsService>(new HierarchicalLifetimeManager());
-            container.RegisterType<ITaskService, TaskService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IReportService, ReportService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IFileService, FileService>(new HierarchicalLifetimeManager());
+            container.RegisterType<ISessionService, SessionService>(new PerResolveLifetimeManager());
+            container.RegisterType<ICompanyService, CompanyService>(new PerResolveLifetimeManager());
+            container.RegisterType<IProjectsService, ProjectsService>(new PerResolveLifetimeManager());
+            container.RegisterType<IAlarmsService, AlarmsService>(new PerResolveLifetimeManager());
+            container.RegisterType<ITaskService, TaskService>(new PerResolveLifetimeManager());
+            container.RegisterType<IReportService, ReportService>(new PerResolveLifetimeManager());
+            container.RegisterType<IFileService, FileService>(new PerResolveLifetimeManager());
 
             // Register AutoMapper
-            container.RegisterMapper();
-            container.RegisterMappingProfile<BllMappingProfile>();
+            container.RegisterType<IMapper>(new ContainerControlledLifetimeManager(),
+                        new InjectionFactory(c => {
+                            var config = new MapperConfiguration(cfg => {
+                                cfg.AddProfile<BllMappingProfile>();
+                            });
+                            return config.CreateMapper();
+                        }));
             var mapper = container.Resolve<IMapper>();
 
             // register Unit of Work
-            container.RegisterType<IUnitOfWork, UnitOfWork>(new HierarchicalLifetimeManager(),
+            container.RegisterType<IUnitOfWork, UnitOfWork>(new PerResolveLifetimeManager()/*,
                 new InjectionFactory(c => {
                     var context = c.Resolve<ITaskManagerDbContext>();
                     return new UnitOfWork(context, new TaskManagerRoleStore(context), new TaskManagerUserStore(context));
-                }));
+                })*/);
             // session
-            container.RegisterType<IUserSession, UserSession>(new HierarchicalLifetimeManager());
+            container.RegisterType<IUserSession, UserSession>(new PerResolveLifetimeManager());
 
             // register services host
-            container.RegisterType<IServicesHost, ServicesHost>(new HierarchicalLifetimeManager(),
-                new InjectionFactory(c => {
-                    var uow = c.Resolve<IUnitOfWork>();
-                    var host = new ServicesHost(new TaskManagerRoleManager(uow.RoleStore), new TaskManagerUserManager(uow.UserStore));
-                    c.Registrations.ToList().Where(
-                        item =>
-                            item.RegisteredType.GetInterfaces().Contains(typeof(IService)) &&
-                            !item.MappedToType.IsInterface && !item.MappedToType.IsGenericType &&
-                            !item.MappedToType.IsAbstract).ToList()
-                        .ForEach(item => c.Resolve(item.RegisteredType,
-                        new ResolverOverride[] {
-                                new ParameterOverride("servicesHost", host),
-                                new ParameterOverride("unitOfWork", uow),
-                                new ParameterOverride("mapper", mapper)
-                        }));
-                    return host;
-                }));
+            container.RegisterType<IServicesHost>(new PerResolveLifetimeManager(), new InjectionFactory(c => new ServicesHost(c.Resolve<IUnitOfWork>(), mapper)));
 
             ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(container));
         }

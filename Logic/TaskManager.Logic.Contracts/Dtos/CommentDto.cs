@@ -11,6 +11,7 @@ namespace TaskManager.Logic.Dtos {
         public TimeSpan? ActualWork { get; set; }
         public float? Progress { get; set; }
         public string Description { get; set; }
+        public bool Show { get; set; }
         public List<FileDto> Files { get; set; } = new List<FileDto>();
     }
 }

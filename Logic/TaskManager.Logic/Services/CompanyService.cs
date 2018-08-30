@@ -8,7 +8,7 @@ using TaskManager.Logic.Dtos;
 using Microsoft.AspNet.Identity;
 
 namespace TaskManager.Logic.Services {
-    public class CompanyService : HostService<ICompanyService>, ICompanyService {
+    public class CompanyService : HostService, ICompanyService {
         public CompanyService(IServicesHost servicesHost, IUnitOfWork unitOfWork, IMapper mapper)
             : base(servicesHost, unitOfWork, mapper) {
         }

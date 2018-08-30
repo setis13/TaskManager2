@@ -80,6 +80,9 @@ namespace Controllers {
             $scope.SubTaskFavorite_OnClick = this.SubTaskFavorite_OnClick;
             $scope.FavoriteFilter_OnClick = this.FavoriteFilter_OnClick;
 
+            $scope.ShowFilter_OnClick = this.ShowFilter_OnClick;
+            $scope.CommentShow_OnClick = this.CommentShow_OnClick;
+
             $scope.AttachFiles_OnClick = this.AttachFiles_OnClick;
             $scope.RemoveFile_OnClick = this.RemoveFile_OnClick;
             $scope.SizeName = SizeName;
@@ -134,6 +137,9 @@ namespace Controllers {
             if (this.Model.ReportFilter == true) {
                 params.push('reportFilter=' + this.Model.ReportFilter);
             }
+            if (this.Model.ShowFilter == true) {
+                params.push('showFilter=' + this.Model.ShowFilter);
+            }
             $.ajax({
                 url: '/api/Home/GetData/?' + params.join('&'),
                 type: 'POST',
@@ -187,6 +193,11 @@ namespace Controllers {
 
         public DayReport_OnClick = () => {
             this.Model.ReportFilter = !this.Model.ReportFilter;
+            this.Load();
+        }
+
+        public ShowFilter_OnClick = () => {
+            this.Model.ShowFilter = !this.Model.ShowFilter;
             this.Load();
         }
 
@@ -288,6 +299,38 @@ namespace Controllers {
                         }
                         this.Model.ApplyClientFilter();
                         this.InitComment();
+                    } else {
+                        $this.Model.Error = result.Message;
+                    }
+                    $this.scope.$apply();
+                },
+                error: (jqXhr) => {
+                    console.error(jqXhr.statusText);
+                    toastr.error(jqXhr.statusText);
+                }
+            });
+        }
+
+        public CommentShow_OnClick = (comment: Models.CommentModel) => {
+            var $this = this;
+            $.ajax({
+                url: '/api/Home/InvertCommentShow?commentId=' + comment.EntityId,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: {},
+                beforeSend(xhr) {
+                    $("#show-" + comment.EntityId).removeClass("show");
+                    $("#show-" + comment.EntityId).addClass("spinner loading");
+                },
+                complete() {
+                    $("#show-" + comment.EntityId).addClass("show");
+                    $("#show-" + comment.EntityId).removeClass("spinner loading");
+                },
+                success: (result) => {
+                    if (result.Success === true) {
+                        comment.Show = result.Data.Show;
+                        this.Model.ApplyClientFilter();
                     } else {
                         $this.Model.Error = result.Message;
                     }

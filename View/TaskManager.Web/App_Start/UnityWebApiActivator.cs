@@ -1,5 +1,5 @@
 using System.Web.Http;
-using Microsoft.Practices.Unity.WebApi;
+using Unity.AspNet.WebApi;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(TaskManager.Web.UnityWebApiActivator), nameof(TaskManager.Web.UnityWebApiActivator.Start))]
 [assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(TaskManager.Web.UnityWebApiActivator), nameof(TaskManager.Web.UnityWebApiActivator.Shutdown))]
@@ -13,8 +13,8 @@ namespace TaskManager.Web {
         public static void Start() {
             // Use UnityHierarchicalDependencyResolver if you want to use
             // a new child container for each IHttpController resolution.
-            var resolver = new UnityHierarchicalDependencyResolver(UnityConfig.GetConfiguredContainer());
-            //var resolver = new UnityDependencyResolver(UnityConfig.Container);
+            //var resolver = new UnityHierarchicalDependencyResolver(UnityConfig.GetConfiguredContainer());
+            var resolver = new UnityDependencyResolver(UnityConfig.Container);
 
             GlobalConfiguration.Configuration.DependencyResolver = resolver;
         }
@@ -22,7 +22,7 @@ namespace TaskManager.Web {
         /// <summary>
         ///     Disposes the Unity container when the application is shut down. </summary>
         public static void Shutdown() {
-            UnityConfig.GetConfiguredContainer().Dispose();
+            UnityConfig.Container.Dispose();
         }
     }
 }

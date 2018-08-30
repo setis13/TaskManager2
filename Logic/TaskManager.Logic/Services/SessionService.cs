@@ -14,7 +14,7 @@ using TaskManager.Logic.Dtos;
 namespace TaskManager.Logic.Services {
     /// <summary>
     ///     The session service. </summary>
-    public class SessionService : HostService<ISessionService>, ISessionService {
+    public class SessionService : HostService, ISessionService {
 
         #region [ Static ]
 

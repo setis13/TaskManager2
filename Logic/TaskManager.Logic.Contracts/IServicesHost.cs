@@ -15,12 +15,6 @@ namespace TaskManager.Logic {
         UserManager<TaskManagerUser, Guid> UserManager { get; }
 
         /// <summary>
-        ///     Registers Service with type T </summary>
-        /// <typeparam name="T">Service Type</typeparam>
-        /// <param name="service">Service instance</param>
-        void Register<T>(T service) where T : IService;
-
-        /// <summary>
         ///     Gets Service by it's type </summary>
         /// <typeparam name="T">Service type</typeparam>
         /// <returns>Service instance</returns>
