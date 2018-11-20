@@ -472,5 +472,17 @@
     "inputFiles": [
       "Scripts/References.js"
     ]
+  },
+  {
+    "outputFileName": "Content/perfect-scrollbar.min.css",
+    "inputFiles": [
+      "Content/perfect-scrollbar.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/perfect-scrollbar.min.js",
+    "inputFiles": [
+      "Scripts/perfect-scrollbar.js"
+    ]
   }
 ]

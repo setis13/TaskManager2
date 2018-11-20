@@ -1,7 +1,16 @@
 ﻿/*** html & footer ***/
+/* hides scroll */
 html,
 body {
-  height: auto;
+  height: 100%;
+  overflow: hidden;
+}
+/* showes scroll */
+.ui.table.tasks {
+  height: 100%;
+  overflow: auto;
+  display: block;
+  position: relative;
 }
 body footer {
   margin-bottom: 1em;
@@ -16,6 +25,32 @@ body footer {
     margin-left: 60px !important;
     margin-right: 60px !important;
   }
+}
+@media only screen and (max-width: 767px) {
+  html,
+  body {
+    height: 100%;
+    overflow: inherit;
+  }
+  .ui.main.container,
+  .ui.main.container > div {
+    height: 100%;
+    overflow: inherit;
+  }
+  .ui.table.tasks {
+    height: 100%;
+    overflow: auto;
+    display: contents;
+    position: relative;
+  }
+  table.ui.table.tasks > tbody td {
+    width: 100% !important;
+  }
+}
+table.ui.table.tasks > thead,
+table.ui.table.tasks > tbody {
+  display: table !important;
+  width: 100% !important;
 }
 /* Mobile */
 .ui.table > tbody > tr.ng-hide {
@@ -113,7 +148,8 @@ table.ui.table.flexed {
   table-layout: fixed;
 }
 td.word_wrap {
-  word-wrap: break-word;
+  word-wrap: break-word !important;
+  max-width: 1px;
 }
 div.block,
 p.block {
@@ -430,4 +466,10 @@ body.night-mode .ui.basic.label:hover {
 body.night-mode .ui.message {
   color: #CCC;
   background: #2D2D30;
+}
+body.night-mode .ui.popup::before {
+  background: #4A4A4A;
+}
+body.night-mode .ui.popup {
+  border: 1px solid #4A4A4A;
 }

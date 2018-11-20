@@ -16,6 +16,7 @@
                 this.Alarms.push(model);
                 if (this.Title == null) {
                     this.Title = model.DateMoment.diff(moment(moment().format('YYYY-MM-DD') + "T00:00:00"), 'days');
+                    continue;
                 }
             }
         }

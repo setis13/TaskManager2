@@ -1,5 +1,6 @@
 ﻿namespace Models {
     export class AlarmModel extends BaseModel {
+        public TimeLeft: number;
         public Title: string;
         public Description: string;
         public Date: string;
@@ -30,6 +31,7 @@
                 this.Birthday = data.Birthday;
                 this.Holiday = data.Holiday;
                 this.DateMoment = moment(data.Date);
+                this.TimeLeft = this.DateMoment.diff(moment(moment().format('YYYY-MM-DD') + "T00:00:00"), 'days');
             } else {
                 this.Title = '';
                 this.Description = '';

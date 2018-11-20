@@ -10,7 +10,7 @@
     </div>
     <p>{{Model.Error}}</p>
 </div>
-<div ng-show="Model.Loaded">
+<div ng-show="Model.Loaded" class="panel">
     <!-- panel -->
     <div class="ui three column stackable grid">
         <div class="row">
@@ -90,11 +90,11 @@
         </div>
     </div>
     <!-- tasks -->
-    <table class="ui celled table flexed">
+    <table class="ui celled table flexed tasks nano-content">
         <thead>
             <tr>
                 <th class="one wide">Tasks</th>
-                <th class="three wide left-merge"></th>
+                <th class="three wide left-merge">(total: {{Model.TotalTasks}}/{{Model.TotalSubtasks}})</th>
                 <th class="five wide">Descriptions</th>
                 <th class="seven wide">Comments</th>
             </tr>
@@ -106,7 +106,7 @@
                          (Model.SelectedProjectFilter == '' || task.ProjectId == Model.SelectedProjectFilter) &&
                          (Model.SelectedUserFilter == '' || task.UserIds.indexOf(Model.SelectedUserFilter) !== -1)"
                 ng-repeat-start="task in Model.FilteredTasks">
-                <td colspan="2">
+                <td class="four wide" colspan="2">
                     <div class="content">
                         <div>
                             <span class="label">Task#</span>&nbsp;
@@ -175,7 +175,7 @@
                         </div>
                     </div>
                 </td>
-                <td class="word_wrap">
+                <td class="five wide word_wrap">
                     <p><b>{{::task.Title}}</b></p>
                     <p ng-bind-html="::task.Description | nl2br"></p>
                     <span class="lightgallery">
@@ -190,7 +190,7 @@
                     </span>
                 </td>
                 <!-- Task -> Comments -->
-                <td class="tasks-comments word_wrap">
+                <td class="seven wide tasks-comments word_wrap">
                     <div class="item" ng-show="task.Comments.length > 3"
                          ng-class="ShowedAllComments.indexOf(task.EntityId) == -1 ? '' : 'border'">
                         <div class="content">
@@ -206,7 +206,7 @@
                         <div class="item block" ng-repeat="comment in ::task.Comments" ng-show="comment.Visible">
                             <div class="content block">
                                 <div class="ui small header">{{::Model.UserName(comment.CreatedById)}}</div>&nbsp;
-                                <span class="label">{{::comment.DateMoment.format('MM/DD')}}</span>,&nbsp;
+                                <span class="label">{{::comment.DateMoment.format('MM/DD')}}</span>
                                 <i id="show-{{comment.EntityId}}"
                                    class="eye show icon"
                                    ng-class="comment.Show ? 'lightblue' : 'disabled'"
@@ -274,8 +274,8 @@
                          (Model.SelectedProjectFilter == '' || task.ProjectId == Model.SelectedProjectFilter) &&
                          (Model.SelectedUserFilter == '' || task.UserIds.indexOf(Model.SelectedUserFilter) !== -1)"
                 ng-repeat-end ng-repeat="subtask in task.SubTasks">
-                <td class="header"></td>
-                <td>
+                <td class="one wide header"></td>
+                <td class="three wide">
                     <div class="content">
                         <div>
                             <span class="label">Index</span>&nbsp;
@@ -331,21 +331,23 @@
                     </div>
                 </td>
                 <td class="four wide word_wrap">
-                    <p><b>{{::subtask.Title}}</b></p>
-                    <p ng-bind-html="::subtask.Description | nl2br"></p>
-                    <span class="lightgallery">
-                        <a ng-repeat="file in ::subtask.GetSubTaskImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{::file.EntityId}}">
-                            {{::file.DisplayName}}<span class="detail">{{::SizeName(file.Size)}}</span>
-                        </a>
-                    </span>
-                    <span>
-                        <a ng-repeat="file in ::subtask.GetSubTaskOtherFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{::file.EntityId}}">
-                            {{::file.DisplayName}}<span class="detail">{{::SizeName(file.Size)}}</span>
-                        </a>
-                    </span>
+                    <div>
+                        <p><b>{{::subtask.Title}}</b></p>
+                        <p ng-bind-html="::subtask.Description | nl2br"></p>
+                        <span class="lightgallery">
+                            <a ng-repeat="file in ::subtask.GetSubTaskImageFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{::file.EntityId}}">
+                                {{::file.DisplayName}}<span class="detail">{{::SizeName(file.Size)}}</span>
+                            </a>
+                        </span>
+                        <span>
+                            <a ng-repeat="file in ::subtask.GetSubTaskOtherFiles()" class="ui file blue basic label" target="_blank" href="/api/file/download?id={{::file.EntityId}}">
+                                {{::file.DisplayName}}<span class="detail">{{::SizeName(file.Size)}}</span>
+                            </a>
+                        </span>
+                    </div>
                 </td>
                 <!-- SubTask -> Comments -->
-                <td class="tasks-comments word_wrap">
+                <td class="seven wide tasks-comments word_wrap">
                     <div class="item" ng-show="subtask.Comments.length > 3"
                          ng-class="ShowedAllComments.indexOf(subtask.EntityId) == -1 ? '' : 'border'">
                         <div class="content">
@@ -426,10 +428,6 @@
             </tr>
         </tbody>
     </table>
-    <hr />
-    <footer>
-        <p>&copy; 2017 - Enote</p>
-    </footer>
 </div>
 <!-- Edit Task Modal -->
 <modal id="edit-task-modal" class="ui big modal" ng-model="Model.EditTask">
@@ -800,4 +798,19 @@
                 }
             });
     }
+
+    var ps = new PerfectScrollbar('table.ui.table');
+
+    $(window).resize(function () {
+        setTableSize();
+    });
+
+    function setTableSize() {
+        $("table.ui.table").height(
+            $(window).height()
+            - $('.ui.main.menu').height()
+            - $('.ui.stackable.grid').height());
+    }
+
+    setTableSize();
 </script>

@@ -510,6 +510,10 @@
     <Content Include="Content\lightgallery\lightgallery.min.css">
       <DependentUpon>lightgallery.css</DependentUpon>
     </Content>
+    <Content Include="Content\perfect-scrollbar.css" />
+    <Content Include="Content\perfect-scrollbar.min.css">
+      <DependentUpon>perfect-scrollbar.css</DependentUpon>
+    </Content>
     <Content Include="Content\semantic-calendar.css" />
     <Content Include="Content\semantic-calendar.min.css">
       <DependentUpon>semantic-calendar.css</DependentUpon>
@@ -951,6 +955,10 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js">
       <DependentUpon>moment.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\perfect-scrollbar.js" />
+    <Content Include="Scripts\perfect-scrollbar.min.js">
+      <DependentUpon>perfect-scrollbar.js</DependentUpon>
     </Content>
     <Content Include="Scripts\References.js">
       <DependentUpon>References.ts</DependentUpon>

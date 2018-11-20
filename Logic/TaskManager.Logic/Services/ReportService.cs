@@ -122,9 +122,9 @@ namespace TaskManager.Logic.Services {
             var subtaskIds = totalComments2.Select(e => e.SubTaskId).ToList();
             List<SubTask> subtasks;
             if (includeNew) {
-                subtasks = subtaskRep.SearchFor(e => subtaskIds.Contains(e.EntityId) || start <= e.CreatedDate && e.CreatedDate <= end).ToList();
+                subtasks = subtaskRep.SearchFor(e => e.ActualWorkTicks != 0 && subtaskIds.Contains(e.EntityId) || start <= e.CreatedDate && e.CreatedDate <= end).ToList();
             } else {
-                subtasks = subtaskRep.SearchFor(e => subtaskIds.Contains(e.EntityId)).ToList();
+                subtasks = subtaskRep.SearchFor(e => e.ActualWorkTicks != 0 && subtaskIds.Contains(e.EntityId)).ToList();
             }
             subtaskDtos = Mapper.Map<List<ReportSubTaskDto>>(subtasks);
             // gets tasks
@@ -141,7 +141,7 @@ namespace TaskManager.Logic.Services {
             var projects = projectRep.SearchFor(e => projectIds2.Contains(e.EntityId)).ToList();
             projectDtos = Mapper.Map<List<ReportProjectDto>>(projects);
             // addes all subtasks by tasks
-            subtasks = subtaskRep.SearchFor(e => taskIds.Contains(e.TaskId) && !subtaskIds.Contains(e.EntityId)).ToList();
+            subtasks = subtaskRep.SearchFor(e => e.ActualWorkTicks != 0 && taskIds.Contains(e.TaskId) && !subtaskIds.Contains(e.EntityId)).ToList();
             subtaskDtos.AddRange(Mapper.Map<List<ReportSubTaskDto>>(subtasks));
 
             // NOTES: we have all prepared collections.

@@ -24,6 +24,21 @@
 
         public FilteredTasks: Array<TaskModel>;
 
+        public get TotalTasks() {
+            if (this.FilteredTasks != null) {
+                return this.FilteredTasks.length;
+            } else {
+                return "-";
+            }
+        }
+        public get TotalSubtasks() {
+            if (this.FilteredTasks != null) {
+                return Enumerable.From(this.FilteredTasks).SelectMany(e => e.SubTasks).Count();
+            } else {
+                return "-";
+            }
+        }
+
         constructor() {
             super();
 
@@ -56,21 +71,31 @@
                 default:
                     break;
             }
-
             // NOTE: moved a filter to html template
-            //if (this.SelectedUserFilter !== '') {
-            //    tasks = tasks.Where(e => this.FavoriteFilter == false || this.SelectedHistoryFilter != '0' || e.Favorite == this.FavoriteFilter);
-            //}
+            if (this.SelectedUserFilter !== '') {
+                tasks = tasks.Where(e => this.FavoriteFilter == false || this.SelectedHistoryFilter != '0' || e.Favorite == this.FavoriteFilter);
+            }
 
-            //if (this.SelectedUserFilter !== '') {
-            //    tasks = tasks.Where(e => e.UserIds.indexOf(this.SelectedUserFilter) !== -1);
-            //}
+            if (this.SelectedUserFilter !== '') {
+                tasks = tasks.Where(e => e.UserIds.indexOf(this.SelectedUserFilter) !== -1);
+            }
 
-            //if (this.SelectedProjectFilter !== '') {
-            //    tasks = tasks.Where(e => e.ProjectId == this.SelectedProjectFilter);
-            //}
+            if (this.SelectedProjectFilter !== '') {
+                tasks = tasks.Where(e => e.ProjectId == this.SelectedProjectFilter);
+            }
+
+            if (this.FavoriteFilter == true) {
+                tasks = tasks.Where(e => e.Favorite).Select(e => e.Clone(true));
+            }
 
             this.FilteredTasks = tasks.ToArray();
+
+            if (this.FavoriteFilter == true) {
+                for (var i = 0; i < this.FilteredTasks.length; i++) {
+                    this.FilteredTasks[i].SubTasks = Enumerable.From(this.FilteredTasks[i].SubTasks).Where(e => e.Favorite).ToArray();
+                }
+            }
+
         }
 
         public SetData(data: any) {

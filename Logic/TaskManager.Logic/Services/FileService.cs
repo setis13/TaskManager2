@@ -8,11 +8,12 @@ using TaskManager.Logic.Dtos;
 using TaskManager.Data.Entities;
 using System.Linq;
 using System.Web;
+using TaskManager.Common;
 
 namespace TaskManager.Logic.Services {
     public class FileService : HostService, IFileService {
 
-        private readonly string root = Path.Combine(HttpRuntime.AppDomainAppPath, "\\App_Data\\Files\\");
+        private readonly string root = Path.Combine(HttpRuntime.AppDomainAppPath, "App_Data\\Files\\");
 
         public FileService(IServicesHost servicesHost, IUnitOfWork unitOfWork, IMapper mapper)
             : base(servicesHost, unitOfWork, mapper) {

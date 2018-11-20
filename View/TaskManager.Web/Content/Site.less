@@ -1,6 +1,15 @@
 ﻿/*** html & footer ***/
+/* hides scroll */
 html, body {
-    height: auto;
+    height: 100%;
+    overflow: hidden;
+}
+/* showes scroll */
+.ui.table.tasks {
+    height: 100%;
+    overflow: auto;
+    display: block;
+    position: relative;
 }
 
 body footer {
@@ -20,6 +29,33 @@ body footer {
     }
 }
 
+@media only screen and (max-width: 767px) {
+    html, body {
+        height: 100%;
+        overflow: inherit; //!
+    }
+
+    .ui.main.container, .ui.main.container > div {
+        height: 100%;
+        overflow: inherit; //!
+    }
+
+    .ui.table.tasks {
+        height: 100%;
+        overflow: auto;
+        display: contents; //!
+        position: relative;
+    }
+
+    table.ui.table.tasks > tbody td {
+        width: 100% !important;
+    }
+}
+
+table.ui.table.tasks > thead, table.ui.table.tasks > tbody {
+    display: table !important;
+    width: 100% !important;
+}
 /* Mobile */
 .ui.table > tbody > tr.ng-hide {
     display: none !important;
@@ -138,7 +174,8 @@ table.ui.table.flexed {
 }
 
 td.word_wrap {
-    word-wrap: break-word;
+    word-wrap: break-word !important;
+    max-width: 1px;
 }
 
 div.block, p.block {
@@ -344,7 +381,7 @@ body.night-mode {
             }
 
             td {
-                border-top: 1px solid @border-night!important;
+                border-top: 1px solid @border-night !important;
             }
 
             th:first-child, td:first-child {
@@ -530,5 +567,13 @@ body.night-mode {
     .ui.message {
         color: @font-color;
         background: @background;
+    }
+
+    .ui.popup::before {
+        background: @border-night;
+    }
+
+    .ui.popup {
+        border: 1px solid @border-night;
     }
 }

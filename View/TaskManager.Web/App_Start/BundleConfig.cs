@@ -74,6 +74,7 @@ namespace TaskManager.Web {
                     "~/Scripts/semantic.js",
                     "~/Scripts/semantic-calendar.js",
                     "~/Content/components/*.js",
+                    "~/Scripts/perfect-scrollbar.js",
                     "~/Scripts/angular.js",
                     "~/Scripts/angular-route.js",
                     "~/Scripts/angular-sanitize.js",
@@ -103,6 +104,7 @@ namespace TaskManager.Web {
                     "~/Content/semantic-calendar.css",
                     "~/Content/semantic-responsive.css",
                     "~/Content/components/*.css",
+                    "~/Content/perfect-scrollbar.css",
                     "~/Content/lightgallery/*.css",
                     "~/Content/Site.css"
                     ));

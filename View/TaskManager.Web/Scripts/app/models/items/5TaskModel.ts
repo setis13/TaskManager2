@@ -89,7 +89,7 @@
             }
         }
 
-        public Clone(): TaskModel {
+        public Clone(includeSubtasks: boolean = false): TaskModel {
             var clone = new TaskModel(null);
 
             clone.EntityId = this.EntityId;
@@ -107,10 +107,12 @@
             clone.Status = this.Status;
             clone.Favorite = this.Favorite;
 
-            // skips subtasks for saving only the task
-            //for (var i = 0; i < this.SubTasks.length; i++) {
-            //    clone.SubTasks.push(this.SubTasks[i].Clone());
-            //}
+            if (includeSubtasks) {
+                // skips subtasks for saving only the task
+                for (var i = 0; i < this.SubTasks.length; i++) {
+                    clone.SubTasks.push(this.SubTasks[i].Clone());
+                }
+            }
             for (var i = 0; i < this.UserIds.length; i++) {
                 clone.UserIds.push(this.UserIds[i]);
             }

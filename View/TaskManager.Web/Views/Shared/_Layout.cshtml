@@ -56,7 +56,9 @@
                     <a ng-class="isActive('/alarms')" href="/alarms" class="alarm item">
                         <i class="icons">
                             <img class="ui mini image" src="/content/images/calendar.png">
-                            <span class="alarm-label icon" id="alarm-label">{{Model.Title}}</span>
+                            <span class="alarm-label icon" id="alarm-label">
+                                {{Model.Title}}
+                            </span>
                             <i class="spinner black loading icon" ng-show="Loading"></i>
                         </i>
                     </a>
@@ -66,7 +68,7 @@
                 <div class="ui divided items">
                     <div ng-repeat="alarm in Model.Alarms" class="item">
                         <div class="ui header">
-                            <span>{{::alarm.DateMoment.format("MM/DD/YYYY")}} {{::alarm.Title}}<i class="blue birthday icon" ng-show="::alarm.Birthday"></i></span>
+                            <span>{{::alarm.TimeLeft}}</span>&nbsp;-&nbsp;<span>{{::alarm.DateMoment.format("MM/DD/YYYY")}} {{::alarm.Title}}<i class="blue birthday icon" ng-show="::alarm.Birthday"></i></span>
                             <div class="ui sub header">{{::alarm.Description}}</div>
                         </div>
                     </div>
