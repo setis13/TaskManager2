@@ -219,7 +219,7 @@
                         <div class="item block" ng-repeat="comment in ::task.Comments" ng-show="comment.Visible">
                             <div class="content block">
                                 <div class="ui small header">{{::Model.UserName(comment.CreatedById)}}</div>&nbsp;
-                                <span class="label" ng-class="comment.DateMoment.dayOfYear() == Model.Now.dayOfYear() ? 'blue' : ''">
+                                <span class="label" ng-class="comment.DateMoment.dayOfYear() == Model.Now.dayOfYear() ? 'background blue' : ''">
                                 {{::comment.DateMoment.format('MM/DD')}}
                                 </span>
                                 <i id="show-{{comment.EntityId}}"
@@ -380,7 +380,7 @@
                                 <div class="ui small header">
                                     {{::Model.UserName(comment.CreatedById)}}
                                 </div>&nbsp;
-                                <span class="label" ng-class="comment.DateMoment.dayOfYear() == Model.Now.dayOfYear() ? 'blue' : ''">
+                                <span class="label" ng-class="comment.DateMoment.dayOfYear() == Model.Now.dayOfYear() ? 'background blue' : ''">
                                     {{comment.DateMoment.format('MM/DD')}}
                                 </span>
                                 <i id="show-{{comment.EntityId}}"

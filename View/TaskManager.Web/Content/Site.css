@@ -60,7 +60,7 @@ table.ui.table.tasks > tbody {
 .content .label {
   color: grey;
 }
-.content .label.blue {
+.content .label.background.blue {
   background: blue;
   color: white;
   padding-left: 0.2em;
