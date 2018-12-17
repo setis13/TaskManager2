@@ -6,6 +6,7 @@
         public End: moment.Moment = null;
         public ShowStatus: boolean = true;
         public IncludeNew: boolean = false;
+        public IncludeZero: boolean = false;
         public ShowAllSubtasks: boolean = false;
         public ReportProjects: Array<ReportProjectModel> = null;
         public SumActualWork: string;

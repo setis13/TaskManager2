@@ -94,9 +94,22 @@
         <thead>
             <tr>
                 <th class="one wide">Tasks</th>
-                <th class="three wide left-merge">(total: {{Model.TotalTasks}}/{{Model.TotalSubtasks}})</th>
+                <th class="three wide left-merge">
+                    <div class="content block">
+                        <div class="pull-right">
+                            total: {{Model.TotalTasks}}/{{Model.TotalSubtasks}}
+                        </div>
+                    </div>
+                </th>
                 <th class="five wide">Descriptions</th>
-                <th class="seven wide">Comments</th>
+                <th class="seven wide">
+                    <div class="content block">
+                        Comments
+                        <div class="pull-right">
+                        day hours: {{Model.DayHours}}h
+                        </div>
+                    </div>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -152,13 +165,13 @@
                             <span class="label">Hours (actual / total)</span>&nbsp;
                             <span class="value"
                                   ng-class="task.ActualWorkHours > task.TotalWorkHours ? 'red' : ''">
-                                {{::task.ActualWorkHours | number:1}}h / {{::task.TotalWorkHours | number:1}}h
+                                {{::task.ActualWorkHours}}h / {{::task.TotalWorkHours}}h
                             </span>
                         </div>
                         <div ng-show="task.TotalWorkHours == undefined && task.ActualWorkHours != 0">
                             <span class="label">Hours (actual)</span>&nbsp;
                             <span class="value">
-                                {{::task.ActualWorkHours | number:1}}h
+                                {{::task.ActualWorkHours}}h
                             </span>
                         </div>
                         <!--<div> not yet used
@@ -206,7 +219,9 @@
                         <div class="item block" ng-repeat="comment in ::task.Comments" ng-show="comment.Visible">
                             <div class="content block">
                                 <div class="ui small header">{{::Model.UserName(comment.CreatedById)}}</div>&nbsp;
-                                <span class="label">{{::comment.DateMoment.format('MM/DD')}}</span>
+                                <span class="label" ng-class="comment.DateMoment.dayOfYear() == Model.Now.dayOfYear() ? 'blue' : ''">
+                                {{::comment.DateMoment.format('MM/DD')}}
+                                </span>
                                 <i id="show-{{comment.EntityId}}"
                                    class="eye show icon"
                                    ng-class="comment.Show ? 'lightblue' : 'disabled'"
@@ -230,7 +245,7 @@
                                     </div>
                                     <div class="ui basic brown label"
                                          ng-show="comment.ActualWorkHours != null">
-                                        {{::comment.ActualWorkHours | number:1}}h
+                                        {{::comment.ActualWorkHours}}h
                                     </div>
                                 </div>
                                 <div class="description block">
@@ -311,13 +326,13 @@
                             <span class="label">Hours (actual / total)</span>&nbsp;
                             <span class="value"
                                   ng-class="subtask.ActualWorkHours > subtask.TotalWorkHours ? 'red' : ''">
-                                {{::subtask.ActualWorkHours | number:1}}h / {{::subtask.TotalWorkHours | number:1}}h
+                                {{::subtask.ActualWorkHours}}h / {{::subtask.TotalWorkHours}}h
                             </span>
                         </div>
                         <div ng-show="subtask.TotalWorkHours == undefined && subtask.ActualWorkHours != 0">
                             <span class="label">Hours (actual)</span>&nbsp;
                             <span class="value">
-                                {{::subtask.ActualWorkHours | number:1}}h
+                                {{::subtask.ActualWorkHours}}h
                             </span>
                         </div>
                         <span class="ng-hide">{{::subtask | set_progress_data_percent}}</span>
@@ -365,7 +380,9 @@
                                 <div class="ui small header">
                                     {{::Model.UserName(comment.CreatedById)}}
                                 </div>&nbsp;
-                                <span class="label">{{comment.DateMoment.format('MM/DD')}}</span>
+                                <span class="label" ng-class="comment.DateMoment.dayOfYear() == Model.Now.dayOfYear() ? 'blue' : ''">
+                                    {{comment.DateMoment.format('MM/DD')}}
+                                </span>
                                 <i id="show-{{comment.EntityId}}"
                                    class="eye show icon"
                                    ng-class="comment.Show ? 'lightblue' : 'disabled'"
@@ -389,7 +406,7 @@
                                     </div>
                                     <div class="ui basic brown label"
                                          ng-show="comment.ActualWorkHours != null">
-                                        {{::comment.ActualWorkHours | number:1}}h
+                                        {{::comment.ActualWorkHours}}h
                                     </div>
                                 </div>
                                 <div class="description block">
@@ -798,7 +815,6 @@
                 }
             });
     }
-
     var ps = new PerfectScrollbar('table.ui.table');
 
     $(window).resize(function () {

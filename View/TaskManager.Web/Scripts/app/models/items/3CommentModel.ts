@@ -6,6 +6,7 @@
         public Date: string;
         public Status: Enums.TaskStatusEnum;
         public ActualWork: string;
+        public ActualWorkTicks: number;
         public Progress: number;
         public Description: string;
         public Show: boolean;
@@ -14,14 +15,16 @@
         // extra
         public Visible: boolean = true;
         // extra
-        private _actualWork: string;
-        public get ActualWorkHours(): string {
+        private _actualWork: number;
+        public get ActualWorkHours(): number {
             return this._actualWork;
         }
-        public set ActualWorkHours(str: string) {
-            this._actualWork = str;
-            if (str != null && str !== '') {
-                var value = parseFloat(str);
+        public set ActualWorkHours(value: number) {
+            if (typeof value == 'string') {
+                value = parseFloat(<any>value);
+            }
+            this._actualWork = value;
+            if (value != null) {
                 this.ActualWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
             } else {
                 this.ActualWork = null;
@@ -70,7 +73,7 @@
                 this.DateMoment = moment(data.Date);
                 this.Status = data.Status.toString();
                 this.Description = data.Description !== null ? data.Description : '';
-                this.ActualWorkHours = data.ActualWork != null ? moment.duration(data.ActualWork).asHours().toFixed(1) : null;
+                this.ActualWorkHours = data.ActualWork != null ? moment.duration(data.ActualWork).asHours() : null;
                 this.Progress = data.Progress;
                 this.Show = data.Show;
                 for (var i = 0; data.Files != null && i < data.Files.length; i++) {

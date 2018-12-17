@@ -35,7 +35,7 @@ namespace TaskManager.Web.Controllers {
                     var start = model.Start.Date;
                     var end = (model.End?.Date ?? start).AddDays(1).AddMilliseconds(-1);
 
-                    var projectDtos = _service.GetData(start, end, model.IncludeNew, model.ProjectIds, GetUserDto());
+                    var projectDtos = _service.GetData(start, end, model.IncludeNew, model.IncludeZero, model.ProjectIds, GetUserDto());
 
                     var sumActualWork = new TimeSpan(projectDtos
                         .Select(e => e.SumActualWork.Ticks)

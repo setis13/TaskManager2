@@ -726,6 +726,18 @@
                 e.preventDefault();
             }
         });
+
+        //******** SCROLL BY SELECTION ********//
+        i.event.bind(i.ownerDocument, 'selectionchange', function (e) {
+            //console.log(window.getSelection().focusNode.pageX);
+            //console.log(window.getSelection().focusNode.pageY);
+            //console.log(window.getSelection().focusNode.offsetTop);
+            //console.log(window.getSelection().focusNode.scrollTop);
+            //console.log(window.getSelection());
+            //console.log(window.getSelection().focusNode.top);
+            //element.scrollTop = window.getSelection().focusNode.top;
+            //updateGeometry(i);
+        });
     };
 
     var wheel = function (i) {

@@ -748,7 +748,6 @@ namespace Controllers {
                 $("#edit-comment-modal").modal("refresh");
                 return;
             }
-
             var $this = this;
             // a confirm modal
             if (this.Model.EditComment.EntityId != null && confirmed == false) {

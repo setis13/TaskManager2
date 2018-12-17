@@ -14,27 +14,31 @@
         public Files: Array<FileModel> = new Array();
 
         //extra
-        private _totalWork: any; // uses string in modal or number in tempate
-        public get TotalWorkHours(): string {
+        private _totalWork: number;
+        public get TotalWorkHours(): number {
             return this._totalWork;
         }
-        public set TotalWorkHours(str: string) {
-            this._totalWork = str;
-            if (str != null && str !== '') {
-                var value = parseFloat(str);
+        public set TotalWorkHours(value: number) {
+            if (typeof value == 'string') {
+                value = parseFloat(<any>value);
+            }
+            this._totalWork = value;
+            if (value != null) {
                 this.TotalWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
             } else {
                 this.TotalWork = null;
             }
         }
         //extra
-        private _actualWork: any; // uses string in modal or number in tempate
-        public get ActualWorkHours(): any {
+        private _actualWork: number;
+        public get ActualWorkHours(): number {
             return this._actualWork;
         }
-        public set ActualWorkHours(str: any) {
-            this._actualWork = str;
-            var value = parseFloat(str);
+        public set ActualWorkHours(value: number) {
+            if (typeof value == 'string') {
+                value = parseFloat(<any>value);
+            }
+            this._actualWork = value;
             this.ActualWork = moment.duration(!isNaN(value) ? value : 0, "hours").format("d.hh:mm:ss", <any>{ trim: false });
         }
 
@@ -64,7 +68,7 @@
                 this.Title = data.Title;
                 this.Description = data.Description !== null ? data.Description : '';
                 this.ActualWorkHours = moment.duration(data.ActualWork).asHours();
-                this.TotalWorkHours = data.TotalWork != null ? moment.duration(data.TotalWork).asHours().toFixed(1) : null;
+                this.TotalWorkHours = data.TotalWork != null ? moment.duration(data.TotalWork).asHours() : null;
                 this.Progress = data.Progress;
                 this.Status = data.Status;
                 this.Favorite = data.Favorite;

@@ -17,14 +17,16 @@ namespace TaskManager.Logic.Services {
         /// <param name="start">Start Date and Time</param>
         /// <param name="end">End Date and Time</param>
         /// <param name="includeNew">to include new tasks without comments</param>
+        /// <param name="includeZero">to include 0 hour tasks</param>
         /// <param name="projectIds">a filter by projects</param>
         /// <param name="user">User DTO</param>
         /// <returns>List of Project DTOs</returns>
         public List<ReportProjectDto> GetData(
-            DateTime start, 
-            DateTime end, 
+            DateTime start,
+            DateTime end,
             bool includeNew,
-            List<Guid> projectIds, 
+            bool includeZero,
+            List<Guid> projectIds,
             UserDto user) {
             var projectDtos = new List<ReportProjectDto>();
             var taskDtos = new List<ReportTaskDto>();
@@ -60,7 +62,8 @@ namespace TaskManager.Logic.Services {
                 var comments = commentsQuery.Where(e =>
                         e.CreatedById == user.Id &&
                         e.TaskId == totalComment.TaskId &&
-                       e.Date <= end /* && start <= e.Date // NOTE: to take an old comment */
+                        (includeZero || (e.ActualWorkTicks != null && e.ActualWorkTicks != 0)) &&
+                        e.Date <= end /* && start <= e.Date // NOTE: to take an old comment */
                     ).OrderByDescending(e => e.Date).ThenBy(e => e.CreatedDate).Take(total + 1)
                     /* Replaces desc sorting to asc */
                     .OrderBy(e => e.Date).ToList();
@@ -98,7 +101,8 @@ namespace TaskManager.Logic.Services {
                 var comments = commentsQuery.Where(e =>
                         e.CreatedById == user.Id &&
                         e.SubTaskId == totalComment.SubTaskId &&
-                       e.Date <= end /* && start <= e.Date // NOTE: to take an old comment */
+                        (includeZero || (e.ActualWorkTicks != null && e.ActualWorkTicks != 0)) &&
+                        e.Date <= end /* && start <= e.Date // NOTE: to take an old comment */
                     ).OrderByDescending(e => e.Date).ThenBy(e => e.CreatedDate).Take(total + 1)
                     /* Replaces desc sorting to asc */
                     .OrderBy(e => e.Date).ToList();
@@ -122,9 +126,9 @@ namespace TaskManager.Logic.Services {
             var subtaskIds = totalComments2.Select(e => e.SubTaskId).ToList();
             List<SubTask> subtasks;
             if (includeNew) {
-                subtasks = subtaskRep.SearchFor(e => e.ActualWorkTicks != 0 && subtaskIds.Contains(e.EntityId) || start <= e.CreatedDate && e.CreatedDate <= end).ToList();
+                subtasks = subtaskRep.SearchFor(e => subtaskIds.Contains(e.EntityId) || start <= e.CreatedDate && e.CreatedDate <= end).ToList();
             } else {
-                subtasks = subtaskRep.SearchFor(e => e.ActualWorkTicks != 0 && subtaskIds.Contains(e.EntityId)).ToList();
+                subtasks = subtaskRep.SearchFor(e => subtaskIds.Contains(e.EntityId)).ToList();
             }
             subtaskDtos = Mapper.Map<List<ReportSubTaskDto>>(subtasks);
             // gets tasks
@@ -140,16 +144,13 @@ namespace TaskManager.Logic.Services {
             var projectIds2 = tasks.Select(e => e.ProjectId).ToList();
             var projects = projectRep.SearchFor(e => projectIds2.Contains(e.EntityId)).ToList();
             projectDtos = Mapper.Map<List<ReportProjectDto>>(projects);
-            // addes all subtasks by tasks
-            subtasks = subtaskRep.SearchFor(e => e.ActualWorkTicks != 0 && taskIds.Contains(e.TaskId) && !subtaskIds.Contains(e.EntityId)).ToList();
-            subtaskDtos.AddRange(Mapper.Map<List<ReportSubTaskDto>>(subtasks));
 
             // NOTES: we have all prepared collections.
             // To prepare result
 
             foreach (var commentDto in commentSubTaskDtos) {
                 var subtaskDto = subtaskDtos.FirstOrDefault(e => e.EntityId == commentDto.SubTaskId.Value);
-                // if a subtask was deleted`
+                // if a subtask was deleted
                 if (subtaskDto == null) {
                     subtaskDto = ReportSubTaskDto.CreateById(commentDto.SubTaskId.Value);
                     subtaskDtos.Add(subtaskDto);

@@ -21,6 +21,7 @@
         public SelectedProjectFilter: string = '';
         public SortBy: Enums.SortByEnum;
         public Now: moment.Moment = moment();
+        public DayHours: number;
 
         public FilteredTasks: Array<TaskModel>;
 
@@ -85,7 +86,7 @@
             }
 
             if (this.FavoriteFilter == true) {
-                tasks = tasks.Where(e => e.Favorite).Select(e => e.Clone(true));
+                tasks = tasks.Where(e => e.Favorite);
             }
 
             this.FilteredTasks = tasks.ToArray();
@@ -99,6 +100,7 @@
         }
 
         public SetData(data: any) {
+            this.DayHours = 0;
             this.Loaded = true;
             this.SortBy = data.SortBy;
             this.Users = new Array();
@@ -124,7 +126,31 @@
             this.LastFavorite = data.LastFavorite;
             this.LastPriority = data.LastPriority;
             this.ApplyClientFilter();
+
+            // calcs day hours
+            for (var i = 0; i < this.Tasks.length; i++) {
+                var task = this.Tasks[i];
+                for (var j = 0; j < task.Comments.length; j++) {
+                    var comment = task.Comments[j];
+                    if (comment.DateMoment.dayOfYear() == this.Now.dayOfYear()) {
+                        this.DayHours += comment.ActualWorkHours;
+                    }
+                }
+                for (var k = 0; k < task.SubTasks.length; k++) {
+                    var subtask = task.SubTasks[k];
+                    for (var j = 0; j < subtask.Comments.length; j++) {
+                        var comment = subtask.Comments[j];
+                        if (comment.DateMoment.dayOfYear() == this.Now.dayOfYear()) {
+                            this.DayHours += comment.ActualWorkHours;
+                        }
+                    }
+                }
+            }
         }
+
+        //private _compareByDate(dt1: moment.Moment, dt2: moment.Moment): boolean {
+        //    return dt1.year == dt2.year && dt1.month == dt2.month && dt1.day == dt2.dayOfYearday;
+        //}
 
         public SetSubTasks(subTasks: any) {
             var tmpComments: { [id: string]: Array<CommentModel>; } = {};
@@ -167,6 +193,7 @@
                 .Select(e => e.Title)
                 .FirstOrDefault(projectId.substr(0, 8));
         }
+
         public TaskIndexByComment(comment: CommentModel): string {
             if (comment == null) {
                 return null;
