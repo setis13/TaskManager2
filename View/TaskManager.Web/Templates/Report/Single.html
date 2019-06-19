@@ -80,17 +80,16 @@
                  contenteditable="true"
                  aria-multiline="true"
                  style="min-height: 54px;">
-                <div style="margin-bottom: 1em;">{{Model.Start.format('MM/DD/YYYY')}}&nbsp;<span style="color: green">[{{Model.SumActualWorkHours}}h]</span></div>
+                <div style="margin-bottom: 1em;">{{Model.Start.format('MM/DD/YYYY')}}&nbsp;<span style="color: gray">[{{Model.SumActualWorkHours}}h]</span></div>
                 <ul style="list-style: none; margin: 0em; padding: 0em;">
                     <li ng-repeat="project in Model.ReportProjects" style="margin-bottom: 1em;">
-                        <div>{{project.Title}}&nbsp;<span style="color: green">[{{project.SumActualWorkHours}}h]&nbsp;</span></div>
+                        <div><b>{{project.Title}}</b>&nbsp;<span style="color: gray">[{{project.SumActualWorkHours}}h]&nbsp;</span></div>
                         <ul style="list-style: circle; margin-left: 0em;">
                             <li ng-repeat="task in project.ReportTasks">
                                 <div>
                                     <span>{{task.Title}}</span>&nbsp;
                                     <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[task.Status]}}&nbsp;</span>
-                                    <span style="color: green">[{{task.SumActualWorkHours}}h]&nbsp;</span>
-                                    <span>{{task.Progress | percent | number:0}}%</span>
+                                    <span style="color: gray">[{{task.SumActualWorkHours}}h]&nbsp;</span>
                                 </div>
                                 <i ng-bind-html="task.Description | nl2br"></i>
                                 <ul style="list-style: disc;">
@@ -99,7 +98,7 @@
                                             <span ng-bind-html="comment.Description | nl2br"></span>&nbsp;
                                             <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[comment.Status]}}&nbsp;</span>
                                             <span style="color: green" ng-show="comment.ActualWorkHours != null">[{{comment.ActualWorkHours}}h]</span>&nbsp;
-                                            <span ng-show="comment.Progress != null">{{comment.Progress | percent | number:0}}%</span><font size="1"><span style="color: green;" ng-show="comment.DeltaProgress != null && comment.DeltaProgress != 0">+{{comment.DeltaProgress | percent | number:0}}%</span></font>
+                                            <span ng-show="comment.Progress != null && comment.Progress != 0 && comment.Progress != 1">{{comment.Progress | percent | number:0}}%</span><font size="1"><span style="color: green;" ng-show="comment.DeltaProgress != null && comment.DeltaProgress != 0"></font>
                                         </b>
                                     </li>
                                 </ul>
@@ -109,7 +108,7 @@
                                             <span>{{subtask.Title}}</span>&nbsp;
                                             <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[subtask.Status]}}&nbsp;</span>
                                             <span style="color: gray" ng-show="subtask.SumActualWorkHours != 0">[{{subtask.SumActualWorkHours}}h]&nbsp;</span>
-                                            <span>{{subtask.Progress | percent | number:0}}%</span>
+                                            <span ng-show="comment.Progress != null && comment.Progress != 0 && comment.Progress != 1">{{subtask.Progress | percent | number:0}}%</span>
                                         </div>
                                         <i ng-bind-html="subtask.Description | nl2br"></i>
                                         <ul style="list-style: disc;">
@@ -118,7 +117,7 @@
                                                     <span ng-bind-html="comment.Description | nl2br"></span>&nbsp;
                                                     <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[comment.Status]}}&nbsp;</span>
                                                     <span style="color: green" ng-show="comment.ActualWorkHours != null">[{{comment.ActualWorkHours}}h]</span>&nbsp;
-                                                    <span ng-show="comment.Progress != null">{{comment.Progress | percent | number:0}}%</span><font size="1"><span style="color: green;" ng-show="comment.DeltaProgress != null && comment.DeltaProgress != 0">+{{comment.DeltaProgress | percent | number:0}}%</span></font>
+                                                    <span ng-show="comment.Progress != null && comment.Progress != 0 && comment.Progress != 1">{{comment.Progress | percent | number:0}}%</span><font size="1"><span style="color: green;" ng-show="comment.DeltaProgress != null && comment.DeltaProgress != 0"></font>
                                                 </b>
                                             </li>
                                         </ul>

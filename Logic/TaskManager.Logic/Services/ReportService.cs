@@ -155,7 +155,10 @@ namespace TaskManager.Logic.Services {
                     subtaskDto = ReportSubTaskDto.CreateById(commentDto.SubTaskId.Value);
                     subtaskDtos.Add(subtaskDto);
                 }
-                subtaskDto.ReportComments.Add(commentDto);
+                // filters by 0
+                if (commentDto.ActualWork != null && commentDto.ActualWork != TimeSpan.Zero) {
+                    subtaskDto.ReportComments.Add(commentDto);
+                }
             }
             foreach (var commentDto in commentTaskDtos) {
                 var taskDto = taskDtos.FirstOrDefault(e => e.EntityId == commentDto.TaskId.Value);
@@ -164,7 +167,10 @@ namespace TaskManager.Logic.Services {
                     taskDto = ReportTaskDto.CreateById(commentDto.TaskId.Value);
                     taskDtos.Add(taskDto);
                 }
-                taskDto.ReportComments.Add(commentDto);
+                // filters by 0
+                if (commentDto.ActualWork != null && commentDto.ActualWork != TimeSpan.Zero) {
+                    taskDto.ReportComments.Add(commentDto);
+                }
             }
             foreach (var subtaskDto in subtaskDtos.OrderBy(e => e.Order)) {
                 var taskDto = taskDtos.FirstOrDefault(e => e.EntityId == subtaskDto.TaskId);
@@ -173,7 +179,10 @@ namespace TaskManager.Logic.Services {
                     taskDto = ReportTaskDto.CreateById(subtaskDto.TaskId);
                     taskDtos.Add(taskDto);
                 }
-                taskDto.ReportSubTasks.Add(subtaskDto);
+                // filters by 0
+                if (subtaskDto.SumActualWork != TimeSpan.Zero) {
+                    taskDto.ReportSubTasks.Add(subtaskDto);
+                }
             }
             foreach (var taskDto in taskDtos.OrderByDescending(e => e.Index)) {
                 var projectDto = projectDtos.FirstOrDefault(e => e.EntityId == taskDto.ProjectId);
@@ -182,12 +191,17 @@ namespace TaskManager.Logic.Services {
                     projectDto = ReportProjectDto.CreateById(taskDto.ProjectId);
                     projectDtos.Add(projectDto);
                 }
-                projectDto.ReportTasks.Add(taskDto);
+                // filters by 0
+                if (taskDto.SumActualWork != TimeSpan.Zero) {
+                    projectDto.ReportTasks.Add(taskDto);
+                }
             }
             // to filter by projects
             if (projectIds != null && projectIds.Any()) {
                 projectDtos = projectDtos.Where(e => projectIds.Contains(e.EntityId)).ToList();
             }
+            // filters by 0
+            projectDtos = projectDtos.Where(e => e.SumActualWork != TimeSpan.Zero).ToList();
             return projectDtos;
         }
     }

@@ -78,7 +78,7 @@
                                     <span>{{task.Title}}</span>&nbsp;
                                     <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[task.Status]}}&nbsp;</span>
                                     <span style="color: green">[{{task.SumActualWorkHours}}h]&nbsp;</span>
-                                    <span>{{task.Progress | percent | number:0}}%</span>
+                                    <span ng-show="task.Progress != null && task.Progress != 0 && task.Progress != 1">{{task.Progress | percent | number:0}}%</span>
                                 </div>
                                 <ul style="list-style: circle; margin-left: 0em;">
                                     <li ng-repeat="subtask in task.ReportSubTasks">
@@ -86,7 +86,7 @@
                                             <span>{{subtask.Title}}</span>&nbsp;
                                             <span style="color: gray" ng-show="Model.ShowStatus">{{TaskStatusNames[subtask.Status]}}&nbsp;</span>
                                             <span style="color: green">[{{subtask.SumActualWorkHours}}h]&nbsp;</span>
-                                            <span>{{subtask.Progress | percent | number:0}}%</span>
+                                            <span ng-show="subtask.Progress != null && subtask.Progress != 0 && subtask.Progress != 1">{{subtask.Progress | percent | number:0}}%</span>
                                         </div>
                                     </li>
                                 </ul>
